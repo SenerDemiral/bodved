@@ -1,0 +1,27 @@
+{
+  "Html": "/bodved/Deneme.html",
+  "SaveTrigger$": 0,
+  "Singles": [
+    {
+      "oNo": 0,
+      "Idx$": 0,
+      "Ad": "",
+      "AoY": ""
+    }
+  ],
+
+  "Doubles": [
+    {
+      "c1": {
+        "oNo": 0,
+        "Idx$": 0,
+        "Ad": ""
+      },
+      "c2": {
+        "oNo": 0,
+        "Idx$": 0,
+        "Ad": ""
+      }
+    }
+  ]
+}

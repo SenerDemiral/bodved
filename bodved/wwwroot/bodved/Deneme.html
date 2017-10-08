@@ -1,0 +1,225 @@
+﻿<!--
+<link rel="stylesheet" href="/sys/redips-style.css"/>
+<script src="/sys/redips-drag-min.js"></script>
+<script src="/sys/redips-script.js"></script>
+-->
+
+<template>
+    <template is="dom-bind" id="sener">
+        <div id="dragSD">
+            <div id="dragS">
+                <table id="tableS">
+
+                    <colgroup>
+                        <col width="50" />
+                        <col width="200" />
+                    </colgroup>
+                    <tr>
+                        <td class="redips-mark" id="message">Sıra</td>
+                        <td class="redips-mark">Single</td>
+                    </tr>
+                    <template is="dom-repeat" items="{{model.Singles}}">
+                        <tr>
+                            <td class="redips-mark" data-AoY$="[[item.AoY]]">{{displayIndex(index)}}</td>
+                            <td><div id="[[item.oNo]]" class="redips-drag">[[item.Ad]]</div></td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+            <div id="dragD">
+                <table id="tableD">
+                    <colgroup>
+                        <col width="50" />
+                        <col width="200" />
+                        <col width="200" />
+                    </colgroup>
+                    <tr>
+                        <td class="redips-mark">Sıra</td>
+                        <td colspan="2" class="redips-mark">Double</td>
+                    </tr>
+
+                    <template is="dom-repeat" items="{{model.Doubles}}">
+                        <template is="dom-if" if="[[item.c2.Ad]]">
+                            <tr>
+                                <td class="redips-mark">{{displayIndex(index)}}</td>
+                                <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.Ad]]</div></td>
+                                <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.Ad]]</div></td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if="[[!item.c2.Ad]]">
+                            <tr>
+                                <td class="redips-mark ydk"></td>
+                                <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.Ad]] - {{isEven(index)}}</div></td>
+                            </tr>
+                        </template>
+                    </template>
+<!--
+                    <template is="dom-repeat" items="{{model.Doubles}}">
+                        <tr>
+                            <td class="redips-mark">{{displayIndex(index)}}</td>
+                            <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.Ad]] - {{isEven(index)}}</div></td>
+                            <template is="dom-if" if="[[item.c2.Ad]]">
+                                <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.Ad]] - {{isEven(index)}}</div></td>
+                            </template>
+                        </tr>
+                    </template>
+                    <tr>
+                        <td class="redips-mark">1</td>
+                        <td><div id="d1" class="redips-drag" data-idx="1">Ahmet</div></td>
+                        <td><div id="d2" class="redips-drag" data-idx="1">Mehmet</div></td>
+                    </tr>
+                    <tr>
+                        <td class="redips-mark">2</td>
+                        <td><div id="d3" class="redips-drag" data-idx="2">Huseyin</div></td>
+                        <td><div id="d4" class="redips-drag" data-idx="2">Ali</div></td>
+                    </tr>
+                    <tr>
+                        <td class="redips-mark">3</td>
+                        <td><div id="d5" class="redips-drag" data-idx="3">Sener DEMIRAL</div></td>
+                        <td><div id="d6" class="redips-drag" data-idx="3">Can DEMIRAL</div></td>
+                    </tr>
+                    <tr>
+                        <td class="redips-mark ydk"></td>
+                        <td colspan="2"><div id="d7" class="redips-drag">Goksan</div></td>
+                    </tr>
+                    <tr>
+                        <td class="redips-mark ydk"></td>
+                        <td colspan="2"><div id="d8" class="redips-drag">Acet</div></td>
+                    </tr>
+                    <tr>
+                        <td class="redips-mark ydk"></td>
+                        <td colspan="2"><div id="d9" class="redips-drag">Dilara DEMIRAL</div></td>
+                    </tr>
+-->
+                </table>
+            </div>
+
+            <div>
+                <button>Kaydet</button>
+                <button>Onayla ve Kaydet</button>
+                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Save</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+			(function () {
+					//REDIPS.drag.init('redips-drag-1');
+					//REDIPS.drag.init('redips-drag-2');
+					//redpis-drag-min.js de default multi'den switch'e cevirdim.
+			    //REDIPS.drag.dropMode = "switch";
+			    //console.log(REDIPS);
+			    setTimeout(function () {
+			        //redipsInit();
+			        console.log("redipsInit");
+			        var rd = REDIPS.drag;	// reference to the REDIPS.drag class
+			        rd.dropMode = "switch";
+			        // DIV container initialization
+			        rd.init('dragS');
+			        rd.init('dragD');
+			        // elements could be cloned with pressed SHIFT key (for demo)
+			        // rd.clone_shiftKey = true;
+                    /*
+			        rd.event.dropped = function () {
+			            var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
+			            console.log('rd.obj', rd.obj);
+			            //rd.obj.dataset.idx = pos[1].toString();
+			            //rd.objOld.dataset.idx = pos[4].toString();
+			            //console.log('droped', pos, rd.obj.dataset.idx);
+			            var sen = document.querySelector("#sener");
+			            
+                        //sen.model.Singles[pos[4] - 1].Idx$ = pos[1];
+                        //sen.model.Singles[pos[1] - 1].Idx$ = pos[4];
+                        //var dilara = "[data-idx='1']";
+                        //var a = document.querySelector(dilara);
+                        //console.log('droped', a);
+                        
+			            var obj = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
+			            obj.Idx$ = pos[1];
+			            var objOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
+			            objOld.Idx$ = pos[4];
+
+			            console.log('obj', obj);
+			            //obj.Idx$ = "55";
+			        };
+                    */
+
+			    });
+			    var template = document.querySelector('#sener');
+			    template.displayIndex = function (index) {
+			        return index + 1;
+			    }
+			    template.isEven = function (index) {
+			        return (index + 1) % 2;
+			    }
+
+			    REDIPS.drag.event.dropped = function () {
+			        var rd = REDIPS.drag;
+			        var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
+			        console.log('droped', pos, rd);
+			        var sen = document.querySelector("#sener");
+			        var tbl = rd.obj.closest("table");
+			        if (tbl.id == "tableS") {
+			            var mdlItm = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
+			            mdlItm.Idx$ = pos[1];
+			            var mdlItmOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
+			            mdlItmOld.Idx$ = pos[4];
+			        }
+			        if (tbl.id == "tableD") {
+			            var mi;
+			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
+			            if (mi) {
+			                mi.c1.Idx$ = pos[1];
+			                console.log("mi.c1", mi.c1);
+			            }
+			            else {
+			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
+			                if (mi) {
+			                    mi.c2.Idx$ = pos[1];
+			                    console.log("mi.c2", mi.c2);
+			                }
+                        }
+			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
+			            if (mi) {
+			                mi.c1.Idx$ = pos[4];
+			                console.log("mi.c1", mi.c1);
+                        }
+			            else {
+			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.objOld.id; });
+			                if (mi) {
+			                    mi.c2.Idx$ = pos[4];
+			                    console.log("mi.c2", mi.c2);
+                            }
+			            }
+
+                        /*
+			            if (pos[2] == 1) {
+			                var mdlItm = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
+			                console.log("mdlItm.c1", mdlItm.c1);
+			                console.log("-->", rd.obj.id, mdlItm);
+                        }
+			            if (pos[2] == 2) {
+			                var mdlItm = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
+			                console.log("-->", rd.obj.id, mdlItm);
+			            }*/
+			            //mdlItm.Idx$ = pos[1];
+			            //var mdlItmOld = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
+			            //mdlItmOld.Idx$ = pos[4];
+			        }
+			        //console.log('obj', obj);
+			        console.log('closest table', tbl.id);
+
+			    };
+
+			    //console.log(REDIPS.drag.dropMode);
+			    //var r = document.querySelector("[value='switch']");
+					//console.log(this);
+			    //r.click();
+
+
+
+
+			})();
+    </script>
+
+</template>

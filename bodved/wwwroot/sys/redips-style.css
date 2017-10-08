@@ -1,0 +1,81 @@
+[data-AoY="Y"] {
+    background-color: red !important;
+}
+
+#dragSD {
+	font-family: arial;
+	margin: 0px; /* for IE6 / IE7 */
+	display: grid;
+	/*grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));*/
+	grid-template-columns: minmax(460px, 1fr);
+	grid-gap: 10px;
+	justify-items: center;
+}
+
+.ydk {
+	background-color: red !important;
+}
+/* table */
+div#dragS table,
+div#dragD table {
+	background-color: #eee;
+	border-collapse: collapse;
+	/*margin: 7px;*/
+}
+
+/* table cells */
+div#dragS td,
+div#dragD td {
+	/*border: 1px solid navy;
+	height: 50px;*/
+	/*height: calc(2em + 4px);*/
+	height: 2em;
+	border: 1px solid white;
+	text-align: center;
+	/*font-size: 10pt;*/
+	padding: 2px;
+    line-height:normal;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+/* drag object (DIV inside table cell) */
+.redips-drag {
+	margin: auto;
+	text-align: center;
+	width: 10em;
+	padding: 2px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	/*height: 35px;*/
+	/*line-height: calc(2em - 4px);*/
+	border: 2px solid SteelBlue;
+	background-color: white;
+}
+/* allow / deny access to cells marked with 'mark' class name */
+.redips-mark {
+	color: white;
+	background-color: #9B9EA2;
+	/*height: calc(2em + 4px);*/
+}
+.t1 {
+	border: 2px solid #499B33;
+}
+.bos {
+	border: 2px solid white;
+	background-color: red;
+	color: white;
+}
+/* table cells */
+/*
+div#redips-drag td {
+	height: 32px;
+	border: 1px solid white;
+	text-align: center;
+	font-size: 10pt;
+	padding: 2px;
+}*/

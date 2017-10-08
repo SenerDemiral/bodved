@@ -6,15 +6,14 @@
     <ProductVersion>9.0.20706</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{C86118D7-451E-4933-BFEE-A1EFDB162FD7};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{E47A800A-660D-4C0A-9499-3C7A1642B594}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{FB1CA197-7F1B-4A78-82CC-A5C71247D05B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bodved</RootNamespace>
-    <AssemblyName>bodved</AssemblyName>
+    <RootNamespace>BDB</RootNamespace>
+    <AssemblyName>BDB</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
     <StarcounterVersionCompatibility>2.4</StarcounterVersionCompatibility>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
@@ -26,8 +25,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
@@ -38,8 +35,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
@@ -62,53 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Deneme.json.cs">
-      <DependentUpon>Deneme.json</DependentUpon>
-    </Compile>
-    <Compile Include="MainPage.json.cs">
-      <DependentUpon>MainPage.json</DependentUpon>
-    </Compile>
-    <Compile Include="MasterPage.json.cs">
-      <DependentUpon>MasterPage.json</DependentUpon>
-    </Compile>
-    <Compile Include="OyuncularPage.json.cs">
-      <DependentUpon>OyuncularPage.json</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Entity1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TurnuvalarPage.json.cs">
-      <DependentUpon>TurnuvalarPage.json</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="wwwroot\bodved\Deneme.html" />
-    <Content Include="wwwroot\sys\Bodved.css" />
-    <Content Include="wwwroot\sys\redips-drag-min.js" />
-    <Content Include="wwwroot\sys\redips-style.css" />
-    <Content Include="wwwroot\sys\thenBy.js" />
-    <TypedJSON Include="TurnuvalarPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="OyuncularPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <TypedJSON Include="Deneme.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <None Include="wwwroot\bodved\Oyuncular.html" />
-    <None Include="wwwroot\bodved\Turnuvalar.html" />
-    <None Include="wwwroot\bodved\MasterPage.html" />
-    <Content Include="wwwroot\bodved\MasterPage2.html" />
-    <TypedJSON Include="MainPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
-    <None Include="wwwroot\bodved\MainPage.html" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <TypedJSON Include="MasterPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />
