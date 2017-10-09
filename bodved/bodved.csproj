@@ -65,6 +65,9 @@
     <Compile Include="CCpage.json.cs">
       <DependentUpon>CCpage.json</DependentUpon>
     </Compile>
+    <Compile Include="CTpage.json.cs">
+      <DependentUpon>CTpage.json</DependentUpon>
+    </Compile>
     <Compile Include="Deneme.json.cs">
       <DependentUpon>Deneme.json</DependentUpon>
     </Compile>
@@ -90,7 +93,11 @@
     <TypedJSON Include="PPpage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="CTpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\bodved\CCpage.html" />
+    <None Include="wwwroot\bodved\CTpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />

@@ -2,7 +2,7 @@
 
 <template>
     <template is="dom-bind">
-        <div class="cc-table">
+        <div class="tblWrap">
             <table id="ccTbl">
                 <caption></caption>
                 <thead>
@@ -19,12 +19,11 @@
                             <td data-typ="nmr">
                                 <template is="dom-if" if="[[model.canMdfy]]">
                                     <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
-                                    <button value="{{item.DltTrigger$::click}}" onmousedown="++this.value">Delete</button>
                                 </template>
                                 [[item.Ad]]
                             </td>
                             <td class="ortala">
-                                <a href="/bodved/Deneme/[[item.oNo]]">►</a>
+                                <a href="/bodved/CTpage/[[item.oNo]]">►</a>
                             </td>
                         </tr>
                     </template>
@@ -32,8 +31,17 @@
             </table>
         </div>
 
-        <input placeholder="Ad" type="text" value="{{model.CCrec.Ad$::change}}" />
-        <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Save</button>
+        <template is="dom-if" if="[[model.canMdfy]]">
+            <div class="mdfRecWrap">
+                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                <div class="mdfRecAction">
+                    <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                    <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                    <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                </div>
+            </div>
+        </template>
 
     </template>
 </template>

@@ -57,6 +57,8 @@ namespace BDB
         public string Pwd { get; set; }
 
         public string CCAd => CC?.Ad ?? "-";
+        public ulong K1oNo => K1?.GetObjectNo() ?? 0;
+        public ulong K2oNo => K2?.GetObjectNo() ?? 0;
         public string K1Ad => K1?.Ad ?? "-";
         public string K2Ad => K2?.Ad ?? "-";
 

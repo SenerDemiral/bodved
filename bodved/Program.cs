@@ -59,6 +59,9 @@ namespace bodved
             Handle.GET("/bodved/partial/CCpage", () => new CCpage());
             Handle.GET("/bodved/CCpage", () => WrapPage<CCpage>("/bodved/partial/CCpage"));
 
+            Handle.GET("/bodved/partial/CTpage/{?}", (string CCoNo) => new CTpage() { CCoNo = $"{CCoNo}" });
+            Handle.GET("/bodved/CTpage/{?}", (string CCoNo) => WrapPage<CTpage>($"/bodved/partial/CTpage/{CCoNo}"));
+
             Handle.GET("/bodved/partial/PPpage", () => new PPpage());
             Handle.GET("/bodved/PPpage", () => WrapPage<PPpage>("/bodved/partial/PPpage"));
 

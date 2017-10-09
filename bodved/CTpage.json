@@ -1,0 +1,37 @@
+{
+  "Html": "/bodved/CTpage.html",
+  "canMdfy": false,
+  "CCoNo": "",
+
+  "CTs": [
+    {
+      "oNo": 0,
+      "Ad": "",
+      "K1oNo": 0,
+      "K2oNo": 0,
+      "K1Ad": "",
+      "K2Ad": "",
+      "MdfTrigger$": 0
+    }
+  ],
+
+  "InsertTrigger$": 0,
+  "UpdateTrigger$": 0,
+  "DeleteTrigger$": 0,
+
+  "MdfRec": {
+    "oNo$": 0,
+    "Ad$": "",
+    "K1Ad$": "",
+    "K1oNo$": "",
+    "K2oNo$": ""
+  },
+
+  "PPs": [
+    {
+      "oNo": "",
+      "Ad": ""
+    }
+  ]
+
+}

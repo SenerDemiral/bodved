@@ -26,28 +26,63 @@ namespace bodved
             //sener.NoR = DateTime.Now.Ticks;
         }
 
-        void Handle(Input.SaveTrigger Action)
+        void Handle(Input.InsertTrigger Action)
         {
             var oo = Action.OldValue;
             var nn = Action.Value;
 
-            Db.Transact(() =>
+            if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
-                if (CCrec.oNo == 0)
+                Db.Transact(() =>
                 {
                     new BDB.CC()
                     {
-                        Ad = this.CCrec.Ad
+                        Ad = this.MdfRec.Ad,
                     };
-                }
-                else
-                {
-                    var ccr = Db.FromId<BDB.CC>((ulong)CCrec.oNo);
-                    ccr.Ad = CCrec.Ad;
-                }
-            });
+                });
+                MdfRec.oNo = 0;
+                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+            }
+        }
 
-            CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+        void Handle(Input.UpdateTrigger Action)
+        {
+            var oo = Action.OldValue;
+            var nn = Action.Value;
+
+            if (MdfRec.oNo != 0)
+            {
+                Db.Transact(() =>
+                {
+                    var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
+                    r.Ad = MdfRec.Ad;
+                });
+                MdfRec.oNo = 0;
+                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+            }
+        }
+
+        void Handle(Input.DeleteTrigger Action)
+        {
+            var oo = Action.OldValue;
+            var nn = Action.Value;
+
+            if (MdfRec.oNo != 0)
+            {
+                Db.Transact(() =>
+                {
+                    if (MdfRec.oNo != 0)
+                    {
+                        Db.Transact(() =>
+                        {
+                            var r = Db.FromId<BDB.PP>((ulong)MdfRec.oNo);
+                            r.Delete();
+                        });
+                    }
+                });
+                MdfRec.oNo = 0;
+                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+            }
         }
 
         [CCpage_json.CCs]
@@ -55,26 +90,11 @@ namespace bodved
         {
             void Handle(Input.MdfTrigger Action)
             {
-                var ccp = this.Parent.Parent as CCpage;
-                ccp.CCrec.oNo = this.oNo;
-                ccp.CCrec.Ad = this.Ad;
+                var p = this.Parent.Parent as CCpage;
+                p.MdfRec.oNo = this.oNo;
+                p.MdfRec.Ad = this.Ad;
 
                 var deneme = this.Root;
-            }
-
-            void Handle(Input.DltTrigger Action)
-            {
-                var ccp = this.Parent.Parent as CCpage;
-                ccp.CCrec.oNo = this.oNo;
-                ccp.CCrec.Ad = this.Ad;
-
-                Db.Transact(() =>
-                {
-                    var ccr = Db.FromId<BDB.CC>((ulong)oNo);
-                    ccr.Delete();
-                    //Db.SQL<BDB.CC>("delete from CC c where c.ObjectNo = ?", (object)this.oNo);
-                });
-                (Parent.Parent as CCpage).Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
             }
         }
 

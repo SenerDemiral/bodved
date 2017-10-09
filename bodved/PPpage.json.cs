@@ -30,20 +30,20 @@ namespace bodved
             var oo = Action.OldValue;
             var nn = Action.Value;
 
-            if (!string.IsNullOrWhiteSpace(PPrec.Ad))
+            if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
                 Db.Transact(() =>
                 {
                     new BDB.PP()
                     {
-                        Ad = this.PPrec.Ad,
-                        Sex = this.PPrec.Sex,
-                        DgmYil = (int)this.PPrec.DgmYil,
-                        Tel = this.PPrec.Tel,
-                        eMail = this.PPrec.eMail
+                        Ad = this.MdfRec.Ad,
+                        Sex = this.MdfRec.Sex,
+                        DgmYil = (int)this.MdfRec.DgmYil,
+                        Tel = this.MdfRec.Tel,
+                        eMail = this.MdfRec.eMail
                     };
                 });
-                PPrec.oNo = 0;
+                MdfRec.oNo = 0;
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
             }
         }
@@ -53,18 +53,18 @@ namespace bodved
             var oo = Action.OldValue;
             var nn = Action.Value;
 
-            if (PPrec.oNo != 0)
+            if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
                 {
-                    var r = Db.FromId<BDB.PP>((ulong)PPrec.oNo);
-                    r.Ad = PPrec.Ad;
-                    r.Sex = this.PPrec.Sex;
-                    r.DgmYil = (int)this.PPrec.DgmYil;
-                    r.Tel = this.PPrec.Tel;
-                    r.eMail = this.PPrec.eMail;
+                    var r = Db.FromId<BDB.PP>((ulong)MdfRec.oNo);
+                    r.Ad = MdfRec.Ad;
+                    r.Sex = this.MdfRec.Sex;
+                    r.DgmYil = (int)this.MdfRec.DgmYil;
+                    r.Tel = this.MdfRec.Tel;
+                    r.eMail = this.MdfRec.eMail;
                 });
-                PPrec.oNo = 0;
+                MdfRec.oNo = 0;
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
             }
         }
@@ -74,20 +74,20 @@ namespace bodved
             var oo = Action.OldValue;
             var nn = Action.Value;
 
-            if (PPrec.oNo != 0)
+            if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
                 {
-                    if (PPrec.oNo != 0)
+                    if (MdfRec.oNo != 0)
                     {
                         Db.Transact(() =>
                         {
-                            var r = Db.FromId<BDB.PP>((ulong)PPrec.oNo);
+                            var r = Db.FromId<BDB.PP>((ulong)MdfRec.oNo);
                             r.Delete();
                         });
                     }
                 });
-                PPrec.oNo = 0;
+                MdfRec.oNo = 0;
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
             }
         }
@@ -97,13 +97,13 @@ namespace bodved
         {
             void Handle(Input.MdfTrigger Action)
             {
-                var rec = this.Parent.Parent as PPpage;
-                rec.PPrec.oNo = this.oNo;
-                rec.PPrec.Ad = this.Ad;
-                rec.PPrec.Sex = this.Sex;
-                rec.PPrec.DgmYil = this.DgmYil;
-                rec.PPrec.Tel = this.Tel;
-                rec.PPrec.eMail = this.eMail;
+                var p = this.Parent.Parent as PPpage;
+                p.MdfRec.oNo = this.oNo;
+                p.MdfRec.Ad = this.Ad;
+                p.MdfRec.Sex = this.Sex;
+                p.MdfRec.DgmYil = this.DgmYil;
+                p.MdfRec.Tel = this.Tel;
+                p.MdfRec.eMail = this.eMail;
 
                 var deneme = this.Root;
             }

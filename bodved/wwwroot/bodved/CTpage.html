@@ -3,21 +3,18 @@
 <template>
     <template is="dom-bind">
         <div class="tblWrap">
-            <table id="ppTbl">
+            <table id="ccTbl">
                 <caption></caption>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Ad</th>
-                        <th>Sex</th>
-                        <th>DgmYil</th>
-                        <th>Tel</th>
-                        <th>eMail</th>
-                        <th>Maclari</th>
+                        <th>Kaptan 1</th>
+                        <th>Kaptan 2</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <template is="dom-repeat" items="[[model.PPs]]">
+                    <template is="dom-repeat" items="[[model.CTs]]">
                         <tr>
                             <td data-typ="nmr">[[item.oNo]]</td>
                             <td data-typ="nmr">
@@ -26,12 +23,10 @@
                                 </template>
                                 [[item.Ad]]
                             </td>
-                            <td data-typ="nmr">[[item.Sex]]</td>
-                            <td data-typ="nmr">[[item.DgmYil]]</td>
-                            <td data-typ="nmr">[[item.Tel]]</td>
-                            <td data-typ="nmr">[[item.eMail]]</td>
+                            <td data-typ="nmr">[[item.K1Ad]]</td>
+                            <td data-typ="nmr">[[item.K2Ad]]</td>
                             <td class="ortala">
-                                <a href="/bodved/Deneme/[[item.oNo]]">►</a>
+                                <a href="/bodved/CTpage/[[item.oNo]]">►</a>
                             </td>
                         </tr>
                     </template>
@@ -41,12 +36,30 @@
 
         <template is="dom-if" if="[[model.canMdfy]]">
             <div class="mdfRecWrap">
-                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center"/>
+                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
                 <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                <input placeholder="Sex" type="text" value="{{model.MdfRec.Sex$::change}}" />
-                <input placeholder="DgmYil" type="number" min="1920" max="2010" value="{{model.MdfRec.DgmYil$::change}}" />
-                <input placeholder="Tel" type="text" value="{{model.MdfRec.Tel$::change}}" />
-                <input placeholder="eMail" type="text" value="{{model.MdfRec.eMail$::change}}" />
+                <input list="browsers" name="myBrowser" value="{{model.MdfRec.K1Ad$::change}}"/>
+                <datalist id="browsers">
+                    <option value="Chrome">
+                    <option value="Firefox">
+                    <option value="Internet Explorer">
+                    <option value="Opera">
+                    <option value="Safari">
+                    <option value="Microsoft Edge">
+                </datalist>
+                <select name="select" value="{{model.MdfRec.K1oNo$::change}}">
+                    <option value="0">N/A</option>
+                    <template is="dom-repeat" items="[[model.PPs]]">
+                        <option value="[[item.oNo]]">[[item.Ad]]</option>
+                    </template>
+                    </select>
+                <select name="select" value="{{model.MdfRec.K2oNo$::change}}">
+                    <option value="0">N/A</option>
+                    <template is="dom-repeat" items="[[model.PPs]]">
+                        <option value="[[item.oNo]]">[[item.Ad]]</option>
+                    </template>
+                </select>
+
                 <div class="mdfRecAction">
                     <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
                     <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
@@ -54,5 +67,6 @@
                 </div>
             </div>
         </template>
+        
     </template>
 </template>
