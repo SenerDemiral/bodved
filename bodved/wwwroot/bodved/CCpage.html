@@ -1,0 +1,39 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <div class="cc-table">
+            <table id="ccTbl">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad</th>
+                        <th>Msbk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.CCs]]">
+                        <tr>
+                            <td data-typ="nmr">[[item.oNo]]</td>
+                            <td data-typ="nmr">
+                                <template is="dom-if" if="[[model.canMdfy]]">
+                                    <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
+                                    <button value="{{item.DltTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                                </template>
+                                [[item.Ad]]
+                            </td>
+                            <td class="ortala">
+                                <a href="/bodved/Deneme/[[item.oNo]]">►</a>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <input placeholder="Ad" type="text" value="{{model.CCrec.Ad$::change}}" />
+        <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Save</button>
+
+    </template>
+</template>

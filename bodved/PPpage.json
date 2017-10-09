@@ -1,0 +1,30 @@
+{
+  "Html": "/bodved/PPpage.html",
+  "canMdfy": false,
+
+  "PPs": [
+    {
+      "oNo": 0,
+      "Ad": "",
+      "Sex": "",
+      "DgmYil": 0,
+      "Tel": "",
+      "eMail": "",
+
+      "MdfTrigger$": 0
+    }
+  ],
+
+  "InsertTrigger$": 0,
+  "UpdateTrigger$": 0,
+  "DeleteTrigger$": 0,
+
+  "PPrec": {
+    "oNo$": 0,
+    "Ad$": "",
+    "Sex$": "",
+    "DgmYil$": 0,
+    "Tel$": "",
+    "eMail$": ""
+  }
+}

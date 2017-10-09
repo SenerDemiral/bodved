@@ -62,6 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CCpage.json.cs">
+      <DependentUpon>CCpage.json</DependentUpon>
+    </Compile>
     <Compile Include="Deneme.json.cs">
       <DependentUpon>Deneme.json</DependentUpon>
     </Compile>
@@ -74,6 +77,9 @@
     <Compile Include="OyuncularPage.json.cs">
       <DependentUpon>OyuncularPage.json</DependentUpon>
     </Compile>
+    <Compile Include="PPpage.json.cs">
+      <DependentUpon>PPpage.json</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TurnuvalarPage.json.cs">
@@ -81,7 +87,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <TypedJSON Include="PPpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <None Include="wwwroot\bodved\CCpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
+    <None Include="wwwroot\bodved\PPpage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />
     <Content Include="wwwroot\sys\redips-drag-min.js" />
     <Content Include="wwwroot\sys\redips-style.css" />
@@ -95,6 +106,9 @@
     <TypedJSON Include="Deneme.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="CCpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\bodved\Oyuncular.html" />
     <None Include="wwwroot\bodved\Turnuvalar.html" />
     <None Include="wwwroot\bodved\MasterPage.html" />
@@ -104,7 +118,12 @@
     </TypedJSON>
     <None Include="wwwroot\bodved\MainPage.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BDB\BDB.csproj">
+      <Project>{fb1ca197-7f1b-4a78-82cc-a5c71247d05b}</Project>
+      <Name>BDB</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="MasterPage.json">
       <Generator>MsBuild:Compile</Generator>

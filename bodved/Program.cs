@@ -56,14 +56,16 @@ namespace bodved
             Handle.GET("/bodved/partial/MainPage", () => new MainPage());
             Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
 
-            Handle.GET("/bodved/partial/TurnuvalarPage", () => new TurnuvalarPage());
-            Handle.GET("/bodved/TurnuvalarPage", () => WrapPage<TurnuvalarPage>("/bodved/partial/TurnuvalarPage"));
+            Handle.GET("/bodved/partial/CCpage", () => new CCpage());
+            Handle.GET("/bodved/CCpage", () => WrapPage<CCpage>("/bodved/partial/CCpage"));
 
-            Handle.GET("/bodved/partial/OyuncularPage", () => new OyuncularPage());
-            Handle.GET("/bodved/OyuncularPage", () => WrapPage<OyuncularPage>("/bodved/partial/OyuncularPage"));
+            Handle.GET("/bodved/partial/PPpage", () => new PPpage());
+            Handle.GET("/bodved/PPpage", () => WrapPage<PPpage>("/bodved/partial/PPpage"));
 
-            Handle.GET("/bodved/partial/Deneme", () => new Deneme());
-            Handle.GET("/bodved/Deneme", () => WrapPage<Deneme>("/bodved/partial/Deneme"));
+
+
+            Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo=$"{CCoNo}" });
+            Handle.GET("/bodved/Deneme/{?}", (string CCoNo) => WrapPage<Deneme>($"/bodved/partial/Deneme/{CCoNo}"));
         }
 
 

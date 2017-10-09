@@ -10,7 +10,7 @@ namespace BDB
         public ulong oNo => this.GetObjectNo();
 
         public string Ad { get; set; }
-        public string Skl { get; set; } = "T";    // Takim/Ferdi
+        public string Skl { get; set; }    // Takim/Ferdi
 
         public CC()
         {

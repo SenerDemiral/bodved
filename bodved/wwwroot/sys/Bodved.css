@@ -3,7 +3,7 @@
 }
 
 :root {
-
+    --master-current-height: calc(100vh - 50px);
 }
 
 body {
@@ -41,7 +41,33 @@ body {
 /*-----------------*/
 
 .master-current {
-    max-height: calc(100vh - 50px); 
+    max-height: var(--master-current-height); 
     max-width:100vw; 
     overflow:auto;
+}
+
+/*-----------------*/
+table {
+	border-collapse: collapse;
+	/*border-spacing: 0px;*/
+    border: 1px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td {
+  	line-height: 1.5em;
+	padding: 0.2em 0.4em;
+	border: 1px solid #CBCBCB;
+    white-space: nowrap;
+}
+
+th {
+  	line-height: 2em;
+	text-align:center;
+	border: 1px solid lightgray;
+}
+
+.ortala {
+    text-align: center;
 }

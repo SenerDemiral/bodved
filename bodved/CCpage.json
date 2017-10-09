@@ -1,0 +1,21 @@
+{
+  "Html": "/bodved/CCpage.html",
+  "canMdfy": false,
+
+  "CCs": [
+    {
+      "oNo": 0,
+      "Ad": "",
+      "MdfTrigger$": 0,
+      "DltTrigger$": 0
+    }
+  ],
+
+  "AddTrigger$": 0,
+  "SaveTrigger$": 0,
+
+  "CCrec": {
+    "oNo$": 0,
+    "Ad$": ""
+  }
+}
