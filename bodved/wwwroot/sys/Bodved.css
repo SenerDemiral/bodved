@@ -63,7 +63,7 @@ td {
 }
 
 th {
-  	line-height: 2em;
+  	/*line-height: 2em;*/
 	text-align:center;
 	border: 1px solid lightgray;
 }
@@ -74,12 +74,29 @@ th {
 
 /*--------------------------*/
 
+.tblWrap {
+    display:grid; 
+    justify-content:center; 
+    justify-items:center;
+    grid-gap:3px; 
+    /*margin: 20px;*/
+}
+
+.tblWrap .capFtr{
+    font-size:small;
+    background:black;
+    color:white;
+    width:100%;
+    text-align:center;
+    padding:5px;
+}
+
 .mdfRecWrap {
     display:grid; 
-    grid-template-columns:20em; 
-    justify-content:center; 
+    /*grid-template-columns:20em; */
+    /*justify-content:center; */
     grid-gap:3px; 
-    margin: 20px;
+    margin-top: 10px;
 }
 
 .mdfRecAction {

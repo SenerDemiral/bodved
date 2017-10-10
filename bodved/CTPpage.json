@@ -1,18 +1,16 @@
 ﻿{
-  "Html": "/bodved/CTpage.html",
-  "CapFtr": "Turnuva Takımları",
+  "Html": "/bodved/CTPpage.html",
+  "CapFtr": "Turnuva Takım Oyuncuları",
   "CapHdr": "",
   "canMdfy": false,
   "CCoNo": "",
+  "CToNo": "",
 
-  "CTs": [
+  "CTPs": [
     {
       "oNo": 0,
-      "Ad": "",
-      "K1oNo": 0,
-      "K2oNo": 0,
-      "K1Ad": "",
-      "K2Ad": "",
+      "PPoNo": 0,
+      "PPAd": "",
       "MdfTrigger$": 0
     }
   ],
@@ -23,9 +21,7 @@
 
   "MdfRec": {
     "oNo$": 0,
-    "Ad$": "",
-    "K1oNo$": "",
-    "K2oNo$": ""
+    "PPoNo$": ""
   },
 
   "PPs": [

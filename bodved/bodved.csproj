@@ -65,8 +65,17 @@
     <Compile Include="CCpage.json.cs">
       <DependentUpon>CCpage.json</DependentUpon>
     </Compile>
+    <Compile Include="CETpage.json.cs">
+      <DependentUpon>CETpage.json</DependentUpon>
+    </Compile>
+    <Compile Include="CETPpage.json.cs">
+      <DependentUpon>CETPpage.json</DependentUpon>
+    </Compile>
     <Compile Include="CTpage.json.cs">
       <DependentUpon>CTpage.json</DependentUpon>
+    </Compile>
+    <Compile Include="CTPpage.json.cs">
+      <DependentUpon>CTPpage.json</DependentUpon>
     </Compile>
     <Compile Include="Deneme.json.cs">
       <DependentUpon>Deneme.json</DependentUpon>
@@ -96,8 +105,19 @@
     <TypedJSON Include="CTpage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="CTPpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="CETpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="CETPpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\bodved\CCpage.html" />
     <None Include="wwwroot\bodved\CTpage.html" />
+    <None Include="wwwroot\bodved\CTPpage.html" />
+    <None Include="wwwroot\bodved\CETpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />

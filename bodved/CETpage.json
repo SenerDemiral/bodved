@@ -1,18 +1,19 @@
 ﻿{
-  "Html": "/bodved/CTpage.html",
-  "CapFtr": "Turnuva Takımları",
+  "Html": "/bodved/CETpage.html",
+  "CapFtr": "Turnuva Müsabakaları",
   "CapHdr": "",
   "canMdfy": false,
   "CCoNo": "",
 
-  "CTs": [
+  "CETs": [
     {
       "oNo": 0,
-      "Ad": "",
-      "K1oNo": 0,
-      "K2oNo": 0,
-      "K1Ad": "",
-      "K2Ad": "",
+      "Tarih": "",
+      "hCToNo": 0,
+      "hCTAd": "",
+      "gCToNo": 0,
+      "gCTAd": "",
+      
       "MdfTrigger$": 0
     }
   ],
@@ -23,12 +24,12 @@
 
   "MdfRec": {
     "oNo$": 0,
-    "Ad$": "",
-    "K1oNo$": "",
-    "K2oNo$": ""
+    "Tarih$": "",
+    "hCToNo$": "",
+    "gCToNo$": ""
   },
 
-  "PPs": [
+  "CTs": [
     {
       "oNo": "",
       "Ad": ""

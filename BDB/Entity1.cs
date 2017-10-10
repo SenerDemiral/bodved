@@ -82,6 +82,9 @@ namespace BDB
         public PP PP { get; set; }
         public int Idx { get; set; }
 
+        public ulong PPoNo => PP?.GetObjectNo() ?? 0;
+        public ulong CCoNo => CC?.GetObjectNo() ?? 0;
+        public ulong CToNo => CT?.GetObjectNo() ?? 0;
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
@@ -127,10 +130,14 @@ namespace BDB
         public int gSW { get; set; }    //       SingleMac Win
         public int gDW { get; set; }    //       DoubleMac Win
 
+        public ulong CCoNo => CC?.GetObjectNo() ?? 0;
+        public ulong hCToNo => hCT?.GetObjectNo() ?? 0;
+        public ulong gCToNo => gCT?.GetObjectNo() ?? 0;
+
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format("{0:s}", Trh);
+        public string Tarih => string.Format("{0:yyyy-MM-dd}", Trh);
     }
 
     [Database]

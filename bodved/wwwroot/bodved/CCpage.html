@@ -4,12 +4,13 @@
     <template is="dom-bind">
         <div class="tblWrap">
             <table id="ccTbl">
-                <caption></caption>
+                <caption>[[model.CapHdr]]</caption>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Ad</th>
-                        <th>Msbk</th>
+                        <th>Takımlar</th>
+                        <th>Müsabaka</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,23 +26,27 @@
                             <td class="ortala">
                                 <a href="/bodved/CTpage/[[item.oNo]]">►</a>
                             </td>
+                            <td class="ortala">
+                                <a href="/bodved/CETpage/[[item.oNo]]">►</a>
+                            </td>
                         </tr>
                     </template>
                 </tbody>
             </table>
-        </div>
+            <div class="capFtr">[[model.CapFtr]]</div>
 
-        <template is="dom-if" if="[[model.canMdfy]]">
-            <div class="mdfRecWrap">
-                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                <div class="mdfRecAction">
-                    <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                    <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                    <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+            <template is="dom-if" if="[[model.canMdfy]]">
+                <div class="mdfRecWrap">
+                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                    <div class="mdfRecAction">
+                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                    </div>
                 </div>
-            </div>
-        </template>
+            </template>
+        </div>
 
     </template>
 </template>

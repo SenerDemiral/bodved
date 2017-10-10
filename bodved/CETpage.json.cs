@@ -1,0 +1,107 @@
+using Starcounter;
+using System;
+
+namespace bodved
+{
+    partial class CETpage : Json
+    {
+        protected override void OnData()
+        {
+            base.OnData();
+
+            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
+                this.canMdfy = true;
+
+            if (canMdfy)
+            {
+                CTsElementJson ps;
+
+                var pps = Db.SQL<BDB.CT>("select p from CT p order by p.Ad");
+                foreach (var pp in pps)
+                {
+                    ps = CTs.Add();
+                    ps.oNo = pp.oNo.ToString();
+                    ps.Ad = pp.Ad;
+                }
+            }
+
+            var pt = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+            CapHdr = $"{pt.Ad}";
+
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+            //sener.NoR = DateTime.Now.Ticks;
+        }
+
+        void Handle(Input.InsertTrigger Action)
+        {
+            var oo = Action.OldValue;
+            var nn = Action.Value;
+
+            Db.Transact(() =>
+            {
+                new BDB.CET()
+                {
+                    CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
+                    hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo)),
+                    gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo)),
+                    Trh = DateTime.Parse(MdfRec.Tarih)
+                };
+            });
+            MdfRec.oNo = 0;
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+        }
+
+        void Handle(Input.UpdateTrigger Action)
+        {
+            var oo = Action.OldValue;
+            var nn = Action.Value;
+
+            if (MdfRec.oNo != 0)
+            {
+                Db.Transact(() =>
+                {
+                    var r = Db.FromId<BDB.CET>((ulong)MdfRec.oNo);
+                    r.hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo));
+                    r.gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo));
+                    r.Trh = DateTime.Parse(MdfRec.Tarih);
+                });
+                MdfRec.oNo = 0;
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            }
+        }
+
+        void Handle(Input.DeleteTrigger Action)
+        {
+            if (MdfRec.oNo != 0)
+            {
+                Db.Transact(() =>
+                {
+                    if (MdfRec.oNo != 0)
+                    {
+                        Db.Transact(() =>
+                        {
+                            var r = Db.FromId<BDB.CET>((ulong)MdfRec.oNo);
+                            r.Delete();
+                        });
+                    }
+                });
+                MdfRec.oNo = 0;
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            }
+        }
+
+        [CETpage_json.CETs]
+        public partial class CETsElementJson
+        {
+            void Handle(Input.MdfTrigger Action)
+            {
+                var p = this.Parent.Parent as CETpage;
+                p.MdfRec.oNo = this.oNo;
+                p.MdfRec.hCToNo = this.hCToNo.ToString();
+                p.MdfRec.gCToNo = this.gCToNo.ToString();
+                p.MdfRec.Tarih = this.Tarih.Substring(0, 10);
+            }
+        }
+    }
+}

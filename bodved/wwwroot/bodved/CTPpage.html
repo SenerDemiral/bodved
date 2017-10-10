@@ -3,35 +3,26 @@
 <template>
     <template is="dom-bind">
         <div class="tblWrap">
-            <table id="ppTbl">
+            <table id="ctpTbl">
                 <caption>[[model.CapHdr]]</caption>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Ad</th>
-                        <th>Sex</th>
-                        <th>DğmYıl</th>
-                        <th>Tel</th>
-                        <th>eMail</th>
-                        <th>Maçlar</th>
+                        <th>Oyuncu</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <template is="dom-repeat" items="[[model.PPs]]">
+                    <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
                             <td data-typ="nmr">[[item.oNo]]</td>
                             <td data-typ="nmr">
                                 <template is="dom-if" if="[[model.canMdfy]]">
                                     <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
                                 </template>
-                                [[item.Ad]]
+                                [[item.PPAd]]
                             </td>
-                            <td data-typ="nmr">[[item.Sex]]</td>
-                            <td data-typ="nmr">[[item.DgmYil]]</td>
-                            <td data-typ="nmr">[[item.Tel]]</td>
-                            <td data-typ="nmr">[[item.eMail]]</td>
                             <td class="ortala">
-                                <a href="/bodved/Deneme/[[item.oNo]]">►</a>
+                                <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
                             </td>
                         </tr>
                     </template>
@@ -42,11 +33,13 @@
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                    <input placeholder="Sex" type="text" value="{{model.MdfRec.Sex$::change}}" />
-                    <input placeholder="DgmYil" type="number" min="1920" max="2010" value="{{model.MdfRec.DgmYil$::change}}" />
-                    <input placeholder="Tel" type="text" value="{{model.MdfRec.Tel$::change}}" />
-                    <input placeholder="eMail" type="text" value="{{model.MdfRec.eMail$::change}}" />
+                    <select name="select" value="{{model.MdfRec.PPoNo$::change}}">
+                        <option value="0">N/A</option>
+                        <template is="dom-repeat" items="[[model.PPs]]">
+                            <option value="[[item.oNo]]">[[item.Ad]]</option>
+                        </template>
+                    </select>
+
                     <div class="mdfRecAction">
                         <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
                         <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>

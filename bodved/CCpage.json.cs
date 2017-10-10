@@ -75,7 +75,7 @@ namespace bodved
                     {
                         Db.Transact(() =>
                         {
-                            var r = Db.FromId<BDB.PP>((ulong)MdfRec.oNo);
+                            var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
                             r.Delete();
                         });
                     }
