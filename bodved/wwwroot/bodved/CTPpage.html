@@ -14,13 +14,13 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
-                            <td data-typ="nmr">[[item.oNo]]</td>
                             <td data-typ="nmr">
                                 <template is="dom-if" if="[[model.canMdfy]]">
                                     <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
                                 </template>
-                                [[item.PPAd]]
+                                [[item.oNo]]
                             </td>
+                            <td data-typ="nmr">[[item.PPAd]]</td>
                             <td class="ortala">
                                 <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
                             </td>

@@ -19,13 +19,13 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.PPs]]">
                         <tr>
-                            <td data-typ="nmr">[[item.oNo]]</td>
                             <td data-typ="nmr">
                                 <template is="dom-if" if="[[model.canMdfy]]">
                                     <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
                                 </template>
-                                [[item.Ad]]
+                                [[item.oNo]]
                             </td>
+                            <td data-typ="nmr">[[item.Ad]]</td>
                             <td data-typ="nmr">[[item.Sex]]</td>
                             <td data-typ="nmr">[[item.DgmYil]]</td>
                             <td data-typ="nmr">[[item.Tel]]</td>
