@@ -1,0 +1,125 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind" id="sener">
+        <div id="dragSD">
+            <div id="dragS">
+                <table id="tableS">
+
+                    <colgroup>
+                        <col width="50" />
+                        <col width="200" />
+                    </colgroup>
+                    <tr>
+                        <td class="redips-mark" id="message">Sıra</td>
+                        <td class="redips-mark">Single</td>
+                    </tr>
+                    <template is="dom-repeat" items="{{model.Singles}}">
+                        <tr>
+                            <td class="redips-mark" data-AoY$="[[item.AoY]]">{{displayIndex(index)}}</td>
+                            <td><div id="[[item.oNo]]" class="redips-drag">[[item.PPAd]]</div></td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+            <div id="dragD">
+                <table id="tableD">
+                    <colgroup>
+                        <col width="50" />
+                        <col width="200" />
+                        <col width="200" />
+                    </colgroup>
+                    <tr>
+                        <td class="redips-mark">Sıra</td>
+                        <td colspan="2" class="redips-mark">Double</td>
+                    </tr>
+
+                    <template is="dom-repeat" items="{{model.Doubles}}">
+                        <template is="dom-if" if="[[item.c2.PPAd]]">
+                            <tr>
+                                <td class="redips-mark">{{displayIndex(index)}}</td>
+                                <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                                <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.PPAd]]</div></td>
+                            </tr>
+                        </template>
+                        <template is="dom-if" if="[[!item.c2.PPAd]]">
+                            <tr>
+                                <td class="redips-mark ydk"></td>
+                                <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                            </tr>
+                        </template>
+                    </template>
+                </table>
+            </div>
+
+            <div>
+                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+			(function () {
+			    setTimeout(function () {
+			        console.log("redipsInit");
+			        var rd = REDIPS.drag;	// reference to the REDIPS.drag class
+			        rd.dropMode = "switch";
+			        // DIV container initialization
+			        rd.init('dragS');
+			        rd.init('dragD');
+			    });
+
+			    var template = document.querySelector('#sener');
+			    template.displayIndex = function (index) {
+			        return index + 1;
+			    }
+			    template.isEven = function (index) {
+			        return (index + 1) % 2;
+			    }
+
+			    REDIPS.drag.event.dropped = function () {
+			        var rd = REDIPS.drag;
+			        var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
+			        console.log('droped', pos, rd);
+			        var sen = document.querySelector("#sener");
+			        var tbl = rd.obj.closest("table");
+			        if (tbl.id == "tableS") {
+			            var mdlItm = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
+			            mdlItm.Idx$ = pos[1];
+			            var mdlItmOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
+			            mdlItmOld.Idx$ = pos[4];
+			        }
+			        if (tbl.id == "tableD") {
+			            var mi;
+			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
+			            if (mi) {
+			                mi.c1.Idx$ = pos[1];
+			                console.log("mi.c1", mi.c1);
+			            }
+			            else {
+			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
+			                if (mi) {
+			                    mi.c2.Idx$ = pos[1];
+			                    console.log("mi.c2", mi.c2);
+			                }
+                        }
+			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
+			            if (mi) {
+			                mi.c1.Idx$ = pos[4];
+			                console.log("mi.c1", mi.c1);
+                        }
+			            else {
+			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.objOld.id; });
+			                if (mi) {
+			                    mi.c2.Idx$ = pos[4];
+			                    console.log("mi.c2", mi.c2);
+                            }
+			            }
+			        }
+			        console.log('closest table', tbl.id);
+			    };
+			})();
+    </script>
+
+</template>

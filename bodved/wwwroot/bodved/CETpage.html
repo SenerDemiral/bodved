@@ -17,14 +17,10 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CETs]]">
                         <tr>
-                            <td data-typ="nmr">[[item.oNo]]
-                                <template is="dom-if" if="[[model.canMdfy]]">
-                                    <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
-                                </template>
-                            </td>
-                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[model.hYtk]]">►</a>[[item.hCTAd]]</td>
-                            <td data-typ="nmr"><a href="/bodved/CETRpage/[[item.oNo]]">[[item.Tarih]]"></a></td>
-                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">►</a>[[item.gCTAd]]</td>
+                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
+                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a>[[item.hCTAd]]</td>
+                            <td data-typ="nmr"><a href="/bodved/CETRpage/[[item.oNo]]">[[item.Tarih]]</a></td>
+                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]" hidden$="[[!model.gPgo]]">►</a>[[item.gCTAd]]</td>
                         </tr>
                     </template>
                 </tbody>

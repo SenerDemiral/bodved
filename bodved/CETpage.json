@@ -5,7 +5,8 @@
   "canMdfy": false,
   "CCoNo": "",
 
-  "hYtk": true,
+  "hPgo": true,  // HomeTeamPlayers Hidden?
+  "gPgo": true,
 
   "CETs": [
     {

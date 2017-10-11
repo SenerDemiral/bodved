@@ -7,9 +7,10 @@
 	margin: 0px; /* for IE6 / IE7 */
 	display: grid;
 	/*grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));*/
-	grid-template-columns: minmax(460px, 1fr);
+	grid-template-columns: auto auto; /*minmax(460px, 1fr);*/
 	grid-gap: 10px;
-	justify-items: center;
+	/*justify-items: center;*/
+    justify-content:start;
 }
 
 .ydk {

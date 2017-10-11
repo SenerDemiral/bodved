@@ -1,5 +1,5 @@
 {
-  "Html": "/bodved/CETpage.html",
+  "Html": "/bodved/CETPpage.html",
   "CapFtr": "Turnuva Müsabakalarý",
   "CapHdr": "",
   "canMdfy": false,
@@ -7,12 +7,30 @@
   "CEToNo": "",
   "CToNo": "",
 
-  "Single": [
+  "SaveTrigger$": 0,
+
+  "Singles": [
     {
-      "oNo": 0,
+      "oNo": "",
       "PPAd": "",
       "Idx$": 0,
       "AoY": ""
     }
+  ],
+
+  "Doubles": [
+    {
+      "c1": {
+        "oNo": "",
+        "Idx$": 0,
+        "PPAd": ""
+      },
+      "c2": {
+        "oNo": "",
+        "Idx$": 0,
+        "PPAd": ""
+      }
+    }
   ]
+
 }

@@ -118,6 +118,7 @@
     <None Include="wwwroot\bodved\CTpage.html" />
     <None Include="wwwroot\bodved\CTPpage.html" />
     <None Include="wwwroot\bodved\CETpage.html" />
+    <None Include="wwwroot\bodved\CETPpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />
