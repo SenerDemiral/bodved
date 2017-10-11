@@ -160,7 +160,8 @@ namespace bodved
                 new BDB.CT() { CC = cc2, Ad = "KutayReno-2" };
                 new BDB.CT() { CC = cc2, Ad = "MitNarKop-2" };
                 new BDB.CT() { CC = cc2, Ad = "Nane-2" };
-                new BDB.CT() { CC = cc2, Ad = "Newpon-2" };
+                new BDB.CT() { CC = cc2, Ad = "Newpon-2A" };
+                var np2B = new BDB.CT() { CC = cc2, Ad = "Newpon-2B" };
                 new BDB.CT() { CC = cc2, Ad = "Nomads-2" };
                 new BDB.CT() { CC = cc2, Ad = "Onbar-2" };
                 new BDB.CT() { CC = cc2, Ad = "Ponpin-2" };
@@ -184,20 +185,20 @@ namespace bodved
                 new BDB.CT() { CC = cc3, Ad = "Yalıkavak-3" };
 
                 // Oyuncular
+
                 // Promil
                 var pr11 = new BDB.PP() { Ad = "Şener DEMİRAL" };
                 var pr12 = new BDB.PP() { Ad = "Ümit ÇETİNALP" };
                 var pr13 = new BDB.PP() { Ad = "Erhan DOĞRU" };
-                var pr14 = new BDB.PP() { Ad = "Göksan AKAY" };
+                var pr14 = new BDB.PP() { Ad = "Göksan AKAY K2" };
                 var pr15 = new BDB.PP() { Ad = "Ahmethan ACET" };
                 var pr16 = new BDB.PP() { Ad = "Yenal EGE" };
                 var pr17 = new BDB.PP() { Ad = "Emre ESMER" };
-                var pr18 = new BDB.PP() { Ad = "Hakan UĞURLU" };
+                var pr18 = new BDB.PP() { Ad = "Hakan UĞURLU K1" };
                 var pr19 = new BDB.PP() { Ad = "Alptekin ARAT" };
                 var pr1A = new BDB.PP() { Ad = "Şevket TAYHAN" };
                 var pr1B = new BDB.PP() { Ad = "MehmetAli " };
                 var pr1C = new BDB.PP() { Ad = "Mustafa " };
-
                 new BDB.CTP() { CC = cc1, CT = pr1, PP = pr11 };
                 new BDB.CTP() { CC = cc1, CT = pr1, PP = pr12 };
                 new BDB.CTP() { CC = cc1, CT = pr1, PP = pr13 };
@@ -212,12 +213,12 @@ namespace bodved
                 new BDB.CTP() { CC = cc1, CT = pr1, PP = pr1C };
 
                 // Ponpin-1
-                var pn11 = new BDB.PP() { Ad = "Cengiz ÇORUMLU" };
+                var pn11 = new BDB.PP() { Ad = "Cengiz ÇORUMLU K1" };
                 var pn12 = new BDB.PP() { Ad = "Kenan TURSAK" };
                 var pn13 = new BDB.PP() { Ad = "Arif ERGUVAN" };
                 var pn14 = new BDB.PP() { Ad = "Bülent AKDERE" };
                 var pn15 = new BDB.PP() { Ad = "Akif KURTULMUŞ" };
-                var pn16 = new BDB.PP() { Ad = "İlyas ERBEM" };
+                var pn16 = new BDB.PP() { Ad = "İlyas ERBEM K2" };
                 var pn17 = new BDB.PP() { Ad = "Ertuğ TUTAL" };
                 var pn18 = new BDB.PP() { Ad = "Tümer ERENLER" };
                 var pn19 = new BDB.PP() { Ad = "Uğur KESİCİ" };
@@ -229,7 +230,6 @@ namespace bodved
                 var pn1F = new BDB.PP() { Ad = "Turan BARAN" };
                 var pn1G = new BDB.PP() { Ad = "Rüştü TEZCAN" };
                 var pn1H = new BDB.PP() { Ad = "Şebnem KAPANAKİ" };
-
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn11 };
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn12 };
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn13 };
@@ -247,6 +247,36 @@ namespace bodved
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn1F };
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn1G };
                 new BDB.CTP() { CC = cc1, CT = pn1, PP = pn1H };
+
+                // Newpon 2B
+                var np2B1 = new BDB.PP() { Ad = "Sayım AKAÇIK K1" };
+                var np2B2 = new BDB.PP() { Ad = "Sadullah TEOMAN K2" };
+                var np2B3 = new BDB.PP() { Ad = "Mahmut ŞİMŞEK" };
+                var np2B4 = new BDB.PP() { Ad = "Selçuk ÜNSAL" };
+                var np2B5 = new BDB.PP() { Ad = "Kamil KARATAY" };
+                var np2B6 = new BDB.PP() { Ad = "Salim POYRAZ" };
+                var np2B7 = new BDB.PP() { Ad = "Bülent KÖPRÜLÜ" };
+                var np2B8 = new BDB.PP() { Ad = "Ahmet ARAÇ" };
+                var np2B9 = new BDB.PP() { Ad = "Murat KORKUT" };
+                var np2BA = new BDB.PP() { Ad = "Derya İREN" };
+                var np2BB = new BDB.PP() { Ad = "Uğur ERKMEN" };
+                var np2BC = new BDB.PP() { Ad = "Birnur AKAN" };
+                var np2BD = new BDB.PP() { Ad = "Sevinç YILDIRIM" };
+                var np2BE = new BDB.PP() { Ad = "Serpil POYRAZ" };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B1 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B2 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B3 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B4 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B5 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B6 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B7 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B8 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2B9 };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BA };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BB };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BC };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BD };
+                new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BE };
 
                 // Bitez
                 new BDB.PP() { Ad = "Faruk ULUSOY" };
@@ -285,8 +315,6 @@ namespace bodved
                 new BDB.PP() { Ad = "Oktay AKÇA" };
                 // Narkos
                 new BDB.PP() { Ad = "Hüseyin ÖZGÜL" };
-                // NewPon
-                new BDB.PP() { Ad = "Sayım AKAÇIK" };
                 // Nomads
                 new BDB.PP() { Ad = "Şükrü TÖRÜN" };
                 new BDB.PP() { Ad = "AliRıza KÖKGİL" };

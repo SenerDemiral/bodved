@@ -12,11 +12,14 @@ namespace bodved
             if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
                 this.canMdfy = true;
 
+            var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+            CapHdr = $"{cc.Ad}";
+
             if (canMdfy)
             {
                 CTsElementJson ps;
 
-                var pps = Db.SQL<BDB.CT>("select p from CT p order by p.Ad");
+                var pps = Db.SQL<BDB.CT>("select p from CT p where p.CC = ? order by p.Ad", cc);
                 foreach (var pp in pps)
                 {
                     ps = CTs.Add();
@@ -25,8 +28,6 @@ namespace bodved
                 }
             }
 
-            var pt = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-            CapHdr = $"{pt.Ad}";
 
             CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 

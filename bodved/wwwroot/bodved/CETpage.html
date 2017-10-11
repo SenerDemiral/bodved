@@ -1,7 +1,7 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 
 <template>
-    <template is="dom-bind">
+    <template is="dom-bind" id="cetTmp">
 
         <div class="tblWrap">
             <table id="cetTbl">
@@ -12,8 +12,6 @@
                         <th>Tarih</th>
                         <th>Home</th>
                         <th>Guest</th>
-                        <th>H#</th>
-                        <th>G#</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,11 +22,9 @@
                                     <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
                                 </template>
                             </td>
-                            <td data-typ="nmr">[[item.Tarih]]</td>
-                            <td data-typ="nmr">[[item.hCTAd]]</td>
-                            <td data-typ="nmr">[[item.gCTAd]]</td>
-                            <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[hCToNo]]">►</a></td>
-                            <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[gCToNo]]">►</a></td>
+                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[model.hYtk]]">►</a>[[item.hCTAd]]</td>
+                            <td data-typ="nmr"><a href="/bodved/CETRpage/[[item.oNo]]">[[item.Tarih]]"></a></td>
+                            <td data-typ="nmr"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">►</a>[[item.gCTAd]]</td>
                         </tr>
                     </template>
                 </tbody>
