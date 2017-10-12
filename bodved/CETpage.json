@@ -8,6 +8,7 @@
   "hPgo": true,  // HomeTeamPlayers Hidden?
   "gPgo": true,
 
+
   "CETs": [
     {
       "oNo": 0,
@@ -16,6 +17,8 @@
       "hCTAd": "",
       "gCToNo": 0,
       "gCTAd": "",
+      "hPok": false,
+      "gPok": true,
       
       "MdfTrigger$": 0
     }

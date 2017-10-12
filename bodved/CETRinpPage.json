@@ -1,0 +1,41 @@
+﻿{
+  "Html": "/bodved/CETRinpPage.html",
+  "CapFtr": "Müsabaka Sonuç Girişleri",
+  "CapHdr": "",
+
+  "CCoNo": "",
+  "CEToNo": "",
+
+  "hCTAd": "",
+  "gCTAd": "",
+  
+
+  "Singles": [
+    {
+      "Idx": 0,
+      "Hide": false,
+      "oNo": "",
+      "PPAd": "",
+      "S1W$": 0,
+      "S2W$": 0,
+      "S3W$": 0,
+      "S4W$": 0,
+      "S5W$": 0
+    }
+  ],
+
+  "Doubles": [
+    {
+      "Idx": 0,
+      "oNo1": "",
+      "oNo2": "",
+      "PPAd1": "",
+      "PPAd2": "",
+      "S1W$": 0,
+      "S2W$": 0,
+      "S3W$": 0,
+      "S4W$": 0,
+      "S5W$": 0
+    }
+  ]
+}

@@ -6,8 +6,11 @@
   "CCoNo": "",
   "CEToNo": "",
   "CToNo": "",
+  "HoG": "", // Home or Guest
+  "Pok": false, // Oyuncu Siralama Ok, Save etmeye izin verme
 
   "SaveTrigger$": 0,
+  "SaveOkTrigger$": 0,
 
   "Singles": [
     {

@@ -53,8 +53,8 @@
             </div>
 
             <div>
-                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
-                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" hidden$="[[model.Pok]]">Kaydet</button>
+                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" hidden$="[[model.Pok]]">Onayla ve Kaydet</button>
             </div>
         </div>
     </template>

@@ -57,6 +57,9 @@ namespace bodved
 
             Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
 
+            Handle.GET("/bodved/partial/AboutPage", () => new AboutPage());
+            Handle.GET("/bodved/AboutPage", () => WrapPage<AboutPage>("/bodved/partial/AboutPage"));
+
             Handle.GET("/bodved/partial/MainPage", () => new MainPage());
             Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
 
@@ -78,6 +81,11 @@ namespace bodved
             Handle.GET("/bodved/partial/CETPpage/{?}/{?}", (string CEToNo, string CToNo) => new CETPpage() { CEToNo = $"{CEToNo}", CToNo = $"{CToNo}" });
             Handle.GET("/bodved/CETPpage/{?}/{?}", (string CEToNo, string CToNo) => WrapPage<CETPpage>($"/bodved/partial/CETPpage/{CEToNo}/{CToNo}"));
 
+            Handle.GET("/bodved/partial/CETRviewPage/{?}", (string CEToNo) => new CETRviewPage() { CEToNo = $"{CEToNo}" });
+            Handle.GET("/bodved/CETRviewPage/{?}", (string CEToNo) => WrapPage<CETRviewPage>($"/bodved/partial/CETRviewPage/{CEToNo}"));
+
+            Handle.GET("/bodved/partial/CETRinpPage/{?}", (string CEToNo) => new CETRinpPage() { CEToNo = $"{CEToNo}" });
+            Handle.GET("/bodved/CETRinpPage/{?}", (string CEToNo) => WrapPage<CETRinpPage>($"/bodved/partial/CETRinpPage/{CEToNo}"));
 
 
             Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo=$"{CCoNo}" });
@@ -141,14 +149,14 @@ namespace bodved
                 // 1.Lig
                 new BDB.CT() { CC = cc1, Ad = "Bitez-1" };
                 new BDB.CT() { CC = cc1, Ad = "Delfi-1" };
-                new BDB.CT() { CC = cc1, Ad = "Dragons-1" };
-                new BDB.CT() { CC = cc1, Ad = "Gümüşlük-1" };
+                var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons-1" };
+                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük-1" };
                 new BDB.CT() { CC = cc1, Ad = "Kekik-1" };
                 new BDB.CT() { CC = cc1, Ad = "MitNarKop-1" };
                 var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin-1" };
                 var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil-1" };
-                new BDB.CT() { CC = cc1, Ad = "Yahşi-1" };
-                new BDB.CT() { CC = cc1, Ad = "Yalıkavak-1" };
+                var yh1 = new BDB.CT() { CC = cc1, Ad = "Yahşi-1" };
+                var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak-1" };
                 // 2.Lig 
                 new BDB.CT() { CC = cc2, Ad = "Bitez-2" };
                 new BDB.CT() { CC = cc2, Ad = "Bosku-2" };
@@ -174,7 +182,7 @@ namespace bodved
                 new BDB.CT() { CC = cc3, Ad = "Bosku-3" };
                 new BDB.CT() { CC = cc3, Ad = "Delfi-3A" };
                 new BDB.CT() { CC = cc3, Ad = "Delfi-3B" };
-                new BDB.CT() { CC = cc3, Ad = "Gümüşlük-3" };
+                var gm3 = new BDB.CT() { CC = cc3, Ad = "Gümüşlük-3" };
                 new BDB.CT() { CC = cc3, Ad = "Kekik-3" };
                 new BDB.CT() { CC = cc3, Ad = "MiaMare-3" };
                 new BDB.CT() { CC = cc3, Ad = "MitNarKop-3" };
@@ -278,54 +286,159 @@ namespace bodved
                 new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BD };
                 new BDB.CTP() { CC = cc2, CT = np2B, PP = np2BE };
 
-                // Bitez
-                new BDB.PP() { Ad = "Faruk ULUSOY" };
-                new BDB.PP() { Ad = "Cem BAŞARGAN" };
-                // Bosku
-                new BDB.PP() { Ad = "Kemal BERBER" };
-                new BDB.PP() { Ad = "Songül MELEK" };
-                // Delfi
-                new BDB.PP() { Ad = "Mehmet DAĞOĞLU" };
-                // Dragons
-                new BDB.PP() { Ad = "Nihat ÜMMETOĞLU" };
-                new BDB.PP() { Ad = "Çağatay ŞAŞMAZ" };
-                // Yahşi
-                new BDB.PP() { Ad = "Levent DİĞİLİ" };
-                new BDB.PP() { Ad = "Vedat GÖKALP" };
-                new BDB.PP() { Ad = "Özgür ÇAM" };
-                // Gümüşlük
-                new BDB.PP() { Ad = "Behçet AK" };
-                new BDB.PP() { Ad = "Levent ALTAN" };
-                new BDB.PP() { Ad = "Mustafa FİL" };
-                // Kekik
-                new BDB.PP() { Ad = "Murat ÇAKIR" };
-                new BDB.PP() { Ad = "Bahadır TULUMCUOĞLU" };
-                new BDB.PP() { Ad = "Hasan ACIOLUK" };
-                // Kopuyos
-                new BDB.PP() { Ad = "Tülay ŞAHAN" };
-                // KutayReno
-                new BDB.PP() { Ad = "Sefer NAMRUK" };
-                new BDB.PP() { Ad = "Yaşar ASLAN" };
-                // MiaMare
-                new BDB.PP() { Ad = "Nizam ATAÇ" };
-                // Mitos
-                new BDB.PP() { Ad = "Ömer AYTAN" };
-                // Nane
-                new BDB.PP() { Ad = "Kader ONAY" };
-                new BDB.PP() { Ad = "Oktay AKÇA" };
-                // Narkos
-                new BDB.PP() { Ad = "Hüseyin ÖZGÜL" };
-                // Nomads
-                new BDB.PP() { Ad = "Şükrü TÖRÜN" };
-                new BDB.PP() { Ad = "AliRıza KÖKGİL" };
-                // Sağlık
-                new BDB.PP() { Ad = "Edip AYDOĞAN" };
-                // Wafellhane
-                new BDB.PP() { Ad = "Gül DİLBER" };
-                // Yalıkavak
-                new BDB.PP() { Ad = "Tahir ÇELİKESEN" };
-                new BDB.PP() { Ad = "Oğuz DEVELİ" };
-                new BDB.PP() { Ad = "Şükran KILIÇASLAN" };
+                // Dragons-1
+                var dr11 = new BDB.PP() { Ad = "Nihat ÜMMETOĞLU" };
+                var dr12 = new BDB.PP() { Ad = "Çağatay ŞAŞMAZ" };
+                var dr13 = new BDB.PP() { Ad = "Tunç HIZAL" };
+                var dr14 = new BDB.PP() { Ad = "Vahi GÜNER" };
+                var dr15 = new BDB.PP() { Ad = "Ercan YEŞİÇİMEN" };
+                var dr16 = new BDB.PP() { Ad = "Ali BİLGİN" };
+                var dr17 = new BDB.PP() { Ad = "Recai ÇAKIR" };
+                var dr18 = new BDB.PP() { Ad = "Gökhan HAMURCU" };
+                var dr19 = new BDB.PP() { Ad = "Rıdvan GÖKBEL" };
+                var dr1A = new BDB.PP() { Ad = "Yasin YILDIRIM" };
+                var dr1B = new BDB.PP() { Ad = "Edip AYDOĞAN" };
+                var dr1C = new BDB.PP() { Ad = "Ahmet KÜLAHÇIOĞLU" };
+                var dr1D = new BDB.PP() { Ad = "Ferit CİLSİN" };
+                var dr1E = new BDB.PP() { Ad = "Necip GÖKBEL" };
+                var dr1F = new BDB.PP() { Ad = "Melike KOPARAN" };
+                var dr1G = new BDB.PP() { Ad = "Kezban ŞAŞMAZ" };
+                var dr1H = new BDB.PP() { Ad = "Dora ŞAŞMAZ" };
+                var dr1I = new BDB.PP() { Ad = "Faruk GEDİKOĞLU" };
+                var dr1J = new BDB.PP() { Ad = "Can DEMİR" };
+                var dr1K = new BDB.PP() { Ad = "Halil OCAKLI" };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr11 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr12 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr13 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr14 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr15 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr16 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr17 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr18 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr19 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1A };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1B };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1C };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1D };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1E };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1F };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1G };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1H };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1I };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1J };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1K };
+
+                // Gümüşlük-1
+                var gm11 = new BDB.PP() { Ad = "Serdar KAYA" };
+                var gm12 = new BDB.PP() { Ad = "Ümit YEKREK" };
+                var gm13 = new BDB.PP() { Ad = "İsmail DÜZTAŞ" };
+                var gm14 = new BDB.PP() { Ad = "Mustafa ÖZASLAN" };
+                var gm15 = new BDB.PP() { Ad = "Levent ALTAN" };
+                var gm16 = new BDB.PP() { Ad = "Hakkı ZIRH" };
+                var gm17 = new BDB.PP() { Ad = "Behçet AK K1" };
+                var gm18 = new BDB.PP() { Ad = "Hamit MENGÜÇ K2" };
+                var gm19 = new BDB.PP() { Ad = "Serkan İLHAN" };
+                var gm1A = new BDB.PP() { Ad = "Ali TÜRKELİ" };
+                var gm1B = new BDB.PP() { Ad = "Metin SOYSAL" };
+                var gm1C = new BDB.PP() { Ad = "Nicholas KARYDAKİS" };
+                var gm1D = new BDB.PP() { Ad = "Fikret YÜCEL" };
+                var gm1E = new BDB.PP() { Ad = "Fırat POLAT" };
+                var gm1F = new BDB.PP() { Ad = "Süleyman KARTAL" };
+                var gm1G = new BDB.PP() { Ad = "Belen ÜNAL" };
+                var gm1H = new BDB.PP() { Ad = "Turgay ÇABALAR" };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm11 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm12 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm13 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm14 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm15 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm16 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm17 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm18 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm19 };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1A };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1B };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1C };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1D };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1E };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1F };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1G };
+                new BDB.CTP() { CC = cc1, CT = gm1, PP = gm1H };
+
+                // Gümüşlük-3
+                var gm31 = new BDB.PP() { Ad = "Kemal ÇINGI" };
+                var gm32 = new BDB.PP() { Ad = "Gül GUZELBEY K2" };
+                var gm33 = new BDB.PP() { Ad = "Fahrettin TÜRE" };
+                var gm34 = new BDB.PP() { Ad = "Fikret YÜCAL" };
+                var gm35 = new BDB.PP() { Ad = "Melih FİDAN" };
+                var gm36 = new BDB.PP() { Ad = "Melike FELEKOĞLU" };
+                var gm37 = new BDB.PP() { Ad = "Ahmet DURUKAN" };
+                var gm38 = new BDB.PP() { Ad = "Beyhan BAĞDATLI" };
+                var gm39 = new BDB.PP() { Ad = "Hilmi ACAR" };
+                var gm3A = new BDB.PP() { Ad = "Ufuk TURHAN" };
+                var gm3B = new BDB.PP() { Ad = "Sevinç ERSİN" };
+                var gm3C = new BDB.PP() { Ad = "Umut YANIK" };
+                var gm3D = new BDB.PP() { Ad = "Barlas GÖZE" };
+                var gm3E = new BDB.PP() { Ad = "Neşe ODABAŞI" };
+                var gm3F = new BDB.PP() { Ad = "Derya AYDIN" };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm31 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm32 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm33 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm34 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm35 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm36 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm37 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm38 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm39 };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3A };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3B };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3C };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3D };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3E };
+                new BDB.CTP() { CC = cc3, CT = gm3, PP = gm3F };
+
+                // Yahşi-1
+                var yh11 = new BDB.PP() { Ad = "Burak KANAT",       Tel = "530-119-0155" };
+                var yh12 = new BDB.PP() { Ad = "Faruk ULUSOY",      Tel = "532-565-7188" };
+                var yh13 = new BDB.PP() { Ad = "Tarık TURFAN",      Tel = "546-274-5584" };
+                var yh14 = new BDB.PP() { Ad = "Güntaç AKŞEHİRLİ",  Tel = "533-447-8283" };
+                var yh15 = new BDB.PP() { Ad = "Önder KURT",        Tel = "542-540-4325" };
+                var yh16 = new BDB.PP() { Ad = "Mustafa İLKER",     Tel = "533-413-9741" };
+                var yh17 = new BDB.PP() { Ad = "Suavi DEMİRCİOĞLU", Tel = "533-283-6822" };
+                var yh18 = new BDB.PP() { Ad = "Necip KUTLUAY",     Tel = "532-217-3547" };
+                var yh19 = new BDB.PP() { Ad = "Veysel TOSUN K2",   Tel = "532-426-0099" };
+                var yh1A = new BDB.PP() { Ad = "Erhan AYAŞLI",      Tel = "532-373-5304" };
+                var yh1B = new BDB.PP() { Ad = "Okyay ARI",         Tel = "532-281-8936" };
+                var yh1C = new BDB.PP() { Ad = "Soner AYDOĞ",       Tel = "532-656-2644" };
+                var yh1D = new BDB.PP() { Ad = "Gamze BAĞCI",       Tel = "507-353-1086" };
+                var yh1E = new BDB.PP() { Ad = "Levent DİGİLİ K1",  Tel = "542-324-1698" };
+                var yh1F = new BDB.PP() { Ad = "Vedat GÖKALP",      Tel = "542-674-2828" };
+                var yh1G = new BDB.PP() { Ad = "Meral BAHÇETEPE",   Tel = "530-927-3627" };
+                var yh1H = new BDB.PP() { Ad = "Ayhan ARAL",        Tel = "532-252-4266" };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh11 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh12 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh13 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh14 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh15 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh16 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh17 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh18 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh19 };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1A };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1B };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1C };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1D };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1E };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1F };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1G };
+                new BDB.CTP() { CC = cc1, CT = yh1, PP = yh1H };
+
+                // Yalıkavak-1
+                var yk11 = new BDB.PP() { Ad = "Tahir ÇELİKESEN" };
+                var yk12 = new BDB.PP() { Ad = "Oğuz DEVELİ" };
+                var yk13 = new BDB.PP() { Ad = "Şükran KILIÇASLAN" };
+                new BDB.CTP() { CC = cc1, CT = yk1, PP = yk11 };
+                new BDB.CTP() { CC = cc1, CT = yk1, PP = yk12 };
+                new BDB.CTP() { CC = cc1, CT = yk1, PP = yk13 };
             });
         }
 

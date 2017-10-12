@@ -1,0 +1,47 @@
+﻿{
+  "Html": "/bodved/CETRviewPage.html",
+  "CapFtr": "Turnuva Müsabaka Sonuçları",
+  "CapHdr": "",
+  
+  "CCoNo": "",
+  "CEToNo": "",
+
+  "hCTAd": "",
+  "gCTAd": "",
+  
+  "hPW": 1,
+  "hSPW": 2,  // Home Single Puan Win
+  "hDPW": 3,  //      Double
+  "hSMW": 4,  //      Single Mac Win
+  "hDMW": 5,  //      Double
+  
+  "gPW": 6,
+  "gSPW": 7,  // Guest Single Puan Win
+  "gDPW": 8,  //       Double
+  "gSMW": 9,  //       Single Mac Win
+  "gDMW": 10,  //       Double
+
+  "Singles": [
+    {
+      "Idx": 0,
+      "hAd": "",
+      "hSW": 0,
+      "hSnc1": "",
+      "hSL": 0,
+      "gAd": ""
+    }
+  ],
+
+  "Doubles": [
+    {
+      "Idx": 0,
+      "hAd": "",
+      "hSW": 0,
+      "hSnc1": "",
+      "hSL": 0,
+      "gAd": ""
+    }
+  ]
+
+
+}

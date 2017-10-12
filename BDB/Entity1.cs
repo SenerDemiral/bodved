@@ -174,17 +174,18 @@ namespace BDB
         public int    Idx { get; set; }
         public PP     PP  { get; set; }
 
-        public int S1 { get; set; }
-        public int S2 { get; set; }
-        public int S3 { get; set; }
-        public int S4 { get; set; }
-        public int S5 { get; set; }
+        // Setlerde kazandigi sayilar
+        public int S1W { get; set; }
+        public int S2W { get; set; }
+        public int S3W { get; set; }
+        public int S4W { get; set; }
+        public int S5W { get; set; }
 
         // Mac bittikten sonra hesaplanacak
         public int    SW   { get; set; }     // Set Won
         public int    SL   { get; set; }     // Set Lost
         public int    PW   { get; set; }     // Puan Won
-        public string Snc1 { get; set; }    // [3-1] 11-5, 8-11, 12-10, 11-0
+        public string Snc1 { get; set; }    // 11-5, 8-11, 12-10, 11-0
         public string Snc2 { get; set; }    // [3-1] –5,+8,–10,–0    [-]Aldigi sette verdigi sayi, [+]Verdigi sette aldigi sayi
 
         public string CCAd => CC?.Ad ?? "-";

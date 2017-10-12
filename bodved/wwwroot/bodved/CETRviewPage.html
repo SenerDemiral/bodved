@@ -1,0 +1,66 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <div class="tblWrap">
+            <table id="cetrTblS">
+                <caption>[[model.CapHdr]]</caption>
+                <thead>
+                    <tr>
+                        <th colspan="6">[[model.hSPW]] Single [[model.gSPW]]</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>[[model.hCTAd]]</th>
+                        <th>[[model.hSMW]]</th>
+                        <th>Sonuc</th>
+                        <th>[[model.gSMW]]</th>
+                        <th>[[model.gCTAd]]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.Singles]]">
+                        <tr>
+                            <td data-typ="nmr">[[item.Idx]]</td>
+                            <td data-typ="nmr">[[item.hAd]]</td>
+                            <td data-typ="nmr">[[item.hSW]]</td>
+                            <td data-typ="nmr">[[item.hSnc1]]</td>
+                            <td data-typ="nmr">[[item.hSL]]</td>
+                            <td data-typ="nmr">[[item.gAd]]</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <table id="cetrTblD">
+                <thead>
+                    <tr>
+                        <th colspan="6">[[[model.hDPW]]] Double [[[model.gDPW]]]</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>[[model.hCTAd]]</th>
+                        <th>[[model.hDMW]]</th>
+                        <th>Sonuc</th>
+                        <th>[[model.gDMW]]</th>
+                        <th>[[model.gCTAd]]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.Doubles]]">
+                        <tr>
+                            <td data-typ="nmr">[[item.Idx]]</td>
+                            <td data-typ="nmr">[[item.hAd]]</td>
+                            <td data-typ="nmr">[[item.hSW]]</td>
+                            <td data-typ="nmr">[[item.hSnc1]]</td>
+                            <td data-typ="nmr">[[item.hSL]]</td>
+                            <td data-typ="nmr">[[item.gAd]]</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="capFtr">[[model.CapFtr]]</div>
+        </div>
+
+    </template>
+</template>

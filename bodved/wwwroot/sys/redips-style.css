@@ -38,7 +38,8 @@ div#dragD td {
     line-height:normal;
 }
 
-tr:nth-child(even) {
+div#dragS tr:nth-child(even),
+div#dragD tr:nth-child(even) {
     background-color: #dddddd;
 }
 

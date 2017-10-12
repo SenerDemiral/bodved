@@ -28,7 +28,7 @@ namespace bodved
             CCoNo = pt.CC.GetObjectNo().ToString();
             CapHdr = $"{pt.CCAd} {pt.Ad}";
 
-            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPAd", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
 
             //sener.NoR = DateTime.Now.Ticks;
         }
