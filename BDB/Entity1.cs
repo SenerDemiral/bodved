@@ -123,12 +123,13 @@ namespace BDB
         public bool gRok { get; set; }
 
         // H & G Sonuclari onayladiktan sonra hesaplanir
-        public int hPW { get; set; }    // Home Puan Win
-        public int hSW { get; set; }    //      SingleMac Win
-        public int hDW { get; set; }    //      DoubleMac Win
-        public int gPW { get; set; }    // Guest Puan Win
-        public int gSW { get; set; }    //       SingleMac Win
-        public int gDW { get; set; }    //       DoubleMac Win
+        public int hP { get; set; }    // Home  Musabaka Puan
+        public int gP { get; set; }    // Guest 
+
+        public int hMSW { get; set; }    // Home  Mac Single Win
+        public int hMDW { get; set; }    //           Double
+        public int gMSW { get; set; }    // Guest Mac Single
+        public int gMDW { get; set; }    //           Double
 
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;
         public ulong hCToNo => hCT?.GetObjectNo() ?? 0;
@@ -138,6 +139,9 @@ namespace BDB
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
         public string Tarih => string.Format("{0:yyyy-MM-dd}", Trh);
+
+        public int hPW => (hMSW * 2) + (hMDW * 3);
+        public int gPW => (gMSW * 2) + (gMDW * 3);
     }
 
     [Database]

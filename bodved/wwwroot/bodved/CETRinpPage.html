@@ -4,31 +4,44 @@
     <template is="dom-bind">
         <div class="tblWrap">
             <table id="cetrTblS">
+                <!--colgroup>
+                    <col>
+                    <col>
+                    <col style="background-color:yellow">
+                    <col>
+                    <col style="background-color:yellow">
+                    <col>
+                    <col style="background-color:yellow">
+                    <col>
+                </colgroup-->
                 <caption>[[model.CapHdr]]</caption>
                 <thead>
                     <tr>
-                        <th colspan="6">[[model.hSPW]] Single [[model.gSPW]]</th>
+                        <th colspan="8">[[[model.hSPW]]] Single [[[model.gSPW]]]</th>
                     </tr>
                     <tr>
                         <th>#</th>
-                        <th>[[model.hCTAd]] [[model.hSMW]]<br />[[model.gCTAd]] [[model.gSMW]]</th>
+                        <th>[[model.hCTAd]] [[[model.hSMW]]]</th>
                         <th>S1</th>
                         <th>S2</th>
                         <th>S3</th>
                         <th>S4</th>
                         <th>S5</th>
+                        <th>[[[model.gSMW]]] [[model.gCTAd]]</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.Singles]]">
-                        <tr data-idx$="[[item.Idx]]">
-                            <td data-typ="nmr" rowspan="2" hidden$="[[item.Hide]]">[[item.Idx]]</td>
-                            <td data-typ="nmr">[[item.PPAd]]</td>
-                            <td data-typ="inmr"><input type="text" min="0" max="20" value="{{item.S1W$::change}}" /></td>
-                            <td data-typ="inmr"><input type="number" min="0" max="20" value="{{item.S2W$::change}}" /></td>
-                            <td data-typ="inmr"><input type="number" min="0" max="20" value="{{item.S3W$::change}}" /></td>
-                            <td data-typ="inmr"><input type="number" min="0" max="20" value="{{item.S4W$::change}}" /></td>
-                            <td data-typ="inmr"><input type="number" min="0" max="20" value="{{item.S5W$::change}}" /></td>
+                        <tr>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.Idx]]</td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.hPPAd]]</td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS1W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS1W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS2W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS2W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS3W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS3W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS4W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS4W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS5W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS5W$::change}}" /></td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.gPPAd]]</td>
                         </tr>
                     </template>
                 </tbody>
@@ -37,26 +50,30 @@
             <table id="cetrTblD">
                 <thead>
                     <tr>
-                        <th colspan="6">[[[model.hDPW]]] Double [[[model.gDPW]]]</th>
+                        <th colspan="8">[[[model.hDPW]]] Double [[[model.gDPW]]]</th>
                     </tr>
                     <tr>
                         <th>#</th>
-                        <th>[[model.hCTAd]]</th>
-                        <th>[[model.hDMW]]</th>
-                        <th>Sonuc</th>
-                        <th>[[model.gDMW]]</th>
-                        <th>[[model.gCTAd]]</th>
+                        <th>[[model.hCTAd]] [[[model.hDMW]]]</th>
+                        <th>S1</th>
+                        <th>S2</th>
+                        <th>S3</th>
+                        <th>S4</th>
+                        <th>S5</th>
+                        <th>[[[model.gDMW]]] [[model.gCTAd]]</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.Doubles]]">
                         <tr>
-                            <td data-typ="nmr">[[item.Idx]]</td>
-                            <td data-typ="nmr">[[item.hAd]]</td>
-                            <td data-typ="nmr">[[item.hSW]]</td>
-                            <td data-typ="nmr">[[item.hSnc1]]</td>
-                            <td data-typ="nmr">[[item.hSL]]</td>
-                            <td data-typ="nmr">[[item.gAd]]</td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.Idx]]</td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.hPPAd1]]<br />[[item.hPPAd2]]</td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS1W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS1W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS2W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS2W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS3W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS3W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS4W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS4W$::change}}" /></td>
+                            <td data-typ="inmr"><input class="SetSayi" type="text" min="0" max="20" value="{{item.hS5W$::change}}" />-<input class="SetSayi" type="text" min="0" max="20" value="{{item.gS5W$::change}}" /></td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.gPPAd1]]<br />[[item.gPPAd2]]</td>
                         </tr>
                     </template>
                 </tbody>

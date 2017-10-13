@@ -123,10 +123,25 @@ tr[data-idx="7"] {
     background-color: #dddddd;
 }
 
-[data-typ="inmr"] {
-    width: 40px;
+td[data-idx="1"],
+td[data-idx="3"],
+td[data-idx="5"],
+td[data-idx="7"] {
+    background-color: #dddddd;
 }
 
-input[type=number] {
+[data-typ="inmr"] {
     width: 40px;
+    padding:1px;
+}
+/*
+input[type=number] {
+    width: 30px;
+}
+*/
+.SetSayi {
+    width: 30px;
+    text-align: center;
+    border: none;
+
 }

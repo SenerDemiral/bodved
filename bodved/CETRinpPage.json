@@ -8,34 +8,69 @@
 
   "hCTAd": "",
   "gCTAd": "",
+
+  "hPW": 3,
+  "gPW": 1,
+
+  "hSPW": 10,
+  "gSPW": 6,
+
+  "hDPW": 6,
+  "gDPW": 3,
+
+
+  "hSMW": 5,
+  "gSMW": 3,
+
+  "hDMW": 2,
+  "gDMW": 1,
   
 
   "Singles": [
     {
       "Idx": 0,
-      "Hide": false,
-      "oNo": "",
-      "PPAd": "",
-      "S1W$": 0,
-      "S2W$": 0,
-      "S3W$": 0,
-      "S4W$": 0,
-      "S5W$": 0
+
+      "hoNo": "",
+      "hPPAd": "",
+      "hS1W$": 0,
+      "hS2W$": 0,
+      "hS3W$": 0,
+      "hS4W$": 0,
+      "hS5W$": 0,
+      
+      "goNo": "",
+      "gPPAd": "",
+      "gS1W$": 0,
+      "gS2W$": 0,
+      "gS3W$": 0,
+      "gS4W$": 0,
+      "gS5W$": 0
     }
   ],
 
   "Doubles": [
     {
       "Idx": 0,
-      "oNo1": "",
-      "oNo2": "",
-      "PPAd1": "",
-      "PPAd2": "",
-      "S1W$": 0,
-      "S2W$": 0,
-      "S3W$": 0,
-      "S4W$": 0,
-      "S5W$": 0
+
+      "hoNo1": "",
+      "hoNo2": "",
+      "hPPAd1": "",
+      "hPPAd2": "",
+      "hS1W$": 0,
+      "hS2W$": 0,
+      "hS3W$": 0,
+      "hS4W$": 0,
+      "hS5W$": 0,
+
+      "goNo1": "",
+      "goNo2": "",
+      "gPPAd1": "",
+      "gPPAd2": "",
+      "gS1W$": 0,
+      "gS2W$": 0,
+      "gS3W$": 0,
+      "gS4W$": 0,
+      "gS5W$": 0
     }
   ]
 }
