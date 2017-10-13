@@ -3,27 +3,32 @@
   "CapFtr": "Müsabaka Sonuç Girişleri",
   "CapHdr": "",
 
+  "SaveTrigger$": 0,
+
   "CCoNo": "",
   "CEToNo": "",
 
   "hCTAd": "",
   "gCTAd": "",
 
+  "hP": 3,
+  "gP": 1,
+
   "hPW": 3,
   "gPW": 1,
 
-  "hSPW": 10,
-  "gSPW": 6,
+  "hPSW": 10,
+  "gPSW": 6,
 
-  "hDPW": 6,
-  "gDPW": 3,
+  "hPDW": 6,
+  "gPDW": 3,
 
 
-  "hSMW": 5,
-  "gSMW": 3,
+  "hMSW": 5,
+  "gMSW": 3,
 
-  "hDMW": 2,
-  "gDMW": 1,
+  "hMDW": 2,
+  "gMDW": 1,
   
 
   "Singles": [

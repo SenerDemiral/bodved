@@ -3,7 +3,6 @@ using Starcounter;
 
 namespace BDB
 {
-
     [Database]
     public class CC    // Competitions
     {
@@ -126,8 +125,11 @@ namespace BDB
         public int hP { get; set; }    // Home  Musabaka Puan
         public int gP { get; set; }    // Guest 
 
+        public int hPW { get; set; }    // Home  Mac Single Win
         public int hMSW { get; set; }    // Home  Mac Single Win
         public int hMDW { get; set; }    //           Double
+
+        public int gPW { get; set; }    // Home  Mac Single Win
         public int gMSW { get; set; }    // Guest Mac Single
         public int gMDW { get; set; }    //           Double
 
@@ -140,8 +142,6 @@ namespace BDB
         public string gCTAd => gCT?.Ad ?? "-";
         public string Tarih => string.Format("{0:yyyy-MM-dd}", Trh);
 
-        public int hPW => (hMSW * 2) + (hMDW * 3);
-        public int gPW => (gMSW * 2) + (gMDW * 3);
     }
 
     [Database]
@@ -197,4 +197,38 @@ namespace BDB
         public string PPAd => PP?.Ad ?? "-";
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
+
+    public static class Hlpr
+    {
+        // Sonuclari toplayip CET'e yaz
+        public static void Cetr2Cet(string CEToNo)
+        {
+            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+            var recs = Db.SQL<CETR>("select c from CETR c where c.CET = ? order by c.SoD, c.Idx, c.HoG desc", cet);
+            long hMSW = 0,
+                 hMDW = 0, 
+                 gMSW = 0,
+                 gMDW = 0;
+
+            foreach ( var r in recs)
+            {
+                if (r.SoD == "S")
+                {
+                    if (r.HoG == "H")
+                        hMSW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
+                    else
+                        gMSW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
+                }
+                else
+                {
+                    if (r.HoG == "H")
+                        hMDW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
+                    else
+                        gMDW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
+                }
+            }
+
+        }
+
+    }
 }

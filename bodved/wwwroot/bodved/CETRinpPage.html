@@ -17,17 +17,29 @@
                 <caption>[[model.CapHdr]]</caption>
                 <thead>
                     <tr>
-                        <th colspan="8">[[[model.hSPW]]] Single [[[model.gSPW]]]</th>
+                        <th colspan="8">[[[model.hP]]] - [[[model.gP]]]</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">[[[model.hPW]]] - [[[model.gPW]]]</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8"></th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">[[[model.hPSW]]] Single [[[model.gPSW]]]</th>
                     </tr>
                     <tr>
                         <th>#</th>
-                        <th>[[model.hCTAd]] [[[model.hSMW]]]</th>
+                        <th>[[model.hCTAd]] [[[model.hMSW]]]</th>
                         <th>S1</th>
                         <th>S2</th>
                         <th>S3</th>
                         <th>S4</th>
                         <th>S5</th>
-                        <th>[[[model.gSMW]]] [[model.gCTAd]]</th>
+                        <th>[[[model.gMSW]]] [[model.gCTAd]]</th>
 
                     </tr>
                 </thead>
@@ -50,17 +62,17 @@
             <table id="cetrTblD">
                 <thead>
                     <tr>
-                        <th colspan="8">[[[model.hDPW]]] Double [[[model.gDPW]]]</th>
+                        <th colspan="8">[[[model.hPDW]]] Double [[[model.gPDW]]]</th>
                     </tr>
                     <tr>
                         <th>#</th>
-                        <th>[[model.hCTAd]] [[[model.hDMW]]]</th>
+                        <th>[[model.hCTAd]] [[[model.hMDW]]]</th>
                         <th>S1</th>
                         <th>S2</th>
                         <th>S3</th>
                         <th>S4</th>
                         <th>S5</th>
-                        <th>[[[model.gDMW]]] [[model.gCTAd]]</th>
+                        <th>[[[model.gMDW]]] [[model.gCTAd]]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,7 +91,12 @@
                 </tbody>
             </table>
             <div class="capFtr">[[model.CapFtr]]</div>
+
+            <div>
+                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+            </div>
         </div>
-        
+
     </template>
 </template>
