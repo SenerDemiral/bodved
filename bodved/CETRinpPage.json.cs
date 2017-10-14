@@ -9,7 +9,11 @@ namespace bodved
             base.OnData();
 
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            CapHdr = $"{cet.CCAd} {cet.Tarih} Müsabaka";
+            hCTAd = cet.hCTAd;
+            gCTAd = cet.gCTAd;
+
+            Cap1 = $"{cet.CCAd}";
+            Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} Müsabaka Sonuçlarý";
 
             hP = cet.hP;
             hPW = cet.hPW;
@@ -24,9 +28,6 @@ namespace bodved
             gMDW = cet.gMDW;
             gPSW = gMSW * 2;
             gPDW = gMDW * 3;
-
-            hCTAd = cet.hCTAd;
-            gCTAd = cet.gCTAd;
 
             var SR = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "S");
             SinglesElementJson sng = null;
@@ -46,6 +47,7 @@ namespace bodved
                     sng.hS3W = src.S3W;
                     sng.hS4W = src.S4W;
                     sng.hS5W = src.S5W;
+                    sng.hSW = src.SW;
                 }
                 if ((s % 2) == 1)
                 {
@@ -56,6 +58,7 @@ namespace bodved
                     sng.gS3W = src.S3W;
                     sng.gS4W = src.S4W;
                     sng.gS5W = src.S5W;
+                    sng.gSW = src.SW;
                 }
 
                 s++;
@@ -78,6 +81,7 @@ namespace bodved
                     dbl.hS3W = src.S3W;
                     dbl.hS4W = src.S4W;
                     dbl.hS5W = src.S5W;
+                    dbl.hDW = src.SW;
                 }
                 if ((c % 4) == 1)
                 {
@@ -93,6 +97,7 @@ namespace bodved
                     dbl.gS3W = src.S3W;
                     dbl.gS4W = src.S4W;
                     dbl.gS5W = src.S5W;
+                    dbl.gDW = src.SW;
                 }
                 if ((c % 4) == 3)
                 {
@@ -151,7 +156,12 @@ namespace bodved
                         hA++;
                     else if (src.hS5W < src.gS5W)
                         gA++;
-                    //(int)(src.hS1W + src.hS2W + src.hS3W + src.hS4W + src.hS5W);
+
+                    hCetr.SW = (int)hA;
+                    hCetr.SL = (int)gA;
+                    gCetr.SW = (int)gA;
+                    gCetr.SL = (int)hA;
+
                     if (hA > gA)
                         hMW++;
                     else
@@ -215,7 +225,12 @@ namespace bodved
                         hA++;
                     else if (src.hS5W < src.gS5W)
                         gA++;
-                    //(int)(src.hS1W + src.hS2W + src.hS3W + src.hS4W + src.hS5W);
+
+                    hCetr1.SW = (int)hA;
+                    hCetr1.SL = (int)gA;
+                    gCetr1.SW = (int)gA;
+                    gCetr1.SL = (int)hA;
+
                     if (hA > gA)
                         hMW++;
                     else
@@ -251,10 +266,12 @@ namespace bodved
                     Action.Cancel();
                     return;
                 }
-                else if (Action.Value <= 10)
+                else if (Action.Value < 10)
                     this.gS1W = 11;
-                else if (Action.Value > 11)
+                else if (Action.Value > 10)
                     this.gS1W = Action.Value - 2;
+                else
+                    this.gS1W = 12;
 
                 /*
                 var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(hoNo));
@@ -273,7 +290,7 @@ namespace bodved
                     Action.Cancel();
                     return;
                 }
-                else if (Action.Value <= 10)
+                else if (Action.Value < 10)
                     this.hS1W = 11;
                 else if (Action.Value > 11)
                     this.hS1W = Action.Value - 2;

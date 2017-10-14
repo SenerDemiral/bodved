@@ -12,7 +12,7 @@ body {
 
 .master-toolbar {
     margin: auto; 
-    background: orange; 
+    background-color: darkkhaki; 
     overflow-x: auto;
     margin-bottom: 5px;
 }
@@ -84,7 +84,7 @@ th {
 
 .tblWrap caption{
     font-size:small;
-    background:black;
+    background-color:indianred;
     color:white;
     margin-bottom: 3px;
     padding: 5px;
@@ -121,14 +121,14 @@ tr[data-idx="1"],
 tr[data-idx="3"],
 tr[data-idx="5"],
 tr[data-idx="7"] {
-    background-color: #dddddd;
+    background-color: #eee;
 }
 
 td[data-idx="1"],
 td[data-idx="3"],
 td[data-idx="5"],
 td[data-idx="7"] {
-    background-color: #dddddd;
+    background-color: #eee;
 }
 
 [data-typ="inmr"] {
@@ -140,9 +140,25 @@ input[type=number] {
     width: 30px;
 }
 */
-.SetSayi {
-    width: 30px;
+.inpSetSayi {
+    width: 20px;
     text-align: center;
     border: none;
-
+}
+.inpSetCell
+{
+    width: 40px;
+    padding:1px;
+}
+.hSW {
+    background-color: gold;
+}
+.gSW {
+    background-color: gold;
+}
+.singleHdr {
+    background-color:rgb(234,241,221); /*RGB(235,246,249);*/
+}
+.doubleHdr {
+    background-color:rgb(255, 242, 229);
 }

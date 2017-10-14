@@ -5,16 +5,23 @@
 
         <div class="tblWrap">
             <table id="cetTbl">
-                <caption>[[model.CapHdr]]</caption>
+                <caption>
+                    <div>[[model.Cap1]]</div>
+                    <div>[[model.Cap2]]</div>
+                </caption>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th rowspan="2">#</th>
+                        <th colspan="2">Home</th>
+                        <th rowspan="2">Tarih</th>
+                        <th colspan="2">Guest</th>
+                        <th rowspan="2">Sonuç</th>
+                    </tr>
+                    <tr>
                         <th>Sıralama</th>
-                        <th>Home</th>
-                        <th>Tarih</th>
-                        <th>Guest</th>
+                        <th>Takım</th>
+                        <th>Takım</th>
                         <th>Sıralama</th>
-                        <th>Sonuç<br />Giriş</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +38,6 @@
                     </template>
                 </tbody>
             </table>
-            <div class="capFtr">[[model.CapFtr]]</div>
 
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">

@@ -13,7 +13,7 @@ namespace bodved
                 this.canMdfy = true;
 
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-            CapHdr = $"{cc.Ad}";
+            Cap1 = $"{cc.Ad} Müsabakalarý";
 
             if (canMdfy)
             {

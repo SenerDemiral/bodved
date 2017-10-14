@@ -4,7 +4,10 @@
     <template is="dom-bind">
         <div class="tblWrap">
             <table id="ccTbl">
-                <caption>[[model.CapHdr]]</caption>
+                <caption>
+                    <div>[[model.Cap1]]</div>
+                    <div>[[model.Cap2]]</div>
+                </caption>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -28,7 +31,6 @@
                     </template>
                 </tbody>
             </table>
-            <div class="capFtr">[[model.CapFtr]]</div>
 
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">

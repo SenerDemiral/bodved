@@ -125,13 +125,13 @@ namespace BDB
         public int hP { get; set; }    // Home  Musabaka Puan
         public int gP { get; set; }    // Guest 
 
-        public int hPW { get; set; }    // Home  Mac Single Win
-        public int hMSW { get; set; }    // Home  Mac Single Win
-        public int hMDW { get; set; }    //           Double
+        public int hPW { get; set; }    // Home Puan Win
+        public int hMSW { get; set; }   //      Mac Single Win
+        public int hMDW { get; set; }   //          Double
 
-        public int gPW { get; set; }    // Home  Mac Single Win
-        public int gMSW { get; set; }    // Guest Mac Single
-        public int gMDW { get; set; }    //           Double
+        public int gPW { get; set; }    // Guest Puan Win
+        public int gMSW { get; set; }   //       Mac Single
+        public int gMDW { get; set; }   //           Double
 
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;
         public ulong hCToNo => hCT?.GetObjectNo() ?? 0;
