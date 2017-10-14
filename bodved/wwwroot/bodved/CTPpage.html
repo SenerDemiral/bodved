@@ -17,7 +17,7 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
-                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
+                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.PPAd]]</td>
                             <td class="ortala">
                                 <a href="/bodved/CTPpage/[[item.oNo]]">►</a>

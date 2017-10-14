@@ -22,7 +22,7 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.PPs]]">
                         <tr>
-                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
+                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.Ad]]</td>
                             <td data-typ="nmr">[[item.Sex]]</td>
                             <td data-typ="nmr">[[item.DgmYil]]</td>

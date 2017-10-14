@@ -29,6 +29,14 @@ namespace bodved
                     mpLgn.Nm = ct.Ad;
                     mpLgn.Rl = "TAKIM";
                     mpLgn.LI = true;
+                    if (!string.IsNullOrEmpty(nPw))
+                    {
+                        Db.Transact(() =>
+                        {
+                            ct.Pw = nPw;
+                        });
+                    }
+
                 }
             }
         }

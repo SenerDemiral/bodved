@@ -5,6 +5,7 @@
 
   "Id$": "",
   "Pw$": "",
+  "nPw$": "",
   "Rl$": "ADMIN",
 
   "LoginTrigger$": 0
