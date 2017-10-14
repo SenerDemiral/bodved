@@ -9,12 +9,12 @@ namespace bodved
         {
             base.OnData();
 
-            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
-                this.canMdfy = true;
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             // Asagidaki sartlarda buraya girise izin verme
-                // Bu takim'in yetkilisi Login olan kullanicisi degilse
-                // Sirlama yapilip onaylamis ise
+            // Bu takim'in yetkilisi Login olan kullanicisi degilse
+            // Sirlama yapilip onaylamis ise
             // Yetkili isterse burada Sirlamayi bitirdigine dair onay verir.
             // Her ikisi de onay vermis ise bu tablo kullanilarak CETR olusturulur.
             // Sirlama yapilip onaylanmadan Mac sonuclari (CETR) girilemez.

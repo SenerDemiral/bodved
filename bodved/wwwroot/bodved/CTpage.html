@@ -14,21 +14,18 @@
                         <th>Ad</th>
                         <th>Kaptan 1</th>
                         <th>Kaptan 2</th>
+                        <th>Adres</th>
                         <th>Oyuncular</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTs]]">
                         <tr>
-                            <td data-typ="nmr">
-                                <template is="dom-if" if="[[model.canMdfy]]">
-                                    <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
-                                </template>
-                                [[item.oNo]]
-                            </td>
+                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.Ad]]</td>
                             <td data-typ="nmr">[[item.K1Ad]]</td>
                             <td data-typ="nmr">[[item.K2Ad]]</td>
+                            <td>[[item.Adres]]</td>
                             <td class="ortala">
                                 <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
                             </td>
@@ -42,14 +39,6 @@
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
                     <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
                     <input list="browsers" name="myBrowser" value="{{model.MdfRec.K1Ad$::change}}" />
-                    <datalist id="browsers">
-                        <option value="Chrome">
-                        <option value="Firefox">
-                        <option value="Internet Explorer">
-                        <option value="Opera">
-                        <option value="Safari">
-                        <option value="Microsoft Edge">
-                    </datalist>
                     <select name="select" value="{{model.MdfRec.K1oNo$::change}}">
                         <option value="0">N/A</option>
                         <template is="dom-repeat" items="[[model.PPs]]">
@@ -62,6 +51,8 @@
                             <option value="[[item.oNo]]">[[item.Ad]]</option>
                         </template>
                     </select>
+                    <input placeholder="Adres" type="text" value="{{model.MdfRec.Adres$::change}}" />
+                    <input placeholder="Pwd" type="text" value="{{model.MdfRec.Pw$::change}}" />
 
                     <div class="mdfRecAction">
                         <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>

@@ -8,17 +8,8 @@ namespace bodved
         {
             base.OnData();
 
-            //var parent = (MasterPage)this.Parent;
-            //var fid = Convert.ToInt32(parent.fID);
-            //var std = Convert.ToDateTime(parent.StartDate);
-            //fID = parent.fID;
-            //StartDate = parent.StartDate;
-
-            //if (!parent.fOnLine)
-            //    return;
-
-            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
-                this.canMdfy = true;
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
 

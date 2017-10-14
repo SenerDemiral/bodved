@@ -8,8 +8,8 @@ namespace bodved
         {
             base.OnData();
 
-            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
-                this.canMdfy = true;
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             if (canMdfy)
             {
@@ -34,9 +34,6 @@ namespace bodved
 
         void Handle(Input.InsertTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
                 Db.Transact(() =>
@@ -44,9 +41,11 @@ namespace bodved
                     new BDB.CT()
                     {
                         CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
-                        Ad = this.MdfRec.Ad,
-                        //K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo)),
-                        //K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo))
+                        Ad = MdfRec.Ad,
+                        K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo)),
+                        K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo)),
+                        Adres = MdfRec.Adres,
+                        Pw = MdfRec.Pw 
                     };
                 });
                 MdfRec.oNo = 0;
@@ -67,6 +66,8 @@ namespace bodved
                     r.Ad = MdfRec.Ad;
                     r.K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo));
                     r.K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo));
+                    r.Adres = MdfRec.Adres;
+                    r.Pw = MdfRec.Pw;
                 });
                 MdfRec.oNo = 0;
                 CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
@@ -111,6 +112,8 @@ namespace bodved
                 p.MdfRec.Ad = this.Ad;
                 p.MdfRec.K1oNo = this.K1oNo.ToString();
                 p.MdfRec.K2oNo = this.K2oNo.ToString();
+                p.MdfRec.Adres = this.Adres;
+                p.MdfRec.Pw = Pw;
             }
         }
     }

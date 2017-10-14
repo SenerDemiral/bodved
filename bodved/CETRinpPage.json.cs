@@ -12,6 +12,16 @@ namespace bodved
             hCTAd = cet.hCTAd;
             gCTAd = cet.gCTAd;
 
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
+            if (!canMdfy)
+            {
+                if (mpLgn.Rl == "TAKIM")
+                    if (mpLgn.LI && (mpLgn.Id == cet.hCToNo.ToString() || mpLgn.Id == cet.gCToNo.ToString()))
+                        canMdfy = true;
+            }
+
+
             Cap1 = $"{cet.CCAd}";
             Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} Müsabaka Sonuçlarý";
 
@@ -259,74 +269,169 @@ namespace bodved
         [CETRinpPage_json.Singles]
         public partial class SinglesElementJson
         {
-            void Handle(Input.hS1W Action)
+            void Handle(Input.hS1W A)
             {
-                if (Action.Value < 0 || Action.Value > 21)
-                {
-                    Action.Cancel();
-                    return;
-                }
-                else if (Action.Value < 10)
-                    this.gS1W = 11;
-                else if (Action.Value > 10)
-                    this.gS1W = Action.Value - 2;
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
                 else
-                    this.gS1W = 12;
-
-                /*
-                var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(hoNo));
-                var gCetr = Db.FromId<BDB.CETR>(ulong.Parse(goNo));
-                Db.Transact(() =>
-                {
-                    hCetr.S1W = (int)Action.Value;
-                    gCetr.S1W = (int)gS1W;
-                });*/
+                    this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
             }
 
-            void Handle(Input.gS1W Action)
+            void Handle(Input.hS2W A)
             {
-                if (Action.Value < 0 || Action.Value > 21)
-                {
-                    Action.Cancel();
-                    return;
-                }
-                else if (Action.Value < 10)
-                    this.hS1W = 11;
-                else if (Action.Value > 11)
-                    this.hS1W = Action.Value - 2;
-                /*
-                var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(hoNo));
-                var gCetr = Db.FromId<BDB.CETR>(ulong.Parse(goNo));
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS2W = A.Value < 10 ? 11 : A.Value + 2;
+            }
 
-                Db.Transact(() =>
-                {
-                    gCetr.S1W = (int)Action.Value;
-                    hCetr.S1W = (int)hS1W;
-                });*/
+            void Handle(Input.hS3W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS3W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS4W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS4W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS5W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS5W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS1W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS2W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS2W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS3W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS3W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS4W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS4W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS5W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS5W = A.Value < 10 ? 11 : A.Value + 2;
             }
         }
 
-        public static void SaveSingles()
+        [CETRinpPage_json.Doubles]
+        public partial class DoublesElementJson
         {
-
-           // var aaa = e.hS1W;
-          //  var bbb = e.gS1W;
-            /*
-            if (sV < 0 || sV > 21)
-                return;
-            else if (sV <= 10)
-                this.hS1W = 11;
-            else if (sV > 11)
-                this.hS1W = sV - 2;
-
-            var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(hoNo));
-            var gCetr = Db.FromId<BDB.CETR>(ulong.Parse(goNo));
-
-            Db.Transact(() =>
+            void Handle(Input.hS1W A)
             {
-                gCetr.S1W = (int)Action.Value;
-                hCetr.S1W = (int)hS1W;
-            });*/
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS2W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS2W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS3W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS3W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS4W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS4W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.hS5W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.gS5W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS1W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS2W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS2W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS3W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS3W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS4W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS4W = A.Value < 10 ? 11 : A.Value + 2;
+            }
+
+            void Handle(Input.gS5W A)
+            {
+                if (A.Value < 0 || A.Value > 21)
+                    A.Cancel();
+                else
+                    this.hS5W = A.Value < 10 ? 11 : A.Value + 2;
+            }
         }
     }
 }

@@ -89,6 +89,9 @@
     <Compile Include="Deneme.json.cs">
       <DependentUpon>Deneme.json</DependentUpon>
     </Compile>
+    <Compile Include="LoginPage.json.cs">
+      <DependentUpon>LoginPage.json</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.json.cs">
       <DependentUpon>MainPage.json</DependentUpon>
     </Compile>
@@ -132,6 +135,9 @@
     <TypedJSON Include="AboutPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="LoginPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\bodved\CCpage.html" />
     <None Include="wwwroot\bodved\CTpage.html" />
     <None Include="wwwroot\bodved\CTPpage.html" />
@@ -142,6 +148,7 @@
     <None Include="wwwroot\bodved\AboutPage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
+    <None Include="wwwroot\bodved\LoginPage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />
     <Content Include="wwwroot\sys\redips-drag-min.js" />
     <Content Include="wwwroot\sys\redips-style.css" />

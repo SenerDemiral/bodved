@@ -17,9 +17,8 @@ namespace bodved
 
             //if (!parent.fOnLine)
             //    return;
-
-            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
-                this.canMdfy = true;
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
 

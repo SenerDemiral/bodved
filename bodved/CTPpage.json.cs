@@ -8,8 +8,8 @@ namespace bodved
         {
             base.OnData();
 
-            if ((Root as MasterPage).Login.LI && (Root as MasterPage).Login.Id == -1)
-                this.canMdfy = true;
+            var mpLgn = (Root as MasterPage).Login;
+            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             if (canMdfy)
             {

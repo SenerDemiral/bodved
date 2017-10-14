@@ -17,12 +17,7 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
-                            <td data-typ="nmr">
-                                <template is="dom-if" if="[[model.canMdfy]]">
-                                    <button value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>
-                                </template>
-                                [[item.oNo]]
-                            </td>
+                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.PPAd]]</td>
                             <td class="ortala">
                                 <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
@@ -36,7 +31,7 @@
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
                     <select name="select" value="{{model.MdfRec.PPoNo$::change}}">
-                        <option value="0">N/A</option>
+                        <option value="0">-</option>
                         <template is="dom-repeat" items="[[model.PPs]]">
                             <option value="[[item.oNo]]">[[item.Ad]]</option>
                         </template>

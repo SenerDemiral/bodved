@@ -1,10 +1,10 @@
 {
   "Html": "/bodved/MasterPage.html",
   "Login": {
-    "Id": -1,
-    "Pw": "",
-    "Rl": "ADMIN",
-    "LI": true
+    "Id": "",
+    "Rl": "?",
+    "Nm": "Login",
+    "LI": false
   },
 
   "CurrentPage": { }

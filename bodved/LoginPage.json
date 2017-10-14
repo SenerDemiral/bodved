@@ -1,0 +1,11 @@
+{
+  "Html": "/bodved/LoginPage.html",
+  "Cap1": "Login",
+  "Cap2": "",
+
+  "Id$": "",
+  "Pw$": "",
+  "Rl$": "ADMIN",
+
+  "LoginTrigger$": 0
+}

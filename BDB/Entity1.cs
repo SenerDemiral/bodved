@@ -53,7 +53,7 @@ namespace BDB
         public PP K1 { get; set; }
         public PP K2 { get; set; }
         public string Adres { get; set; }
-        public string Pwd { get; set; }
+        public string Pw { get; set; }
 
         public string CCAd => CC?.Ad ?? "-";
         public ulong K1oNo => K1?.GetObjectNo() ?? 0;
@@ -65,7 +65,7 @@ namespace BDB
         {
             Ad = "";
             Adres = "";
-            Pwd = null;
+            Pw = null;
         }
     }
     // CC->CT: Kaptan1 ve Kaptan2 PP'den secilir

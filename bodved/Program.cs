@@ -60,6 +60,9 @@ namespace bodved
             Handle.GET("/bodved/partial/AboutPage", () => new AboutPage());
             Handle.GET("/bodved/AboutPage", () => WrapPage<AboutPage>("/bodved/partial/AboutPage"));
 
+            Handle.GET("/bodved/partial/LoginPage", () => new LoginPage());
+            Handle.GET("/bodved/LoginPage", () => WrapPage<LoginPage>("/bodved/partial/LoginPage"));
+
             Handle.GET("/bodved/partial/MainPage", () => new MainPage());
             Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
 
@@ -147,50 +150,50 @@ namespace bodved
 
                 // Turnuva Takimlari
                 // 1.Lig
-                new BDB.CT() { CC = cc1, Ad = "Bitez-1" };
-                new BDB.CT() { CC = cc1, Ad = "Delfi-1" };
-                var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons-1" };
-                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük-1" };
-                new BDB.CT() { CC = cc1, Ad = "Kekik-1" };
-                new BDB.CT() { CC = cc1, Ad = "MitNarKop-1" };
-                var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin-1" };
-                var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil-1" };
-                var yh1 = new BDB.CT() { CC = cc1, Ad = "Yahşi-1" };
-                var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak-1" };
+                new BDB.CT() { CC = cc1, Ad = "Bitez•1" };
+                new BDB.CT() { CC = cc1, Ad = "Delfi•1" };
+                var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons•1" };
+                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük•1" };
+                new BDB.CT() { CC = cc1, Ad = "Kekik•1" };
+                new BDB.CT() { CC = cc1, Ad = "MitNarKop•1" };
+                var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin•1" };
+                var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil•1" };
+                var yh1 = new BDB.CT() { CC = cc1, Ad = "Yahşi•1" };
+                var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak•1" };
                 // 2.Lig 
-                new BDB.CT() { CC = cc2, Ad = "Bitez-2" };
-                new BDB.CT() { CC = cc2, Ad = "Bosku-2" };
-                new BDB.CT() { CC = cc2, Ad = "Delfi-2A" };
-                new BDB.CT() { CC = cc2, Ad = "Delfi-2B" };
-                new BDB.CT() { CC = cc2, Ad = "Dragons-2" };
-                new BDB.CT() { CC = cc2, Ad = "Gümüşlük-2" };
-                new BDB.CT() { CC = cc2, Ad = "Kekik-2" };
-                new BDB.CT() { CC = cc2, Ad = "KutayReno-2" };
-                new BDB.CT() { CC = cc2, Ad = "MitNarKop-2" };
-                new BDB.CT() { CC = cc2, Ad = "Nane-2" };
-                new BDB.CT() { CC = cc2, Ad = "Newpon-2A" };
-                var np2B = new BDB.CT() { CC = cc2, Ad = "Newpon-2B" };
-                new BDB.CT() { CC = cc2, Ad = "Nomads-2" };
-                new BDB.CT() { CC = cc2, Ad = "Onbar-2" };
-                new BDB.CT() { CC = cc2, Ad = "Ponpin-2" };
-                new BDB.CT() { CC = cc2, Ad = "Promil-2" };
-                new BDB.CT() { CC = cc2, Ad = "Sağlık-2" };
-                new BDB.CT() { CC = cc2, Ad = "Yahşi-2" };
-                new BDB.CT() { CC = cc2, Ad = "Yalıkavak-2" };
+                new BDB.CT() { CC = cc2, Ad = "Bitez•2" };
+                new BDB.CT() { CC = cc2, Ad = "Bosku•2" };
+                new BDB.CT() { CC = cc2, Ad = "Delfi•2A" };
+                new BDB.CT() { CC = cc2, Ad = "Delfi•2B" };
+                new BDB.CT() { CC = cc2, Ad = "Dragons•2" };
+                new BDB.CT() { CC = cc2, Ad = "Gümüşlük•2" };
+                new BDB.CT() { CC = cc2, Ad = "Kekik•2" };
+                new BDB.CT() { CC = cc2, Ad = "KutayReno•2" };
+                new BDB.CT() { CC = cc2, Ad = "MitNarKop•2" };
+                new BDB.CT() { CC = cc2, Ad = "Nane•2" };
+                new BDB.CT() { CC = cc2, Ad = "Newpon•2A" };
+                var np2B = new BDB.CT() { CC = cc2, Ad = "Newpon•2B" };
+                new BDB.CT() { CC = cc2, Ad = "Nomads•2" };
+                new BDB.CT() { CC = cc2, Ad = "Onbar•2" };
+                new BDB.CT() { CC = cc2, Ad = "Ponpin•2" };
+                new BDB.CT() { CC = cc2, Ad = "Promil•2" };
+                new BDB.CT() { CC = cc2, Ad = "Sağlık•2" };
+                new BDB.CT() { CC = cc2, Ad = "Yahşi•2" };
+                new BDB.CT() { CC = cc2, Ad = "Yalıkavak•2" };
                 // 3.Lig
-                new BDB.CT() { CC = cc3, Ad = "Bitez-3" };
-                new BDB.CT() { CC = cc3, Ad = "Bosku-3" };
-                new BDB.CT() { CC = cc3, Ad = "Delfi-3A" };
-                new BDB.CT() { CC = cc3, Ad = "Delfi-3B" };
-                var gm3 = new BDB.CT() { CC = cc3, Ad = "Gümüşlük-3" };
-                new BDB.CT() { CC = cc3, Ad = "Kekik-3" };
-                new BDB.CT() { CC = cc3, Ad = "MiaMare-3" };
-                new BDB.CT() { CC = cc3, Ad = "MitNarKop-3" };
-                new BDB.CT() { CC = cc3, Ad = "Nane-3" };
-                new BDB.CT() { CC = cc3, Ad = "Onbar-3" };
-                new BDB.CT() { CC = cc3, Ad = "Waffelhane-3" };
-                new BDB.CT() { CC = cc3, Ad = "Yahşi-3" };
-                new BDB.CT() { CC = cc3, Ad = "Yalıkavak-3" };
+                new BDB.CT() { CC = cc3, Ad = "Bitez•3" };
+                new BDB.CT() { CC = cc3, Ad = "Bosku•3" };
+                new BDB.CT() { CC = cc3, Ad = "Delfi•3A" };
+                new BDB.CT() { CC = cc3, Ad = "Delfi•3B" };
+                var gm3 = new BDB.CT() { CC = cc3, Ad = "Gümüşlük•3" };
+                new BDB.CT() { CC = cc3, Ad = "Kekik•3" };
+                new BDB.CT() { CC = cc3, Ad = "MiaMare•3" };
+                new BDB.CT() { CC = cc3, Ad = "MitNarKop•3" };
+                new BDB.CT() { CC = cc3, Ad = "Nane•3" };
+                new BDB.CT() { CC = cc3, Ad = "Onbar•3" };
+                new BDB.CT() { CC = cc3, Ad = "Waffelhane•3" };
+                new BDB.CT() { CC = cc3, Ad = "Yahşi•3" };
+                new BDB.CT() { CC = cc3, Ad = "Yalıkavak•3" };
 
                 // Oyuncular
 

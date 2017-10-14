@@ -27,7 +27,7 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CETs]]">
                         <tr>
-                            <td data-typ="nmr"><button hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">Modify</button>[[item.oNo]]</td>
+                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
                             <td data-typ="nmr">[[item.hCTAd]]</td>
                             <td data-typ="nmr"><a href="/bodved/CETRviewPage/[[item.oNo]]">[[item.Tarih]]</a></td>
