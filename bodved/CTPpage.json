@@ -10,7 +10,9 @@
     {
       "oNo": 0,
       "PPoNo": 0,
+      "Idx": 0,
       "PPAd": "",
+      "oCTs": "",
       "MdfTrigger$": 0
     }
   ],

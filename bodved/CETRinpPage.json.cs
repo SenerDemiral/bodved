@@ -138,6 +138,8 @@ namespace bodved
             {
                 cet.Rok = true;
             });
+
+            BDB.H.updCTsum(cet.hCT.oNo);
         }
 
         protected void Save()

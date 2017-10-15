@@ -10,11 +10,13 @@ namespace BDB
 
         public string Ad { get; set; }
         public string Skl { get; set; }    // Takim/Ferdi
+        public string Grp { get; set; }    // Birden cok turnuvada oynayan Oyunculari takip icin
 
         public CC()
         {
             Ad = "";
             Skl = "T";
+            Grp = "T17";
         }
     }
 
@@ -55,6 +57,12 @@ namespace BDB
         public string Adres { get; set; }
         public string Pw { get; set; }
 
+        public int oE { get; set; }
+        public int aE { get; set; }
+        public int vE { get; set; }
+        public int aP { get; set; }
+        public int vP { get; set; }
+
         public string CCAd => CC?.Ad ?? "-";
         public ulong K1oNo => K1?.GetObjectNo() ?? 0;
         public ulong K2oNo => K2?.GetObjectNo() ?? 0;
@@ -87,6 +95,23 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
+
+        public string oCTs
+        {
+            get     // Oynadigi diger Takimlar
+            {
+                string oCTs = "";
+                foreach( var r in Db.SQL<CTP>("select c from BDB.CTP c where c.PP = ? and c.CC.Grp = ?", this.PP, this.CC.Grp))
+                {
+                    if(r.CT.GetObjectNo() != this.CT.GetObjectNo())
+                    {
+                        oCTs += r.CTAd + " ";
+                    }
+                }
+
+                return oCTs;
+            }
+        }
     }
     // CT->CTP gecildikten sonra PP'den secilerek olusturulur
     // Oyuncu baska takima gectiginde burdan silinip digerine eklenir.

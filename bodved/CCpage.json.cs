@@ -36,7 +36,9 @@ namespace bodved
                 {
                     new BDB.CC()
                     {
-                        Ad = this.MdfRec.Ad,
+                        Ad = MdfRec.Ad,
+                        Skl = MdfRec.Skl,
+                        Grp = MdfRec.Grp
                     };
                 });
                 MdfRec.oNo = 0;
@@ -55,6 +57,8 @@ namespace bodved
                 {
                     var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
                     r.Ad = MdfRec.Ad;
+                    r.Skl = MdfRec.Skl;
+                    r.Grp = MdfRec.Grp;
                 });
                 MdfRec.oNo = 0;
                 CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
@@ -90,8 +94,10 @@ namespace bodved
             void Handle(Input.MdfTrigger Action)
             {
                 var p = this.Parent.Parent as CCpage;
-                p.MdfRec.oNo = this.oNo;
-                p.MdfRec.Ad = this.Ad;
+                p.MdfRec.oNo = oNo;
+                p.MdfRec.Ad = Ad;
+                p.MdfRec.Skl = Skl;
+                p.MdfRec.Grp = Grp;
 
                 var deneme = this.Root;
             }

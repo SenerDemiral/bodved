@@ -11,17 +11,18 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Sıra</th>
                         <th>Oyuncu</th>
+                        <th>Oynadığı Diğer Takımlar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
                             <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td data-typ="nmr">[[item.Idx]]</td>
                             <td data-typ="nmr">[[item.PPAd]]</td>
-                            <td class="ortala">
-                                <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
-                            </td>
+                            <td data-typ="nmr">[[item.oCTs]]</td>
                         </tr>
                     </template>
                 </tbody>
@@ -30,6 +31,7 @@
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                    <input placeholder="Sıra" type="text" value="{{model.MdfRec.Idx$::change}}" />
                     <select name="select" value="{{model.MdfRec.PPoNo$::change}}">
                         <option value="0">-</option>
                         <template is="dom-repeat" items="[[model.PPs]]">
