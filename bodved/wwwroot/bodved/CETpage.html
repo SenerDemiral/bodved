@@ -12,16 +12,17 @@
                 <thead>
                     <tr>
                         <th rowspan="2">#</th>
-                        <th colspan="2">Home</th>
+                        <th colspan="3" class="hHdr">Home</th>
                         <th rowspan="2">Tarih</th>
-                        <th colspan="2">Guest</th>
-                        <th rowspan="2">Sonuç</th>
+                        <th colspan="3" class="gHdr">Guest</th>
                     </tr>
                     <tr>
-                        <th>Sıralama</th>
-                        <th>Takım</th>
-                        <th>Takım</th>
-                        <th>Sıralama</th>
+                        <th class="hHdr">Sıralama</th>
+                        <th class="hHdr">Takım</th>
+                        <th class="hHdr">P</th>
+                        <th class="gHdr">P</th>
+                        <th class="gHdr">Takım</th>
+                        <th class="gHdr">Sıralama</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,10 +31,11 @@
                             <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
                             <td data-typ="nmr">[[item.hCTAd]]</td>
-                            <td data-typ="nmr"><a href="/bodved/CETRviewPage/[[item.oNo]]">[[item.Tarih]]</a></td>
+                            <td class="hSW">[[item.hP]]</td>
+                            <td data-typ="nmr"><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>
+                            <td class="gSW">[[item.gP]]</td>
                             <td data-typ="nmr">[[item.gCTAd]]</td>
                             <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]" hidden$="[[!model.gPgo]]">►</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
-                            <td class="ortala"><a href="/bodved/CETRinpPage/[[item.oNo]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>

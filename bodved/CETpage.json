@@ -18,7 +18,11 @@
       "gCToNo": 0,
       "gCTAd": "",
       "hPok": false,
-      "gPok": true,
+      "gPok": false,
+      "Rok": false,
+
+      "hP": 0,
+      "gP": 0,
       
       "MdfTrigger$": 0
     }

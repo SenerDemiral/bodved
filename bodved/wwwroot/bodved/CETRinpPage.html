@@ -102,8 +102,10 @@
             </table>
 
             <div hidden$="[[!model.canMdfy]]">
-                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
-                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                <div hidden$="[[model.Rok]]">
+                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                </div>
             </div>
         </div>
 

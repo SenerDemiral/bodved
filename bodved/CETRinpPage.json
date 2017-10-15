@@ -3,8 +3,10 @@
   "Cap1": "",
   "Cap2": "Müsabaka Sonuçları",
   "canMdfy": true,
+  "Rok": false,
 
   "SaveTrigger$": 0,
+  "SaveOkTrigger$": 0,
 
   "CCoNo": "",
   "CEToNo": "",

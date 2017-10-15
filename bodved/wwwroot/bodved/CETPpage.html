@@ -2,61 +2,65 @@
 
 <template>
     <template is="dom-bind" id="sener">
-        <div id="dragSD">
-            <div id="dragS">
-                <table id="tableS">
+        <div>[[model.Cap1]]</div>
+        <template is="dom-if" if="[[model.canMdfy]]">
 
-                    <colgroup>
-                        <col width="50" />
-                        <col width="200" />
-                    </colgroup>
-                    <tr>
-                        <td class="redips-mark" id="message">Sıra</td>
-                        <td class="redips-mark">Single</td>
-                    </tr>
-                    <template is="dom-repeat" items="{{model.Singles}}">
+            <div id="dragSD">
+                <div id="dragS">
+                    <table id="tableS">
+                        <colgroup>
+                            <col width="50" />
+                            <col width="200" />
+                        </colgroup>
                         <tr>
-                            <td class="redips-mark" data-AoY$="[[item.AoY]]">{{displayIndex(index)}}</td>
-                            <td><div id="[[item.oNo]]" class="redips-drag">[[item.PPAd]]</div></td>
+                            <td class="redips-mark" id="message">Sıra</td>
+                            <td class="redips-mark">Single</td>
                         </tr>
-                    </template>
-                </table>
-            </div>
-            <div id="dragD">
-                <table id="tableD">
-                    <colgroup>
-                        <col width="50" />
-                        <col width="200" />
-                        <col width="200" />
-                    </colgroup>
-                    <tr>
-                        <td class="redips-mark">Sıra</td>
-                        <td colspan="2" class="redips-mark">Double</td>
-                    </tr>
-
-                    <template is="dom-repeat" items="{{model.Doubles}}">
-                        <template is="dom-if" if="[[item.c2.PPAd]]">
+                        <template is="dom-repeat" items="{{model.Singles}}">
                             <tr>
-                                <td class="redips-mark">{{displayIndex(index)}}</td>
-                                <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
-                                <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.PPAd]]</div></td>
+                                <td class="redips-mark" data-AoY$="[[item.AoY]]">{{displayIndex(index)}}</td>
+                                <td><div id="[[item.oNo]]" class="redips-drag">[[item.PPAd]]</div></td>
                             </tr>
                         </template>
-                        <template is="dom-if" if="[[!item.c2.PPAd]]">
-                            <tr>
-                                <td class="redips-mark ydk"></td>
-                                <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
-                            </tr>
+                    </table>
+                </div>
+                <div id="dragD">
+                    <table id="tableD">
+                        <colgroup>
+                            <col width="50" />
+                            <col width="200" />
+                            <col width="200" />
+                        </colgroup>
+                        <tr>
+                            <td class="redips-mark">Sıra</td>
+                            <td colspan="2" class="redips-mark">Double</td>
+                        </tr>
+
+                        <template is="dom-repeat" items="{{model.Doubles}}">
+                            <template is="dom-if" if="[[item.c2.PPAd]]">
+                                <tr>
+                                    <td class="redips-mark">{{displayIndex(index)}}</td>
+                                    <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                                    <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.PPAd]]</div></td>
+                                </tr>
+                            </template>
+                            <template is="dom-if" if="[[!item.c2.PPAd]]">
+                                <tr>
+                                    <td class="redips-mark ydk"></td>
+                                    <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                                </tr>
+                            </template>
                         </template>
-                    </template>
-                </table>
+                    </table>
+                </div>
+
+                <div hidden$="[[model.Pok]]">
+                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                </div>
             </div>
 
-            <div>
-                <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" hidden$="[[model.Pok]]">Kaydet</button>
-                <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" hidden$="[[model.Pok]]">Onayla ve Kaydet</button>
-            </div>
-        </div>
+        </template>
     </template>
 
     <script>

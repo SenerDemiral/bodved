@@ -9,8 +9,18 @@ namespace bodved
         {
             base.OnData();
 
+            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
+            if (!canMdfy && mpLgn.Rl == "TAKIM" && mpLgn.LI)
+            {
+                if (mpLgn.Id == CToNo)
+                    canMdfy = true;
+            }
+
+            if (!canMdfy)
+                return;
 
             // Asagidaki sartlarda buraya girise izin verme
             // Bu takim'in yetkilisi Login olan kullanicisi degilse
@@ -18,18 +28,15 @@ namespace bodved
             // Yetkili isterse burada Sirlamayi bitirdigine dair onay verir.
             // Her ikisi de onay vermis ise bu tablo kullanilarak CETR olusturulur.
             // Sirlama yapilip onaylanmadan Mac sonuclari (CETR) girilemez.
-            if (canMdfy)
-            {
-            }
 
-
-            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             HoG = CToNo == cet.hCToNo.ToString() ? "H" : "G";
             Pok = HoG == "H" ? cet.hPok : cet.gPok;
+            if (mpLgn.Rl == "ADMIN")
+                Pok = false;    // Admin sirlama OK olsa bile degistirebilsin
 
             var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));     // Bu Takim'in siralamasi yapiliyor.
-            CapHdr = $"{cet.Tarih} {ct.Ad}";
-
+            Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu Sýralama";
+            Cap2 = $"{ct.Ad} Oyuncu Sýralama";
 
             var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? order by c.Idx", cet, ct).First;
             // Kayit yoksa CTP'den alip yarat

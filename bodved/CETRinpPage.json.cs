@@ -11,6 +11,7 @@ namespace bodved
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             hCTAd = cet.hCTAd;
             gCTAd = cet.gCTAd;
+            Rok = cet.Rok;
 
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
@@ -20,6 +21,8 @@ namespace bodved
                     if (mpLgn.LI && (mpLgn.Id == cet.hCToNo.ToString() || mpLgn.Id == cet.gCToNo.ToString()))
                         canMdfy = true;
             }
+            if (mpLgn.Rl == "ADMIN")
+                Rok = false;    // Admin sonuc OK olsa bile degistirebilsin
 
 
             Cap1 = $"{cet.CCAd}";
@@ -121,6 +124,23 @@ namespace bodved
         }
         
         public void Handle(Input.SaveTrigger Action)
+        {
+            Save();
+        }
+
+        public void Handle(Input.SaveOkTrigger Action)
+        {
+            Save();
+
+            // Sonuc OK Onayla
+            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+            Db.Transact(() =>
+            {
+                cet.Rok = true;
+            });
+        }
+
+        protected void Save()
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
 

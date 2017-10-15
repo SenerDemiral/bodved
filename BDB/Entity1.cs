@@ -118,8 +118,7 @@ namespace BDB
 
         public bool hPok { get; set; }  // Home Players Ok
         public bool gPok { get; set; }
-        public bool hRok { get; set; }  // Home Results Signed
-        public bool gRok { get; set; }
+        public bool Rok { get; set; }   // Results Ok. Home/Guest Onaylayabilir
 
         // H & G Sonuclari onayladiktan sonra hesaplanir
         public int hP { get; set; }    // Home  Musabaka Puan

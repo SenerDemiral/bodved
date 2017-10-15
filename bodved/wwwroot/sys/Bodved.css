@@ -156,6 +156,13 @@ input[type=number] {
 .gSW {
     background-color: #eaefb3;
 }
+.hHdr {
+    background-color: honeydew;
+}
+.gHdr {
+    background-color: lightgoldenrodyellow;
+}
+
 .singleHdr {
     background-color:rgb(234,241,221); /*RGB(235,246,249);*/
 }
