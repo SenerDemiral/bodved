@@ -11,7 +11,7 @@ namespace bodved
 				<html>
 				<head>
 					<meta charset=""utf-8"">
-				    <meta name=""viewport"" content=""width=device-width, initial-scale=1, shrink-to-fit=yes"">
+				    <meta name=""viewport"" content=""width=device-width, initial-scale=1, user-scalable=yes"">
 					<title>{0}</title>
 					
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
