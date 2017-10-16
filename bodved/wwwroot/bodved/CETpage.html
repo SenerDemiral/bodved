@@ -11,7 +11,7 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th rowspan="2">#</th>
+                        <th class="oNo" rowspan="2">#</th>
                         <th colspan="3" class="hHdr">Home</th>
                         <th rowspan="2">Tarih</th>
                         <th colspan="3" class="gHdr">Guest</th>
@@ -28,7 +28,7 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CETs]]">
                         <tr>
-                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
                             <td data-typ="nmr">[[item.hCTAd]]</td>
                             <td class="hSW">[[item.hP]]</td>

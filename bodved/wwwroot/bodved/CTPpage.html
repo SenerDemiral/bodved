@@ -10,7 +10,7 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="oNo">#</th>
                         <th>Sıra</th>
                         <th>Oyuncu</th>
                         <th>Oynadığı Diğer Takımlar</th>
@@ -19,10 +19,10 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTPs]]">
                         <tr>
-                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td data-typ="nmr">[[item.Idx]]</td>
-                            <td data-typ="nmr">[[item.PPAd]]</td>
-                            <td data-typ="nmr">[[item.oCTs]]</td>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td>[[item.Idx]]</td>
+                            <td>[[item.PPAd]]</td>
+                            <td>[[item.oCTs]]</td>
                         </tr>
                     </template>
                 </tbody>

@@ -10,10 +10,10 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="oNo">#</th>
                         <th>Ad</th>
                         <th>Sex</th>
-                        <th>DğmYıl</th>
+                        <th>Dğm</th>
                         <th>Tel</th>
                         <th>eMail</th>
                         <th>Maçlar</th>
@@ -22,15 +22,13 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.PPs]]">
                         <tr>
-                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td data-typ="nmr">[[item.Ad]]</td>
-                            <td data-typ="nmr">[[item.Sex]]</td>
-                            <td data-typ="nmr">[[item.DgmYil]]</td>
-                            <td data-typ="nmr">[[item.Tel]]</td>
-                            <td data-typ="nmr">[[item.eMail]]</td>
-                            <td class="ortala">
-                                <a href="/bodved/Deneme/[[item.oNo]]">►</a>
-                            </td>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td>[[item.Ad]]</td>
+                            <td>[[item.Sex]]</td>
+                            <td>[[item.DgmYil]]</td>
+                            <td>[[item.Tel]]</td>
+                            <td>[[item.eMail]]</td>
+                            <td class="ortala"><a href="/bodved/Deneme/[[item.oNo]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>

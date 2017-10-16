@@ -10,7 +10,7 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="oNo">#</th>
                         <th>Ad</th>
                         <th>Kaptan 1</th>
                         <th>Kaptan 2</th>
@@ -21,14 +21,12 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTs]]">
                         <tr>
-                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td data-typ="nmr">[[item.Ad]]</td>
-                            <td data-typ="nmr">[[item.K1Ad]]</td>
-                            <td data-typ="nmr">[[item.K2Ad]]</td>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td>[[item.Ad]]</td>
+                            <td>[[item.K1Ad]]</td>
+                            <td>[[item.K2Ad]]</td>
                             <td>[[item.Adres]]</td>
-                            <td class="ortala">
-                                <a href="/bodved/CTPpage/[[item.oNo]]">►</a>
-                            </td>
+                            <td class="ortala"><a href="/bodved/CTPpage/[[item.oNo]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>

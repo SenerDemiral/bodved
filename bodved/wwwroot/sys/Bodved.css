@@ -150,6 +150,10 @@ input[type=number] {
     width: 40px;
     padding:1px;
 }
+.oNo {
+    background-color: gainsboro;
+    font-size: 0.7em;
+}
 .hSW {
     background-color: #eaefb3;
 }

@@ -10,7 +10,7 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="oNo">#</th>
                         <th>Ad</th>
                         <th>Şkl</th>
                         <th>Grp</th>
@@ -21,16 +21,12 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.CCs]]">
                         <tr>
-                            <td><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.Ad]]</td>
                             <td data-typ="nmr">[[item.Skl]]</td>
                             <td data-typ="nmr">[[item.Grp]]</td>
-                            <td class="ortala">
-                                <a href="/bodved/CTpage/[[item.oNo]]">►</a>
-                            </td>
-                            <td class="ortala">
-                                <a href="/bodved/CETpage/[[item.oNo]]">►</a>
-                            </td>
+                            <td class="ortala"><a href="/bodved/CTpage/[[item.oNo]]">►</a></td>
+                            <td class="ortala"><a href="/bodved/CETpage/[[item.oNo]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>
