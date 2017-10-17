@@ -1,4 +1,4 @@
-using Starcounter;
+ï»¿using Starcounter;
 
 namespace bodved
 {
@@ -25,7 +25,7 @@ namespace bodved
             }
 
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-            Cap1 = $"{cc.Ad} Takýmlarý";
+            Cap1 = $"{cc.Ad} TakÄ±mlarÄ±";
             
             CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", cc);
 
