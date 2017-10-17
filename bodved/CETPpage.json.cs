@@ -42,7 +42,7 @@ namespace bodved
             // Kayit yoksa CTP'den alip yarat
             if (cetps == null)
             {
-                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", ct);
+                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
                 int ix = 1;
                 foreach (var src in ctps)
                 {
@@ -167,10 +167,15 @@ namespace bodved
 
         void createCETR()
         {
-            createCETR("H", "S");
-            createCETR("H", "D");
-            createCETR("G", "S");
-            createCETR("G", "D");
+            var x = Db.SQL<BDB.CETR>("select c from BDB.CETR c where c.CET.ObjectNo = ?", ulong.Parse(CEToNo)).First;
+
+            if (x == null)
+            {
+                createCETR("H", "S");
+                createCETR("H", "D");
+                createCETR("G", "S");
+                createCETR("G", "D");
+            }
             /*
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             // Home/Guest Players Single/Double

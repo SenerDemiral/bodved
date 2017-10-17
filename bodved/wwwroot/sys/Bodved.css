@@ -141,6 +141,19 @@ input[type=number] {
     width: 30px;
 }
 */
+.bodved{
+    font-style:italic;
+    font-weight:bold;
+    background-color:whitesmoke;
+    color:darkkhaki;
+    border:1px solid;
+}
+.ppAd {
+    min-width: 8rem;
+    max-width: 8rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
 .inpSetSayi {
     width: 20px;
     text-align: center;

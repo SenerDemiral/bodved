@@ -100,6 +100,7 @@ namespace bodved
                 {
                     dbl.hoNo2 = src.oNo.ToString();
                     dbl.hPPAd2 = src.PPAd;
+
                 }
                 if ((c % 4) == 2)
                 {
@@ -262,6 +263,11 @@ namespace bodved
                     hCetr1.SL = (int)gA;
                     gCetr1.SW = (int)gA;
                     gCetr1.SL = (int)hA;
+
+                    hCetr2.SW = (int)hA;
+                    hCetr2.SL = (int)gA;
+                    gCetr2.SW = (int)gA;
+                    gCetr2.SL = (int)hA;
 
                     if (hA > gA)
                         hMW++;

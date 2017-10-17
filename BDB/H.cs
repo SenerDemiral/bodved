@@ -10,6 +10,7 @@ namespace BDB
 {
     public static class H
     {
+
         // Sonuclari toplayip CET'e yaz
         public static void Cetr2Cet(string CEToNo)
         {

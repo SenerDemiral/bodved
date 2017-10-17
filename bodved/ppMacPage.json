@@ -1,0 +1,35 @@
+﻿{
+  "Html": "/bodved/ppMacPage.html",
+  "Cap1": "Oyuncu Maclari",
+  "Cap2": "",
+  "PPoNo": "",
+
+  "TMSW": 0, // Toplam Mac Single Win
+  "TMSL": 0,
+  "TMDW": 0,
+  "TMDL": 0,
+
+  "TSSW": 0, // Toplam Set Single Win
+  "TSSL": 0,
+  "TSDW": 0,
+  "TSDL": 0,
+  
+  "TMS": 0, // Toplam Mac Single Adedi
+  "TMD": 0,
+
+  "Singles": [
+    {
+      "Sonuc": "",
+      "Rakip": ""
+    }
+  ],
+
+  "Doubles": [
+    {
+      "Ortak": "",
+      "Sonuc": "",
+      "Rakip1": "",
+      "Rakip2": ""
+    }
+  ]
+}
