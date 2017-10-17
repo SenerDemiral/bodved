@@ -4,21 +4,32 @@
   "Cap2": "",
   "PPoNo": "",
 
-  "TMSW": 0, // Toplam Mac Single Win
-  "TMSL": 0,
-  "TMDW": 0,
-  "TMDL": 0,
+  "SMo": 0, // Sng Mac Oynadigi
+  "SMa": 0, //         Aldigi
+  "SMv": 0, //         Verdigi
+  "SSo": 0, // Sng Set Oynadigi
+  "SSa": 0,
+  "SSv": 0,
 
-  "TSSW": 0, // Toplam Set Single Win
-  "TSSL": 0,
-  "TSDW": 0,
-  "TSDL": 0,
-  
-  "TMS": 0, // Toplam Mac Single Adedi
-  "TMD": 0,
+  "DMo": 0,
+  "DMa": 0,
+  "DMv": 0,
+  "DSo": 0,
+  "DSa": 0,
+  "DSv": 0,
+
 
   "Singles": [
     {
+      "oNo": 0,
+      "WoL": "",
+      "SW": "",
+      "SL": "",
+      "S1": "",
+      "S2": "",
+      "S3": "",
+      "S4": "",
+      "S5": "",
       "Sonuc": "",
       "Rakip": ""
     }
@@ -26,7 +37,16 @@
 
   "Doubles": [
     {
+      "oNo": 0,
+      "WoL": "",
       "Ortak": "",
+      "SW": "",
+      "SL": "",
+      "S1": "",
+      "S2": "",
+      "S3": "",
+      "S4": "",
+      "S5": "",
       "Sonuc": "",
       "Rakip1": "",
       "Rakip2": ""

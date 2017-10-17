@@ -2,6 +2,131 @@
 
 <template>
     <template is="dom-bind">
+        <div class="tblWrap">
+            <table id="ppTbl">
+                <caption>
+                    <div>[[model.Cap1]]</div>
+                    <div>[[model.Cap2]]</div>
+                </caption>
+                <thead>
+                    <tr>
+                        <th colspan="6">Single</th>
+                        <th colspan="6">Double</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Maç</th>
+                        <th colspan="3">Set</th>
+                        <th colspan="3">Maç</th>
+                        <th colspan="3">Set</th>
+                    </tr>
+                    <tr>
+                        <th>O</th>
+                        <th>A</th>
+                        <th>V</th>
+                        <th>O</th>
+                        <th>A</th>
+                        <th>V</th>
+                        <th>O</th>
+                        <th>A</th>
+                        <th>V</th>
+                        <th>O</th>
+                        <th>A</th>
+                        <th>V</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[[model.SMo]]</td>
+                        <td>[[model.SMa]]</td>
+                        <td>[[model.SMv]]</td>
+                        <td>[[model.SSo]]</td>
+                        <td>[[model.SSa]]</td>
+                        <td>[[model.SSv]]</td>
+
+                        <td>[[model.DMo]]</td>
+                        <td>[[model.DMa]]</td>
+                        <td>[[model.DMv]]</td>
+                        <td>[[model.DSo]]</td>
+                        <td>[[model.DSa]]</td>
+                        <td>[[model.DSv]]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table>
+                <caption>
+                    <div>Single</div>
+                </caption>
+                <thead>
+                    <tr>
+                        <th class="oNo">№</th>
+                        <th>A</th>
+                        <th>S1</th>
+                        <th>S2</th>
+                        <th>S3</th>
+                        <th>S4</th>
+                        <th>S5</th>
+                        <th>V</th>
+                        <th>Rakip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.Singles]]">
+                        <tr data-WoL$="[[item.WoL]]">
+                            <td class="oNo">[[item.oNo]]</td>
+
+                            <td>[[item.SW]]</td>
+                            <td>[[item.S1]]</td>
+                            <td>[[item.S2]]</td>
+                            <td>[[item.S3]]</td>
+                            <td>[[item.S4]]</td>
+                            <td>[[item.S5]]</td>
+                            <td>[[item.SL]]</td>
+                            
+                            <td>[[item.Rakip]]</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <table>
+                <caption>
+                    <div>Double</div>
+                </caption>
+                <thead>
+                    <tr>
+                        <th class="oNo">№</th>
+                        <th>Ortak</th>
+                        <th>A</th>
+                        <th>S1</th>
+                        <th>S2</th>
+                        <th>S3</th>
+                        <th>S4</th>
+                        <th>S5</th>
+                        <th>V</th>
+                        <th>Rakip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.Doubles]]">
+                        <tr data-WoL$="[[item.WoL]]">
+                            <td class="oNo">[[item.oNo]]</td>
+                            <td>[[item.Ortak]]</td>
+
+                            <td>[[item.SW]]</td>
+                            <td>[[item.S1]]</td>
+                            <td>[[item.S2]]</td>
+                            <td>[[item.S3]]</td>
+                            <td>[[item.S4]]</td>
+                            <td>[[item.S5]]</td>
+                            <td>[[item.SL]]</td>
+
+                            <td>[[item.Rakip1]]<br />[[item.Rakip2]]</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
         
     </template>
 </template>

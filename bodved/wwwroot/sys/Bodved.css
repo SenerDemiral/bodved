@@ -193,6 +193,11 @@ button.edit {
     margin-right:3px;
     padding: 0px;
 }
+
+[data-WoL="W"] {
+    color: red;
+}
+
 /****************/
 .dropbtn {
     background-color: #4CAF50;
