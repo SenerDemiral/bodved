@@ -39,6 +39,8 @@ namespace bodved
 
                 }
             }
+            BDB.H.Write2Log($"Login: {mpLgn.Nm} {mpLgn.Id} {Pw} {nPw} {mpLgn.LI}");
+
         }
     }
 }

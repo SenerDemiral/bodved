@@ -50,6 +50,9 @@ namespace bodved
 
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider(HTML));
+
+            BDB.H.Write2Log("Start");
+
             Handle.GET("/bodved/init", () =>
             {
                 //popTable();
@@ -116,6 +119,8 @@ namespace bodved
                 master = new MasterPage();
                 //Session.Current.Data = master;
                 Session.Current.Store["App"] = master;
+
+                BDB.H.Write2Log("Enter");
             }
 
             return master;

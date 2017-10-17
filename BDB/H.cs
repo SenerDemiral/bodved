@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Starcounter;
+using System.IO;
 
 namespace BDB
 {
@@ -81,5 +82,22 @@ namespace BDB
 
         }
 
+        public static void Write2Log(string Msg)
+        {
+            //StreamWriter sw = null;
+            //if (sw == null)
+            //    sw = new StreamWriter(@"C:\Starcounter\MyLog\tMaxLogin-Log.txt", true);
+
+            try
+            {
+                StreamWriter sw = new StreamWriter(@"C:\Starcounter\MyLog\BodVed-Log.txt", true);
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + Msg);
+                sw.Flush();
+                sw.Close();
+            }
+            catch
+            {
+            }
+        }
     }
 }
