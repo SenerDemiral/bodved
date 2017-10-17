@@ -434,7 +434,7 @@ namespace BDB
                 var yk15 = new BDB.PP() { Ad = "Ahmet KÖK" };
                 var yk16 = new BDB.PP() { Ad = "Nadir UYSAL" };
                 var yk17 = new BDB.PP() { Ad = "Ali ŞENIŞIK" };
-                var yk18 = new BDB.PP() { Ad = "Sinan LİMÖNCUOĞLU" };
+                var yk18 = new BDB.PP() { Ad = "Sinan LİMONCUOĞLU" };
                 var yk19 = new BDB.PP() { Ad = "İhsan ÇÖKER" };
                 var yk1A = new BDB.PP() { Ad = "Oğuz DEVELİ" };
                 var yk1B = new BDB.PP() { Ad = "Tahir ÇELİKKESEN" };

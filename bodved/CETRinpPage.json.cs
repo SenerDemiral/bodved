@@ -195,10 +195,28 @@ namespace bodved
                     gCetr.SW = (int)gA;
                     gCetr.SL = (int)hA;
 
-                    if (hA > gA)
-                        hMW++;
-                    else
-                        gMW++;
+                    src.hSW = hA;
+                    src.gSW = gA;
+
+                    hCetr.MW = 0;
+                    hCetr.ML = 0;
+                    gCetr.MW = 0;
+                    gCetr.ML = 0;
+                    if ((hA + gA) > 0)  // Oynandiysa
+                    {
+                        if (hA > gA)
+                        {
+                            hMW++;
+                            hCetr.MW = 1;
+                            gCetr.ML = 1;
+                        }
+                        else
+                        {
+                            gMW++;
+                            hCetr.ML = 1;
+                            gCetr.MW = 1;
+                        }
+                    }
                 }
                 cet.hMSW = (int)hMW;
                 cet.gMSW = (int)gMW;
@@ -259,6 +277,9 @@ namespace bodved
                     else if (src.hS5W < src.gS5W)
                         gA++;
 
+                    src.hDW = hA;
+                    src.gDW = gA;
+
                     hCetr1.SW = (int)hA;
                     hCetr1.SL = (int)gA;
                     gCetr1.SW = (int)gA;
@@ -269,10 +290,33 @@ namespace bodved
                     gCetr2.SW = (int)gA;
                     gCetr2.SL = (int)hA;
 
-                    if (hA > gA)
-                        hMW++;
-                    else
-                        gMW++;
+                    hCetr1.MW = 0;
+                    hCetr1.ML = 0;
+                    gCetr1.MW = 0;
+                    gCetr1.ML = 0;
+                    hCetr2.MW = 0;
+                    hCetr2.ML = 0;
+                    gCetr2.MW = 0;
+                    gCetr2.ML = 0;
+                    if ((hA + gA) > 0)  // Oynandiysa
+                    {
+                        if (hA > gA)
+                        {
+                            hMW++;
+                            hCetr1.MW = 1;
+                            hCetr2.MW = 1;
+                            gCetr1.ML = 1;
+                            gCetr2.ML = 1;
+                        }
+                        else
+                        {
+                            gMW++;
+                            hCetr1.ML = 1;
+                            hCetr2.ML = 1;
+                            gCetr1.MW = 1;
+                            gCetr2.MW = 1;
+                        }
+                    }
                 }
 
                 cet.hMDW = (int)hMW;
@@ -281,17 +325,32 @@ namespace bodved
                 cet.hPW = (cet.hMSW * 2) + (cet.hMDW * 3);
                 cet.gPW = (cet.gMSW * 2) + (cet.gMDW * 3);
 
+                cet.hP = 0;
+                cet.gP = 0;
                 if (cet.hPW > cet.gPW)
                 {
                     cet.hP = 3;
                     cet.gP = 1;
                 }
-                else
+                else if(cet.hPW < cet.gPW)
                 {
                     cet.hP = 1;
                     cet.gP = 3;
                 }
             });
+            hP = cet.hP;
+            gP = cet.gP;
+            hPW = cet.hPW;
+            gPW = cet.gPW;
+            //hPSW = cet.hPSW;
+            //gPSW = cet.gPSW;
+            //hPDW = cet.hPDW;
+            //gPDW = cet.gPDW;
+            hMSW = cet.hMSW;
+            gMSW = cet.gMSW;
+            hMDW = cet.hMDW;
+            gMDW = cet.gMDW;
+
         }
 
         [CETRinpPage_json.Singles]

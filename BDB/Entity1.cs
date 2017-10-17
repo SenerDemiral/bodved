@@ -34,6 +34,20 @@ namespace BDB
 
         public string KytTarih => string.Format("{0:s}", KytTrh);
 
+        public int SSo { get; set; }    // Single Set Oynadigi
+        public int SSa { get; set; }
+        public int SSv { get; set; }
+        public int SMo { get; set; }    //        Mac Oynadigi
+        public int SMa { get; set; }
+        public int SMv { get; set; }
+
+        public int DSo { get; set; }
+        public int DSa { get; set; }
+        public int DSv { get; set; }
+        public int DMo { get; set; }
+        public int DMa { get; set; }
+        public int DMv { get; set; }
+
         public PP()
         {
             Ad = "";
@@ -210,9 +224,12 @@ namespace BDB
         public int S5W { get; set; }
 
         // Mac bittikten sonra hesaplanacak
-        public int    SW   { get; set; }     // Set Won
-        public int    SL   { get; set; }     // Set Lost
-        public int    PW   { get; set; }     // Puan Won
+        public int SW { get; set; }     // Set Won
+        public int SL { get; set; }     //     Lost
+        public int MW { get; set; }     // Mac Won
+        public int ML { get; set; }     //     Lost
+
+        //public int    PW   { get; set; }     // Puan Won
         public string Snc1 { get; set; }    // 11-5, 8-11, 12-10, 11-0
         public string Snc2 { get; set; }    // [3-1] –5,+8,–10,–0    [-]Aldigi sette verdigi sayi, [+]Verdigi sette aldigi sayi
 

@@ -60,6 +60,12 @@ namespace bodved
                 return "Init: OK";
             });
 
+            Handle.GET("/bodved/updPPsum", () =>
+            {
+                BDB.H.updPPsum();
+                return "updPPsum: OK";
+            });
+
             Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
 
             Handle.GET("/bodved/partial/AboutPage", () => new AboutPage());

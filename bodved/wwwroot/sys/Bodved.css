@@ -56,8 +56,8 @@ table {
 }
 
 td {
-  	line-height: 1.5em;
-	padding: 0.2em 0.4em;
+  	/*-height: 1.5em;*/
+	padding: 2px; /*0.2em 0.4em;*/
 	border: 1px solid #CBCBCB;
     white-space: nowrap;
 }
@@ -135,6 +135,9 @@ td[data-idx="7"] {
 [data-typ="inmr"] {
     width: 40px;
     padding:1px;
+}
+[data-val="0"] {
+    color:white;
 }
 /*
 input[type=number] {

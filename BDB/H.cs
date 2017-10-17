@@ -82,6 +82,66 @@ namespace BDB
             });
 
         }
+        public static void updPPsum()
+        {
+            var pp = Db.SQL<BDB.PP>("select p from PP p");
+            foreach(var p in pp)
+            {
+                updPPsum(p.oNo);
+            }
+        }
+
+        public static void updPPsum(ulong oNo)
+        {
+            var pp = Db.FromId<BDB.PP>(oNo);
+            int SMo = 0, SMa = 0, SMv = 0;
+            int DMo = 0, DMa = 0, DMv = 0;
+            int SSo = 0, SSa = 0, SSv = 0;
+            int DSo = 0, DSa = 0, DSv = 0;
+
+            var cetr = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ?", pp);
+            foreach(var k in cetr)
+            {
+                if ((k.SW + k.SL) != 0)
+                {
+                    if (k.SoD == "S")
+                    {
+                        SMo++;
+                        SMa += k.MW;
+                        SMv += k.ML;
+                        SSa += k.SW;
+                        SSv += k.SL;
+                        SSo += SSa + SSv;
+                    }
+                    else
+                    {
+                        DMo++;
+                        DMa += k.MW;
+                        DMv += k.ML;
+                        DSa += k.SW;
+                        DSv += k.SL;
+                        DSo += DSa + DSv;
+                    }
+                }
+            }
+            Db.Transact(() =>
+            {
+                pp.SSo = SSo;
+                pp.SSa = SSa;
+                pp.SSv = SSv;
+                pp.SMo = SMo;
+                pp.SMa = SMa;
+                pp.SMv = SMv;
+
+                pp.DSo = DSo;
+                pp.DSa = DSa;
+                pp.DSv = DSv;
+                pp.DMo = DMo;
+                pp.DMa = DMa;
+                pp.DMv = DMv;
+            });
+
+        }
 
         public static void Write2Log(string Msg)
         {

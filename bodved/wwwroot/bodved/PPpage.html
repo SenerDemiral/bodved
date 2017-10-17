@@ -10,20 +10,53 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">№</th>
-                        <th>Ad</th>
-                        <th>♀♂</th>
-                        <th>Dğm</th>
-                        <th>Tel</th>
-                        <th>eMail</th>
-                        <!--th>Maçlar</th-->
+                        <th rowspan="3" class="oNo">№</th>
+                        <th rowspan="3">Ad</th>
+                        <th colspan="6">Single</th>
+                        <th colspan="6">Double</th>
+                        <th rowspan="3">♀♂</th>
+                        <th rowspan="3">Dğm</th>
+                        <th rowspan="3">Tel</th>
+                        <th rowspan="3">eMail</th>
                     </tr>
-                </thead>
+                    <tr>
+                        <th colspan="3">Set</th>
+                        <th colspan="3">Maç</th>
+                        <th colspan="3">Set</th>
+                        <th colspan="3">Maç</th>
+                    </tr>
+                    <tr>
+                        <th>o</th>
+                        <th>a</th>
+                        <th>v</th>
+                        <th>o</th>
+                        <th>a</th>
+                        <th>v</th>
+                        <th>o</th>
+                        <th>a</th>
+                        <th>v</th>
+                        <th>o</th>
+                        <th>a</th>
+                        <th>v</th>
+                    </tr>
+r                </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.PPs]]">
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td><a href="/bodved/ppMacPage/[[item.oNo]]">[[item.Ad]]</a></td>
+                            <td data-val$="[[item.SSo]]">[[item.SSo]]</td>
+                            <td data-val$="[[item.SSa]]">[[item.SSa]]</td>
+                            <td data-val$="[[item.SSv]]">[[item.SSv]]</td>
+                            <td data-val$="[[item.SMo]]">[[item.SMo]]</td>
+                            <td data-val$="[[item.SMa]]">[[item.SMa]]</td>
+                            <td data-val$="[[item.SMv]]">[[item.SMv]]</td>
+                            <td data-val$="[[item.DSo]]">[[item.DSo]]</td>
+                            <td data-val$="[[item.DSa]]">[[item.DSa]]</td>
+                            <td data-val$="[[item.DSv]]">[[item.DSv]]</td>
+                            <td data-val$="[[item.DMo]]">[[item.DMo]]</td>
+                            <td data-val$="[[item.DMa]]">[[item.DMa]]</td>
+                            <td data-val$="[[item.DMv]]">[[item.DMv]]</td>
                             <td>[[item.Sex]]</td>
                             <td>[[item.DgmYil]]</td>
                             <td>[[item.Tel]]</td>
