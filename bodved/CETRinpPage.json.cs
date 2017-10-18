@@ -55,6 +55,7 @@ namespace bodved
 
                     sng.hoNo = src.oNo.ToString();
                     sng.hPPAd = src.PPAd;
+                    sng.hPPrnk = src.PRH.prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.hS2W = src.S2W;
                     sng.hS3W = src.S3W;
@@ -66,6 +67,8 @@ namespace bodved
                 {
                     sng.goNo = src.oNo.ToString();
                     sng.gPPAd = src.PPAd;
+                    sng.gPPrnk = src.PRH.prvRnk;
+
                     sng.gS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.gS2W = src.S2W;
                     sng.gS3W = src.S3W;
@@ -209,17 +212,37 @@ namespace bodved
                             hMW++;
                             hCetr.MW = 1;
                             gCetr.ML = 1;
+
+                            hCetr.PRH.Won = 1;
+                            gCetr.PRH.Won = -1;
+
+                            hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
+                            hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
+                            gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
+                            gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
                         }
                         else
                         {
                             gMW++;
                             hCetr.ML = 1;
                             gCetr.MW = 1;
+
+                            hCetr.PRH.Won = -1;
+                            gCetr.PRH.Won = 1;
+
+                            hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
+                            hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
+                            gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
+                            gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
                         }
                     }
+
+                    //var prh = Db.FromId<BDB.PRH>(hCetr.PRH.);
                 }
                 cet.hMSW = (int)hMW;
                 cet.gMSW = (int)gMW;
+
+
 
                 hMW = 0;
                 gMW = 0;

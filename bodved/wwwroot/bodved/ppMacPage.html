@@ -59,30 +59,37 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">№</th>
-                        <th>A</th>
+                        <th class="oNo">ID</th>
+                        <th>Tarih</th>
+                        <th>Rank</th>
+                        <th>PX</th>
+                        <th class="hSW">A</th>
                         <th>S1</th>
                         <th>S2</th>
                         <th>S3</th>
                         <th>S4</th>
                         <th>S5</th>
-                        <th>V</th>
-                        <th>Rakip</th>
+                        <th class="hSW">V</th>
+                        <th colspan="2">Rakip</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.Singles]]">
                         <tr data-WoL$="[[item.WoL]]">
                             <td class="oNo">[[item.oNo]]</td>
+                            <td>[[item.Tarih]]</td>
+                            <td>°[[item.Rnk]]</td>
+                            <td>[[item.NOBX]]</td>
 
-                            <td>[[item.SW]]</td>
+                            <td class="hSW">[[item.SW]]</td>
                             <td>[[item.S1]]</td>
                             <td>[[item.S2]]</td>
                             <td>[[item.S3]]</td>
                             <td>[[item.S4]]</td>
                             <td>[[item.S5]]</td>
-                            <td>[[item.SL]]</td>
+                            <td class="hSW">[[item.SL]]</td>
                             
+                            <td>°[[item.rRnk]]</td>
                             <td>[[item.Rakip]]</td>
                         </tr>
                     </template>
@@ -95,15 +102,16 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">№</th>
+                        <th class="oNo">ID</th>
+                        <th>Tarih</th>
                         <th>Ortak</th>
-                        <th>A</th>
+                        <th class="hSW">A</th>
                         <th>S1</th>
                         <th>S2</th>
                         <th>S3</th>
                         <th>S4</th>
                         <th>S5</th>
-                        <th>V</th>
+                        <th class="hSW">V</th>
                         <th>Rakip</th>
                     </tr>
                 </thead>
@@ -111,15 +119,16 @@
                     <template is="dom-repeat" items="[[model.Doubles]]">
                         <tr data-WoL$="[[item.WoL]]">
                             <td class="oNo">[[item.oNo]]</td>
+                            <td>[[item.Tarih]]</td>
                             <td>[[item.Ortak]]</td>
 
-                            <td>[[item.SW]]</td>
+                            <td class="hSW">[[item.SW]]</td>
                             <td>[[item.S1]]</td>
                             <td>[[item.S2]]</td>
                             <td>[[item.S3]]</td>
                             <td>[[item.S4]]</td>
                             <td>[[item.S5]]</td>
-                            <td>[[item.SL]]</td>
+                            <td class="hSW">[[item.SL]]</td>
 
                             <td>[[item.Rakip1]]<br />[[item.Rakip2]]</td>
                         </tr>

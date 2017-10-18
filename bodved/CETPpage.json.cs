@@ -227,7 +227,7 @@ namespace bodved
 
                 Db.Transact(() =>
                 {
-                    new BDB.CETR()
+                    var nCetr = new BDB.CETR()
                     {
                         CET = cet,
                         CC = src.CC,
@@ -235,9 +235,20 @@ namespace bodved
                         PP = src.PP,
                         Idx = src.Idx,
                         SoD = sOd,
-                        HoG = hOg
+                        HoG = hOg,
+                        Trh = cet.Trh
                     };
-
+                    if (sOd == "S")
+                    {
+                        var rp = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.SoD = ? and c.Idx = ? and c.HoG <> ?", cet, sOd, src.Idx, hOg).First;
+                        nCetr.PRH = new BDB.PRH()
+                        {
+                            PP = src.PP,
+                            rPP = rp.PP,
+                            Trh = cet.Trh,
+                            Won = 0
+                        };
+                    }
                 });
                 c++;
             }

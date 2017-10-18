@@ -66,6 +66,11 @@ namespace bodved
                     r.hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo));
                     r.gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo));
                     r.Trh = DateTime.Parse(MdfRec.Tarih);
+
+                    foreach (var s in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ?", r))
+                    {
+                        s.Trh = r.Trh;
+                    }
                 });
                 MdfRec.oNo = 0;
                 CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));

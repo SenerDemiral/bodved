@@ -10,6 +10,8 @@
       "Ad": "",
       "Sex": "",
       "DgmYil": 0,
+      "RnkBaz": 0,
+      "curRnk": 0,
       "Tel": "",
       "eMail": "",
 
@@ -39,6 +41,7 @@
     "Ad$": "",
     "Sex$": "",
     "DgmYil$": 0,
+    "RnkBaz$": 0,
     "Tel$": "",
     "eMail$": ""
   }

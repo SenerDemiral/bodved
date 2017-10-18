@@ -22,6 +22,9 @@
   "Singles": [
     {
       "oNo": 0,
+      "Tarih": "",
+      "Rnk": 0,
+      "NOBX": 0,
       "WoL": "",
       "SW": "",
       "SL": "",
@@ -31,13 +34,15 @@
       "S4": "",
       "S5": "",
       "Sonuc": "",
-      "Rakip": ""
+      "Rakip": "",
+      "rRnk": 0
     }
   ],
 
   "Doubles": [
     {
       "oNo": 0,
+      "Tarih": "",
       "WoL": "",
       "Ortak": "",
       "SW": "",

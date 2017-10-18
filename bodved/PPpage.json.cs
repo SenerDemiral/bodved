@@ -30,6 +30,7 @@ namespace bodved
                         Ad = this.MdfRec.Ad,
                         Sex = this.MdfRec.Sex,
                         DgmYil = (int)this.MdfRec.DgmYil,
+                        RnkBaz = (int)this.MdfRec.RnkBaz,
                         Tel = this.MdfRec.Tel,
                         eMail = this.MdfRec.eMail
                     };
@@ -52,6 +53,7 @@ namespace bodved
                     r.Ad = MdfRec.Ad;
                     r.Sex = this.MdfRec.Sex;
                     r.DgmYil = (int)this.MdfRec.DgmYil;
+                    r.RnkBaz = (int)this.MdfRec.RnkBaz;
                     r.Tel = this.MdfRec.Tel;
                     r.eMail = this.MdfRec.eMail;
                 });

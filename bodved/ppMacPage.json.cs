@@ -10,10 +10,10 @@ namespace bodved
             base.OnData();
 
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
-            Cap1 = $"{pp.Ad} №{pp.oNo}";
+            Cap1 = $"{pp.Ad} [{pp.oNo}]"; // №
 
             SinglesElementJson sng = null;
-            var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "S");
+            var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh", pp, "S");
             foreach(var k in cetrS)
             {
                 
@@ -22,6 +22,11 @@ namespace bodved
 
                 sng = Singles.Add();
                 sng.oNo = (long)k.oNo;
+                sng.Tarih = k.Trh.ToString("yyy-MM-dd");
+                sng.Rnk = k.PRH.prvRnk;
+                sng.NOBX = k.PRH.NOPX;
+                sng.rRnk = r.PRH.prvRnk;
+
                 sng.Rakip = r.PPAd;
                 sng.Sonuc = $"[{k.SW}-{r.SW}] {k.S1W}-{r.S1W} {k.S2W}-{r.S2W} {k.S3W}-{r.S3W} {k.S4W}-{r.S4W} {k.S5W}-{r.S5W}";
 
@@ -50,13 +55,14 @@ namespace bodved
             foreach(var k in cetrD)
             {
                 var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, k.HoG, pp).First;
-                
+
                 // Rakip
                 var rHoG = k.HoG == "H" ? "G" : "H";
                 var r = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ?", k.CET, k.Idx, k.SoD, rHoG).ToArray();
 
                 dbl = Doubles.Add();
                 dbl.oNo = (long)k.oNo;
+                dbl.Tarih = k.Trh.ToString("yyy-MM-dd");
                 dbl.Ortak = o.PPAd;
 
                 dbl.Rakip1 = r[0].PPAd;

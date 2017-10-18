@@ -82,6 +82,7 @@ namespace BDB
             });
 
         }
+
         public static void updPPsum()
         {
             var pp = Db.SQL<BDB.PP>("select p from PP p");
@@ -141,6 +142,121 @@ namespace BDB
                 pp.DMv = DMv;
             });
 
+        }
+
+
+        public static void updPPrnk(ulong CCoNo)
+        {
+            var cc = Db.FromId<BDB.CC>(CCoNo);
+
+            // Sadece Sngl oynadiklarinda Rank hesaplanir
+            // Home oyunculari tara, rakibi Guest
+
+            int hRnk = 0,
+                gRnk = 0;
+
+            int PS = 0;    // Point Spread between players
+            int ER = 0; // ExpectedResult
+            int UR = 0; // UpsetResult
+            string W = "";  // Winner H/G
+
+            var cetr = Db.SQL<BDB.CETR>("select c from CETR c where c.CC = ? and c.SoD = ? and c.HoG = ? order by c.Trh", cc, "S", "H");
+            foreach (var h in cetr)
+            {
+                hRnk = h.PP.Rnk == 0 ? h.PP.RnkBaz : h.PP.Rnk;
+                // Guest/Rakip
+                var g = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG <> ?", h.CET, h.Idx, h.SoD, "G").First;
+                gRnk = g.PP.Rnk == 0 ? g.PP.RnkBaz : g.PP.Rnk;
+
+                W = h.MW > g.MW ? "H" : "G";
+
+                PS = Math.Abs(hRnk - gRnk);
+                ER = 0;
+                UR = 0;
+
+                if (PS < 13)
+                {
+                    ER = 8;
+                    UR = 8;
+                }
+                else if (PS < 38)
+                {
+                    ER = 7;
+                    UR = 10;
+                }
+                else if (PS < 63)
+                {
+                    ER = 6;
+                    UR = 13;
+                }
+                else if (PS < 88)
+                {
+                    ER = 5;
+                    UR = 16;
+                }
+                else if (PS < 113)
+                {
+                    ER = 4;
+                    UR = 20;
+                }
+                else if (PS < 138)
+                {
+                    ER = 3;
+                    UR = 25;
+                }
+                else if (PS < 163)
+                {
+                    ER = 2;
+                    UR = 30;
+                }
+                else if (PS < 188)
+                {
+                    ER = 2;
+                    UR = 35;
+                }
+                else if (PS < 213)
+                {
+                    ER = 1;
+                    UR = 40;
+                }
+                else if (PS < 238)
+                {
+                    ER = 1;
+                    UR = 45;
+                }
+                else
+                {
+                    ER = 0;
+                    UR = 50;
+                }
+            }
+
+            if (hRnk >= gRnk)   // Home: Iyi
+            {
+                if (W == "H")   // Expected: Home kazanmis
+                {
+                    hRnk += ER;
+                    gRnk -= ER;
+                }
+                else            // Upset: Home kaybetmis
+                {
+                    hRnk -= UR;
+                    gRnk += UR;
+                }
+            }
+            else                // Guest: Iyi
+            {
+                if (W == "G")   // Expected: Guest kazanmis
+                {
+                    hRnk -= ER;
+                    gRnk += ER;
+                }
+                else            // Upset: Guest kayetmis
+                {
+                    hRnk += UR;
+                    gRnk -= UR;
+                }
+            }
         }
 
         public static void Write2Log(string Msg)

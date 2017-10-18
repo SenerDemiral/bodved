@@ -34,6 +34,9 @@ namespace BDB
 
         public string KytTarih => string.Format("{0:s}", KytTrh);
 
+        public int RnkBaz { get; set; }
+        public int Rnk { get; set; }
+
         public int SSo { get; set; }    // Single Set Oynadigi
         public int SSa { get; set; }
         public int SSv { get; set; }
@@ -48,12 +51,24 @@ namespace BDB
         public int DMa { get; set; }
         public int DMv { get; set; }
 
+        public int curRnk
+        {
+            get
+            {
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this, DateTime.MaxValue).First;
+                return p?.Rnk ?? this.RnkBaz;
+
+            }
+        }
+
         public PP()
         {
             Ad = "";
             Sex = "E";
             DgmYil = 1960;
             KytTrh = DateTime.Now;
+            RnkBaz = 1900;
+            Rnk = 0;
         }
     }
     // Global, Oyuncu oynayabilmesi icin burada tanimlanmalidir.
@@ -208,13 +223,15 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
-        public CC     CC  { get; set; }
-        public CET    CET { get; set; }
-        public CT     CT  { get; set; }
+        public CC CC  { get; set; }
+        public CET CET { get; set; }
+        public CT CT  { get; set; }
         public string HoG { get; set; }
         public string SoD { get; set; }
-        public int    Idx { get; set; }
-        public PP     PP  { get; set; }
+        public int Idx { get; set; }
+        public PP PP { get; set; }
+        public PRH PRH { get; set; }
+        public DateTime Trh { get; set; }
 
         // Setlerde kazandigi sayilar
         public int S1W { get; set; }
@@ -238,5 +255,139 @@ namespace BDB
         public string PPAd => PP?.Ad ?? "-";
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
+
+    [Database]
+    public class PRH     // Player Rank History
+    {
+        public PP PP { get; set; }     // Target Oyuncu
+        public PP rPP { get; set; }    // Rakip
+
+        public DateTime Trh { get; set; }
+
+        public int Won { get; set; }    // -1:Kaybetti, 0:Oynanmadi, +1:Kazandi
+        public int NOPX { get; set; }   // NumberOfPointsExchange between players. -:Kaybetti, 0:Oynanmadi, +:Kazandi
+
+        public int Rnk { get; set; }    // Macdan Sonraki Rank. (Rnk = prvRnk + NOPX)
+
+        public string PPAd => PP?.Ad ?? "-";
+        public string rPPAd => rPP?.Ad ?? "-";
+
+        public int prvRnk
+        {
+            get
+            {
+                // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).First;
+                return p?.Rnk ?? this.PP.RnkBaz;
+            }
+        }
+        public int prvRnkRkp
+        {
+            get
+            {
+                // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).First;
+                return p?.Rnk ?? this.rPP.RnkBaz;
+            }
+        }
+        public int compNOPX
+        {
+            get
+            {
+                int NOPX = 0;
+                if (this.Won == 0)
+                    return NOPX;
+
+                int Rnk = this.prvRnk;
+                int RnkRkp = this.prvRnkRkp;
+
+                int PS = 0; // Point Spread between players
+                int ER = 0; // ExpectedResult
+                int UR = 0; // UpsetResult
+
+                // Compute
+                PS = Math.Abs(Rnk - RnkRkp);
+
+                if (PS < 13)
+                {
+                    ER = 8;
+                    UR = 8;
+                }
+                else if (PS < 38)
+                {
+                    ER = 7;
+                    UR = 10;
+                }
+                else if (PS < 63)
+                {
+                    ER = 6;
+                    UR = 13;
+                }
+                else if (PS < 88)
+                {
+                    ER = 5;
+                    UR = 16;
+                }
+                else if (PS < 113)
+                {
+                    ER = 4;
+                    UR = 20;
+                }
+                else if (PS < 138)
+                {
+                    ER = 3;
+                    UR = 25;
+                }
+                else if (PS < 163)
+                {
+                    ER = 2;
+                    UR = 30;
+                }
+                else if (PS < 188)
+                {
+                    ER = 2;
+                    UR = 35;
+                }
+                else if (PS < 213)
+                {
+                    ER = 1;
+                    UR = 40;
+                }
+                else if (PS < 238)
+                {
+                    ER = 1;
+                    UR = 45;
+                }
+                else
+                {
+                    ER = 0;
+                    UR = 50;
+                }
+                if (Rnk >= RnkRkp)   // Target: Iyi
+                {
+                    if (Won > 0)     // Expected: Target kazanmis
+                        NOPX += ER;
+                    else             // Upset: Target kaybetmis
+                        NOPX -= UR;
+                }
+                else                 // Rakip: Iyi
+                {
+                    if (Won < 0)     // Expected: Rakip kazanmis
+                        NOPX -= ER;
+                    else             // Upset: Rakip kaybetmis
+                        NOPX += UR;
+                }
+
+                return NOPX;
+            }
+        }
+
+        public PRH()
+        {
+            Won = 0;
+            Rnk = 0;
+        }
+    }
+    // CETR (Veya baska Turnuva) yaratildiginda bu kayit da yaratilacak, Sonuc girildiginde NOPX ve Rnk hesaplanarak buraya yazilacak
 
 }
