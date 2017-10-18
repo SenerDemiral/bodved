@@ -57,7 +57,6 @@ namespace BDB
             {
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this, DateTime.MaxValue).First;
                 return p?.Rnk ?? this.RnkBaz;
-
             }
         }
 

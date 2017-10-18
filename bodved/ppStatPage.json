@@ -1,5 +1,5 @@
 {
-  "Html": "/bodved/PPpage.html",
+  "Html": "/bodved/ppStatPage.html",
   "Cap1": "Oyuncular",
   "Cap2": "",
   "canMdfy": false,
@@ -14,6 +14,19 @@
       "curRnk": 0,
       "Tel": "",
       "eMail": "",
+
+      "SSo": 0,
+      "SSa": 0,
+      "SSv": 0,
+      "SMo": 0,
+      "SMa": 0,
+      "SMv": 0,
+      "DSo": 0,
+      "DSa": 0,
+      "DSv": 0,
+      "DMo": 0,
+      "DMa": 0,
+      "DMv": 0,
 
       "MdfTrigger$": 0
     }

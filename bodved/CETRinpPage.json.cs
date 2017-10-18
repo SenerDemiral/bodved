@@ -92,6 +92,7 @@ namespace bodved
 
                     dbl.hoNo1 = src.oNo.ToString();
                     dbl.hPPAd1 = src.PPAd;
+                    dbl.hPPrnk1 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
                     dbl.hS1W = src.S1W;
                     dbl.hS2W = src.S2W;
                     dbl.hS3W = src.S3W;
@@ -103,12 +104,13 @@ namespace bodved
                 {
                     dbl.hoNo2 = src.oNo.ToString();
                     dbl.hPPAd2 = src.PPAd;
-
+                    dbl.hPPrnk2 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
                 }
                 if ((c % 4) == 2)
                 {
                     dbl.goNo1 = src.oNo.ToString();
                     dbl.gPPAd1 = src.PPAd;
+                    dbl.gPPrnk1 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
                     dbl.gS1W = src.S1W;
                     dbl.gS2W = src.S2W;
                     dbl.gS3W = src.S3W;
@@ -120,6 +122,7 @@ namespace bodved
                 {
                     dbl.goNo2 = src.oNo.ToString();
                     dbl.gPPAd2 = src.PPAd;
+                    dbl.gPPrnk2 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
                 }
 
                 c++;
@@ -365,15 +368,16 @@ namespace bodved
             gP = cet.gP;
             hPW = cet.hPW;
             gPW = cet.gPW;
-            //hPSW = cet.hPSW;
-            //gPSW = cet.gPSW;
-            //hPDW = cet.hPDW;
-            //gPDW = cet.gPDW;
+
             hMSW = cet.hMSW;
             gMSW = cet.gMSW;
             hMDW = cet.hMDW;
             gMDW = cet.gMDW;
 
+            hPSW = hMSW * 2;
+            hPDW = hMDW * 3;
+            gPSW = gMSW * 2;
+            gPDW = gMDW * 3;
         }
 
         [CETRinpPage_json.Singles]

@@ -137,7 +137,7 @@ td[data-idx="7"] {
     padding:1px;
 }
 [data-val="0"] {
-    color:white !important;
+    color:#e8e8e8 !important;
 }
 /*
 input[type=number] {

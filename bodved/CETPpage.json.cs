@@ -38,7 +38,7 @@ namespace bodved
             Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu Sýralama";
             Cap2 = $"{ct.Ad} Oyuncu Sýralama";
 
-            var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? order by c.Idx", cet, ct).First;
+            var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ?", cet, ct).First;
             // Kayit yoksa CTP'den alip yarat
             if (cetps == null)
             {

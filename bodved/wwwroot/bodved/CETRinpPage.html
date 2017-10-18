@@ -87,7 +87,7 @@
                     <template is="dom-repeat" items="[[model.Doubles]]">
                         <tr>
                             <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.Idx]]</td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">[[item.hPPAd1]]<br />[[item.hPPAd2]]</td>
+                            <td class="ppAd" data-idx$="[[item.Idx]]">[[item.hPPAd1]]<span class="rank">°[[item.hPPrnk1]]</span><br />[[item.hPPAd2]]<span class="rank">°[[item.hPPrnk2]]</span></td>
                             <td class="hSW" data-val$="[[item.hDW]]">[[item.hDW]]</td>
                             <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS1W$]]" value="{{item.hS1W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS1W$]]" value="{{item.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                             <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS2W$]]" value="{{item.hS2W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS2W$]]" value="{{item.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
@@ -95,7 +95,7 @@
                             <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS4W$]]" value="{{item.hS4W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS4W$]]" value="{{item.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                             <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS5W$]]" value="{{item.hS5W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS5W$]]" value="{{item.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                             <td class="gSW">[[item.gDW]]</td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">[[item.gPPAd1]]<br />[[item.gPPAd2]]</td>
+                            <td class="ppAd" data-idx$="[[item.Idx]]">[[item.gPPAd1]]<span class="rank">°[[item.gPPrnk1]]</span><br />[[item.gPPAd2]]<span class="rank">°[[item.gPPrnk2]]</span></td>
                         </tr>
                     </template>
                 </tbody>

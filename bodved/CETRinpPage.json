@@ -62,6 +62,8 @@
 
       "hoNo1": "",
       "hoNo2": "",
+      "hPPrnk1": 0,
+      "hPPrnk2": 0,
       "hPPAd1": "",
       "hPPAd2": "",
       "hS1W$": 0,
@@ -72,6 +74,8 @@
 
       "goNo1": "",
       "goNo2": "",
+      "gPPrnk1": 0,
+      "gPPrnk2": 0,
       "gPPAd1": "",
       "gPPAd2": "",
       "gS1W$": 0,
