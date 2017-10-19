@@ -20,6 +20,7 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
+            //canMdfy = true; DENEME
             CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
 
             //sener.NoR = DateTime.Now.Ticks;
@@ -43,6 +44,11 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
                 CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+
+                Session.ForAll((s, sessionId) =>
+                {
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
             }
         }
 
@@ -53,6 +59,7 @@ namespace bodved
 
             if (MdfRec.oNo != 0)
             {
+                
                 Db.Transact(() =>
                 {
                     var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
@@ -61,7 +68,12 @@ namespace bodved
                     r.Grp = MdfRec.Grp;
                 });
                 MdfRec.oNo = 0;
-                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+                //CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+                
+                Session.ForAll((s, sessionId) =>
+                {
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
             }
         }
 
@@ -85,6 +97,10 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
                 CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+                Session.ForAll((s, sessionId) =>
+                {
+                    s.CalculatePatchAndPushOnWebSocket();
+                });
             }
         }
 
