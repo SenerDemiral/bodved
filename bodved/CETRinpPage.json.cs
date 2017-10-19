@@ -364,6 +364,7 @@ namespace bodved
                     cet.gP = 3;
                 }
             });
+            
             hP = cet.hP;
             gP = cet.gP;
             hPW = cet.hPW;
@@ -378,6 +379,14 @@ namespace bodved
             hPDW = hMDW * 3;
             gPSW = gMSW * 2;
             gPDW = gMDW * 3;
+            
+            
+            Session.ForAll( (s, sID) => {
+                //if (s.Data is CETRinpPage)
+                    s.CalculatePatchAndPushOnWebSocket();
+            });
+            //OnData();
+            
         }
 
         [CETRinpPage_json.Singles]

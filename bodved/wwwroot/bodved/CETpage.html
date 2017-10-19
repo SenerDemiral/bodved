@@ -29,13 +29,13 @@
                     <template is="dom-repeat" items="[[model.CETs]]">
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
+                            <td class="ortala"><a class="Go" href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]" hidden$="[[!model.hPgo]]">►</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
                             <td data-typ="nmr">[[item.hCTAd]]</td>
                             <td class="hSW">[[item.hP]]</td>
                             <td data-typ="nmr"><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>
                             <td class="gSW">[[item.gP]]</td>
                             <td data-typ="nmr">[[item.gCTAd]]</td>
-                            <td class="ortala"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]" hidden$="[[!model.gPgo]]">►</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
+                            <td class="ortala"><a class="Go" href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]" hidden$="[[!model.gPgo]]">►</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
                         </tr>
                     </template>
                 </tbody>

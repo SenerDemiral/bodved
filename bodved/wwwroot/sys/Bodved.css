@@ -49,6 +49,7 @@ body {
 /*-----------------*/
 table {
 	border-collapse: collapse;
+    width: 100%;
 	/*border-spacing: 0px;*/
     border: 1px;
 	/*margin-left: auto;*/
@@ -76,8 +77,8 @@ th {
 
 .tblWrap {
     display:grid; 
-    /*justify-content:center; */
-    /*justify-items:center;*/
+    justify-content:start; 
+    justify-items:auto;
     /*grid-template-columns: minmax(700px, 1fr);*/
     grid-gap:3px; 
     /*margin: 20px;*/
@@ -116,6 +117,7 @@ th {
 
 .okSgn {
     padding-left:5px;
+    text-decoration:none;
 }
 
 tr[data-idx="1"],
@@ -136,8 +138,14 @@ td[data-idx="7"] {
     width: 40px;
     padding:1px;
 }
+
 [data-val="0"] {
     color:#e8e8e8 !important;
+}
+input:focus {
+    /*font-size: 1.2em;*/
+    background-color: yellow;
+    color:black !important;
 }
 /*
 input[type=number] {
@@ -152,13 +160,16 @@ input[type=number] {
     border:1px solid;
 }
 .ppAd {
-    min-width: 12rem;
+    min-width: 11rem;
     max-width: 12rem;
     overflow: hidden;
     white-space: nowrap;
 }
 .rank {
     font-size: 0.8em;
+}
+.rank::before {
+    content: " °";
 }
 .inpSetSayi {
     width: 20px;
@@ -175,17 +186,36 @@ input[type=number] {
     font-size: 0.7em;
     /*text-align: right;*/
 }
+.Idx {
+    text-align:center;
+}
+.Go {
+    text-align:center;
+    text-decoration:none;
+}
 .hSW {
     background-color: #eaefb3;
+    width: 20px;
+    text-align: center;
+    font-weight:700;
 }
 .gSW {
     background-color: #eaefb3;
+    width: 20px;
+    text-align: center;
+    font-weight:700;
 }
 .hHdr {
     background-color: honeydew;
 }
 .gHdr {
     background-color: lightgoldenrodyellow;
+}
+.SngHdr {
+    background-color: lavender;
+}
+.DblHdr {
+    background-color: lemonchiffon;
 }
 
 

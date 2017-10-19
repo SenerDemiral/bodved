@@ -13,7 +13,7 @@ namespace bodved
             Cap1 = $"{pp.Ad} [{pp.oNo}]"; // №
 
             SinglesElementJson sng = null;
-            var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh", pp, "S");
+            var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "S");
             foreach(var k in cetrS)
             {
                 
@@ -42,6 +42,8 @@ namespace bodved
 
                 // Esit sonuc sadece 0-0 da olur, bu da oynanmamis demektir
                 SMo++;
+                SSo = k.SW + r.SW;
+
                 SSa += k.SW;
                 SSv += r.SW;
                 if (k.SW > r.SW)
@@ -81,6 +83,8 @@ namespace bodved
                 dbl.WoL = k.SW > r[0].SW ? "W" : "L";
 
                 DMo++;
+                DSo = k.SW + r[0].SW;
+
                 DSa += k.SW;
                 DSv += r[0].SW;
                 if (k.SW > r[0].SW)
