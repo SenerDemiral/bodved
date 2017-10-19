@@ -20,7 +20,7 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            //canMdfy = true; DENEME
+            canMdfy = true; //DENEME
             CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
 
             //sener.NoR = DateTime.Now.Ticks;
@@ -48,6 +48,7 @@ namespace bodved
                 Session.ForAll((s, sessionId) =>
                 {
                     s.CalculatePatchAndPushOnWebSocket();
+                    var aaa = s;
                 });
             }
         }
@@ -72,6 +73,9 @@ namespace bodved
                 
                 Session.ForAll((s, sessionId) =>
                 {
+                    var aa = ((s.Store["App"] as MasterPage).CurrentPage) as CCpage;
+                    aa.Cap1 = MdfRec.Ad;
+
                     s.CalculatePatchAndPushOnWebSocket();
                 });
             }
