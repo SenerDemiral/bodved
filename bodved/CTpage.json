@@ -15,7 +15,13 @@
       "K2Ad": "",
       "Adres": "",
       "Pw": "",
-      "MdfTrigger$": 0
+      "MdfTrigger$": 0,
+
+      "aP": 0,  // Aldigi Puan
+      "vP": 0,
+      "oE": 0,  // Oynadigi Event/Musabaka Sayisi
+      "aE": 0,
+      "vE": 0
     }
   ],
 

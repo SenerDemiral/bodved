@@ -9,128 +9,8 @@ namespace bodved
         protected override void OnData()
         {
             base.OnData();
+
             Read();
-            /*
-            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            hCTAd = cet.hCTAd;
-            gCTAd = cet.gCTAd;
-            Rok = cet.Rok;
-
-            var mpLgn = (Root as MasterPage).Login;
-            canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
-            if (!canMdfy)
-            {
-                if (mpLgn.Rl == "TAKIM")
-                    if (mpLgn.LI && (mpLgn.Id == cet.hCToNo.ToString() || mpLgn.Id == cet.gCToNo.ToString()))
-                        canMdfy = true;
-            }
-            if (mpLgn.Rl == "ADMIN")
-                Rok = false;    // Admin sonuc OK olsa bile degistirebilsin
-
-
-            Cap1 = $"{cet.CCAd}";
-            Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} Müsabaka Sonuçlarý";
-
-            hP = cet.hP;
-            hPW = cet.hPW;
-            hMSW = cet.hMSW;
-            hMDW = cet.hMDW;
-            hPSW = hMSW * 2;
-            hPDW = hMDW * 3;
-
-            gP = cet.gP;
-            gPW = cet.gPW;
-            gMSW = cet.gMSW;
-            gMDW = cet.gMDW;
-            gPSW = gMSW * 2;
-            gPDW = gMDW * 3;
-
-            var SR = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "S");
-            SinglesElementJson sng = null;
-
-            int s = 0;
-            foreach (var src in SR)
-            {
-                if ((s % 2) == 0)
-                {
-                    sng = Singles.Add();
-                    sng.Idx = src.Idx;
-
-                    sng.hoNo = src.oNo.ToString();
-                    sng.hPPAd = src.PPAd;
-                    sng.hPPrnk = src.PRH.prvRnk;
-                    sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
-                    sng.hS2W = src.S2W;
-                    sng.hS3W = src.S3W;
-                    sng.hS4W = src.S4W;
-                    sng.hS5W = src.S5W;
-                    sng.hSW = src.SW;
-                }
-                if ((s % 2) == 1)
-                {
-                    sng.goNo = src.oNo.ToString();
-                    sng.gPPAd = src.PPAd;
-                    sng.gPPrnk = src.PRH.prvRnk;
-
-                    sng.gS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
-                    sng.gS2W = src.S2W;
-                    sng.gS3W = src.S3W;
-                    sng.gS4W = src.S4W;
-                    sng.gS5W = src.S5W;
-                    sng.gSW = src.SW;
-                }
-
-                s++;
-            }
-
-            var DR = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "D");
-            DoublesElementJson dbl = null;
-            int c = 0, i = 0;
-            foreach (var src in DR)
-            {
-                if ((c % 4) == 0)
-                {
-                    dbl = Doubles.Add();
-                    dbl.Idx = src.Idx;
-
-                    dbl.hoNo1 = src.oNo.ToString();
-                    dbl.hPPAd1 = src.PPAd;
-                    dbl.hPPrnk1 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
-                    dbl.hS1W = src.S1W;
-                    dbl.hS2W = src.S2W;
-                    dbl.hS3W = src.S3W;
-                    dbl.hS4W = src.S4W;
-                    dbl.hS5W = src.S5W;
-                    dbl.hDW = src.SW;
-                }
-                if ((c % 4) == 1)
-                {
-                    dbl.hoNo2 = src.oNo.ToString();
-                    dbl.hPPAd2 = src.PPAd;
-                    dbl.hPPrnk2 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
-                }
-                if ((c % 4) == 2)
-                {
-                    dbl.goNo1 = src.oNo.ToString();
-                    dbl.gPPAd1 = src.PPAd;
-                    dbl.gPPrnk1 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
-                    dbl.gS1W = src.S1W;
-                    dbl.gS2W = src.S2W;
-                    dbl.gS3W = src.S3W;
-                    dbl.gS4W = src.S4W;
-                    dbl.gS5W = src.S5W;
-                    dbl.gDW = src.SW;
-                }
-                if ((c % 4) == 3)
-                {
-                    dbl.goNo2 = src.oNo.ToString();
-                    dbl.gPPAd2 = src.PPAd;
-                    dbl.gPPrnk2 = BDB.H.PPprvRnk( src.PP.oNo, cet.Trh);
-                }
-
-                c++;
-            }
-            */
         }
         
         public void Handle(Input.SaveTrigger Action)
@@ -150,11 +30,23 @@ namespace bodved
             });
 
             BDB.H.updCTsum(cet.hCT.oNo);
+            BDB.H.updCTsum(cet.gCT.oNo);
+
+            var csId = Session.Current.SessionId;
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo && csId != sId)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         protected void Read()
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+            CCoNo = cet.CCoNo.ToString();
             hCTAd = cet.hCTAd;
             gCTAd = cet.gCTAd;
             Rok = cet.Rok;
@@ -496,35 +388,20 @@ namespace bodved
                 }
             });
 
-            Read();
+            //Read(); // Her bir Seesion icin Data=null yapilarak zaten okunuyor
 
             var csId = Session.Current.SessionId;
-            var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data;
+            // var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data; Hep Null geliyor
 
             Session.ForAll( (s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
-                var xx = s.Store["bodved"].Data;
-                if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo && csId != sId)
+                // var xx = s.Store["bodved"].Data;  Hep Null geliyor???
+                if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo) // && csId != sId)
                 {
                     // Session.Current.SessionId ve sId burda ayni oluyor ???
 
+                    // trick to invoke OnData. Null olunca OnData call ediliyor
                     (s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
-                    //(s.Store["bodved"] as MasterPage).CurrentPage.Data = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data;
-
-                    //(cp as CETRinpPage).hP = cet.hP;
-                    //(cp as CETRinpPage).gP = cet.gP;
-                    //(cp as CETRinpPage).hPW = cet.hPW;
-                    //(cp as CETRinpPage).gPW = cet.gPW;
-                    //
-                    //(cp as CETRinpPage).hMSW = cet.hMSW;
-                    //(cp as CETRinpPage).gMSW = cet.gMSW;
-                    //(cp as CETRinpPage).hMDW = cet.hMDW;
-                    //(cp as CETRinpPage).gMDW = cet.gMDW;
-                    //
-                    //(cp as CETRinpPage).hPSW = hMSW * 2;
-                    //(cp as CETRinpPage).hPDW = hMDW * 3;
-                    //(cp as CETRinpPage).gPSW = gMSW * 2;
-                    //(cp as CETRinpPage).gPDW = gMDW * 3;
 
                     s.CalculatePatchAndPushOnWebSocket();
                 }

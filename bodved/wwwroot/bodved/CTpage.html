@@ -10,12 +10,21 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">ID</th>
-                        <th>Ad</th>
-                        <th>Kaptan 1</th>
-                        <th>Kaptan 2</th>
-                        <th>Adres</th>
-                        <th>Oyuncular</th>
+                        <th rowspan="2" class="oNo">ID</th>
+                        <th rowspan="2">Ad</th>
+                        <th colspan="2">Puan</th>
+                        <th colspan="3">Musabaka</th>
+                        <th rowspan="2">K1</th>
+                        <th rowspan="2">K2</th>
+                        <th rowspan="2">Adres</th>
+                        <th rowspan="2">Oyuncu</th>
+                    </tr>
+                    <tr>
+                        <th>a</th>
+                        <th>v</th>
+                        <th>o</th>
+                        <th>a</th>
+                        <th>v</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +32,11 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td>[[item.Ad]]</td>
+                            <td class="ortala">[[item.aP]]</td>
+                            <td class="ortala">[[item.vP]]</td>
+                            <td class="ortala">[[item.oE]]</td>
+                            <td class="ortala">[[item.aE]]</td>
+                            <td class="ortala">[[item.vE]]</td>
                             <td>[[item.K1Ad]]</td>
                             <td>[[item.K2Ad]]</td>
                             <td>[[item.Adres]]</td>

@@ -49,8 +49,8 @@ namespace BDB
             int vE = 0; // Verdigi/Kaybettigi Event
 
             var ct = Db.FromId<CT>(oNo);
-
-            foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ?", ct))
+            //Musabaka Soncu Onaylanmislari tara
+            foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ? and c.Rok = ?", ct, true))
             {
                 aP += r.hP;
                 vP += r.gP;
@@ -61,7 +61,7 @@ namespace BDB
                     vE++;
 
             }
-            foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ?", ct))
+            foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ? and c.Rok = ?", ct, true))
             {
                 aP += r.gP;
                 vP += r.hP;

@@ -20,7 +20,7 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            canMdfy = true; //DENEME
+            //canMdfy = true; //DENEME
             CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
 
             //sener.NoR = DateTime.Now.Ticks;
@@ -43,14 +43,21 @@ namespace bodved
                     };
                 });
                 MdfRec.oNo = 0;
-                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
 
-                Session.ForAll((s, sessionId) =>
-                {
-                    s.CalculatePatchAndPushOnWebSocket();
-                    var aaa = s;
-                });
+                PushChanges();
             }
+        }
+
+        public void PushChanges()
+        {
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CCpage)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         void Handle(Input.UpdateTrigger Action)
@@ -69,18 +76,8 @@ namespace bodved
                     r.Grp = MdfRec.Grp;
                 });
                 MdfRec.oNo = 0;
-                //CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
-                
-                Session.ForAll((s, sessionId) =>
-                {
-                    if (((s.Store["bodved"] as MasterPage).CurrentPage) is CCpage)
-                    {
-                        var aa = ((s.Store["bodved"] as MasterPage).CurrentPage) as CCpage;
-                        aa.Cap1 = MdfRec.Ad;
 
-                        s.CalculatePatchAndPushOnWebSocket();
-                    }
-                });
+                PushChanges();
             }
         }
 
@@ -103,11 +100,8 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
-                Session.ForAll((s, sessionId) =>
-                {
-                    s.CalculatePatchAndPushOnWebSocket();
-                });
+
+                PushChanges();
             }
         }
 
