@@ -38,7 +38,7 @@ namespace bodved
             Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu Sýralama";
             Cap2 = $"{ct.Ad} Oyuncu Sýralama";
 
-            var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ?", cet, ct).First;
+            var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ?", cet, ct).FirstOrDefault();
             // Kayit yoksa CTP'den alip yarat
             if (cetps == null)
             {
@@ -167,7 +167,7 @@ namespace bodved
 
         void createCETR()
         {
-            var x = Db.SQL<BDB.CETR>("select c from BDB.CETR c where c.CET.ObjectNo = ?", ulong.Parse(CEToNo)).First;
+            var x = Db.SQL<BDB.CETR>("select c from BDB.CETR c where c.CET.ObjectNo = ?", ulong.Parse(CEToNo)).FirstOrDefault();
 
             if (x == null)
             {
@@ -240,7 +240,7 @@ namespace bodved
                     };
                     if (sOd == "S")
                     {
-                        var rp = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.SoD = ? and c.Idx = ? and c.HoG <> ?", cet, sOd, src.Idx, hOg).First;
+                        var rp = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.SoD = ? and c.Idx = ? and c.HoG <> ?", cet, sOd, src.Idx, hOg).FirstOrDefault();
                         nCetr.PRH = new BDB.PRH()
                         {
                             PP = src.PP,

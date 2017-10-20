@@ -18,7 +18,7 @@ namespace bodved
             {
                 
                 // Rakip
-                var r = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, pp).First;
+                var r = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, pp).FirstOrDefault();
 
                 sng = Singles.Add();
                 sng.oNo = (long)k.oNo;
@@ -56,7 +56,7 @@ namespace bodved
             var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "D");
             foreach(var k in cetrD)
             {
-                var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, k.HoG, pp).First;
+                var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, k.HoG, pp).FirstOrDefault();
 
                 // Rakip
                 var rHoG = k.HoG == "H" ? "G" : "H";

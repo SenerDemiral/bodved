@@ -73,10 +73,13 @@ namespace bodved
                 
                 Session.ForAll((s, sessionId) =>
                 {
-                    var aa = ((s.Store["App"] as MasterPage).CurrentPage) as CCpage;
-                    aa.Cap1 = MdfRec.Ad;
+                    if (((s.Store["bodved"] as MasterPage).CurrentPage) is CCpage)
+                    {
+                        var aa = ((s.Store["bodved"] as MasterPage).CurrentPage) as CCpage;
+                        aa.Cap1 = MdfRec.Ad;
 
-                    s.CalculatePatchAndPushOnWebSocket();
+                        s.CalculatePatchAndPushOnWebSocket();
+                    }
                 });
             }
         }

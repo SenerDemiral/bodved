@@ -171,13 +171,13 @@ namespace bodved
             Session.Ensure();
 
             //MasterPage master = Session.Current.Data as MasterPage;
-            MasterPage master = Session.Current.Store["App"] as MasterPage;
+            MasterPage master = Session.Current.Store["bodved"] as MasterPage;
 
             if (master == null)
             {
                 master = new MasterPage();
                 //Session.Current.Data = master;
-                Session.Current.Store["App"] = master;
+                Session.Current.Store["bodved"] = master;
 
                 BDB.H.Write2Log("Enter");
             }
