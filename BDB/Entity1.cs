@@ -9,6 +9,7 @@ namespace BDB
         public ulong oNo => this.GetObjectNo();
 
         public string Ad { get; set; }
+        public string Idx { get; set; }
         public string Skl { get; set; }    // Takim/Ferdi
         public string Grp { get; set; }    // Birden cok turnuvada oynayan Oyunculari takip icin
 
@@ -192,7 +193,7 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format("{0:yyyy-MM-dd}", Trh);
+        public string Tarih => string.Format("{0:dd.MM.yy}", Trh);
 
     }
 

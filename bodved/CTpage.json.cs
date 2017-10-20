@@ -27,7 +27,7 @@ namespace bodved
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
             Cap1 = $"{cc.Ad} Takımları";
             
-            CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", cc);
+            CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.aP desc, c.vP", cc);
 
             //sener.NoR = DateTime.Now.Ticks;
         }
@@ -49,15 +49,13 @@ namespace bodved
                     };
                 });
                 MdfRec.oNo = 0;
-                CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+                PushChanges();
             }
         }
 
         void Handle(Input.UpdateTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -70,15 +68,13 @@ namespace bodved
                     r.Pw = MdfRec.Pw;
                 });
                 MdfRec.oNo = 0;
-                CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+                PushChanges();
             }
         }
 
         void Handle(Input.DeleteTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -93,8 +89,21 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.Ad", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+                PushChanges();
             }
+        }
+
+        public void PushChanges()
+        {
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         [CTpage_json.CTs]

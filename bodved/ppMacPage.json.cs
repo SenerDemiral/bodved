@@ -42,7 +42,6 @@ namespace bodved
 
                 // Esit sonuc sadece 0-0 da olur, bu da oynanmamis demektir
                 SMo++;
-                SSo = k.SW + r.SW;
 
                 SSa += k.SW;
                 SSv += r.SW;
@@ -51,6 +50,7 @@ namespace bodved
                 else if (k.SW < r.SW)
                     SMv++;
             }
+            SSo = SSa + SSv;
 
             DoublesElementJson dbl = null;
             var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "D");
@@ -64,7 +64,7 @@ namespace bodved
 
                 dbl = Doubles.Add();
                 dbl.oNo = (long)k.oNo;
-                dbl.Tarih = k.Trh.ToString("yyy-MM-dd");
+                dbl.Tarih = k.Trh.ToString("dd.MM.yy");
                 dbl.Ortak = o.PPAd;
 
                 dbl.Rakip1 = r[0].PPAd;
@@ -83,7 +83,6 @@ namespace bodved
                 dbl.WoL = k.SW > r[0].SW ? "W" : "L";
 
                 DMo++;
-                DSo = k.SW + r[0].SW;
 
                 DSa += k.SW;
                 DSv += r[0].SW;
@@ -92,6 +91,7 @@ namespace bodved
                 else if (k.SW < r[0].SW)
                     DMv++;
             }
+            DSo = DSa + DSv;
         }
     }
 }

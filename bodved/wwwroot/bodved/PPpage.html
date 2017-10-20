@@ -11,9 +11,9 @@
                 <thead>
                     <tr>
                         <th class="oNo">ID</th>
-                        <th>Ad</th>
+                        <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value">Ad ↕</button></th>
                         <th>BR</th>
-                        <th>R</th>
+                        <th><button class="sort" value="{{model.SortRnk$::click}}" onmousedown="++this.value">Rank ↕</button></th>
                         <th>Cns</th>
                         <th>Dğm</th>
                         <th>Tel</th>
@@ -25,8 +25,8 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td><a href="/bodved/ppMacPage/[[item.oNo]]">[[item.Ad]]</a></td>
-                            <td><span class="rank">[[item.RnkBaz]]</span></td>
-                            <td><span class="rank">[[item.curRnk]]</span></td>
+                            <td class="ortala">°[[item.RnkBaz]]</td>
+                            <td class="ortala">°[[item.curRnk]]</td>
                             <td class="ortala">[[item.Sex]]</td>
                             <td>[[item.DgmYil]]</td>
                             <td>[[item.Tel]]</td>

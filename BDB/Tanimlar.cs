@@ -14,25 +14,25 @@ namespace BDB
             Db.Transact(() =>
             {
                 // Turnuvalar
-                var cc1 = new BDB.CC() { Ad = "17-18 1.Lig" };
-                var cc2A = new BDB.CC() { Ad = "17-18 2A.Lig" };
-                var cc2B = new BDB.CC() { Ad = "17-18 2B.Lig" };
-                var cc3A = new BDB.CC() { Ad = "17-18 3A.Lig" };
-                var cc3B = new BDB.CC() { Ad = "17-18 3B.Lig" };
+                var cc1  = new BDB.CC() { Ad = "17-18 1.Lig",  Idx = "17-5", Skl = "T", Grp = "17T" };
+                var cc2A = new BDB.CC() { Ad = "17-18 2A.Lig", Idx = "17-4", Skl = "T", Grp = "17T" };
+                var cc2B = new BDB.CC() { Ad = "17-18 2B.Lig", Idx = "17-3", Skl = "T", Grp = "17T" };
+                var cc3A = new BDB.CC() { Ad = "17-18 3A.Lig", Idx = "17-2", Skl = "T", Grp = "17T" };
+                var cc3B = new BDB.CC() { Ad = "17-18 3B.Lig", Idx = "17-1", Skl = "T", Grp = "17T" };
 
                 // Turnuva Takimlari
                 // 1.Lig
-                var df1 = new BDB.CT() { CC = cc1, Ad = "Delfi•1",      Pw = "df1", Adres = "Delfi Arena" };
-                var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons•1",    Pw = "dr1", Adres = "Funtown Yahşi" };
+                var df1 = new BDB.CT() { CC = cc1, Ad = "Delfi•1",      Pw = "df1", Adres = "Delfi Arena Bodrum" };
+                var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons•1",    Pw = "dr1", Adres = "Funtown Yahşi Orakent" };
                 var em1 = new BDB.CT() { CC = cc1, Ad = "ErkanMotel•1", Pw = "em1", Adres = "Erkan Motel Yahşi" };
-                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük•1",   Pw = "gm1", Adres = "Avta tesisleri" };
+                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük•1",   Pw = "gm1", Adres = "Avta Turgutreis" };
                 var kp1 = new BDB.CT() { CC = cc1, Ad = "KingPong•1",   Pw = "kk1", Adres = "" };
                 var kr1 = new BDB.CT() { CC = cc1, Ad = "KutayReno•1",  Pw = "kr1", Adres = "" };
-                var mk1 = new BDB.CT() { CC = cc1, Ad = "MilasKarya•1", Pw = "mk1", Adres = "Delfi Arena" };
-                var mt1 = new BDB.CT() { CC = cc1, Ad = "Mitos•1",      Pw = "mt1", Adres = "Avta tesisleri" };
-                var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin•1",     Pw = "pn1", Adres = "Delfi Arena" };
-                var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil•1",     Pw = "pr1", Adres = "Değirmen Cafe OASİS" };
-                var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak•1",  Pw = "yk1", Adres = "Çaça Restaurant" };
+                var mk1 = new BDB.CT() { CC = cc1, Ad = "MilasKarya•1", Pw = "mk1", Adres = "Delfi Arena Bodrum" };
+                var mt1 = new BDB.CT() { CC = cc1, Ad = "Mitos•1",      Pw = "mt1", Adres = "Avta Turgutreis" };
+                var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin•1",     Pw = "pn1", Adres = "Delfi Arena Bodrum" };
+                var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil•1",     Pw = "pr1", Adres = "Değirmen Cafe OASİS Bodrum" };
+                var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak•1",  Pw = "yk1", Adres = "Çaça Restaurant Yalıkavak" };
 
                 // 2A.Lig 
                 new BDB.CT() { CC = cc2A, Ad = "Bitez•2A" };

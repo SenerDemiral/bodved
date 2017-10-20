@@ -171,6 +171,10 @@ input[type=number] {
 .rank::before {
     content: " °";
 }
+button.sort {
+    padding: 0px 2px;
+    margin-left: 2px;
+}
 .inpSetSayi {
     width: 20px;
     text-align: center;

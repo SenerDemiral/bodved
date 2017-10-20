@@ -28,7 +28,6 @@ namespace bodved
                 }
             }
 
-
             CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
             //sener.NoR = DateTime.Now.Ticks;
@@ -36,9 +35,6 @@ namespace bodved
 
         void Handle(Input.InsertTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             Db.Transact(() =>
             {
                 new BDB.CET()
@@ -50,14 +46,12 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
-            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+            PushChanges();
         }
 
         void Handle(Input.UpdateTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -73,7 +67,8 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+                PushChanges();
             }
         }
 
@@ -93,8 +88,21 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ?", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+
+                PushChanges();
             }
+        }
+
+        public void PushChanges()
+        {
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CETpage && CCoNo == (cp as CETpage).CCoNo)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         [CETpage_json.CETs]

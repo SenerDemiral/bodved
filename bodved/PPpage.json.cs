@@ -1,3 +1,4 @@
+using System.Linq;
 using Starcounter;
 
 namespace bodved
@@ -12,15 +13,14 @@ namespace bodved
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+            NOP = Db.SQL<BDB.PP>("select p from PP p order by p.Ad").Count();
+            Cap1 = $"Oyuncular  [{NOP} adet]";
 
             //sener.NoR = DateTime.Now.Ticks;
         }
 
         void Handle(Input.InsertTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
                 Db.Transact(() =>
@@ -36,15 +36,13 @@ namespace bodved
                     };
                 });
                 MdfRec.oNo = 0;
-                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+
+                PushChanges();
             }
         }
 
         void Handle(Input.UpdateTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -58,15 +56,13 @@ namespace bodved
                     r.eMail = this.MdfRec.eMail;
                 });
                 MdfRec.oNo = 0;
-                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+
+                PushChanges();
             }
         }
 
         void Handle(Input.DeleteTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -81,8 +77,37 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+
+                PushChanges();
             }
+        }
+
+        public void PushChanges()
+        {
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is PPpage)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
+        }
+
+        void Handle(Input.SortAd Action)
+        {
+            if (Action.Value % 2 == 0)
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+            else
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad desc");
+        }
+
+        void Handle(Input.SortRnk Action)
+        {
+            if (Action.Value % 2 == 0)
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.curRnk, p.Ad");
+            else
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.curRnk desc, p.Ad");
         }
 
         [PPpage_json.PPs]

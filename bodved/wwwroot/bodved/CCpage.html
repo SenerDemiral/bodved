@@ -12,9 +12,7 @@
                     <tr>
                         <th class="oNo">ID</th>
                         <th>Ad</th>
-                        <th>Şkl</th>
-                        <th>Grp</th>
-                        <th>Takımlar</th>
+                        <th>Takım</th>
                         <th>Müsabaka</th>
                     </tr>
                 </thead>
@@ -23,8 +21,6 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.Ad]]</td>
-                            <td data-typ="nmr">[[item.Skl]]</td>
-                            <td data-typ="nmr">[[item.Grp]]</td>
                             <td class="ortala"><a class="Go" href="/bodved/CTpage/[[item.oNo]]">►</a></td>
                             <td class="ortala"><a class="Go" href="/bodved/CETpage/[[item.oNo]]">►</a></td>
                         </tr>
@@ -36,6 +32,7 @@
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
                     <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                    <input placeholder="Idx" type="text" value="{{model.MdfRec.Idx$::change}}" />
                     <input placeholder="Şekli" type="text" value="{{model.MdfRec.Skl$::change}}" />
                     <input placeholder="Grup" type="text" value="{{model.MdfRec.Grp$::change}}" />
                     <div class="mdfRecAction">

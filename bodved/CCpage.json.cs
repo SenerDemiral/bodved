@@ -21,7 +21,7 @@ namespace bodved
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             //canMdfy = true; //DENEME
-            CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Ad");
+            CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Idx desc");
 
             //sener.NoR = DateTime.Now.Ticks;
         }
@@ -38,6 +38,7 @@ namespace bodved
                     new BDB.CC()
                     {
                         Ad = MdfRec.Ad,
+                        Idx = MdfRec.Idx,
                         Skl = MdfRec.Skl,
                         Grp = MdfRec.Grp
                     };
@@ -72,6 +73,7 @@ namespace bodved
                 {
                     var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
                     r.Ad = MdfRec.Ad;
+                    r.Idx = MdfRec.Idx;
                     r.Skl = MdfRec.Skl;
                     r.Grp = MdfRec.Grp;
                 });
@@ -113,6 +115,7 @@ namespace bodved
                 var p = this.Parent.Parent as CCpage;
                 p.MdfRec.oNo = oNo;
                 p.MdfRec.Ad = Ad;
+                p.MdfRec.Idx = Idx;
                 p.MdfRec.Skl = Skl;
                 p.MdfRec.Grp = Grp;
 

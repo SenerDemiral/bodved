@@ -16,6 +16,8 @@ namespace bodved
         public void Handle(Input.SaveTrigger Action)
         {
             Save();
+
+            PushChanges();
         }
 
         public void Handle(Input.SaveOkTrigger Action)
@@ -32,15 +34,7 @@ namespace bodved
             BDB.H.updCTsum(cet.hCT.oNo);
             BDB.H.updCTsum(cet.gCT.oNo);
 
-            var csId = Session.Current.SessionId;
-            Session.ForAll((s, sId) => {
-                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
-                if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo && csId != sId)
-                {
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
-                    s.CalculatePatchAndPushOnWebSocket();
-                }
-            });
+            PushChangesCT();
         }
 
         protected void Read()
@@ -170,6 +164,41 @@ namespace bodved
 
                 c++;
             }
+        }
+
+        public void PushChanges()
+        {
+            //Read(); // Her bir Seesion icin Data=null yapilarak zaten okunuyor
+
+            //var csId = Session.Current.SessionId;
+            // var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data; Hep Null geliyor
+
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                // var xx = s.Store["bodved"].Data;  Hep Null geliyor???
+                if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo) // && csId != sId)
+                {
+                    // Session.Current.SessionId ve sId burda ayni oluyor ???
+
+                    // trick to invoke OnData. Null olunca OnData call ediliyor
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
+
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
+        }
+
+        public void PushChangesCT()
+        {
+            var csId = Session.Current.SessionId;
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo && csId != sId)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         protected void Save()
@@ -385,25 +414,6 @@ namespace bodved
                 {
                     cet.hP = 1;
                     cet.gP = 3;
-                }
-            });
-
-            //Read(); // Her bir Seesion icin Data=null yapilarak zaten okunuyor
-
-            var csId = Session.Current.SessionId;
-            // var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data; Hep Null geliyor
-
-            Session.ForAll( (s, sId) => {
-                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
-                // var xx = s.Store["bodved"].Data;  Hep Null geliyor???
-                if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo) // && csId != sId)
-                {
-                    // Session.Current.SessionId ve sId burda ayni oluyor ???
-
-                    // trick to invoke OnData. Null olunca OnData call ediliyor
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
-
-                    s.CalculatePatchAndPushOnWebSocket();
                 }
             });
         }
