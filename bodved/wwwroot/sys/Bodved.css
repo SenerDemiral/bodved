@@ -58,7 +58,7 @@ table {
 
 td {
   	/*-height: 1.5em;*/
-	padding: 2px; /*0.2em 0.4em;*/
+	padding: 2px 4px; /*0.2em 0.4em;*/
 	border: 1px solid #CBCBCB;
     white-space: nowrap;
 }
@@ -220,20 +220,16 @@ iron-icon {
 .gHdr {
     background-color: lightgoldenrodyellow;
 }
+
 .SngHdr {
-    background-color: lavender;
+    background-color:rgb(234,241,221); /*RGB(235,246,249);*/
+    /*background-color: lavender;*/
 }
 .DblHdr {
-    background-color: lemonchiffon;
-}
-
-
-.singleHdr {
-    background-color:rgb(234,241,221); /*RGB(235,246,249);*/
-}
-.doubleHdr {
     background-color:rgb(255, 242, 229);
+    /*background-color: lemonchiffon;*/
 }
+
 
 .SS {
     color:cadetblue;
