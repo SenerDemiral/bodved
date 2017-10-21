@@ -1,0 +1,22 @@
+{
+  "name": "bodved",
+  "homepage": "https://github.com/SenerDemiral/bodved",
+  "authors": [
+    "SenerDemiral <sener.demiral@gmail.com>"
+  ],
+  "description": "BodVed MasaTenisi Turnuvalari",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "wwwroot/sys",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1",
+    "iron-icon": "PolymerElements/iron-icon#^2.0.1"
+  }
+}

@@ -1,15 +1,16 @@
-﻿<link rel="import" href="/sys/polymer/polymer.html">
+﻿<link rel="import" href="/sys/iron-icons/iron-icons.html">
+<!-->link rel="import" href="/sys/iron-icon/iron-icon.html.html"-->
 
 <template>
     <template is="dom-bind">
         <div>
             <section class="master-toolbar">
                 <ul role="navigation">
-                    <li><a href="/bodved">Home</a></li>
-                    <li><a href="/bodved/ccPage">Turnuvalar</a></li>
-                    <li><a href="/bodved/ppPage">Oyuncular</a></li>
-                    <li class="toRight"><a href="/bodved/AboutPage">Hakkında</a></li>
-                    <li><a href="/bodved/LoginPage">[[model.Login.Nm]]</a></li>
+                    <li><a href="/bodved"><iron-icon icon="home"></iron-icon></a></li>
+                    <li><a href="/bodved/ccPage"><iron-icon icon="schedule"></iron-icon></a></li>
+                    <li><a href="/bodved/ppPage"><iron-icon icon="supervisor-account"></iron-icon></a></li>
+                    <li class="toRight"><a href="/bodved/AboutPage"><iron-icon icon="info"></iron-icon></a></li>
+                    <li><a href="/bodved/LoginPage"><iron-icon icon="lock" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm]]</span></a></li>
                     <li class="bodved">BodVed</li>
                 </ul>
             </section>
