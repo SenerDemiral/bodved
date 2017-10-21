@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using Starcounter;
 using System.Collections.Generic;
 
@@ -58,7 +58,7 @@ namespace bodved
 
 
             Cap1 = $"{cet.CCAd}";
-            Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} Müsabaka Sonuçlarý";
+            Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} MÃ¼sabaka SonuÃ§larÄ±";
 
             hP = cet.hP;
             hPW = cet.hPW;
