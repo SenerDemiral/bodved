@@ -102,9 +102,9 @@
             </table>
 
             <div hidden$="[[!model.canMdfy]]">
-                <div hidden$="[[model.Rok]]">
-                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
-                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">
+                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" style="justify-self:start;">Kaydet</button>
+                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" style="justify-self:end;">Onayla ve Kaydet</button>
                 </div>
             </div>
         </div>
