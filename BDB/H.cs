@@ -85,6 +85,7 @@ namespace BDB
 
         public static void refreshPRH()
         {
+            // ReCalculate Rank of All Players
             var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh ASC");
 
             Db.Transact(() =>
@@ -96,13 +97,13 @@ namespace BDB
                 }
             });
         }
-
+        
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
             var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP.ObjectNo = ? and p.Trh < ? order by p.Trh desc", PPoNo, Trh).First;
             return r?.prvRnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;
         }
-
+        
         public static void updPPsum()
         {
             var pp = Db.SQL<BDB.PP>("select p from PP p");

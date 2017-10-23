@@ -49,18 +49,6 @@ namespace bodved
             }
         }
 
-        public void PushChanges()
-        {
-            Session.ForAll((s, sId) => {
-                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
-                if (cp is CCpage)
-                {
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
-                    s.CalculatePatchAndPushOnWebSocket();
-                }
-            });
-        }
-
         void Handle(Input.UpdateTrigger Action)
         {
             var oo = Action.OldValue;
@@ -105,6 +93,18 @@ namespace bodved
 
                 PushChanges();
             }
+        }
+
+        public void PushChanges()
+        {
+            Session.ForAll((s, sId) => {
+                var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
+                if (cp is CCpage)
+                {
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    s.CalculatePatchAndPushOnWebSocket();
+                }
+            });
         }
 
         [CCpage_json.CCs]

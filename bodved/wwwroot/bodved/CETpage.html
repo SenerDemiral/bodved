@@ -44,7 +44,7 @@
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="Tarıh" type="date" value="{{model.MdfRec.Tarih$::change}}" />
+                    <input placeholder="Tarih" type="datetime" value="{{model.MdfRec.Tarih$::change}}" />
                     <select name="select" value="{{model.MdfRec.hCToNo$::change}}">
                         <option value="0">N/A</option>
                         <template is="dom-repeat" items="[[model.CTs]]">

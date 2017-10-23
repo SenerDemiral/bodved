@@ -193,7 +193,7 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format("{0:dd.MM.yy}", Trh);
+        public string Tarih => string.Format("{0:dd.MM.yy HH:mm}", Trh);
 
     }
 

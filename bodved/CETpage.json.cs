@@ -1,5 +1,7 @@
 using Starcounter;
 using System;
+using System.Linq;
+using System.Diagnostics;
 
 namespace bodved
 {
@@ -54,21 +56,50 @@ namespace bodved
         {
             if (MdfRec.oNo != 0)
             {
+                bool trhChanged = false;
+                //Stopwatch watch = new Stopwatch();
+                //watch.Start();
+
                 Db.Transact(() =>
                 {
                     var r = Db.FromId<BDB.CET>((ulong)MdfRec.oNo);
-                    r.hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo));
-                    r.gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo));
-                    r.Trh = DateTime.Parse(MdfRec.Tarih);
 
-                    foreach (var s in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ?", r))
+                    // Oyuncular varsa talimlar degisemez, ama tarih degisebilir
+                    var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ?", r).FirstOrDefault();
+                    if (cetps == null)
                     {
-                        s.Trh = r.Trh;
+                        r.hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo));
+                        r.gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo));
                     }
+
+                    var nTrh = DateTime.Parse(MdfRec.Tarih);
+                    
+                    if (r.Trh != nTrh)
+                    {
+                        trhChanged = true;
+                        r.Trh = nTrh;
+
+                        foreach (var s in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ?", r))
+                        {
+                            s.Trh = nTrh;
+                            // Oyuncu Rank/Mac tarihini de degistir
+                            if (s.PRH != null)
+                                s.PRH.Trh = nTrh;
+                        }
+                    } 
                 });
-                MdfRec.oNo = 0;
+                
+                if (trhChanged)
+                    BDB.H.refreshPRH();
+
+                //watch.Stop();
+                //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+
+                MdfRec.oNo = 0; // Yanlislikla birdaha bu kayitta birsey yapamasin
 
                 PushChanges();
+
+
             }
         }
 
@@ -114,7 +145,7 @@ namespace bodved
                 p.MdfRec.oNo = this.oNo;
                 p.MdfRec.hCToNo = this.hCToNo.ToString();
                 p.MdfRec.gCToNo = this.gCToNo.ToString();
-                p.MdfRec.Tarih = this.Tarih.Substring(0, 10);
+                p.MdfRec.Tarih = Tarih; // DateTime.Parse(Tarih).ToString("s");
             }
         }
     }

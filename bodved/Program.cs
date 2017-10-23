@@ -157,8 +157,27 @@ namespace bodved
 
             Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo = $"{CCoNo}" });
             Handle.GET("/bodved/Deneme/{?}", (string CCoNo) => WrapPage<Deneme>($"/bodved/partial/Deneme/{CCoNo}"));
-        }
 
+            Hook<BDB.CC>.CommitUpdate += (s, obj) =>
+            {
+            };
+            Hook<BDB.CET>.CommitUpdate += (s, obj) =>
+            {
+                /*
+                //var old = Db.FromId<BDB.CET>(obj.GetObjectNo());
+                //if (obj.Trh != old.Trh)
+                {
+                    foreach(var r in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ?", obj))
+                    {
+                        if (r.PRH != null)
+                        {
+                            r.PRH.Trh = obj.Trh;
+                        }
+                    }
+                }
+                */
+            };
+        }
 
         public static MasterPage GetMasterPageFromSession()
         {
