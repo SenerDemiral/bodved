@@ -26,7 +26,7 @@ namespace bodved
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
 					<link rel=""import"" href=""/sys/starcounter.html"">
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
-					<!--link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html""-->
+					<link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html"">
 					
 
                     <script src=""/sys/thenBy.js""></script>
@@ -43,7 +43,8 @@ namespace bodved
                     <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
                     <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
-                    <!--starcounter-debug-aid></starcounter-debug-aid-->
+                    <!--palindrom-client ref=""puppet-root"" remote-url=""{1}""></palindrom-client-->
+                    <starcounter-debug-aid></starcounter-debug-aid>
                 </body>
 				</html>";
 
@@ -58,6 +59,15 @@ namespace bodved
                 //popTable();
                 BDB.Tanimlar.popTable();
                 return "Init: OK";
+            });
+
+            Handle.GET("/bodved/deneme1", () =>
+            {
+                return BDB.Tanimlar.deneme1();
+            });
+            Handle.GET("/bodved/deneme2", () =>
+            {
+                return BDB.Tanimlar.deneme2();
             });
 
             Handle.GET("/bodved/IndexCreate", () =>
@@ -178,16 +188,7 @@ namespace bodved
 
         public static MasterPage GetMasterPageFromSession()
         {
-            /*
-            if (Session.Current == null)
-            {
-                Session.Current = new Session(Session.Flags.PatchVersioning);
-            }
-            */
-            Session.Ensure();
-
-            //MasterPage master = Session.Current.Data as MasterPage;
-            MasterPage master = Session.Current.Store["bodved"] as MasterPage;
+            var master = Session.Ensure().Store["bodved"] as MasterPage;
 
             if (master == null)
             {
@@ -205,15 +206,15 @@ namespace bodved
         {
             var master = GetMasterPageFromSession();
 
-            /*
+            
             if (master.CurrentPage != null && master.CurrentPage.GetType().Equals(typeof(T)))
             {
                 return master;
             }
-            */
+            
             master.CurrentPage = Self.GET(partialPath);
 
-            //if (master.CurrentPage.Data == null)
+            if (master.CurrentPage.Data == null)
             {
                 master.CurrentPage.Data = null; //trick to invoke OnData in partial
             }

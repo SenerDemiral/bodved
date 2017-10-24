@@ -4,21 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Starcounter;
+using System.Diagnostics;
 
 namespace BDB
 {
     public static class Tanimlar
     {
+        public static string deneme1()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            Db.Transact(() => {
+                for (int i = 0; i < 1000000; i++)
+                {
+                    new BDB.PP
+                    {
+                        Ad = i.ToString(),
+                        DgmYil = i
+                    };
+                }
+            });
+
+            watch.Stop();
+            //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            return $"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks";
+        }
+
+        public static string deneme2()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            Db.Transact(() =>
+            {
+                Db.SQL<BDB.PP>("delete from PP");
+            });
+
+            watch.Stop();
+            //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            return $"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks";
+        }
+
         public static void popTable()
         {
             Db.Transact(() =>
             {
                 // Turnuvalar
-                var cc1  = new BDB.CC() { Ad = "17-18 1.Lig",  Idx = "17-5", Skl = "T", Grp = "17T" };
-                var cc2A = new BDB.CC() { Ad = "17-18 2A.Lig", Idx = "17-4", Skl = "T", Grp = "17T" };
-                var cc2B = new BDB.CC() { Ad = "17-18 2B.Lig", Idx = "17-3", Skl = "T", Grp = "17T" };
-                var cc3A = new BDB.CC() { Ad = "17-18 3A.Lig", Idx = "17-2", Skl = "T", Grp = "17T" };
-                var cc3B = new BDB.CC() { Ad = "17-18 3B.Lig", Idx = "17-1", Skl = "T", Grp = "17T" };
+                var cc1  = new BDB.CC() { Ad = "1.Lig (2017-18)",  Idx = "17-5", Skl = "T", Grp = "17T" };
+                var cc2A = new BDB.CC() { Ad = "2A.Lig (2017-18)", Idx = "17-4", Skl = "T", Grp = "17T" };
+                var cc2B = new BDB.CC() { Ad = "2B.Lig (2017-18)", Idx = "17-3", Skl = "T", Grp = "17T" };
+                var cc3A = new BDB.CC() { Ad = "3A.Lig (2017-18)", Idx = "17-2", Skl = "T", Grp = "17T" };
+                var cc3B = new BDB.CC() { Ad = "3B.Lig (2017-18)", Idx = "17-1", Skl = "T", Grp = "17T" };
 
                 // Turnuva Takimlari
                 // 1.Lig
