@@ -91,6 +91,7 @@ namespace bodved
                     sng.Idx = src.Idx;
 
                     sng.hoNo = src.oNo.ToString();
+                    sng.hPPoNo = src.PP.oNo.ToString();
                     sng.hPPAd = src.PPAd;
                     sng.hPPrnk = src.PRH.prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
@@ -103,6 +104,7 @@ namespace bodved
                 if ((s % 2) == 1)
                 {
                     sng.goNo = src.oNo.ToString();
+                    sng.gPPoNo = src.PP.oNo.ToString();
                     sng.gPPAd = src.PPAd;
                     sng.gPPrnk = src.PRH.prvRnk;
 
@@ -128,6 +130,7 @@ namespace bodved
                     dbl.Idx = src.Idx;
 
                     dbl.hoNo1 = src.oNo.ToString();
+                    dbl.hPPoNo1 = src.PP.oNo.ToString();
                     dbl.hPPAd1 = src.PPAd;
                     dbl.hPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.hS1W = src.S1W;
@@ -140,12 +143,14 @@ namespace bodved
                 if ((c % 4) == 1)
                 {
                     dbl.hoNo2 = src.oNo.ToString();
+                    dbl.hPPoNo2 = src.PP.oNo.ToString();
                     dbl.hPPAd2 = src.PPAd;
                     dbl.hPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }
                 if ((c % 4) == 2)
                 {
                     dbl.goNo1 = src.oNo.ToString();
+                    dbl.gPPoNo1 = src.PP.oNo.ToString();
                     dbl.gPPAd1 = src.PPAd;
                     dbl.gPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.gS1W = src.S1W;
@@ -158,6 +163,7 @@ namespace bodved
                 if ((c % 4) == 3)
                 {
                     dbl.goNo2 = src.oNo.ToString();
+                    dbl.gPPoNo2 = src.PP.oNo.ToString();
                     dbl.gPPAd2 = src.PPAd;
                     dbl.gPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }

@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using Starcounter;
 
 namespace bodved
@@ -18,6 +18,7 @@ namespace bodved
                 if (mpLgn.Id == CToNo)
                     canMdfy = true;
             }
+            //canMdfy = true; // DENEME
 
             if (!canMdfy)
                 return;
@@ -35,8 +36,8 @@ namespace bodved
                 Pok = false;    // Admin sirlama OK olsa bile degistirebilsin
 
             var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));     // Bu Takim'in siralamasi yapiliyor.
-            Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu Sýralama";
-            Cap2 = $"{ct.Ad} Oyuncu Sýralama";
+            Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu SÄ±ralama";
+            Cap2 = $"{ct.Ad} Oyuncu SÄ±ralama";
 
             var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ?", cet, ct).FirstOrDefault();
             // Kayit yoksa CTP'den alip yarat

@@ -27,35 +27,33 @@ div#dragD table {
 /* table cells */
 div#dragS td,
 div#dragD td {
-	/*border: 1px solid navy;
-	height: 50px;*/
-	/*height: calc(2em + 4px);*/
-	height: 2em;
-	border: 1px solid white;
+	height: 19px;
+	/*border: 1px solid white;*/
+	border: none;
 	text-align: center;
 	/*font-size: 10pt;*/
-	padding: 2px;
+	/*padding: 0px;*/
     line-height:normal;
 }
-
+/*
 div#dragS tr:nth-child(even),
 div#dragD tr:nth-child(even) {
     background-color: #dddddd;
 }
-
+*/
 
 /* drag object (DIV inside table cell) */
 .redips-drag {
 	margin: auto;
 	text-align: center;
 	width: 10em;
-	padding: 2px;
+	/*padding: 2px;*/
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	/*height: 35px;*/
 	/*line-height: calc(2em - 4px);*/
-	border: 2px solid SteelBlue;
+	border: 1px solid SteelBlue;
 	background-color: white;
 }
 /* allow / deny access to cells marked with 'mark' class name */

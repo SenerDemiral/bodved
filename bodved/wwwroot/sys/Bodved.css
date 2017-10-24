@@ -47,7 +47,7 @@ body {
 }
 
 /*-----------------*/
-table {
+.tblWrap table {
 	border-collapse: collapse;
     width: 100%;
 	/*border-spacing: 0px;*/
@@ -56,14 +56,14 @@ table {
 	/*margin-right: auto;*/
 }
 
-td {
+.tblWrap td {
   	/*-height: 1.5em;*/
 	padding: 2px 4px; /*0.2em 0.4em;*/
 	border: 1px solid #CBCBCB;
     white-space: nowrap;
 }
 
-th {
+.tblWrap th {
   	/*line-height: 2em;*/
 	text-align:center;
 	border: 1px solid lightgray;

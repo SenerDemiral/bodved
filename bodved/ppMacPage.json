@@ -34,7 +34,8 @@
       "S4": "",
       "S5": "",
       "Sonuc": "",
-      "Rakip": "",
+      "rPPoNo": "",
+      "rPPAd": "",
       "rRnk": 0
     }
   ],
@@ -44,7 +45,8 @@
       "oNo": 0,
       "Tarih": "",
       "WoL": "",
-      "Ortak": "",
+      "oPPoNo": "",
+      "oPPAd": "",
       "SW": "",
       "SL": "",
       "S1": "",
@@ -53,8 +55,10 @@
       "S4": "",
       "S5": "",
       "Sonuc": "",
-      "Rakip1": "",
-      "Rakip2": ""
+      "rPPoNo1": "",
+      "rPPoNo2": "",
+      "rPPAd1": "",
+      "rPPAd2": ""
     }
   ]
 }

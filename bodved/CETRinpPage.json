@@ -35,6 +35,7 @@
       "gSW": 0,
       
       "hoNo": "",
+      "hPPoNo": "",
       "hPPAd": "",
       "hPPrnk": 0,
       "hS1W$": 0,
@@ -44,6 +45,7 @@
       "hS5W$": 0,
       
       "goNo": "",
+      "gPPoNo": "",
       "gPPAd": "",
       "gPPrnk": 0,
       "gS1W$": 0,
@@ -62,6 +64,8 @@
 
       "hoNo1": "",
       "hoNo2": "",
+      "hPPoNo1": "",
+      "hPPoNo2": "",
       "hPPrnk1": 0,
       "hPPrnk2": 0,
       "hPPAd1": "",
@@ -74,6 +78,8 @@
 
       "goNo1": "",
       "goNo2": "",
+      "gPPoNo1": "",
+      "gPPoNo2": "",
       "gPPrnk1": 0,
       "gPPrnk2": 0,
       "gPPAd1": "",

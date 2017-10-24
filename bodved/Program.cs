@@ -158,9 +158,6 @@ namespace bodved
             Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo = $"{CCoNo}" });
             Handle.GET("/bodved/Deneme/{?}", (string CCoNo) => WrapPage<Deneme>($"/bodved/partial/Deneme/{CCoNo}"));
 
-            Hook<BDB.CC>.CommitUpdate += (s, obj) =>
-            {
-            };
             Hook<BDB.CET>.CommitUpdate += (s, obj) =>
             {
                 /*

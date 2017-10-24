@@ -27,7 +27,8 @@ namespace bodved
                 sng.NOBX = k.PRH.NOPX;
                 sng.rRnk = r.PRH.prvRnk;
 
-                sng.Rakip = r.PPAd;
+                sng.rPPoNo = r.PP.oNo.ToString();
+                sng.rPPAd = r.PPAd;
                 sng.Sonuc = $"[{k.SW}-{r.SW}] {k.S1W}-{r.S1W} {k.S2W}-{r.S2W} {k.S3W}-{r.S3W} {k.S4W}-{r.S4W} {k.S5W}-{r.S5W}";
 
                 sng.SW = $"{k.SW}";
@@ -65,10 +66,13 @@ namespace bodved
                 dbl = Doubles.Add();
                 dbl.oNo = (long)k.oNo;
                 dbl.Tarih = k.Trh.ToString("dd.MM.yy");
-                dbl.Ortak = o.PPAd;
+                dbl.oPPoNo = o.PP.oNo.ToString();
+                dbl.oPPAd = o.PPAd;
 
-                dbl.Rakip1 = r[0].PPAd;
-                dbl.Rakip2 = r[1].PPAd;
+                dbl.rPPoNo1 = r[0].PP.oNo.ToString();
+                dbl.rPPoNo2 = r[1].PP.oNo.ToString();
+                dbl.rPPAd1 = r[0].PPAd;
+                dbl.rPPAd2 = r[1].PPAd;
 
                 dbl.Sonuc = $"[{k.SW}-{r[0].SW}] {k.S1W}-{r[0].S1W} {k.S2W}-{r[0].S2W} {k.S3W}-{r[0].S3W} {k.S4W}-{r[0].S4W} {k.S5W}-{r[0].S5W}";
 
