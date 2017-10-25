@@ -27,7 +27,7 @@ body {
 }
 
 .master-toolbar ul li {
-    padding: 4px 8px;
+    padding: 4px 4px;
 }
 
 .master-toolbar ul li a {
@@ -56,7 +56,7 @@ body {
 }
 
 .tblWrap td {
-	padding: 2px 4px;
+	padding: 2px 2px;
 	border: 1px solid #CBCBCB;
     white-space: nowrap;
 }
@@ -153,8 +153,8 @@ input:focus {
     margin-right:4px;
 }
 .ppAd {
-    min-width: 11rem;
-    max-width: 12rem;
+    min-width: 12em;
+    max-width: 12em;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -169,14 +169,15 @@ button.sort {
     margin-left: 2px;
 }
 .inpSetSayi {
-    width: 20px;
+    width: 1.2em;
+    font-size:1em;
     text-align: center;
     border: none;
 }
 .inpSetCell
 {
-    width: 40px;
-    padding:1px;
+    /*width: 40px;
+    padding:1px;*/
 }
 .oNo {
     background-color: gainsboro;

@@ -46,7 +46,7 @@ div#dragD tr:nth-child(even) {
 .redips-drag {
 	margin: auto;
 	text-align: center;
-	width: 10em;
+	width: 8em;
 	/*padding: 2px;*/
 	overflow: hidden;
 	text-overflow: ellipsis;

@@ -7,8 +7,8 @@
                 <div id="dragS">
                     <table id="tableS">
                         <colgroup>
-                            <col width="30" />
-                            <col width="140" />
+                            <col width="20" />
+                            <col width="110" />
                         </colgroup>
                         <tr>
                             <td class="redips-mark" id="message">Sıra</td>
@@ -25,9 +25,9 @@
                 <div id="dragD">
                     <table id="tableD">
                         <colgroup>
-                            <col width="30" />
-                            <col width="140" />
-                            <col width="140" />
+                            <col width="20" />
+                            <col width="110" />
+                            <col width="110" />
                         </colgroup>
                         <tr>
                             <td class="redips-mark">Sıra</td>
@@ -54,6 +54,8 @@
 
                 <div hidden$="[[model.Pok]]">
                     <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                    <br />
+                    <br />
                     <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
                 </div>
             </div>

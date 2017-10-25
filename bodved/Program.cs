@@ -11,7 +11,8 @@ namespace bodved
 				<html>
 				<head>
 					<meta charset=""utf-8"">
-				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes"">
+				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, minimum-scale=0.50, user-scalable=yes"">
+				    <!--meta name=""viewport"" content=""width=device-width""-->
 					<title>{0}</title>
 					
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
@@ -68,6 +69,14 @@ namespace bodved
             Handle.GET("/bodved/deneme2", () =>
             {
                 return BDB.Tanimlar.deneme2();
+            });
+            Handle.GET("/bodved/deneme3", () =>
+            {
+                return BDB.Tanimlar.deneme3();
+            });
+            Handle.GET("/bodved/deneme4", () =>
+            {
+                return BDB.Tanimlar.deneme4();
             });
 
             Handle.GET("/bodved/IndexCreate", () =>

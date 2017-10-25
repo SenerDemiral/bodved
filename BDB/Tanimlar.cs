@@ -31,6 +31,42 @@ namespace BDB
             return $"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks";
         }
 
+        public static string deneme3()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+                for (int i = 0; i < 1000000; i++)
+                {
+                    var rec = Db.SQL<BDB.PP>("select p from PP p where p.ObjectNo = ?", i).FirstOrDefault();
+                }
+
+            watch.Stop();
+            //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            return $"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks";
+        }
+
+        public static string deneme4()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            var rec = Db.SQL<BDB.PP>("select p from PP p");
+            int i = 0;
+            int a = 0;
+            string s = "";
+            foreach (var r in rec)
+            {
+                s = r.Ad;
+                a = r.DgmYil;
+                i++;
+            }
+
+            watch.Stop();
+            //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            return $"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks {i}";
+        }
+
         public static string deneme2()
         {
             Stopwatch watch = new Stopwatch();
