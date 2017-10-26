@@ -1,4 +1,4 @@
-using Starcounter;
+ï»¿using Starcounter;
 using System;
 using System.Linq;
 using System.Diagnostics;
@@ -15,7 +15,7 @@ namespace bodved
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-            Cap1 = $"{cc.Ad} Müsabakalarý";
+            Cap1 = $"{cc.Ad} MÃ¼sabakalarÄ±";
 
             if (canMdfy)
             {
