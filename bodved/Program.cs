@@ -27,7 +27,7 @@ namespace bodved
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
 					<link rel=""import"" href=""/sys/starcounter.html"">
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
-					<link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html"">
+					<!--link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html""-->
 					
 
                     <script src=""/sys/thenBy.js""></script>
@@ -41,11 +41,11 @@ namespace bodved
 
                 <body>
                     <template is=""dom-bind"" id=""puppet-root"">
-                    <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
+                        <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
-                    <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
-                    <!--palindrom-client ref=""puppet-root"" remote-url=""{1}""></palindrom-client-->
-                    <starcounter-debug-aid></starcounter-debug-aid>
+                    <!--puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client-->
+                    <palindrom-client ref=""puppet-root"" remote-url=""{1}""></palindrom-client>
+                    <!--starcounter-debug-aid></starcounter-debug-aid-->
                 </body>
 				</html>";
 

@@ -107,6 +107,74 @@ namespace BDB
                 var pr1 = new BDB.CT() { CC = cc1, Ad = "Promil•1",     Pw = "pr1", Adres = "Değirmen Cafe OASİS Bodrum" };
                 var yk1 = new BDB.CT() { CC = cc1, Ad = "Yalıkavak•1",  Pw = "yk1", Adres = "Çaça Restaurant Yalıkavak" };
 
+
+                // 1.Lig Fikstur
+                new BDB.CET { CC = cc1, hCT = df1, gCT = dr1, Trh = DateTime.Parse("30.10.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mt1, gCT = kr1, Trh = DateTime.Parse("01.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pn1, gCT = kp1, Trh = DateTime.Parse("01.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pr1, gCT = gm1, Trh = DateTime.Parse("01.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = yk1, gCT = em1, Trh = DateTime.Parse("03.11.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = em1, gCT = df1, Trh = DateTime.Parse("06.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = gm1, gCT = yk1, Trh = DateTime.Parse("07.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kp1, gCT = pr1, Trh = DateTime.Parse("07.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kr1, gCT = pn1, Trh = DateTime.Parse("08.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mk1, gCT = mt1, Trh = DateTime.Parse("10.11.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = df1, gCT = gm1, Trh = DateTime.Parse("13.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pn1, gCT = mk1, Trh = DateTime.Parse("15.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pr1, gCT = kr1, Trh = DateTime.Parse("15.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = dr1, gCT = em1, Trh = DateTime.Parse("16.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = yk1, gCT = kp1, Trh = DateTime.Parse("17.11.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = gm1, gCT = dr1, Trh = DateTime.Parse("21.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kp1, gCT = df1, Trh = DateTime.Parse("21.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kr1, gCT = yk1, Trh = DateTime.Parse("22.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mt1, gCT = pn1, Trh = DateTime.Parse("24.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mk1, gCT = pr1, Trh = DateTime.Parse("24.11.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = df1, gCT = kr1, Trh = DateTime.Parse("27.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = em1, gCT = gm1, Trh = DateTime.Parse("27.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pr1, gCT = mt1, Trh = DateTime.Parse("29.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = dr1, gCT = kp1, Trh = DateTime.Parse("30.11.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = yk1, gCT = mk1, Trh = DateTime.Parse("01.12.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = mt1, gCT = yk1, Trh = DateTime.Parse("04.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kp1, gCT = em1, Trh = DateTime.Parse("05.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kr1, gCT = dr1, Trh = DateTime.Parse("06.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pn1, gCT = pr1, Trh = DateTime.Parse("06.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mk1, gCT = df1, Trh = DateTime.Parse("08.12.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = df1, gCT = mt1, Trh = DateTime.Parse("11.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = em1, gCT = kr1, Trh = DateTime.Parse("11.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = gm1, gCT = kp1, Trh = DateTime.Parse("12.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = dr1, gCT = mk1, Trh = DateTime.Parse("14.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = yk1, gCT = pn1, Trh = DateTime.Parse("15.12.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = mt1, gCT = dr1, Trh = DateTime.Parse("18.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = kr1, gCT = gm1, Trh = DateTime.Parse("20.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pn1, gCT = df1, Trh = DateTime.Parse("20.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = pr1, gCT = yk1, Trh = DateTime.Parse("20.12.2017 19:00") };
+                new BDB.CET { CC = cc1, hCT = mk1, gCT = em1, Trh = DateTime.Parse("22.12.2017 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = gm1, gCT = mk1, Trh = DateTime.Parse("02.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = kp1, gCT = kr1, Trh = DateTime.Parse("02.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = em1, gCT = mt1, Trh = DateTime.Parse("03.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = dr1, gCT = pn1, Trh = DateTime.Parse("04.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = df1, gCT = pr1, Trh = DateTime.Parse("05.01.2018 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = mt1, gCT = gm1, Trh = DateTime.Parse("08.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = pn1, gCT = em1, Trh = DateTime.Parse("10.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = pr1, gCT = dr1, Trh = DateTime.Parse("10.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = mk1, gCT = kp1, Trh = DateTime.Parse("12.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = yk1, gCT = df1, Trh = DateTime.Parse("12.01.2018 19:00") };
+
+                new BDB.CET { CC = cc1, hCT = em1, gCT = pr1, Trh = DateTime.Parse("15.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = gm1, gCT = pn1, Trh = DateTime.Parse("16.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = kp1, gCT = mt1, Trh = DateTime.Parse("16.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = kr1, gCT = mk1, Trh = DateTime.Parse("17.01.2018 19:00") };
+                new BDB.CET { CC = cc1, hCT = dr1, gCT = yk1, Trh = DateTime.Parse("18.01.2018 19:00") };
+
                 // 2A.Lig 
                 new BDB.CT() { CC = cc2A, Ad = "Bitez•2A" };
                 new BDB.CT() { CC = cc2A, Ad = "Bosku•2A" };

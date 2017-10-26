@@ -1,5 +1,6 @@
 ﻿using System;
 using Starcounter;
+using System.Globalization;
 
 namespace BDB
 {
@@ -193,8 +194,9 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format("{0:dd.MM.yy HH:mm}", Trh);
-
+        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM dddd}", Trh);
+        //public string Tarih2 => string.Format()
+        //CultureInfo.CreateSpecificCulture("de-DE")
     }
 
     [Database]
