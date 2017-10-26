@@ -194,7 +194,7 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM dddd}", Trh);
+        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
         //public string Tarih2 => string.Format()
         //CultureInfo.CreateSpecificCulture("de-DE")
     }

@@ -150,7 +150,7 @@ input:focus {
     background-color:whitesmoke;
     color:darkkhaki;
     border:1px solid;
-    margin-right:4px;
+    /*margin-right:4px;*/
 }
 .ppAd {
     min-width: 12em;
@@ -188,6 +188,8 @@ button.sort {
 }
 iron-icon {
     margin: 0px 5px;
+    width: 1rem;
+    height: 1rem;
 }
 .Go {
     text-align:center;
