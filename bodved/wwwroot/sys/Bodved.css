@@ -6,6 +6,10 @@
     --master-current-height: calc(100vh - 55px);
 }
 
+a {
+    text-decoration:none;
+    font-style:oblique;
+}
 body {
     font-family:sans-serif;
     font-size: 0.8rem;
@@ -28,6 +32,10 @@ body {
 
 .master-toolbar ul li {
     padding: 4px 4px;
+}
+
+.master-toolbar iron-icon {
+    margin: 0px 5px;
 }
 
 .master-toolbar ul li a {
@@ -187,15 +195,15 @@ button.sort {
     text-align:center;
 }
 iron-icon {
-    margin: 0px 5px;
     width: 1rem;
     height: 1rem;
 }
+/*
 .Go {
     text-align:center;
     text-decoration:none;
     font-style:oblique;
-}
+}*/
 .hSW {
     background-color: #eaefb3;
     width: 20px;
