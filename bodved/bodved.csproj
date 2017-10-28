@@ -192,6 +192,7 @@
     <ProjectReference Include="..\BDB\BDB.csproj">
       <Project>{fb1ca197-7f1b-4a78-82cc-a5c71247d05b}</Project>
       <Name>BDB</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

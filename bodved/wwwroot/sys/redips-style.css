@@ -3,7 +3,6 @@
 }
 
 #dragSD {
-	font-family: arial;
 	margin: 0px; /* for IE6 / IE7 */
 	display: grid;
 	/*grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));*/
