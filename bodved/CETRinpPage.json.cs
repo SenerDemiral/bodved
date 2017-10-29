@@ -57,8 +57,8 @@ namespace bodved
                 Rok = false;    // Admin sonuc OK olsa bile degistirebilsin
 
 
-            Cap1 = $"{cet.CCAd}";
-            Cap2 = $"{cet.Tarih} {cet.hCTAd} <> {cet.gCTAd} Müsabaka Sonuçları";
+            Cap1 = $"{cet.CCAd}  {cet.Tarih}";
+            Cap2 = $"{cet.hCTAd} <> {cet.gCTAd}"; // Müsabaka Sonuçları";
 
             hP = cet.hP;
             hPW = cet.hPW;

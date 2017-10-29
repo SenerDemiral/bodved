@@ -98,9 +98,9 @@ namespace BDB
                 var df1 = new BDB.CT() { CC = cc1, Ad = "Delfi•1",      Pw = "df1", Adres = "Delfi Arena Bodrum" };
                 var dr1 = new BDB.CT() { CC = cc1, Ad = "Dragons•1",    Pw = "dr1", Adres = "Funtown Yahşi Orakent" };
                 var em1 = new BDB.CT() { CC = cc1, Ad = "ErkanMotel•1", Pw = "em1", Adres = "Erkan Motel Yahşi" };
-                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük•1",   Pw = "gm1", Adres = "Avta Turgutreis" };
-                var kp1 = new BDB.CT() { CC = cc1, Ad = "KingPong•1",   Pw = "kk1", Adres = "" };
-                var kr1 = new BDB.CT() { CC = cc1, Ad = "KutayReno•1",  Pw = "kr1", Adres = "" };
+                var gm1 = new BDB.CT() { CC = cc1, Ad = "Gümüşlük•1",   Pw = "gm1", Adres = "Avta Tesisleri Turgutreis" };
+                var kp1 = new BDB.CT() { CC = cc1, Ad = "KingPong•1",   Pw = "kk1", Adres = "Yahşi Tenis Kulübü" };
+                var kr1 = new BDB.CT() { CC = cc1, Ad = "KutayReno•1",  Pw = "kr1", Adres = "Avta Tesisleri Turgutreis" };
                 var mk1 = new BDB.CT() { CC = cc1, Ad = "MilasKarya•1", Pw = "mk1", Adres = "Delfi Arena Bodrum" };
                 var mt1 = new BDB.CT() { CC = cc1, Ad = "Mitos•1",      Pw = "mt1", Adres = "Avta Turgutreis" };
                 var pn1 = new BDB.CT() { CC = cc1, Ad = "Ponpin•1",     Pw = "pn1", Adres = "Delfi Arena Bodrum" };
@@ -265,6 +265,7 @@ namespace BDB
                 var dr1I = new BDB.PP() { Ad = "Faruk GEDİKOĞLU" };
                 var dr1J = new BDB.PP() { Ad = "Can DEMİR" };
                 var dr1K = new BDB.PP() { Ad = "Halil OCAKLI" };
+                var dr1L = new BDB.PP() { Ad = "Yaşar KARATAŞ" };
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr11, Idx = 1 };
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr12, Idx = 2 };
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr13, Idx = 3 };
@@ -285,6 +286,7 @@ namespace BDB
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1I, Idx = 18 };
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1J, Idx = 19 };
                 new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1K, Idx = 20 };
+                new BDB.CTP() { CC = cc1, CT = dr1, PP = dr1L, Idx = 20 };
                 #endregion Dragons-1
 
                 #region ErkanMotel-1
@@ -305,6 +307,7 @@ namespace BDB
                 var em1F = new BDB.PP() { Ad = "Vedat GÖKALP", Tel = "542-674-2828" };
                 var em1G = new BDB.PP() { Ad = "Meral BAHÇETEPE", Tel = "530-927-3627" };
                 var em1H = new BDB.PP() { Ad = "Ayhan ARAL", Tel = "532-252-4266" };
+                var em1I = new BDB.PP() { Ad = "Hasan DOĞAN" };
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em11, Idx = 1 };
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em12, Idx = 2 };
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em13, Idx = 3 };
@@ -322,6 +325,7 @@ namespace BDB
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em1F, Idx = 15 };
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em1G, Idx = 16 };
                 new BDB.CTP() { CC = cc1, CT = em1, PP = em1H, Idx = 17 };
+                new BDB.CTP() { CC = cc1, CT = em1, PP = em1I, Idx = 17 };
                 #endregion ErkanMotel-1
 
                 #region Gümüşlük-1
@@ -377,6 +381,7 @@ namespace BDB
                 var kk1B = new BDB.PP() { Ad = "Gürdal DALKILIÇ" };
                 var kk1C = new BDB.PP() { Ad = "Ahmet ERDEM" };
                 var kk1D = new BDB.PP() { Ad = "Ramazan İZMİRLİ" };
+                var kk1E = new BDB.PP() { Ad = "Ahmet ŞAHAN İZMİRLİ" };
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk11, Idx = 1 };
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk12, Idx = 2 };
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk13, Idx = 3 };
@@ -390,18 +395,19 @@ namespace BDB
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk1B, Idx = 11 };
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk1C, Idx = 12 };
                 new BDB.CTP() { CC = cc1, CT = kp1, PP = kk1D, Idx = 13 };
+                new BDB.CTP() { CC = cc1, CT = kp1, PP = kk1E, Idx = 13 };
                 #endregion KingPong-1
 
                 #region KutayReno-1
                 var kr11 = new BDB.PP() { Ad = "Sefer NAMRUK" };
-                var kr12 = new BDB.PP() { Ad = "Metin ÖZDEMİR (yasaklı)" };
+                var kr12 = new BDB.PP() { Ad = "Metin ÖZDEMİR" };
                 var kr13 = new BDB.PP() { Ad = "Yaşar ASLAN" };
                 var kr14 = new BDB.PP() { Ad = "Atalay SÜTCÜ" };
                 var kr15 = new BDB.PP() { Ad = "Barış DALDAL" };
                 var kr16 = new BDB.PP() { Ad = "Ümit ÜNSAL" };
                 var kr17 = new BDB.PP() { Ad = "Doğan İPEK" };
                 var kr18 = new BDB.PP() { Ad = "Davut DİRİL" };
-                var kr19 = new BDB.PP() { Ad = "Oya KIZIR" };
+                var kr19 = new BDB.PP() { Ad = "Oya KİZİR" };
                 var kr1A = new BDB.PP() { Ad = "Koray BAYSAL" };
                 var kr1B = new BDB.PP() { Ad = "Hamdi AKDOĞAN" };
                 var kr1C = new BDB.PP() { Ad = "Kaya ERGİN" };
@@ -428,7 +434,7 @@ namespace BDB
                 var mk12 = new BDB.PP() { Ad = "Çağdaş SAVAŞ" };
                 var mk13 = new BDB.PP() { Ad = "Enver VARAN" };
                 var mk14 = new BDB.PP() { Ad = "İsmail BOZKURT" };
-                var mk15 = new BDB.PP() { Ad = "Allattin SAGUŞ" };
+                var mk15 = new BDB.PP() { Ad = "Alaattin SAGUŞ" };
                 var mk16 = new BDB.PP() { Ad = "Fatih BULDAN" };
                 var mk17 = new BDB.PP() { Ad = "Mesut ÖZER" };
                 var mk18 = new BDB.PP() { Ad = "Erdem ÖZKAN" };
@@ -440,6 +446,7 @@ namespace BDB
                 var mk1E = new BDB.PP() { Ad = "Mustafa ALP" };
                 var mk1F = new BDB.PP() { Ad = "Ahmet EGE" };
                 var mk1G = new BDB.PP() { Ad = "Efkan UYSAL" };
+                var mk1H = new BDB.PP() { Ad = "Furkan YİĞİT" };
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk11, Idx = 1 };
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk12, Idx = 2 };
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk13, Idx = 3 };
@@ -456,6 +463,7 @@ namespace BDB
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk1E, Idx = 14 };
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk1F, Idx = 15 };
                 new BDB.CTP() { CC = cc1, CT = mk1, PP = mk1G, Idx = 16 };
+                new BDB.CTP() { CC = cc1, CT = mk1, PP = mk1H, Idx = 16 };
                 #endregion MilasKarya-1
 
                 #region Mitos-1

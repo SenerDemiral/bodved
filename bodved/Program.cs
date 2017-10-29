@@ -29,7 +29,7 @@ namespace bodved
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
 					<!--link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html""-->
 					
-                    <link href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro"" rel=""stylesheet"">
+                    <link rel=""stylesheet"" href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro"">
                     <script src=""/sys/thenBy.js""></script>
                     <script src=""/sys/redips-drag-min.js""></script>
 					<link rel=""stylesheet"" href=""/sys/redips-style.css"">
