@@ -86,7 +86,7 @@ namespace BDB
         public static void refreshPRH()
         {
             // ReCalculate Rank of All Players
-            var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh ASC");
+            var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh");
 
             Db.Transact(() =>
             {
@@ -279,6 +279,355 @@ namespace BDB
                 }
             }
         }
+
+        public static void RestorePP()
+        {
+            StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-PP.txt", System.Text.Encoding.UTF8);
+            {
+                string line;
+
+                Db.Transact(() => {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.PP()
+                        {
+                            ID = ra[0],
+                            Sex = ra[1],
+                            Ad = ra[2]
+                        };
+                    }
+                });
+            }
+        }
+
+        public static void RestoreCC()
+        {
+            StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CC.txt", System.Text.Encoding.UTF8);
+            {
+                string line;
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.CC()
+                        {
+                            ID = ra[0],
+                            Ad = ra[1]
+                        };
+                    }
+                });
+
+            }
+        }
+
+        public static void RestoreCT(string ccID)
+        {
+            StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CT-{ccID}.txt", System.Text.Encoding.UTF8);
+            {
+                string line;
+                var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.CT()
+                        {
+                            CC = cc,
+                            ID = ra[1],
+                            Ad = ra[2]
+                        };
+                    }
+                });
+            }
+        }
+
+        public static void RestoreCTP(string ccID)
+        {
+            StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CTP-{ccID}.txt");
+            {
+                string line;
+                var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+                int i = 1;
+
+                Db.Transact(() => {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[1]).FirstOrDefault();
+                        var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[2]).FirstOrDefault();
+
+                        new BDB.CTP()
+                        {
+                            CC = cc,
+                            CT = ct,
+                            Idx = i++,
+                            PP = pp,
+                            PPid = ra[2],
+                        };
+                    }
+                });
+            }
+        }
+
+        public static void RestoreCET(string ccID)
+        {
+            string line;
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            PRH prh;
+            Db.Transact(() =>
+            {
+                var recs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
+                foreach (var cetr in recs)
+                {
+                    if (cetr.PRH != null)
+                    {
+                        prh = Db.FromId<PRH>(cetr.PRH.GetObjectNo());
+                        prh.Delete();
+                    }
+                    cetr.Delete();
+                }
+
+                Db.SQL("DELETE FROM BDB.CET where CC = ?", cc);
+            });
+
+            StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CET-{ccID}.txt");
+            Db.Transact(() => 
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] ra = line.Split(',');
+
+                    var hct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[3]).FirstOrDefault();
+                    var gct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[4]).FirstOrDefault();
+
+                    new BDB.CET()
+                    {
+                        CC = cc,
+                        ID = ra[1],
+                        Trh = DateTime.Parse(ra[2]),
+                        hCT = hct,
+                        gCT = gct,
+                    };
+                }
+            });
+        }
+
+        public static void RestoreCETR(string ccID)
+        {
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
+            foreach (var r in recs)
+            {
+                RestoreCETR(ccID, r.ID);
+            }
+        }
+
+        public static void RestoreCETR(string ccID, string cetID)
+        {
+            string line;
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cet = Db.SQL<CET>("select r from CET r where r.CC = ? and r.ID = ?", cc, cetID).FirstOrDefault();
+
+            Db.Transact(() =>
+            {
+                var recs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
+                foreach (var cetr in recs)
+                {
+                    if (cetr.PRH != null)
+                    {
+                        Db.FromId<PRH>(cetr.PRH.GetObjectNo()).Delete();
+                    }
+                    cetr.Delete();
+                }
+            });
+
+
+            //sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd}");
+            //                      0          1         2       3       4       5         6       7          8          9         10         11        12     13     14     15       16      
+            StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CETR-{ccID}-{cetID}.txt");
+            Db.Transact(() => {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] ra = line.Split(',');
+
+                    var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[2]).FirstOrDefault();
+                    var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
+
+                    var cetr = new CETR()
+                    {
+                        CC = cc,
+                        CET = cet,
+                        CT = ct,
+                        Trh = cet.Trh,
+                        SoD = ra[3],
+                        Idx = int.Parse(ra[4]),
+                        HoG = ra[5],
+                        PP = pp,
+                        S1W = int.Parse(ra[7]),
+                        S2W = int.Parse(ra[8]),
+                        S3W = int.Parse(ra[9]),
+                        S4W = int.Parse(ra[10]),
+                        S5W = int.Parse(ra[11]),
+                        SW = int.Parse(ra[12]),
+                        SL = int.Parse(ra[13]),
+                        MW = int.Parse(ra[14]),
+                        ML = int.Parse(ra[15]),
+                    };
+                }
+            });
+            sr.Close();
+
+            // Rank PRH, Sadece Singles
+            Db.Transact(() =>
+            {
+                PP pp = null, rpp = null;
+                CETR h = null, g = null;
+                int Won = 0;
+                PRH prh;
+                var recs = Db.SQL<CETR>("select r from CETR r where r.CET = ? and r.SoD = ? order by r.Idx, r.HoG desc", cet, "S");
+                foreach (var r in recs)
+                {
+                    if(r.HoG == "H")
+                    {
+                        h = r;
+                        pp = r.PP;
+                        if (r.MW > r.ML)
+                            Won = 1;
+                        else if (r.MW < r.ML)
+                            Won = -1;
+                    }
+                    else if (r.HoG == "G")
+                    {
+                        g = r;
+                        rpp = r.PP;
+
+                        prh = new PRH
+                        {
+                            PP = pp,
+                            rPP = rpp,
+                            Won = Won,
+                            Trh = cet.Trh,
+                        };
+                        h.PRH = prh;
+
+                        prh = new PRH
+                        {
+                            PP = rpp,
+                            rPP = pp,
+                            Won = Won * -1,
+                            Trh = cet.Trh,
+                        };
+                        g.PRH = prh;
+                    }
+                }
+            });
+
+        }
+
+        public static void BackupPP()
+        {
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-PP.txt", false);
+
+            var recs = Db.SQL<PP>("select r from PP r order by r.Ad");
+            foreach (var r in recs)
+            {
+                sw.WriteLine($"{r.ID},{r.Sex},{r.Ad}");
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+        public static void BackupCC(string ccID)
+        {
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC-{ccID}.txt", false);
+
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            sw.WriteLine($"{cc.ID},{cc.Ad}");
+            sw.Flush();
+            sw.Close();
+
+            BackupCT(cc.oNo);
+            BackupCTP(cc.oNo);
+            BackupCET(cc.oNo);
+            BackupCETR(cc.oNo);
+        }
+
+        public static void BackupCT(ulong CCoNo)
+        {
+            var cc = Db.FromId<CC>(CCoNo);
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CT-{cc.ID}.txt", false);
+
+            var recs = Db.SQL<CT>("select r from CT r where r.CC = ? order by r.Ad", cc);
+            foreach (var r in recs)
+            {
+                sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad}");
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+        public static void BackupCTP(ulong CCoNo)
+        {
+            var cc = Db.FromId<CC>(CCoNo);
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CTP-{cc.ID}.txt", false);
+
+            var recs = Db.SQL<CTP>("select r from CTP r where r.CC = ? order by r.CT, r.Idx", cc);
+            foreach (var r in recs)
+            {
+                sw.WriteLine($"{r.CC.ID},{r.CT.ID},{r.PP.ID}");
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+        public static void BackupCET(ulong CCoNo)
+        {
+            var cc = Db.FromId<CC>(CCoNo);
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CET-{cc.ID}.txt", false);
+
+            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
+            foreach (var r in recs)
+            {
+                sw.WriteLine($"{r.CC.ID},{r.ID},{r.Trh:dd.MM.yy HH:mm},{r.hCT.ID},{r.gCT.ID}");
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+        public static void BackupCETR(ulong CCoNo)
+        {
+            var cc = Db.FromId<CC>(CCoNo);
+            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
+            foreach (var r in recs)
+                BackupCETR(CCoNo, r.oNo);
+        }
+
+        public static void BackupCETR(ulong CCoNo, ulong CEToNo)
+        {
+            var cet = Db.FromId<CET>(CEToNo);
+
+            var recs = Db.SQL<CETR>("select r from CETR r where r.CET = ? order by r.SoD desc, r.Idx, r.HoG desc", cet);
+            if (recs.First == null)
+                return;
+
+            StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CETR-{cet.CC.ID}-{cet.ID}.txt", false);
+            foreach (var r in recs)
+            {
+                sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd}");
+            }
+            sw.Flush();
+            sw.Close();
+        }
+
+
 
         public static void Write2Log(string Msg)
         {

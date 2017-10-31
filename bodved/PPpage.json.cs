@@ -27,6 +27,7 @@ namespace bodved
                 {
                     new BDB.PP()
                     {
+                        ID = this.MdfRec.ID,
                         Ad = this.MdfRec.Ad,
                         Sex = this.MdfRec.Sex,
                         DgmYil = (int)this.MdfRec.DgmYil,
@@ -48,6 +49,7 @@ namespace bodved
                 Db.Transact(() =>
                 {
                     var r = Db.FromId<BDB.PP>((ulong)MdfRec.oNo);
+                    r.ID = MdfRec.ID;
                     r.Ad = MdfRec.Ad;
                     r.Sex = this.MdfRec.Sex;
                     r.DgmYil = (int)this.MdfRec.DgmYil;
@@ -117,6 +119,7 @@ namespace bodved
             {
                 var p = this.Parent.Parent as PPpage;
                 p.MdfRec.oNo = this.oNo;
+                p.MdfRec.ID = this.ID;
                 p.MdfRec.Ad = this.Ad;
                 p.MdfRec.Sex = this.Sex;
                 p.MdfRec.DgmYil = this.DgmYil;

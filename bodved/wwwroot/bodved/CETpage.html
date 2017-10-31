@@ -12,6 +12,7 @@
                 <thead>
                     <tr>
                         <th class="oNo" rowspan="2">ID</th>
+                        <th rowspan="2">#</th>
                         <th colspan="2" class="hHdr">Home</th>
                         <th rowspan="2"><iron-icon icon="vaadin:bolt"></iron-icon></th>
                         <th colspan="2" class="gHdr">Guest</th>
@@ -27,6 +28,7 @@
                     <template is="dom-repeat" items="[[model.CETs]]">
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td>[[item.ID]]</td>
                             <td><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]">[[item.hCTAd]]</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
                             <td class="hSW" data-val$="[[item.hP]]">[[item.hP]]</td>
                             <td><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>

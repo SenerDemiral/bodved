@@ -9,6 +9,7 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
+        public string ID { get; set; }
         public string Ad { get; set; }
         public string Idx { get; set; }
         public string Skl { get; set; }    // Takim/Ferdi
@@ -27,6 +28,7 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
+        public string ID { get; set; }
         public string Ad { get; set; }
         public string Sex { get; set; }
         public int DgmYil { get; set; }
@@ -81,6 +83,7 @@ namespace BDB
         public ulong oNo => this.GetObjectNo();
 
         public CC CC { get; set; }
+        public string ID { get; set; }
         public string Ad { get; set; }
         public PP K1 { get; set; }
         public PP K2 { get; set; }
@@ -117,6 +120,7 @@ namespace BDB
         public CC CC { get; set; }
         public CT CT { get; set; }
         public PP PP { get; set; }
+        public string PPid { get; set; }
         public int Idx { get; set; }
 
         public ulong PPoNo => PP?.GetObjectNo() ?? 0;
@@ -167,6 +171,7 @@ namespace BDB
         public ulong oNo => this.GetObjectNo();
 
         public CC CC { get; set; }
+        public string ID { get; set; }
         public CT hCT { get; set; }
         public CT gCT { get; set; }
         public DateTime Trh { get; set; }

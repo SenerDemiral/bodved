@@ -10,6 +10,7 @@
                     <tr>
                         <th class="oNo">ID</th>
                         <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value">Ad ↕</button></th>
+                        <th>Rumuz</th>
                         <th>BR</th>
                         <th><button class="sort" value="{{model.SortRnk$::click}}" onmousedown="++this.value">Rank ↕</button></th>
                         <th>Cns</th>
@@ -23,6 +24,7 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td><a href="/bodved/ppMacPage/[[item.oNo]]">[[item.Ad]]</a></td>
+                            <td>[[item.ID]]</td>
                             <td class="ortala">°[[item.RnkBaz]]</td>
                             <td class="ortala">°[[item.curRnk]]</td>
                             <td class="ortala">[[item.Sex]]</td>
@@ -38,6 +40,7 @@
             <template is="dom-if" if="[[model.canMdfy]]">
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                    <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
                     <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
                     <input placeholder="Sex" type="text" value="{{model.MdfRec.Sex$::change}}" />
                     <input placeholder="DgmYil" type="number" min="1920" max="2010" value="{{model.MdfRec.DgmYil$::change}}" />
