@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bodved", "bodved\bodved.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDB", "BDB\BDB.csproj", "{FB1CA197-7F1B-4A78-82CC-A5C71247D05B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scExpert", "scExpert\scExpert.csproj", "{688C40F7-8AC6-42E2-9F5A-3004F24CE5FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{FB1CA197-7F1B-4A78-82CC-A5C71247D05B}.Debug|x64.Build.0 = Debug|x64
 		{FB1CA197-7F1B-4A78-82CC-A5C71247D05B}.Release|x64.ActiveCfg = Release|x64
 		{FB1CA197-7F1B-4A78-82CC-A5C71247D05B}.Release|x64.Build.0 = Release|x64
+		{688C40F7-8AC6-42E2-9F5A-3004F24CE5FA}.Debug|x64.ActiveCfg = Debug|x64
+		{688C40F7-8AC6-42E2-9F5A-3004F24CE5FA}.Debug|x64.Build.0 = Debug|x64
+		{688C40F7-8AC6-42E2-9F5A-3004F24CE5FA}.Release|x64.ActiveCfg = Release|x64
+		{688C40F7-8AC6-42E2-9F5A-3004F24CE5FA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
