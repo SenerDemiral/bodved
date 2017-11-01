@@ -123,10 +123,9 @@ namespace bodved
                 p.MdfRec.Ad = this.Ad;
                 p.MdfRec.Sex = this.Sex;
                 p.MdfRec.DgmYil = this.DgmYil;
+                p.MdfRec.RnkBaz = RnkBaz;
                 p.MdfRec.Tel = this.Tel;
                 p.MdfRec.eMail = this.eMail;
-
-                var deneme = this.Root;
             }
         }
 

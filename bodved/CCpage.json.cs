@@ -37,6 +37,7 @@ namespace bodved
                 {
                     new BDB.CC()
                     {
+                        ID = MdfRec.ID,
                         Ad = MdfRec.Ad,
                         Idx = MdfRec.Idx,
                         Skl = MdfRec.Skl,
@@ -60,6 +61,7 @@ namespace bodved
                 Db.Transact(() =>
                 {
                     var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
+                    r.ID = MdfRec.ID;
                     r.Ad = MdfRec.Ad;
                     r.Idx = MdfRec.Idx;
                     r.Skl = MdfRec.Skl;
@@ -114,6 +116,7 @@ namespace bodved
             {
                 var p = this.Parent.Parent as CCpage;
                 p.MdfRec.oNo = oNo;
+                p.MdfRec.ID = ID;
                 p.MdfRec.Ad = Ad;
                 p.MdfRec.Idx = Idx;
                 p.MdfRec.Skl = Skl;

@@ -57,7 +57,8 @@ namespace bodved
 
             Handle.GET("/bodved/BackupCC", () =>
             {
-                BDB.H.BackupCC("17T1A");
+                //BDB.H.BackupCC("17T1A");
+                BDB.H.BackupCC();
                 return "OK";
             });
             Handle.GET("/bodved/BackupCETR", () =>
@@ -70,9 +71,9 @@ namespace bodved
                 BDB.H.RestorePP();
                 return "OK";
             });
-            Handle.GET("/bodved/RestoreCC", () =>
+            Handle.GET("/bodved/RestoreCC/{?}", (string ccID) =>
             {
-                BDB.H.RestoreCC();
+                BDB.H.RestoreCC(ccID);
                 return "OK";
             });
             Handle.GET("/bodved/RestoreCT", () =>
