@@ -826,6 +826,7 @@ namespace BDB
         
         
         #region IPTAL
+        /*
         public static void BackupPP()
         {
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-PP.txt", false))
@@ -915,6 +916,7 @@ namespace BDB
                 }
             }
         }
+        */
         #endregion IPTAL
 
 

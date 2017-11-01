@@ -55,20 +55,14 @@ namespace bodved
 
             BDB.H.Write2Log("Start");
 
-            Handle.GET("/bodved/BackupCC", () =>
+            Handle.GET("/bodved/LoadPP", () =>
             {
-                //BDB.H.BackupCC("17T1A");
-                BDB.H.BackupCC();
+                BDB.H.LoadPP();
                 return "OK";
             });
-            Handle.GET("/bodved/BackupCETR", () =>
+            Handle.GET("/bodved/LoadCC", () =>
             {
-                BDB.H.BackupCETR(1);
-                return "OK";
-            });
-            Handle.GET("/bodved/RestorePP", () =>
-            {
-                BDB.H.RestorePP();
+                BDB.H.LoadCC();
                 return "OK";
             });
             Handle.GET("/bodved/RestoreCC/{?}", (string ccID) =>
@@ -76,26 +70,7 @@ namespace bodved
                 BDB.H.RestoreCC(ccID);
                 return "OK";
             });
-            Handle.GET("/bodved/RestoreCT", () =>
-            {
-                BDB.H.RestoreCT("17T1A");
-                return "OK";
-            });
-            Handle.GET("/bodved/RestoreCTP", () =>
-            {
-                BDB.H.RestoreCTP("17T1A");
-                return "OK";
-            });
-            Handle.GET("/bodved/RestoreCET", () =>
-            {
-                BDB.H.RestoreCET("17T1A");
-                return "OK";
-            });
-            Handle.GET("/bodved/RestoreCETRdeneme", () =>
-            {
-                BDB.H.RestoreCETR("17T1A", "01");
-                return "OK";
-            });
+
 
             Handle.GET("/bodved/init", () =>
             {
