@@ -434,6 +434,7 @@ namespace BDB
         {
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
 
+            //sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad},{r.Adres},{r.Pw},{r.K1?.ID},{r.K2?.ID},{r.K1?.Ad,25},{r.K2?.Ad,25}");
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CT-{ccID}.txt", System.Text.Encoding.UTF8))
             {
                 string line;
@@ -442,13 +443,21 @@ namespace BDB
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
+
                         string[] ra = line.Split(',');
+
+                        var ppK1 = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[5]).FirstOrDefault();
+                        var ppK2 = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
 
                         new BDB.CT()
                         {
                             CC = cc,
                             ID = ra[1],
-                            Ad = ra[2]
+                            Ad = ra[2],
+                            Adres = ra[3],
+                            Pw = ra[4],
+                            K1 = ppK1,
+                            K2 = ppK2,
                         };
                     }
                 });
@@ -774,7 +783,7 @@ namespace BDB
                 var recs = Db.SQL<CT>("select r from CT r where r.CC = ? order by r.Ad", cc);
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad}");
+                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad},{r.Adres},{r.Pw},{r.K1?.ID},{r.K2?.ID},{r.K1?.Ad,25},{r.K2?.Ad,25}");
                 }
             }
         }
