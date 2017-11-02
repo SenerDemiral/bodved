@@ -42,6 +42,7 @@ namespace bodved
                     {
                         CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
                         Ad = MdfRec.Ad,
+                        ID = MdfRec.ID,
                         K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo)),
                         K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo)),
                         Adres = MdfRec.Adres,
@@ -62,6 +63,7 @@ namespace bodved
                 {
                     var r = Db.FromId<BDB.CT>((ulong)MdfRec.oNo);
                     r.Ad = MdfRec.Ad;
+                    r.ID = MdfRec.ID;
                     r.K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo));
                     r.K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo));
                     r.Adres = MdfRec.Adres;
@@ -119,6 +121,7 @@ namespace bodved
                 var p = this.Parent.Parent as CTpage;
                 p.MdfRec.oNo = this.oNo;
                 p.MdfRec.Ad = this.Ad;
+                p.MdfRec.ID = this.ID;
                 p.MdfRec.K1oNo = this.K1oNo.ToString();
                 p.MdfRec.K2oNo = this.K2oNo.ToString();
                 p.MdfRec.Adres = this.Adres;

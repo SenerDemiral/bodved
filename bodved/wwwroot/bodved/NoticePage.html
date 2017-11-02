@@ -19,7 +19,7 @@
                     <template is="dom-repeat" items="[[model.NTCs]]">
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td>[[item.Tarih]]</td>
+                            <td data-onc$="[[item.Onc]]">[[item.Tarih]]</td>
                             <td><a class="ortala" href="[[item.Link]]">[[item.Ad]]</a></td>
                         </tr>
                     </template>

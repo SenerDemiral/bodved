@@ -46,7 +46,8 @@
                 <div class="mdfRecWrap">
                     <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
                     <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                    <input list="browsers" name="myBrowser" value="{{model.MdfRec.K1Ad$::change}}" />
+                    <input placeholder="Rumuz/ID" type="text" value="{{model.MdfRec.ID$::change}}" />
+                    
                     <select name="select" value="{{model.MdfRec.K1oNo$::change}}">
                         <option value="0">N/A</option>
                         <template is="dom-repeat" items="[[model.PPs]]">

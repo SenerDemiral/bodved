@@ -161,6 +161,10 @@ td[data-idx="7"] {
     padding:1px;
 }
 
+[data-onc="9"] {
+    background-color: papayawhip;
+}
+
 [data-val="0"] {
     color:#e8e8e8 !important;
 }
