@@ -31,6 +31,8 @@ namespace bodved
                 cet.Rok = true;
             });
 
+            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+
             BDB.H.updCTsum(cet.hCT.oNo);
             BDB.H.updCTsum(cet.gCT.oNo);
 
@@ -121,7 +123,7 @@ namespace bodved
 
             var DR = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "D");
             DoublesElementJson dbl = null;
-            int c = 0, i = 0;
+            int c = 0;
             foreach (var src in DR)
             {
                 if ((c % 4) == 0)

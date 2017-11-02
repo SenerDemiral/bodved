@@ -343,7 +343,7 @@ namespace BDB
 
             if (cc != null)
             {
-                DeleteCC(cc.oNo);
+                DeleteCCrelated(cc.oNo);
 
                 LoadCTofCC(ccID);
                 LoadCTPofCC(ccID);
@@ -353,7 +353,7 @@ namespace BDB
             }
         }
 
-        public static void DeleteCC(ulong CCoNo)    // Delete Turnuvanin alti
+        public static void DeleteCCrelated(ulong CCoNo)    // Delete Turnuvanin alti
         {
             var cc = Db.FromId<CC>(CCoNo);
 
@@ -362,7 +362,7 @@ namespace BDB
             {
                 foreach (var cet in cets)
                 {
-                    DeleteCET(cet.oNo);
+                    DeleteCETrelated(cet.oNo);
                 }
             });
 
@@ -386,12 +386,13 @@ namespace BDB
 
         }
 
-        public static void DeleteCET(ulong CEToNo)  // Delete Musabaka alti
+        public static void DeleteCETrelated(ulong CEToNo)  // Delete Musabaka alti
         {
             PRH prh;
             var cet = Db.FromId<CET>(CEToNo);
             var cetps = Db.SQL<CETP>("select r from CETP r where r.CET = ?", cet);
             var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ?", cet);
+
             Db.Transact(() =>
             {
                 foreach (var cetp in cetps)
@@ -408,6 +409,23 @@ namespace BDB
                     }
                     cetr.Delete();
                 }
+
+                cet.hPok = false;
+                cet.gPok = false;
+                cet.Rok = false;
+                cet.hP = 0;
+                cet.hPW = 0;
+                cet.hMSW = 0;
+                cet.hMDW = 0;
+                cet.gP = 0;
+                cet.gPW = 0;
+                cet.gMSW = 0;
+                cet.gMDW = 0;
+
+                updCTsum(cet.hCT.oNo);
+                updCTsum(cet.gCT.oNo);
+
+                refreshPRH();
             });
         }
 

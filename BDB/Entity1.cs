@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Starcounter;
 using System.Globalization;
 
@@ -59,7 +60,7 @@ namespace BDB
         {
             get
             {
-                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this, DateTime.MaxValue).First;
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this, DateTime.MaxValue).FirstOrDefault();
                 return p?.Rnk ?? 0; // this.RnkBaz;
             }
         }
@@ -284,7 +285,7 @@ namespace BDB
             get
             {
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
-                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).First;
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).FirstOrDefault();
                 return p?.Rnk ?? this.PP.RnkBaz;
             }
         }
@@ -293,7 +294,7 @@ namespace BDB
             get
             {
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
-                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).First;
+                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).FirstOrDefault();
                 return p?.Rnk ?? this.rPP.RnkBaz;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using Starcounter;
 
 namespace bodved
@@ -214,7 +215,8 @@ namespace bodved
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             // Home/Guest Players Single/Double
-            QueryResultRows<BDB.CETP> P;
+            //QueryResultRows<BDB.CETP> P;
+            IEnumerable<BDB.CETP> P;
             if (hOg == "H")
                 P = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.hCT, sOd);
             else
