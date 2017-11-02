@@ -12,29 +12,37 @@ namespace scExpert
             Handle.GET("/scExpert/LoadPP", () =>
             {
                 BDB.H.LoadPP();
-                return "OK";
+                return "OK: LoadPP()";
             });
+
             Handle.GET("/scExpert/LoadCC", () =>
             {
                 BDB.H.LoadCC();
-                return "OK";
+                return "OK: LoadCC()";
             });
+
             Handle.GET("/scExpert/RestoreCC/{?}", (string ccID) =>
             {
                 BDB.H.RestoreCC(ccID);
-                return "OK: RestoreCC";
+                return $"OK: RestoreCC({ccID})";
             });
 
             Handle.GET("/scExpert/BackupCC/{?}", (string ccID) =>
             {
                 BDB.H.BackupCC(ccID);
-                return "OK: BackupCC";
+                return $"OK: BackupCC({ccID})";
             });
 
             Handle.GET("/scExpert/BackupCET/{?}/{?}", (string ccID, string cetID) =>
             {
                 BDB.H.BackupCET(ccID, cetID);
-                return "OK: BackupCET";
+                return $"OK: BackupCET({ccID}, {cetID})";
+            });
+
+            Handle.GET("/scExpert/DeleteCETrelated/{?}", (string cetOnO) =>
+            {
+                H.DeleteCETrelated(ulong.Parse(cetOnO));
+                return $"OK: DeleteCETrelated({cetOnO}) CEToNo";
             });
 
             Handle.GET("/bodved/init", () =>
@@ -51,9 +59,24 @@ namespace scExpert
                     Db.SQL("DELETE FROM CETP where CET.ObjectNo = ?", 382);
                 });
 
-                return "OK";
+                return "OK: delCETP382";
             });
 
+            Handle.GET("/scExpert/CETidnumaraVer/{?}", (string ccID) =>
+            {
+                var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+
+                Db.Transact(() =>
+                {
+                    var cets = Db.SQL<CET>("select c from CET c where c.CC = ?", cc);
+                    foreach(var cet in cets)
+                    {
+                        cet.ID = $"1{cet.ID}";
+                    }
+                });
+
+                return "OK: CETidNumaraVer";
+            });
 
 
             Handle.GET("/scExpert/deneme2", () =>

@@ -10,7 +10,7 @@ namespace bodved
             base.OnData();
 
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
-            Cap1 = $"{pp.Ad} [{pp.oNo}]"; // №
+            Cap1 = $"{pp.Ad} [{pp.ID}/{pp.oNo}]"; // №
 
             SinglesElementJson sng = null;
             var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "S");
