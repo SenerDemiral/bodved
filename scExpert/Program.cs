@@ -9,23 +9,23 @@ namespace scExpert
     {
         static void Main()
         {
-            Handle.GET("/bodved/LoadPP", () =>
+            Handle.GET("/scExpert/LoadPP", () =>
             {
                 BDB.H.LoadPP();
                 return "OK";
             });
-            Handle.GET("/bodved/LoadCC", () =>
+            Handle.GET("/scExpert/LoadCC", () =>
             {
                 BDB.H.LoadCC();
                 return "OK";
             });
-            Handle.GET("/bodved/RestoreCC/{?}", (string ccID) =>
+            Handle.GET("/scExpert/RestoreCC/{?}", (string ccID) =>
             {
                 BDB.H.RestoreCC(ccID);
                 return "OK: RestoreCC";
             });
 
-            Handle.GET("/bodved/BackupCC/{?}", (string ccID) =>
+            Handle.GET("/scExpert/BackupCC/{?}", (string ccID) =>
             {
                 BDB.H.BackupCC(ccID);
                 return "OK: BackupCC";
@@ -50,32 +50,34 @@ namespace scExpert
 
 
 
-            Handle.GET("/bodved/deneme2", () =>
+            Handle.GET("/scExpert/deneme2", () =>
             {
                 return BDB.Tanimlar.deneme2();
             });
-            Handle.GET("/bodved/deneme3", () =>
+            Handle.GET("/scExpert/deneme3", () =>
             {
                 return BDB.Tanimlar.deneme3();
             });
-            Handle.GET("/bodved/deneme4", () =>
+            Handle.GET("/scExpert/deneme4", () =>
             {
                 return BDB.Tanimlar.deneme4();
             });
 
-            Handle.GET("/bodved/refreshPRH", () =>
+
+
+            Handle.GET("/scExpert/refreshPRH", () =>
             {
                 BDB.H.refreshPRH();
                 return "refreshPRH: OK";
             });
 
-            Handle.GET("/bodved/updPPsum", () =>
+            Handle.GET("/scExpert/updPPsum", () =>
             {
                 BDB.H.updPPsum();
                 return "updPPsum: OK";
             });
 
-            Handle.GET("/bodved/IndexCreate", () =>
+            Handle.GET("/scExpert/IndexCreate", () =>
             {
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPP_Ad   ON PP   (Ad ASC)");
@@ -104,7 +106,7 @@ namespace scExpert
                 return "IndexCreate: OK";
             });
 
-            Handle.GET("/bodved/IndexDrop", () =>
+            Handle.GET("/scExpert/IndexDrop", () =>
             {
                 Db.SQL("DROP INDEX IdxPP_Ad           ON PP");
                 Db.SQL("DROP INDEX IdxPRH_Trh         ON PRH");
