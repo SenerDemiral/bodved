@@ -6,6 +6,19 @@ using System.Globalization;
 namespace BDB
 {
     [Database]
+    public class NTC
+    {
+        public ulong oNo => this.GetObjectNo();
+
+        public string Onc { get; set; }     // Oncelik 1-9
+        public DateTime Trh { get; set; }
+        public string Ad { get; set; }
+        public string Link { get; set; }
+
+        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
+    }
+
+    [Database]
     public class CC    // Competitions
     {
         public ulong oNo => this.GetObjectNo();

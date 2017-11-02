@@ -98,6 +98,9 @@
     <Compile Include="MasterPage.json.cs">
       <DependentUpon>MasterPage.json</DependentUpon>
     </Compile>
+    <Compile Include="NoticePage.json.cs">
+      <DependentUpon>NoticePage.json</DependentUpon>
+    </Compile>
     <Compile Include="OyuncularPage.json.cs">
       <DependentUpon>OyuncularPage.json</DependentUpon>
     </Compile>
@@ -150,6 +153,9 @@
     <TypedJSON Include="ppStatPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="NoticePage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="wwwroot\bodved\CCpage.html" />
     <None Include="wwwroot\bodved\CTpage.html" />
     <None Include="wwwroot\bodved\CTPpage.html" />
@@ -163,6 +169,7 @@
     <None Include="wwwroot\bodved\LoginPage.html" />
     <None Include="wwwroot\bodved\ppMacPage.html" />
     <None Include="wwwroot\bodved\ppStatPage.html" />
+    <None Include="wwwroot\bodved\NoticePage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />
     <Content Include="wwwroot\sys\redips-drag-min.js" />
     <Content Include="wwwroot\sys\redips-style.css" />

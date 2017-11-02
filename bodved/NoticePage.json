@@ -1,0 +1,31 @@
+{
+  "Html": "/bodved/NoticePage.html",
+  "Cap1": "Turnuvalar",
+  "Cap2": "",
+  "canMdfy": false,
+
+  "NTCs": [
+    {
+      "oNo": 0,
+      "Onc": "",
+      "Trh": "",
+      "Tarih": "",
+      "Ad": "",
+      "Link": "",
+      "MdfTrigger$": 0
+    }
+  ],
+
+  "InsertTrigger$": 0,
+  "UpdateTrigger$": 0,
+  "DeleteTrigger$": 0,
+
+  "MdfRec": {
+    "oNo$": 0,
+    "Onc$": "",
+    "Tarih$": "",
+    "Ad$": "",
+    "Link$": ""
+  }
+
+}

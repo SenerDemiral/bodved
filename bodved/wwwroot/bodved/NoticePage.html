@@ -1,0 +1,47 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <template is="dom-bind">
+        <div class="tblWrap">
+            <table>
+                <caption>
+                    <div>[[model.Cap1]]</div>
+                    <div>[[model.Cap2]]</div>
+                </caption>
+                <thead>
+                    <tr>
+                        <th class="oNo">ID</th>
+                        <th>Tarih</th>
+                        <th>Ad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.NTCs]]">
+                        <tr>
+                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td>[[item.Tarih]]</td>
+                            <td><a class="ortala" href="[[item.Link]]">[[item.Ad]]</a></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <template is="dom-if" if="[[model.canMdfy]]">
+                <div class="mdfRecWrap">
+                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                    <input placeholder="Öncelik 1-9" type="text" value="{{model.MdfRec.Onc$::change}}" />
+                    <input placeholder="Tarih" type="date" value="{{model.MdfRec.Tarih$::change}}" />
+                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                    <input placeholder="Link" type="text" value="{{model.MdfRec.Link$::change}}" />
+                    <div class="mdfRecAction">
+                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        
+    </template>
+</template>
