@@ -9,6 +9,18 @@ namespace scExpert
     {
         static void Main()
         {
+            Handle.GET("/scExpert/SavePP", () =>
+            {
+                BDB.H.SavePP();
+                return "OK: SavePP()";
+            });
+
+            Handle.GET("/scExpert/SaveCC", () =>
+            {
+                BDB.H.SaveCC();
+                return "OK: SaveCC()";
+            });
+
             Handle.GET("/scExpert/LoadPP", () =>
             {
                 BDB.H.LoadPP();

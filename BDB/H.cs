@@ -783,7 +783,7 @@ namespace BDB
                 var recs = Db.SQL<CT>("select r from CT r where r.CC = ? order by r.Ad", cc);
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad},{r.Adres},{r.Pw},{r.K1?.ID},{r.K2?.ID},{r.K1?.Ad,25},{r.K2?.Ad,25}");
+                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad},{r.Adres},{r.Pw},{r.K1?.ID},{r.K2?.ID},{r.K1?.Ad},{r.K2?.Ad}");
                 }
             }
         }
