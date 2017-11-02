@@ -728,6 +728,7 @@ namespace BDB
             SaveCTofCC(cc.oNo);
             SaveCTPofCC(cc.oNo);
             SaveCETofCC(cc.oNo);
+            SaveCETPofCC(cc.oNo);
             SaveCETRofCC(cc.oNo);
         }
 
