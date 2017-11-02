@@ -31,6 +31,12 @@ namespace scExpert
                 return "OK: BackupCC";
             });
 
+            Handle.GET("/scExpert/BackupCET/{?}/{?}", (string ccID, string cetID) =>
+            {
+                BDB.H.BackupCET(ccID, cetID);
+                return "OK: BackupCET";
+            });
+
             Handle.GET("/bodved/init", () =>
             {
                 //popTable();

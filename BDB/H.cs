@@ -725,11 +725,26 @@ namespace BDB
         {
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
 
-            SaveCTofCC(cc.oNo);
-            SaveCTPofCC(cc.oNo);
-            SaveCETofCC(cc.oNo);
-            SaveCETPofCC(cc.oNo);
-            SaveCETRofCC(cc.oNo);
+            if (cc != null)
+            {
+                SaveCTofCC(cc.oNo);
+                SaveCTPofCC(cc.oNo);
+                SaveCETofCC(cc.oNo);
+                SaveCETPofCC(cc.oNo);
+                SaveCETRofCC(cc.oNo);
+            }
+        }
+
+        public static void BackupCET(string ccID, string cetID)     // Musabaka Ilgili Kayitlari
+        {
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cet = Db.SQL<CET>("select r from CET r where r.CC = ? and r.ID = ?", cc, cetID).FirstOrDefault();
+
+            if (cet != null)
+            {
+                SaveCETPofCET(cet.oNo);
+                SaveCETRofCET(cet.oNo);
+            }
         }
 
         public static void SaveCTofCC(ulong CCoNo)      // Turnuva Takimlari
@@ -794,7 +809,7 @@ namespace BDB
             {
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
+                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
                 }
             }
         }
@@ -819,7 +834,7 @@ namespace BDB
             {
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.PPAd,25}");
+                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.ID},{r.PPAd,25}");
                 }
             }
         }
