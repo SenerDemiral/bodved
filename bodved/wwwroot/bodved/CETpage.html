@@ -55,6 +55,8 @@
                             <option value="[[item.oNo]]">[[item.Ad]]</option>
                         </template>
                     </select>
+                    <input placeholder="hP" type="number" value="{{model.MdfRec.hP$::change}}" />
+                    <input placeholder="gP" type="number" value="{{model.MdfRec.gP$::change}}" />
 
                     <div class="mdfRecAction">
                         <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>

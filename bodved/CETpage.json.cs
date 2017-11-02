@@ -73,7 +73,9 @@ namespace bodved
                     }
 
                     var nTrh = DateTime.Parse(MdfRec.Tarih);
-                    
+                    r.hP = (int)MdfRec.hP;
+                    r.gP = (int)MdfRec.gP;
+
                     if (r.Trh != nTrh)
                     {
                         trhChanged = true;
@@ -146,6 +148,8 @@ namespace bodved
                 p.MdfRec.hCToNo = this.hCToNo.ToString();
                 p.MdfRec.gCToNo = this.gCToNo.ToString();
                 p.MdfRec.Tarih = Tarih; // DateTime.Parse(Tarih).ToString("s");
+                p.MdfRec.hP = hP;
+                p.MdfRec.gP = gP;
             }
         }
     }
