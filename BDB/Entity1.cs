@@ -78,6 +78,20 @@ namespace BDB
             }
         }
 
+        public string oCTs
+        {
+            get     // Oynadigi dTakimlar
+            {
+                string oCTs = "";
+                foreach (var r in Db.SQL<CTP>("select c from BDB.CTP c where c.PP = ?", this))
+                {
+                    oCTs += r.CC.ID + "-" + r.CT.ID + " ";
+                }
+
+                return oCTs;
+            }
+        }
+
         public PP()
         {
             Ad = "";
@@ -115,6 +129,7 @@ namespace BDB
         public ulong K2oNo => K2?.GetObjectNo() ?? 0;
         public string K1Ad => K1?.Ad ?? "-";
         public string K2Ad => K2?.Ad ?? "-";
+
 
         public CT()
         {
