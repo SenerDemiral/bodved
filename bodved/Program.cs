@@ -56,8 +56,8 @@ namespace bodved
             BDB.H.Write2Log("Start");
 
 
-            //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
-            Handle.GET("/bodved", () => { return Self.GET("/bodved/NoticePage"); });
+            Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
+            //Handle.GET("/bodved", () => { return Self.GET("/bodved/NoticePage"); });
 
             Handle.GET("/bodved/partial/AboutPage", () => new AboutPage());
             Handle.GET("/bodved/AboutPage", () => WrapPage<AboutPage>("/bodved/partial/AboutPage"));
@@ -65,8 +65,8 @@ namespace bodved
             Handle.GET("/bodved/partial/LoginPage", () => new LoginPage());
             Handle.GET("/bodved/LoginPage", () => WrapPage<LoginPage>("/bodved/partial/LoginPage"));
 
-            //Handle.GET("/bodved/partial/MainPage", () => new MainPage());
-            //Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
+            Handle.GET("/bodved/partial/MainPage", () => new MainPage());
+            Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
             Handle.GET("/bodved/partial/NoticePage", () => new NoticePage());
             Handle.GET("/bodved/NoticePage", () => WrapPage<NoticePage>("/bodved/partial/NoticePage"));
 

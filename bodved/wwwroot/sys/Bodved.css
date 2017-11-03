@@ -11,6 +11,10 @@ body {
     font-size: 0.8rem;
 }
 
+img {
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
 a {
     text-decoration:none;
     font-style:oblique;
@@ -175,7 +179,7 @@ input:focus {
 }
 
 .ppAd {
-    min-width: 12em;
+    min-width: 10em;
     max-width: 12em;
     overflow: hidden;
     white-space: nowrap;

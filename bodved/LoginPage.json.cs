@@ -13,7 +13,7 @@ namespace bodved
 
             if (Id == "-1")
             {
-                if (Pw == "CanDilSen")
+                if (Pw == "BoDvEd")
                 {
                     mpLgn.Nm = "ADMIN";
                     mpLgn.Rl = "ADMIN";
