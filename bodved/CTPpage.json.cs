@@ -45,6 +45,7 @@ namespace bodved
                     CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
                     CT = Db.FromId<BDB.CT>(ulong.Parse(CToNo)),
                     PP = MdfRec.PPoNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.PPoNo)),
+                    Idx = (int)MdfRec.Idx,
                 };
             });
             MdfRec.oNo = 0;
@@ -62,6 +63,7 @@ namespace bodved
                 {
                     var r = Db.FromId<BDB.CTP>((ulong)MdfRec.oNo);
                     r.PP = MdfRec.PPoNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.PPoNo));
+                    r.Idx = (int)MdfRec.Idx;
                 });
                 MdfRec.oNo = 0;
                 CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
@@ -94,7 +96,8 @@ namespace bodved
             void Handle(Input.MdfTrigger Action)
             {
                 var p = this.Parent.Parent as CTPpage;
-                p.MdfRec.oNo = this.oNo;
+                p.MdfRec.oNo = oNo;
+                p.MdfRec.Idx = Idx;
                 p.MdfRec.PPoNo = this.PPoNo.ToString();
             }
         }
