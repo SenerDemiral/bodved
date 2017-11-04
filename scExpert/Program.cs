@@ -64,14 +64,11 @@ namespace scExpert
                 return "Init: OK";
             });
 
-            Handle.GET("/scExpert/delCETP382", () =>
+            Handle.GET("/scExpert/DeleteCETrelated/{?}", (string cetOnO) =>
             {
-                Db.Transact(() =>
-                {
-                    Db.SQL("DELETE FROM CETP where CET.ObjectNo = ?", 382);
-                });
+                H.DeleteCETrelated(ulong.Parse(cetOnO));
 
-                return "OK: delCETP382";
+                return $"OK: DeleteCETrelated({cetOnO})";
             });
 
             Handle.GET("/scExpert/CETidnumaraVer/{?}", (string ccID) =>
