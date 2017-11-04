@@ -17,16 +17,16 @@ namespace bodved
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
             Cap1 = $"{cc.Ad} Müsabakaları";
 
-            if (canMdfy)
+            if (canMdfy && CTs.Count == 0)
             {
                 CTsElementJson ps;
 
-                var pps = Db.SQL<BDB.CT>("select p from CT p where p.CC = ? order by p.Ad", cc);
-                foreach (var pp in pps)
+                var cts = Db.SQL<BDB.CT>("select p from CT p where p.CC = ? order by p.Ad", cc);
+                foreach (var ct in cts)
                 {
                     ps = CTs.Add();
-                    ps.oNo = pp.oNo.ToString();
-                    ps.Ad = pp.Ad;
+                    ps.oNo = ct.oNo.ToString();
+                    ps.Ad = ct.Ad;
                 }
             }
 
@@ -49,8 +49,9 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
-            PushChanges();
+            //PushChanges();
         }
 
         void Handle(Input.UpdateTrigger Action)
@@ -123,8 +124,9 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
-                PushChanges();
+                //PushChanges();
             }
         }
 
@@ -134,7 +136,7 @@ namespace bodved
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CETpage && CCoNo == (cp as CETpage).CCoNo)
                 {
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    //(s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
                     s.CalculatePatchAndPushOnWebSocket();
                 }
             });
