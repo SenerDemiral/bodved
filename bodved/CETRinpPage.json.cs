@@ -415,13 +415,13 @@ namespace bodved
                 cet.gP = 0;
                 if (cet.hPW > cet.gPW)
                 {
-                    cet.hP = 3;
+                    cet.hP = 2;
                     cet.gP = 1;
                 }
                 else if(cet.hPW < cet.gPW)
                 {
                     cet.hP = 1;
-                    cet.gP = 3;
+                    cet.gP = 2;
                 }
             });
         }
