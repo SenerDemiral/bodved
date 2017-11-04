@@ -30,7 +30,7 @@ namespace bodved
                 }
             }
 
-            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
             //sener.NoR = DateTime.Now.Ticks;
         }
@@ -49,7 +49,7 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
-            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
             //PushChanges();
         }
@@ -124,7 +124,7 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
                 //PushChanges();
             }
