@@ -35,6 +35,7 @@
 
   "MdfRec": {
     "oNo$": 0,
+    "ID$": "",
     "Tarih$": "",
     "hCToNo$": "",
     "gCToNo$": "",

@@ -117,6 +117,11 @@ namespace bodved
                 }
                 */
             };
+
+            Hook<BDB.CT>.CommitInsert += (p, obj) =>
+            {
+                //Session.ForAll((s, id) => s.CalculatePatchAndPushOnWebSocket());
+            };
         }
 
         public static MasterPage GetMasterPageFromSession()

@@ -11,10 +11,12 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            if (canMdfy)
+            if (canMdfy && PPs.Count == 0)
             {
                 PPsElementJson ps;
-
+                PPs.Clear();
+                //PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");  //Cakıyor
+                
                 var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
                 foreach (var pp in pps)
                 {
@@ -51,7 +53,10 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
-                PushChanges();
+                var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+                CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.aP desc, c.vP, c.Ad", cc);
+                //PushChanges();
+
             }
         }
 
@@ -102,7 +107,11 @@ namespace bodved
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo)
                 {
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+                    //(s.Store["bodved"] as MasterPage).CurrentPage.Data = null;
+
+                    //var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+                    //CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.aP desc, c.vP, c.Ad", cc);
+
                     s.CalculatePatchAndPushOnWebSocket();
                 }
             });
@@ -118,13 +127,13 @@ namespace bodved
 
             void Handle(Input.MdfTrigger Action)
             {
-                var p = this.Parent.Parent as CTpage;
-                p.MdfRec.oNo = this.oNo;
-                p.MdfRec.Ad = this.Ad;
-                p.MdfRec.ID = this.ID;
-                p.MdfRec.K1oNo = this.K1oNo.ToString();
-                p.MdfRec.K2oNo = this.K2oNo.ToString();
-                p.MdfRec.Adres = this.Adres;
+                var p = Parent.Parent as CTpage;
+                p.MdfRec.oNo = oNo;
+                p.MdfRec.Ad = Ad;
+                p.MdfRec.ID = ID;
+                p.MdfRec.K1oNo = K1oNo.ToString();
+                p.MdfRec.K2oNo = K2oNo.ToString();
+                p.MdfRec.Adres = Adres;
                 p.MdfRec.Pw = Pw;
             }
         }

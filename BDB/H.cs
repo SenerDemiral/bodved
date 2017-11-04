@@ -471,12 +471,18 @@ namespace BDB
                 string line;
                 var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
                 int i = 1;
+                string pctID = "";
 
                 Db.Transact(() =>
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
                         string[] ra = line.Split(',');
+                        if (pctID != ra[1])
+                        {
+                            i = 1;
+                            pctID = ra[1];
+                        }
 
                         var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[1]).FirstOrDefault();
                         var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[2]).FirstOrDefault();

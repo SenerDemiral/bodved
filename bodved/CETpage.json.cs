@@ -42,6 +42,7 @@ namespace bodved
                 new BDB.CET()
                 {
                     CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
+                    ID = MdfRec.ID,
                     hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo)),
                     gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo)),
                     Trh = DateTime.Parse(MdfRec.Tarih)
@@ -73,6 +74,7 @@ namespace bodved
                     }
 
                     var nTrh = DateTime.Parse(MdfRec.Tarih);
+                    r.ID = MdfRec.ID;
                     r.hP = (int)MdfRec.hP;
                     r.gP = (int)MdfRec.gP;
 
@@ -145,6 +147,7 @@ namespace bodved
             {
                 var p = this.Parent.Parent as CETpage;
                 p.MdfRec.oNo = this.oNo;
+                p.MdfRec.ID = this.ID;
                 p.MdfRec.hCToNo = this.hCToNo.ToString();
                 p.MdfRec.gCToNo = this.gCToNo.ToString();
                 p.MdfRec.Tarih = Tarih; // DateTime.Parse(Tarih).ToString("s");

@@ -11,7 +11,7 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            if (canMdfy)
+            if (canMdfy && PPs.Count == 0)
             {
                 PPsElementJson ps;
 
@@ -49,7 +49,7 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
-            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
         }
 
         void Handle(Input.UpdateTrigger Action)
@@ -66,7 +66,7 @@ namespace bodved
                     r.Idx = (int)MdfRec.Idx;
                 });
                 MdfRec.oNo = 0;
-                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
             }
         }
 
@@ -86,7 +86,7 @@ namespace bodved
                     }
                 });
                 MdfRec.oNo = 0;
-                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
             }
         }
 
