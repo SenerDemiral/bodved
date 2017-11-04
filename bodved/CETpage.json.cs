@@ -45,7 +45,7 @@ namespace bodved
                     ID = MdfRec.ID,
                     hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo)),
                     gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo)),
-                    Trh = DateTime.Parse(MdfRec.Tarih)
+                    Trh = DateTime.Parse(MdfRec.Trh)
                 };
             });
             MdfRec.oNo = 0;
@@ -74,7 +74,7 @@ namespace bodved
                         r.gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo));
                     }
 
-                    var nTrh = DateTime.Parse(MdfRec.Tarih);
+                    var nTrh = DateTime.Parse(MdfRec.Trh);
                     r.ID = MdfRec.ID;
                     r.hP = (int)MdfRec.hP;
                     r.gP = (int)MdfRec.gP;
@@ -152,7 +152,7 @@ namespace bodved
                 p.MdfRec.ID = this.ID;
                 p.MdfRec.hCToNo = this.hCToNo.ToString();
                 p.MdfRec.gCToNo = this.gCToNo.ToString();
-                p.MdfRec.Tarih = Tarih; // DateTime.Parse(Tarih).ToString("s");
+                p.MdfRec.Trh = DateTime.Parse(Trh).ToString("yyyy-MM-dd");
                 p.MdfRec.hP = hP;
                 p.MdfRec.gP = gP;
             }

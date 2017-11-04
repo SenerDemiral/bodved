@@ -13,6 +13,7 @@
     {
       "oNo": 0,
       "ID": "",
+      "Trh": "",
       "Tarih": "",
       "hCToNo": 0,
       "hCTAd": "",
@@ -36,7 +37,7 @@
   "MdfRec": {
     "oNo$": 0,
     "ID$": "",
-    "Tarih$": "",
+    "Trh$": "",
     "hCToNo$": "",
     "gCToNo$": "",
     "hP$": 0,
