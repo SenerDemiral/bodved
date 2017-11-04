@@ -40,7 +40,16 @@ namespace BDB
             }
         }
 
-        public static void updCTsum(ulong oNo)
+        public static void updCTsum(string ccID)
+        {
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cts = Db.SQL<CT>("select r from CT r where r.CC = ?", cc);
+            foreach (var ct in cts)
+                updCTsum(ct.oNo);
+
+        }
+
+        public static void updCTsum(ulong CToNo)
         {
             int aP = 0; // Musabakalardan Aldigi Puan Toplami
             int vP = 0; //                Verdigi
@@ -48,7 +57,7 @@ namespace BDB
             int aE = 0; // Aldigi/Kazandigi Event
             int vE = 0; // Verdigi/Kaybettigi Event
 
-            var ct = Db.FromId<CT>(oNo);
+            var ct = Db.FromId<CT>(CToNo);
             //Musabaka Soncu Onaylanmislari tara
             foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ? and c.Rok = ?", ct, true))
             {

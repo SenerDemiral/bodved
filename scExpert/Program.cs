@@ -9,12 +9,17 @@ namespace scExpert
     {
         static void Main()
         {
+            Handle.GET("/scExpert/ReCalcCTsum/{?}", (string ccID) =>
+            {
+                BDB.H.updCTsum(ccID);
+                return $"OK: UpdateCTsum({ccID})";
+            });
+
             Handle.GET("/scExpert/SavePP", () =>
             {
                 BDB.H.SavePP();
                 return "OK: SavePP()";
             });
-
             Handle.GET("/scExpert/SaveCC", () =>
             {
                 BDB.H.SaveCC();
