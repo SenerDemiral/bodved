@@ -269,6 +269,7 @@ namespace BDB
         public PRH PRH { get; set; }
         public DateTime Trh { get; set; }
 
+        public bool OynDis { get; set; }    // Oyuncu Diskalifiye Rank hesaplanmayacak
         // Setlerde kazandigi sayilar
         public int S1W { get; set; }
         public int S2W { get; set; }
@@ -312,18 +313,22 @@ namespace BDB
         {
             get
             {
+                if (PP.Ad == "∞")
+                    return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).FirstOrDefault();
-                return p?.Rnk ?? this.PP.RnkBaz;
+                return p?.Rnk ?? PP.RnkBaz;
             }
         }
         public int prvRnkRkp
         {
             get
             {
+                if (rPP.Ad == "∞")
+                    return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).FirstOrDefault();
-                return p?.Rnk ?? this.rPP.RnkBaz;
+                return p?.Rnk ?? rPP.RnkBaz;
             }
         }
         public int compNOPX
@@ -331,8 +336,11 @@ namespace BDB
             get
             {
                 int NOPX = 0;
-                if (this.Won == 0)
+                if(PP.Ad == "∞" || rPP.Ad == "∞")   // Oyunculardan biri diskalifiye ise Rank hesaplama
                     return NOPX;
+
+                if (this.Won == 0)
+                        return NOPX;
 
                 int Rnk = this.prvRnk;
                 int RnkRkp = this.prvRnkRkp;

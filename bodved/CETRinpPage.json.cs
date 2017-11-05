@@ -15,19 +15,25 @@ namespace bodved
         
         public void Handle(Input.SaveTrigger Action)
         {
-            Save();
+            Save(false);
 
             PushChanges();
         }
 
         public void Handle(Input.SaveOkTrigger Action)
         {
-            Save();
+            Save(true);
+            // -9 lari bul Diskalifiye yap
 
             // Sonuc OK Onayla
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+            var cetrs = Db.SQL<BDB.CETR>("select r from CETR r where r.CET = ?", cet);
             Db.Transact(() =>
             {
+                foreach(var cetr in cetrs)
+                {
+
+                }
                 cet.Rok = true;
             });
 
@@ -93,7 +99,7 @@ namespace bodved
                     sng.Idx = src.Idx;
 
                     sng.hoNo = src.oNo.ToString();
-                    sng.hPPoNo = src.PP.oNo.ToString();
+                    sng.hPPoNo = src.PP?.oNo.ToString();
                     sng.hPPAd = src.PPAd;
                     sng.hPPrnk = src.PRH.prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
@@ -106,7 +112,7 @@ namespace bodved
                 if ((s % 2) == 1)
                 {
                     sng.goNo = src.oNo.ToString();
-                    sng.gPPoNo = src.PP.oNo.ToString();
+                    sng.gPPoNo = src.PP?.oNo.ToString();
                     sng.gPPAd = src.PPAd;
                     sng.gPPrnk = src.PRH.prvRnk;
 
@@ -132,7 +138,7 @@ namespace bodved
                     dbl.Idx = src.Idx;
 
                     dbl.hoNo1 = src.oNo.ToString();
-                    dbl.hPPoNo1 = src.PP.oNo.ToString();
+                    dbl.hPPoNo1 = src.PP?.oNo.ToString();
                     dbl.hPPAd1 = src.PPAd;
                     dbl.hPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.hS1W = src.S1W;
@@ -145,14 +151,14 @@ namespace bodved
                 if ((c % 4) == 1)
                 {
                     dbl.hoNo2 = src.oNo.ToString();
-                    dbl.hPPoNo2 = src.PP.oNo.ToString();
+                    dbl.hPPoNo2 = src.PP?.oNo.ToString();
                     dbl.hPPAd2 = src.PPAd;
                     dbl.hPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }
                 if ((c % 4) == 2)
                 {
                     dbl.goNo1 = src.oNo.ToString();
-                    dbl.gPPoNo1 = src.PP.oNo.ToString();
+                    dbl.gPPoNo1 = src.PP?.oNo.ToString();
                     dbl.gPPAd1 = src.PPAd;
                     dbl.gPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.gS1W = src.S1W;
@@ -165,7 +171,7 @@ namespace bodved
                 if ((c % 4) == 3)
                 {
                     dbl.goNo2 = src.oNo.ToString();
-                    dbl.gPPoNo2 = src.PP.oNo.ToString();
+                    dbl.gPPoNo2 = src.PP?.oNo.ToString();
                     dbl.gPPAd2 = src.PPAd;
                     dbl.gPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }
@@ -189,7 +195,7 @@ namespace bodved
                     // Session.Current.SessionId ve sId burda ayni oluyor ???
 
                     // trick to invoke OnData. Null olunca OnData call ediliyor
-                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
+                    //(s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
 
                     s.CalculatePatchAndPushOnWebSocket();
                 }
@@ -209,98 +215,172 @@ namespace bodved
             });
         }
 
-        protected void Save()
+        protected void Save(bool OK)
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-
+            var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.Ad = ?", "∞").FirstOrDefault();
             Db.Transact(() =>
             {
                 long hA, gA, hMW = 0, gMW = 0;
+
                 foreach (var src in Singles)
                 {
                     var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo));
                     var gCetr = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo));
-
-                    hCetr.S1W = (int)src.hS1W;
-                    hCetr.S2W = (int)src.hS2W;
-                    hCetr.S3W = (int)src.hS3W;
-                    hCetr.S4W = (int)src.hS4W;
-                    hCetr.S5W = (int)src.hS5W;
-
-                    gCetr.S1W = (int)src.gS1W;
-                    gCetr.S2W = (int)src.gS2W;
-                    gCetr.S3W = (int)src.gS3W;
-                    gCetr.S4W = (int)src.gS4W;
-                    gCetr.S5W = (int)src.gS5W;
-
-                    hA = 0;
-                    gA = 0;
-                    if (src.hS1W > src.gS1W)
-                        hA++;
-                    else if (src.hS1W < src.gS1W)
-                        gA++;
-                    if (src.hS2W > src.gS2W)
-                        hA++;
-                    else if (src.hS2W < src.gS2W)
-                        gA++;
-                    if (src.hS3W > src.gS3W)
-                        hA++;
-                    else if (src.hS3W < src.gS3W)
-                        gA++;
-                    if (src.hS4W > src.gS4W)
-                        hA++;
-                    else if (src.hS4W < src.gS4W)
-                        gA++;
-                    if (src.hS5W > src.gS5W)
-                        hA++;
-                    else if (src.hS5W < src.gS5W)
-                        gA++;
-
-                    hCetr.SW = (int)hA;
-                    hCetr.SL = (int)gA;
-                    gCetr.SW = (int)gA;
-                    gCetr.SL = (int)hA;
-
-                    src.hSW = hA;
-                    src.gSW = gA;
-
-                    hCetr.MW = 0;
-                    hCetr.ML = 0;
-                    gCetr.MW = 0;
-                    gCetr.ML = 0;
-                    if ((hA + gA) > 0)  // Oynandiysa
+                    /*
+                    if (OK && (src.hS1W < 0 || src.gS1W < 0))   // Player Diskalifiye
                     {
-                        if (hA > gA)
-                        {
-                            hMW++;
-                            hCetr.MW = 1;
-                            gCetr.ML = 1;
+                        hCetr.S1W = 0;
+                        hCetr.S2W = 0;
+                        hCetr.S3W = 0;
+                        hCetr.S4W = 0;
+                        hCetr.S5W = 0;
+                        gCetr.S1W = 0;
+                        gCetr.S2W = 0;
+                        gCetr.S3W = 0;
+                        gCetr.S4W = 0;
+                        gCetr.S5W = 0;
 
-                            hCetr.PRH.Won = 1;
-                            gCetr.PRH.Won = -1;
+                        hCetr.SW = 0;
+                        hCetr.SL = 0;
+                        gCetr.SW = 0;
+                        gCetr.SL = 0;
 
-                            hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
-                            hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
-                            gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
-                            gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
-                        }
-                        else
+                        if (src.hS1W < 0)   // HomePlayer Diskalifiye
                         {
-                            gMW++;
+                            hCetr.PP = dkPP;
+                            hCetr.PRH.PP = dkPP;
+                            hCetr.MW = 0;
                             hCetr.ML = 1;
                             gCetr.MW = 1;
+                            gCetr.ML = 0;
 
-                            hCetr.PRH.Won = -1;
-                            gCetr.PRH.Won = 1;
+                            hCetr.SW = 0;
+                            hCetr.SL = 3;
+                            gCetr.SW = 3;
+                            gCetr.SL = 0;
+                            src.hSW = 0;
+                            src.gSW = 3;
+                            gMW++;
+                        }
+                        else                // GusetPlayer Diskalifiye
+                        {
+                            gCetr.PP = dkPP;
+                            gCetr.PRH.PP = dkPP;
+                            hCetr.MW = 1;
+                            hCetr.ML = 0;
+                            gCetr.MW = 0;
+                            gCetr.ML = 1;
 
-                            hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
-                            hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
-                            gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
-                            gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
+                            hCetr.SW = 3;
+                            hCetr.SL = 0;
+                            gCetr.SW = 0;
+                            gCetr.SL = 3;
+                            src.hSW = 3;
+                            src.gSW = 0;
+                            hMW++;
                         }
                     }
+                    else*/
+                    {
+                        hCetr.S1W = (int)src.hS1W;
+                        hCetr.S2W = (int)src.hS2W;
+                        hCetr.S3W = (int)src.hS3W;
+                        hCetr.S4W = (int)src.hS4W;
+                        hCetr.S5W = (int)src.hS5W;
 
-                    //var prh = Db.FromId<BDB.PRH>(hCetr.PRH.);
+                        gCetr.S1W = (int)src.gS1W;
+                        gCetr.S2W = (int)src.gS2W;
+                        gCetr.S3W = (int)src.gS3W;
+                        gCetr.S4W = (int)src.gS4W;
+                        gCetr.S5W = (int)src.gS5W;
+
+                        hA = 0;
+                        gA = 0;
+                        if (src.hS1W > src.gS1W)
+                            hA++;
+                        else if (src.hS1W < src.gS1W)
+                            gA++;
+                        if (src.hS2W > src.gS2W)
+                            hA++;
+                        else if (src.hS2W < src.gS2W)
+                            gA++;
+                        if (src.hS3W > src.gS3W)
+                            hA++;
+                        else if (src.hS3W < src.gS3W)
+                            gA++;
+                        if (src.hS4W > src.gS4W)
+                            hA++;
+                        else if (src.hS4W < src.gS4W)
+                            gA++;
+                        if (src.hS5W > src.gS5W)
+                            hA++;
+                        else if (src.hS5W < src.gS5W)
+                            gA++;
+
+                        if (src.hS1W == -9) // HomePlyr diskalifiye
+                        {
+                            hA = 0;
+                            gA = 3;
+                            hCetr.PP = dkPP;
+                            hCetr.PRH.PP = dkPP;
+                            gCetr.PRH.rPP = dkPP;
+                        }
+                        if (src.gS1W == -9) // HomePlyr diskalifiye
+                        {
+                            hA = 3;
+                            gA = 0;
+                            gCetr.PP = dkPP;
+                            gCetr.PRH.PP = dkPP;
+                            hCetr.PRH.rPP = dkPP;
+                        }
+
+                        hCetr.SW = (int)hA;
+                        hCetr.SL = (int)gA;
+                        gCetr.SW = (int)gA;
+                        gCetr.SL = (int)hA;
+
+                        src.hSW = hA;
+                        src.gSW = gA;
+
+                        hCetr.MW = 0;
+                        hCetr.ML = 0;
+                        gCetr.MW = 0;
+                        gCetr.ML = 0;
+                        if ((hA + gA) > 0)  // Oynandiysa
+                        {
+                            if (hA > gA)
+                            {
+                                hMW++;
+                                hCetr.MW = 1;
+                                gCetr.ML = 1;
+
+                                hCetr.PRH.Won = 1;
+                                gCetr.PRH.Won = -1;
+
+                                hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
+                                hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
+                                gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
+                                gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
+                            }
+                            else
+                            {
+                                gMW++;
+                                hCetr.ML = 1;
+                                gCetr.MW = 1;
+
+                                hCetr.PRH.Won = -1;
+                                gCetr.PRH.Won = 1;
+
+                                hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
+                                hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
+                                gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
+                                gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
+                            }
+                        }
+
+                        //var prh = Db.FromId<BDB.PRH>(hCetr.PRH.);
+                    }
                 }
                 cet.hMSW = (int)hMW;
                 cet.gMSW = (int)gMW;
@@ -431,8 +511,18 @@ namespace bodved
         {
             void Handle(Input.hS1W A)
             {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
+                if (A.Value < -1)
+                {
+                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                    gS1W = 11;
+                }
+                else if (A.Value == -1)
+                {
+                    A.Value = 0;
+                    gS1W = 11;
+                }
+                else if (A.Value > 21)
+                        A.Cancel();
                 else
                     this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
             }
@@ -471,7 +561,17 @@ namespace bodved
 
             void Handle(Input.gS1W A)
             {
-                if (A.Value < 0 || A.Value > 21)
+                if (A.Value < -1)
+                {
+                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                    hS1W = 11;
+                }
+                else if (A.Value == -1)
+                {
+                    A.Value = 0;
+                    hS1W = 11;
+                }
+                else if (A.Value > 21)
                     A.Cancel();
                 else
                     this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
