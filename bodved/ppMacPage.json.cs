@@ -57,9 +57,10 @@ namespace bodved
             var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "D");
             foreach(var k in cetrD)
             {
-                var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, k.HoG, pp).FirstOrDefault();
+                // Ortagi
+                var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.ObjectNo <> ?", k.CET, k.Idx, k.SoD, k.HoG, k.GetObjectNo()).FirstOrDefault();
 
-                // Rakip
+                // Rakipleri 
                 var rHoG = k.HoG == "H" ? "G" : "H";
                 var r = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ?", k.CET, k.Idx, k.SoD, rHoG).ToArray();
 

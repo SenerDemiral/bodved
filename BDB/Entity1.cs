@@ -313,7 +313,7 @@ namespace BDB
         {
             get
             {
-                if (PP.Ad == "∞")
+                if (PP.ID == "∞")
                     return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).FirstOrDefault();
@@ -324,7 +324,7 @@ namespace BDB
         {
             get
             {
-                if (rPP.Ad == "∞")
+                if (rPP.ID == "∞")
                     return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).FirstOrDefault();
@@ -336,7 +336,7 @@ namespace BDB
             get
             {
                 int NOPX = 0;
-                if(PP.Ad == "∞" || rPP.Ad == "∞")   // Oyunculardan biri diskalifiye ise Rank hesaplama
+                if(PP.ID == "∞" || rPP.ID == "∞")   // Oyunculardan biri diskalifiye ise Rank hesaplama
                     return NOPX;
 
                 if (this.Won == 0)

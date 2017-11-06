@@ -195,7 +195,7 @@ namespace bodved
                     // Session.Current.SessionId ve sId burda ayni oluyor ???
 
                     // trick to invoke OnData. Null olunca OnData call ediliyor
-                    //(s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
+                    (s.Store["bodved"] as MasterPage).CurrentPage.Data = null; // cscpData;
 
                     s.CalculatePatchAndPushOnWebSocket();
                 }
@@ -218,7 +218,7 @@ namespace bodved
         protected void Save(bool OK)
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.Ad = ?", "∞").FirstOrDefault();
+            var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.ID = ?", "∞").FirstOrDefault();
             Db.Transact(() =>
             {
                 long hA, gA, hMW = 0, gMW = 0;
@@ -318,21 +318,43 @@ namespace bodved
                         else if (src.hS5W < src.gS5W)
                             gA++;
 
-                        if (src.hS1W == -9) // HomePlyr diskalifiye
+                        if (src.hS1W == -9 || hCetr.PP.ID == "∞") // HomePlyr diskalifiye
                         {
                             hA = 0;
                             gA = 3;
                             hCetr.PP = dkPP;
                             hCetr.PRH.PP = dkPP;
                             gCetr.PRH.rPP = dkPP;
+
+                            hCetr.S1W = 0;
+                            hCetr.S2W = 0;
+                            hCetr.S3W = 0;
+                            hCetr.S4W = 0;
+                            hCetr.S5W = 0;
+                            gCetr.S1W = 0;
+                            gCetr.S2W = 0;
+                            gCetr.S3W = 0;
+                            gCetr.S4W = 0;
+                            gCetr.S5W = 0;
                         }
-                        if (src.gS1W == -9) // HomePlyr diskalifiye
+                        if (src.gS1W == -9 || gCetr.PP.ID == "∞") // GuestPlyr diskalifiye
                         {
                             hA = 3;
                             gA = 0;
                             gCetr.PP = dkPP;
                             gCetr.PRH.PP = dkPP;
                             hCetr.PRH.rPP = dkPP;
+
+                            hCetr.S1W = 0;
+                            hCetr.S2W = 0;
+                            hCetr.S3W = 0;
+                            hCetr.S4W = 0;
+                            hCetr.S5W = 0;
+                            gCetr.S1W = 0;
+                            gCetr.S2W = 0;
+                            gCetr.S3W = 0;
+                            gCetr.S4W = 0;
+                            gCetr.S5W = 0;
                         }
 
                         hCetr.SW = (int)hA;
@@ -443,6 +465,62 @@ namespace bodved
                     else if (src.hS5W < src.gS5W)
                         gA++;
 
+                    if (src.hS1W == -9 || hCetr1.PP.ID == "∞") // HomePlyrS diskalifiye
+                    {
+                        hA = 0;
+                        gA = 3;
+                        hCetr1.PP = dkPP;
+                        hCetr2.PP = dkPP;
+
+                        hCetr1.S1W = 0;
+                        hCetr1.S2W = 0;
+                        hCetr1.S3W = 0;
+                        hCetr1.S4W = 0;
+                        hCetr1.S5W = 0;
+                        hCetr2.S1W = 0;
+                        hCetr2.S2W = 0;
+                        hCetr2.S3W = 0;
+                        hCetr2.S4W = 0;
+                        hCetr2.S5W = 0;
+                        gCetr1.S1W = 0;
+                        gCetr1.S2W = 0;
+                        gCetr1.S3W = 0;
+                        gCetr1.S4W = 0;
+                        gCetr1.S5W = 0;
+                        gCetr2.S1W = 0;
+                        gCetr2.S2W = 0;
+                        gCetr2.S3W = 0;
+                        gCetr2.S4W = 0;
+                        gCetr2.S5W = 0;
+                    }
+                    if (src.gS1W == -9 || gCetr1.PP.ID == "∞") // GuestPlyrS diskalifiye
+                    {
+                        hA = 3;
+                        gA = 0;
+                        gCetr1.PP = dkPP;
+                        gCetr2.PP = dkPP;
+
+                        hCetr1.S1W = 0;
+                        hCetr1.S2W = 0;
+                        hCetr1.S3W = 0;
+                        hCetr1.S4W = 0;
+                        hCetr1.S5W = 0;
+                        hCetr2.S1W = 0;
+                        hCetr2.S2W = 0;
+                        hCetr2.S3W = 0;
+                        hCetr2.S4W = 0;
+                        hCetr2.S5W = 0;
+                        gCetr1.S1W = 0;
+                        gCetr1.S2W = 0;
+                        gCetr1.S3W = 0;
+                        gCetr1.S4W = 0;
+                        gCetr1.S5W = 0;
+                        gCetr2.S1W = 0;
+                        gCetr2.S2W = 0;
+                        gCetr2.S3W = 0;
+                        gCetr2.S4W = 0;
+                        gCetr2.S5W = 0;
+                    }
                     src.hDW = hA;
                     src.gDW = gA;
 
@@ -615,7 +693,17 @@ namespace bodved
         {
             void Handle(Input.hS1W A)
             {
-                if (A.Value < 0 || A.Value > 21)
+                if (A.Value < -1)
+                {
+                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                    gS1W = 11;
+                }
+                else if (A.Value == -1)
+                {
+                    A.Value = 0;
+                    gS1W = 11;
+                }
+                else if (A.Value > 21)
                     A.Cancel();
                 else
                     this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
@@ -655,7 +743,17 @@ namespace bodved
 
             void Handle(Input.gS1W A)
             {
-                if (A.Value < 0 || A.Value > 21)
+                if (A.Value < -1)
+                {
+                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                    hS1W = 11;
+                }
+                else if (A.Value == -1)
+                {
+                    A.Value = 0;
+                    hS1W = 11;
+                }
+                else if (A.Value > 21)
                     A.Cancel();
                 else
                     this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
