@@ -12,8 +12,8 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
-            NOP = Db.SQL<BDB.PP>("select p from PP p order by p.Ad").Count();
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
+            NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
             Cap1 = $"Oyuncular  [{NOP} adet]";
 
             //sener.NoR = DateTime.Now.Ticks;
@@ -99,9 +99,9 @@ namespace bodved
         void Handle(Input.SortAd Action)
         {
             if (Action.Value % 2 == 0)
-                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
-            else
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad desc");
+            else
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
         }
 
         void Handle(Input.SortRnk Action)
@@ -110,6 +110,14 @@ namespace bodved
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.curRnk, p.Ad");
             else
                 PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.curRnk desc, p.Ad");
+        }
+
+        void Handle(Input.SortSra Action)
+        {
+            if (Action.Value % 2 == 0)
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra desc");
+            else
+                PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
         }
 
         [PPpage_json.PPs]

@@ -9,10 +9,11 @@
                 <thead>
                     <tr>
                         <th class="oNo">ID</th>
-                        <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value">Ad ↕</button></th>
+                        <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
                         <th>Rumuz</th>
                         <th>BR</th>
-                        <th><button class="sort" value="{{model.SortRnk$::click}}" onmousedown="++this.value">Rank ↕</button></th>
+                        <th>Rank</th>
+                        <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
                         <th>Cns</th>
                         <th>Dğm</th>
                         <th>Tel</th>
@@ -28,6 +29,7 @@
                             <td>[[item.ID]]</td>
                             <td class="ortala">°[[item.RnkBaz]]</td>
                             <td class="ortala">°[[item.curRnk]]</td>
+                            <td class="ortala">[[item.Sra]]</td>
                             <td class="ortala">[[item.Sex]]</td>
                             <td>[[item.DgmYil]]</td>
                             <td>[[item.Tel]]</td>

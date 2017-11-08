@@ -105,8 +105,25 @@ namespace BDB
                     r.Rnk = r.NOPX + r.prvRnk;
                 }
             });
+            ReCalcPPsra();
         }
-        
+
+        public static void ReCalcPPsra()
+        {
+            // ReCalculate Rank of All Players
+            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.CurRnk desc, p.RnkBaz desc, p.Ad");
+
+            Db.Transact(() =>
+            {
+                int sira = 1;
+                foreach (var r in pps)
+                {
+                    r.Rnk = r.curRnk;
+                    r.Sra = sira++;
+                }
+            });
+        }
+
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
             var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP.ObjectNo = ? and p.Trh < ? order by p.Trh desc", PPoNo, Trh).FirstOrDefault();

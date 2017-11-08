@@ -42,6 +42,8 @@ namespace bodved
             BDB.H.updCTsum(cet.hCT.oNo);
             BDB.H.updCTsum(cet.gCT.oNo);
 
+            BDB.H.refreshPRH();
+
             PushChangesCT();
         }
 

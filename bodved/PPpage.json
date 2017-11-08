@@ -6,6 +6,7 @@
   
   "SortAd$": 0,
   "SortRnk$": 0,
+  "SortSra$": 0,
   "NOP": 0,
 
   "PPs": [
@@ -17,6 +18,7 @@
       "DgmYil": 0,
       "RnkBaz": 0,
       "curRnk": 0,
+      "Sra": 0,
       "Tel": "",
       "eMail": "",
       "oCTs": "",

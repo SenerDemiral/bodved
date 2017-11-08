@@ -8,12 +8,15 @@
                     <li><a href="/bodved/NoticePage"><iron-icon icon="vaadin:star"></iron-icon></a></li>
                     <li><a href="/bodved/ccPage"><iron-icon icon="vaadin:trophy"></iron-icon></a></li>
                     <li><a href="/bodved/ppPage"><iron-icon icon="vaadin:users"></iron-icon></a></li>
+                    <li><a href="https://www.facebook.com/bodved"><iron-icon icon="vaadin:facebook"></iron-icon></a></li>
+                    <li><a href="http://instagram.com/bodved"><iron-icon icon="vaadin:instagram"></iron-icon></a></li>
                     <li class="toRight"><a href="/bodved/AboutPage"><iron-icon icon="vaadin:info-circle"></iron-icon></a></li>
                     <li><a href="/bodved/LoginPage"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm]]</span></a></li>
                     <li class="bodved">BodVed</li>
                 </ul>
             </section>
             <section class="master-current">
+                <!--template is="imported-template" model="{{model.CurrentPage}}" href="{{model.CurrentPage.bodved_0.Html}}"></template-->
                 <starcounter-include partial="{{model.CurrentPage}}"></starcounter-include>
             </section>
         </div>

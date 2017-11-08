@@ -54,6 +54,7 @@ namespace BDB
 
         public int RnkBaz { get; set; }
         public int Rnk { get; set; }
+        public int Sra { get; set; }    // Rank'a gore sirasi
 
         public int SSo { get; set; }    // Single Set Oynadigi
         public int SSa { get; set; }
