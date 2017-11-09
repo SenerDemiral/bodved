@@ -63,8 +63,11 @@ namespace bodved
                     if (mpLgn.LI && (mpLgn.Id == cet.hCToNo.ToString() || mpLgn.Id == cet.gCToNo.ToString()))
                         canMdfy = true;
             }
+
+            //canMdfy = true; //deneme
             if (mpLgn.Rl == "ADMIN")
                 Rok = false;    // Admin sonuc OK olsa bile degistirebilsin
+
 
 
             Cap1 = $"{cet.CCAd}  {cet.Tarih}";
@@ -586,211 +589,281 @@ namespace bodved
             });
         }
 
+        #region InputDialog
+        void Handle(Input.DlgRejectTrigger A)
+        {
+            DlgOpened = false;
+        }
+
+        void Handle(Input.DlgSaveTrigger A)
+        {
+            DlgOpened = false;
+            int i = (int)Idx - 1;
+
+            if (SoD == "S")
+            {
+                Singles[i].hS1W = hS1W;
+                Singles[i].hS2W = hS2W;
+                Singles[i].hS3W = hS3W;
+                Singles[i].hS4W = hS4W;
+                Singles[i].hS5W = hS5W;
+                Singles[i].gS1W = gS1W;
+                Singles[i].gS2W = gS2W;
+                Singles[i].gS3W = gS3W;
+                Singles[i].gS4W = gS4W;
+                Singles[i].gS5W = gS5W;
+            }
+            Save(false);
+
+            PushChanges();
+        }
+
+        void Handle(Input.hS1W A)
+        {
+            if (A.Value < -1)
+            {
+                A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                gS1W = 11;
+            }
+            else if (A.Value == -1)
+            {
+                A.Value = 0;
+                gS1W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS1W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.hS2W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                gS2W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS2W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.gS2W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.hS3W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                gS3W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS3W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.gS3W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.hS4W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                gS4W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS4W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.gS4W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.hS5W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                gS5W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS5W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.gS5W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.gS1W A)
+        {
+            if (A.Value < -1)
+            {
+                A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
+                hS1W = 11;
+            }
+            else if (A.Value == -1)
+            {
+                A.Value = 0;
+                hS1W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                gS1W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.gS2W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                hS2W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                hS2W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.hS2W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.gS3W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                hS3W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                hS3W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.hS3W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.gS4W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                hS4W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                hS4W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.hS4W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        void Handle(Input.gS5W A)
+        {
+            if (A.Value == -1)
+            {
+                A.Value = 0;
+                hS5W = 11;
+            }
+            else if (A.Value == 0)
+            {
+                A.Value = 0;
+                hS5W = 0;
+            }
+            else if (A.Value > 21)
+                A.Cancel();
+            else
+                this.hS5W = A.Value < 10 ? 11 : A.Value + 2;
+        }
+
+        #endregion InputDialog
+
         [CETRinpPage_json.Singles]
         public partial class SinglesElementJson
         {
-            void Handle(Input.hS1W A)
+            void Handle(Input.MdfTrigger A)
             {
-                if (A.Value < -1)
-                {
-                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
-                    gS1W = 11;
-                }
-                else if (A.Value == -1)
-                {
-                    A.Value = 0;
-                    gS1W = 11;
-                }
-                else if (A.Value > 21)
-                        A.Cancel();
-                else
-                    this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
-            }
+                var p = this.Parent.Parent as CETRinpPage;
 
-            void Handle(Input.hS2W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS2W = A.Value < 10 ? 11 : A.Value + 2;
-            }
+                p.hPPAd1 = hPPAd;
+                p.hPPAd2 = "";
+                p.gPPAd1 = gPPAd;
+                p.gPPAd2 = "";
 
-            void Handle(Input.hS3W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS3W = A.Value < 10 ? 11 : A.Value + 2;
-            }
+                p.SoD = "S";
+                p.Idx = Idx;
+                p.hS1W = hS1W;
+                p.hS2W = hS2W;
+                p.hS3W = hS3W;
+                p.hS4W = hS4W;
+                p.hS5W = hS5W;
+                p.gS1W = gS1W;
+                p.gS2W = gS2W;
+                p.gS3W = gS3W;
+                p.gS4W = gS4W;
+                p.gS5W = gS5W;
 
-            void Handle(Input.hS4W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS4W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.hS5W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS5W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS1W A)
-            {
-                if (A.Value < -1)
-                {
-                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
-                    hS1W = 11;
-                }
-                else if (A.Value == -1)
-                {
-                    A.Value = 0;
-                    hS1W = 11;
-                }
-                else if (A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS2W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS2W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS3W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS3W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS4W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS4W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS5W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS5W = A.Value < 10 ? 11 : A.Value + 2;
+                p.DlgOpened = true;
             }
         }
 
         [CETRinpPage_json.Doubles]
         public partial class DoublesElementJson
         {
-            void Handle(Input.hS1W A)
+            void Handle(Input.MdfTrigger A)
             {
-                if (A.Value < -1)
-                {
-                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
-                    gS1W = 11;
-                }
-                else if (A.Value == -1)
-                {
-                    A.Value = 0;
-                    gS1W = 11;
-                }
-                else if (A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS1W = A.Value < 10 ? 11 : A.Value + 2;
-            }
+                var p = this.Parent.Parent as CETRinpPage;
 
-            void Handle(Input.hS2W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS2W = A.Value < 10 ? 11 : A.Value + 2;
-            }
+                p.hPPAd1 = hPPAd1;
+                p.hPPAd2 = hPPAd2;
+                p.gPPAd1 = gPPAd1;
+                p.gPPAd2 = gPPAd2;
+                p.SoD = "S";
+                p.Idx = Idx;
+                p.hS1W = hS1W;
+                p.hS2W = hS2W;
+                p.hS3W = hS3W;
+                p.hS4W = hS4W;
+                p.hS5W = hS5W;
+                p.gS1W = gS1W;
+                p.gS2W = gS2W;
+                p.gS3W = gS3W;
+                p.gS4W = gS4W;
+                p.gS5W = gS5W;
 
-            void Handle(Input.hS3W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS3W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.hS4W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS4W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.hS5W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.gS5W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS1W A)
-            {
-                if (A.Value < -1)
-                {
-                    A.Value = -9;   // Diskalifiye, kayit edilirken (Onayla&Kaydet) Oyuncu "∞" ye cevrilecek ve 0 yapilacak
-                    hS1W = 11;
-                }
-                else if (A.Value == -1)
-                {
-                    A.Value = 0;
-                    hS1W = 11;
-                }
-                else if (A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS1W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS2W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS2W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS3W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS3W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS4W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS4W = A.Value < 10 ? 11 : A.Value + 2;
-            }
-
-            void Handle(Input.gS5W A)
-            {
-                if (A.Value < 0 || A.Value > 21)
-                    A.Cancel();
-                else
-                    this.hS5W = A.Value < 10 ? 11 : A.Value + 2;
+                p.DlgOpened = true;
             }
         }
     }

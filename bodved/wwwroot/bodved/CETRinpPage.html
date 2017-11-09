@@ -1,17 +1,73 @@
-﻿<template>
+﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
+
+<template>
     <template is="dom-bind">
+        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+            <div class="tblWrap">
+                
+                <table>
+                    <caption>
+                        Set Sonuçları
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Set</th>
+                            <th>[[model.hPPAd1]]</th>
+                            <th>[[model.gPPAd1]]</th>
+                        </tr>
+                        <tr>
+                            <th>[[model.hPPAd2]]</th>
+                            <th>[[model.gPPAd2]]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ortala">1</td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.hS1W$::change}}" /></td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.gS1W$::change}}" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">2</td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.hS2W$::change}}" /></td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.gS2W$::change}}" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">3</td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.hS3W$::change}}" /></td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.gS3W$::change}}" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">4</td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.hS4W$::change}}" /></td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.gS4W$::change}}" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">5</td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.hS5W$::change}}" /></td>
+                            <td><input class="inpSetSayi" type="number" value="{{model.gS5W$::change}}" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <button dialog-dismiss value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;">Vazgeç</button>
+                <span>&nbsp;</span>
+                <button dialog-confirm autofocus value="{{model.DlgSaveTrigger$::click}}" onmousedown="++this.value;">Kaydet</button>
+            </div>
+        </paper-dialog>
+
         <div class="tblWrap">
             <table id="cetrTblS">
                 <!--colgroup>
-                    <col>
-                    <col>
-                    <col style="background-color:yellow">
-                    <col>
-                    <col style="background-color:yellow">
-                    <col>
-                    <col style="background-color:yellow">
-                    <col>
-                </colgroup-->
+                <col>
+                <col>
+                <col style="background-color:yellow">
+                <col>
+                <col style="background-color:yellow">
+                <col>
+                <col style="background-color:yellow">
+                <col>
+            </colgroup-->
                 <caption>
                     <div>[[model.Cap1]]</div>
                     <!--div>[[model.Cap2]]</div-->
@@ -47,18 +103,21 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.Singles]]">
                         <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.Idx]]</td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">
+                                [[item.Idx]]
+                                <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                            </td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
                                 <a href="/bodved/ppMacPage/[[item.hPPoNo]]">[[item.hPPAd]]</a>
                                 <span class="rank">[[item.hPPrnk]]</span>
                             </td>
-                            <td class="hSW" data-val$="[[item.hSW]]" >[[item.hSW]]</td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS1W$]]" value="{{item.hS1W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS1W$]]" value="{{item.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS2W$]]" value="{{item.hS2W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS2W$]]" value="{{item.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS3W$]]" value="{{item.hS3W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS3W$]]" value="{{item.gS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS4W$]]" value="{{item.hS4W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS4W$]]" value="{{item.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS5W$]]" value="{{item.hS5W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS5W$]]" value="{{item.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="gSW" data-val$="[[item.gSW]]" >[[item.gSW]]</td>
+                            <td class="hSW" data-val$="[[item.hSW]]">[[item.hSW]]</td>
+                            <td class="ortala">[[item.hS1W$]]-[[item.gS1W$]]</td>
+                            <td class="ortala">[[item.hS2W$]]-[[item.gS2W$]]</td>
+                            <td class="ortala">[[item.hS3W$]]-[[item.gS3W$]]</td>
+                            <td class="ortala">[[item.hS4W$]]-[[item.gS4W$]]</td>
+                            <td class="ortala">[[item.hS5W$]]-[[item.gS5W$]]</td>
+                            <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
                                 <a href="/bodved/ppMacPage/[[item.gPPoNo]]">[[item.gPPAd]]</a>
                                 <span class="rank">[[item.gPPrnk]]</span>
@@ -91,17 +150,21 @@
                 <tbody>
                     <template is="dom-repeat" items="[[model.Doubles]]">
                         <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]">[[item.Idx]]</td>
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]">
+                                [[item.Idx]]
+                                <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                            </td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
                                 <a href="/bodved/ppMacPage/[[item.hPPoNo1]]">[[item.hPPAd1]]</a><span class="rank">[[item.hPPrnk1]]</span>
                                 <br />
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo2]]">[[item.hPPAd2]]</a><span class="rank">[[item.hPPrnk2]]</span></td>
+                                <a href="/bodved/ppMacPage/[[item.hPPoNo2]]">[[item.hPPAd2]]</a><span class="rank">[[item.hPPrnk2]]</span>
+                            </td>
                             <td class="hSW" data-val$="[[item.hDW]]">[[item.hDW]]</td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS1W$]]" value="{{item.hS1W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS1W$]]" value="{{item.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS2W$]]" value="{{item.hS2W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS2W$]]" value="{{item.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS3W$]]" value="{{item.hS3W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS3W$]]" value="{{item.gS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS4W$]]" value="{{item.hS4W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS4W$]]" value="{{item.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td class="inpSetCell"><input class="inpSetSayi" type="text" data-val$="[[item.hS5W$]]" value="{{item.hS5W$::change}}" readonly$="[[!model.canMdfy]]" />-<input class="inpSetSayi" type="text" data-val$="[[item.gS5W$]]" value="{{item.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td class="ortala">[[item.hS1W$]]-[[item.gS1W$]]</td>
+                            <td class="ortala">[[item.hS2W$]]-[[item.gS2W$]]</td>
+                            <td class="ortala">[[item.hS3W$]]-[[item.gS3W$]]</td>
+                            <td class="ortala">[[item.hS4W$]]-[[item.gS4W$]]</td>
+                            <td class="ortala">[[item.hS5W$]]-[[item.gS5W$]]</td>
                             <td class="gSW" data-val$="[[item.gDW]]">[[item.gDW]]</td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
                                 <a href="/bodved/ppMacPage/[[item.gPPoNo1]]">[[item.gPPAd1]]</a><span class="rank">[[item.gPPrnk1]]</span>

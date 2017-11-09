@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "iron-icons": "PolymerElements/iron-icons#^2.0.1",
-    "iron-icon": "PolymerElements/iron-icon#^2.0.1"
+    "iron-icon": "PolymerElements/iron-icon#^2.0.1",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
   }
 }

@@ -52,7 +52,9 @@
       "gS2W$": 0,
       "gS3W$": 0,
       "gS4W$": 0,
-      "gS5W$": 0
+      "gS5W$": 0,
+
+      "MdfTrigger$": 0
     }
   ],
 
@@ -88,7 +90,31 @@
       "gS2W$": 0,
       "gS3W$": 0,
       "gS4W$": 0,
-      "gS5W$": 0
+      "gS5W$": 0,
+
+      "MdfTrigger$": 0
     }
-  ]
+  ],
+
+  "DlgOpened": false,
+  "DlgRejectTrigger$": 0,
+  "DlgSaveTrigger$": 0,
+
+  "hPPAd1": "",
+  "hPPAd2": "",
+  "gPPAd1": "", 
+  "gPPAd2": "", 
+  "SoD": "",
+  "Idx": 0,
+  "hS1W$": 0,
+  "hS2W$": 0,
+  "hS3W$": 0,
+  "hS4W$": 0,
+  "hS5W$": 0,
+  "gS1W$": 0,
+  "gS2W$": 0,
+  "gS3W$": 0,
+  "gS4W$": 0,
+  "gS5W$": 0,
+
 }
