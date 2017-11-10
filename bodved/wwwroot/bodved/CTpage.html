@@ -8,16 +8,20 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">ID</th>
-                        <th >Takım</th>
-                        <th>oM</th>
-                        <th>aMP</th>
-                        <th>vMP</th>
+                        <th rowspan="2" class="oNo">ID</th>
+                        <th rowspan="2">Takım</th>
+                        <th colspan="5">Müsabaka</th>
+                        <th rowspan="2">Puan</th>
+                        <th rowspan="2">K1</th>
+                        <th rowspan="2">K2</th>
+                        <th rowspan="2">Adres</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>o</th>
+                        <th>aP</th>
+                        <th>vP</th>
                         <th>Avr</th>
-                        <th>Puan</th>
-                        <th>K1</th>
-                        <th>K2</th>
-                        <th>Adres</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,11 +29,12 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td><a href="/bodved/CTPpage/[[item.oNo]]">[[item.Ad]]</a></td>
+                            <td class="ortala"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
                             <td class="ortala">[[item.oM]]</td>
                             <td class="ortala">[[item.aMP]]</td>
                             <td class="ortala">[[item.vMP]]</td>
                             <td class="ortala">[[item.fMP]]</td>
-                            <td class="ortala">[[item.tP]]</td>
+                            <td class="Puan">[[item.tP]]</td>
                             <td>[[item.K1Ad]]</td>
                             <td>[[item.K2Ad]]</td>
                             <td>[[item.Adres]]</td>

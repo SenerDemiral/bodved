@@ -178,6 +178,13 @@ input:focus {
     color:black !important;
 }
 
+.Puan {
+    background-color:royalblue;
+    color:white;
+    text-align: center;
+    font-weight:bold;
+}
+
 .ppAd {
     width:9rem;
     /*min-width: 10em;*/

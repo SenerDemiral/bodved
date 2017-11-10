@@ -14,23 +14,39 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-            Cap1 = $"{cc.Ad} Müsabakaları";
+            BDB.CC cc = null;
+            BDB.CT ct = null;
+
+            // CT (CToNo) ->
+            if (!string.IsNullOrEmpty(CToNo))
+            {
+                ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
+                cc = ct.CC;
+                Cap1 = $"{cc.Ad} {ct.Ad} Müsabakaları";
+            }
+            // CET (CCoNo) ->
+            if (!string.IsNullOrEmpty(CCoNo))
+            {
+                cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+                Cap1 = $"{cc.Ad} Müsabakaları";
+            }
 
             if (canMdfy && CTs.Count == 0)
             {
                 CTsElementJson ps;
 
                 var cts = Db.SQL<BDB.CT>("select p from CT p where p.CC = ? order by p.Ad", cc);
-                foreach (var ct in cts)
+                foreach (var t in cts)
                 {
                     ps = CTs.Add();
-                    ps.oNo = ct.oNo.ToString();
-                    ps.Ad = ct.Ad;
+                    ps.oNo = t.oNo.ToString();
+                    ps.Ad = t.Ad;
                 }
             }
-
-            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            if (!string.IsNullOrEmpty(CCoNo))
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", cc);
+            else if (!string.IsNullOrEmpty(CToNo))
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? and (c.hCT = ? or c.gCT = ?) order by c.ID, c.Trh", cc, ct, ct);
 
             //sener.NoR = DateTime.Now.Ticks;
         }
