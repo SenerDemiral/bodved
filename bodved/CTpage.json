@@ -17,12 +17,12 @@
       "Adres": "",
       "Pw": "",
       "MdfTrigger$": 0,
-
-      "aP": 0,  // Aldigi Puan
-      "vP": 0,
-      "oE": 0,  // Oynadigi Event/Musabaka Sayisi
-      "aE": 0,
-      "vE": 0
+      
+      "tP": 0, 
+      "oM": 0, 
+      "aMP": 0,
+      "vMP": 0,
+      "fMP": 0
     }
   ],
 

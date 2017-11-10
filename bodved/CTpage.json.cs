@@ -29,7 +29,7 @@ namespace bodved
             var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
             Cap1 = $"{cc.Ad} Takımları";
             
-            CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.aP desc, c.vP, c.Ad", cc);
+            CTs.Data = Db.SQL<BDB.CT>("select c from CT c where c.CC = ? order by c.tP desc, c.aMP desc, c.fMP desc", cc);
 
             //sener.NoR = DateTime.Now.Ticks;
         }

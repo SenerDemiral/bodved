@@ -119,6 +119,13 @@ namespace BDB
         public string Adres { get; set; }
         public string Pw { get; set; }
 
+        public int tP { get; set; }  // Takim Puan
+        public int oM { get; set; }  // Oynadigi Musabaka Sayisi
+        public int aMP { get; set; } // Aldigi Musabaka Puani
+        public int vMP { get; set; } // Verdigi Musabaka Puani
+        public int fMP { get; set; } // Fark Aldigi-Verdigi Musabaka Puani
+
+
         public int oE { get; set; }
         public int aE { get; set; }
         public int vE { get; set; }

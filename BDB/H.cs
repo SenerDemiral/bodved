@@ -10,7 +10,6 @@ namespace BDB
 {
     public static class H
     {
-
         // Sonuclari toplayip CET'e yaz
         public static void Cetr2Cet(string CEToNo)
         {
@@ -40,54 +39,52 @@ namespace BDB
             }
         }
 
-        public static void updCTsum(string ccID)
+        public static void updCTsumCC(ulong CCoNo)
         {
-            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            //var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cc = Db.FromId<CC>(CCoNo);
+
             var cts = Db.SQL<CT>("select r from CT r where r.CC = ?", cc);
             foreach (var ct in cts)
                 updCTsum(ct.oNo);
-
         }
 
         public static void updCTsum(ulong CToNo)
         {
-            int aP = 0; // Musabakalardan Aldigi Puan Toplami
-            int vP = 0; //                Verdigi
-            int oE = 0; // Oynadigi Event
-            int aE = 0; // Aldigi/Kazandigi Event
-            int vE = 0; // Verdigi/Kaybettigi Event
+            int tP = 0;  // Takim Puan
+            int oM = 0;  // Oynadigi Musabaka Sayisi
+            int aMP = 0; // Aldigi Musabaka Puani
+            int vMP = 0; // Verdigi Musabaka Puani
+            int fMP = 0; // Fark Aldigi-Verdigi Musabaka Puani
 
             var ct = Db.FromId<CT>(CToNo);
-            //Musabaka Soncu Onaylanmislari tara
+
+            // Musabaka Soncu Onaylanmislari tara
+            // HOME
             foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ? and c.Rok = ?", ct, true))
             {
-                aP += r.hP;
-                vP += r.gP;
-                oE++;
-                if (r.hP > r.gP)
-                    aE++;
-                else
-                    vE++;
-
+                oM++;
+                tP += r.hP;
+                aMP += r.hPW;
+                vMP += r.gPW;
             }
+            // GUEST
             foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ? and c.Rok = ?", ct, true))
             {
-                aP += r.gP;
-                vP += r.hP;
-                oE++;
-                if (r.hP < r.gP)
-                    aE++;
-                else
-                    vE++;
+                oM++;
+                tP += r.gP;
+                aMP += r.gPW;
+                vMP += r.hPW;
             }
+            fMP = aMP - vMP;
 
             Db.Transact(() =>
             {
-                ct.aP = aP;
-                ct.vP = vP;
-                ct.oE = oE;
-                ct.aE = aE;
-                ct.vE = vE;
+                ct.oM = oM;
+                ct.tP = tP;
+                ct.aMP = aMP;
+                ct.vMP = vMP;
+                ct.fMP = fMP;
             });
 
         }
