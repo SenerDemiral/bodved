@@ -83,7 +83,7 @@
                         <th colspan="10"></th>
                     </tr>
                     <tr class="SngHdr">
-                        <th rowspan="2">#</th>
+                        <th rowspan="2" style="width:12px;">#</th>
                         <th rowspan="2">[[model.hCTAd]]</th>
                         <th>[[model.hPSW]]</th>
                         <th colspan="5">Single</th>
@@ -130,7 +130,7 @@
             <table id="cetrTblD">
                 <thead>
                     <tr class="DblHdr">
-                        <th rowspan="2">#</th>
+                        <th rowspan="2" style="width:12px;">#</th>
                         <th rowspan="2">[[model.hCTAd]]</th>
                         <th>[[model.hPDW]]</th>
                         <th colspan="5">Double</th>
@@ -155,9 +155,11 @@
                                 <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
                             </td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo1]]">[[item.hPPAd1]]</a><span class="rank">[[item.hPPrnk1]]</span>
+                                <a href="/bodved/ppMacPage/[[item.hPPoNo1]]">[[item.hPPAd1]]</a>
+                                <span class="rank">[[item.hPPrnk1]]</span>
                                 <br />
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo2]]">[[item.hPPAd2]]</a><span class="rank">[[item.hPPrnk2]]</span>
+                                <a href="/bodved/ppMacPage/[[item.hPPoNo2]]">[[item.hPPAd2]]</a>
+                                <span class="rank">[[item.hPPrnk2]]</span>
                             </td>
                             <td class="hSW" data-val$="[[item.hDW]]">[[item.hDW]]</td>
                             <td class="ortala">[[item.hS1W$]]-[[item.gS1W$]]</td>
@@ -167,9 +169,11 @@
                             <td class="ortala">[[item.hS5W$]]-[[item.gS5W$]]</td>
                             <td class="gSW" data-val$="[[item.gDW]]">[[item.gDW]]</td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.gPPoNo1]]">[[item.gPPAd1]]</a><span class="rank">[[item.gPPrnk1]]</span>
+                                <a href="/bodved/ppMacPage/[[item.gPPoNo1]]">[[item.gPPAd1]]</a>
+                                <span class="rank">[[item.gPPrnk1]]</span>
                                 <br />
-                                <a href="/bodved/ppMacPage/[[item.gPPoNo2]]">[[item.gPPAd2]]</a><span class="rank">[[item.gPPrnk2]]</span>
+                                <a href="/bodved/ppMacPage/[[item.gPPoNo2]]">[[item.gPPAd2]]</a>
+                                <span class="rank">[[item.gPPrnk2]]</span>
                             </td>
                         </tr>
                     </template>
