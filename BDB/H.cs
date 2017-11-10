@@ -798,7 +798,7 @@ namespace BDB
 
             if (cet != null)
             {
-                SaveCETPofCET(cet.oNo);
+                //SaveCETPofCET(cet.oNo);
                 SaveCETRofCET(cet.oNo);
             }
         }
