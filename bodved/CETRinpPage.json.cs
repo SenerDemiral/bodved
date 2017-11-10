@@ -127,6 +127,28 @@ namespace bodved
                     sng.gS4W = src.S4W;
                     sng.gS5W = src.S5W;
                     sng.gSW = src.SW;
+
+                    if (sng.hS1W == 0 && sng.gS1W == 0)
+                        sng.hgS1W = "";
+                    else
+                        sng.hgS1W = $"{sng.hS1W}-{sng.gS1W}";
+                    if (sng.hS2W == 0 && sng.gS2W == 0)
+                        sng.hgS2W = "";
+                    else
+                        sng.hgS2W = $"{sng.hS2W}-{sng.gS2W}";
+                    if (sng.hS3W == 0 && sng.gS3W == 0)
+                        sng.hgS3W = "";
+                    else
+                        sng.hgS3W = $"{sng.hS3W}-{sng.gS3W}";
+                    if (sng.hS4W == 0 && sng.gS4W == 0)
+                        sng.hgS4W = "";
+                    else
+                        sng.hgS4W = $"{sng.hS4W}-{sng.gS4W}";
+                    if (sng.hS5W == 0 && sng.gS5W == 0)
+                        sng.hgS5W = "";
+                    else
+                        sng.hgS5W = $"{sng.hS5W}-{sng.gS5W}";
+
                 }
 
                 s++;
@@ -172,6 +194,27 @@ namespace bodved
                     dbl.gS4W = src.S4W;
                     dbl.gS5W = src.S5W;
                     dbl.gDW = src.SW;
+
+                    if (dbl.hS1W == 0 && dbl.gS1W == 0)
+                        dbl.hgS1W = "";
+                    else
+                        dbl.hgS1W = $"{dbl.hS1W}-{dbl.gS1W}";
+                    if (dbl.hS2W == 0 && dbl.gS2W == 0)
+                        dbl.hgS2W = "";
+                    else
+                        dbl.hgS2W = $"{dbl.hS2W}-{dbl.gS2W}";
+                    if (dbl.hS3W == 0 && dbl.gS3W == 0)
+                        dbl.hgS3W = "";
+                    else
+                        dbl.hgS3W = $"{dbl.hS3W}-{dbl.gS3W}";
+                    if (dbl.hS4W == 0 && dbl.gS4W == 0)
+                        dbl.hgS4W = "";
+                    else
+                        dbl.hgS4W = $"{dbl.hS4W}-{dbl.gS4W}";
+                    if (dbl.hS5W == 0 && dbl.gS5W == 0)
+                        dbl.hgS5W = "";
+                    else
+                        dbl.hgS5W = $"{dbl.hS5W}-{dbl.gS5W}";
                 }
                 if ((c % 4) == 3)
                 {
@@ -613,6 +656,19 @@ namespace bodved
                 Singles[i].gS4W = gS4W;
                 Singles[i].gS5W = gS5W;
             }
+            else if (SoD == "D")
+            {
+                Doubles[i].hS1W = hS1W;
+                Doubles[i].hS2W = hS2W;
+                Doubles[i].hS3W = hS3W;
+                Doubles[i].hS4W = hS4W;
+                Doubles[i].hS5W = hS5W;
+                Doubles[i].gS1W = gS1W;
+                Doubles[i].gS2W = gS2W;
+                Doubles[i].gS3W = gS3W;
+                Doubles[i].gS4W = gS4W;
+                Doubles[i].gS5W = gS5W;
+            }
             Save(false);
 
             PushChanges();
@@ -850,7 +906,7 @@ namespace bodved
                 p.hPPAd2 = hPPAd2;
                 p.gPPAd1 = gPPAd1;
                 p.gPPAd2 = gPPAd2;
-                p.SoD = "S";
+                p.SoD = "D";
                 p.Idx = Idx;
                 p.hS1W = hS1W;
                 p.hS2W = hS2W;
