@@ -1,12 +1,21 @@
 ﻿using System.Linq;
 using Starcounter;
+using System.Timers;
 
 namespace bodved
 {
     class Program
     {
+        static Timer tmr;
+
         static void Main()
         {
+            //tmr = new Timer(10000);
+            //tmr.AutoReset = true;
+            //tmr.Elapsed += Tmr_Elapsed;
+            //tmr.Start();
+
+
             var HTML = @"<!DOCTYPE html>
 				<html>
 				<head>
@@ -67,8 +76,12 @@ namespace bodved
 
 
             //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
-            Handle.GET("/bodved", () => { return Self.GET("/bodved/NoticePage"); });
+            Handle.GET("/bodved", (Request request) => {
+
+                return Self.GET("/bodved/NoticePage");
+            });
             //Handle.GET("/bodved", () => {return new MainPage(); });
+
 
             Handle.GET("/bodved/partial/MainPage", () => new MainPage());
             Handle.GET("/bodved/MainPage", () => WrapPage<MainPage>("/bodved/partial/MainPage"));
@@ -133,11 +146,27 @@ namespace bodved
                 }
                 */
             };
-
+            
             Hook<BDB.CT>.CommitInsert += (p, obj) =>
             {
-                //Session.ForAll((s, id) => s.CalculatePatchAndPushOnWebSocket());
+                Session.ForAll((s, id) => {
+                    
+                    s.CalculatePatchAndPushOnWebSocket(); });
             };
+        }
+
+        private static void Tmr_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Session.ForAll((s, id) => {
+                var bb = s.ActiveWebSocket.IsDead();
+                var aa = "";
+
+                if (s.ActiveWebSocket.IsDead())
+                {
+                    aa = "sener";
+                }
+            });
+
         }
 
         public static MasterPage GetMasterPageFromSession()
@@ -150,7 +179,7 @@ namespace bodved
                 //Session.Current.Data = master;
                 Session.Current.Store["bodved"] = master;
 
-                BDB.H.Write2Log("Enter");
+                BDB.H.Write2Log($"Enter: {Session.Current}");
             }
 
             return master;
