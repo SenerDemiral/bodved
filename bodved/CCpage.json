@@ -16,10 +16,6 @@
     }
   ],
 
-  "InsertTrigger$": 0,
-  "UpdateTrigger$": 0,
-  "DeleteTrigger$": 0,
-
   "MdfRec": {
     "oNo$": 0,
     "ID$": "",
@@ -27,5 +23,11 @@
     "Idx$": "",
     "Skl$": "",
     "Grp$": ""
-  }
+  },
+
+  "DlgOpened": false,
+  "DlgRejectTrigger$": 0,
+  "DlgInsertTrigger$": 0,
+  "DlgUpdateTrigger$": 0,
+  "DlgDeleteTrigger$": 0
 }

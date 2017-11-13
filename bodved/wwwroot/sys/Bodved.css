@@ -132,7 +132,7 @@ iron-icon {
     /*grid-template-columns:20em; */
     justify-content:start;
     grid-gap:3px; 
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 .mdfRecAction {

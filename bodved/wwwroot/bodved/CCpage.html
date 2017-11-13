@@ -1,5 +1,24 @@
-﻿<template>
+﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
+
+<template>
     <template is="dom-bind">
+        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+            <div class="mdfRecWrap">
+                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
+                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                <input placeholder="Idx" type="text" value="{{model.MdfRec.Idx$::change}}" />
+                <input placeholder="Şekli" type="text" value="{{model.MdfRec.Skl$::change}}" />
+                <input placeholder="Grup" type="text" value="{{model.MdfRec.Grp$::change}}" />
+                <div class="mdfRecAction">
+                    <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                    <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                    <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                </div>
+                <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
+            </div>
+        </paper-dialog>
+
         <div class="tblWrap">
             <table id="ccTbl">
                 <caption>
@@ -25,23 +44,6 @@
                     </template>
                 </tbody>
             </table>
-
-            <template is="dom-if" if="[[model.canMdfy]]">
-                <div class="mdfRecWrap">
-                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
-                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                    <input placeholder="Idx" type="text" value="{{model.MdfRec.Idx$::change}}" />
-                    <input placeholder="Şekli" type="text" value="{{model.MdfRec.Skl$::change}}" />
-                    <input placeholder="Grup" type="text" value="{{model.MdfRec.Grp$::change}}" />
-                    <div class="mdfRecAction">
-                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
-                    </div>
-                    <a href="/bodved/CCpage">Refresh</a>
-                </div>
-            </template>
         </div>
 
     </template>

@@ -137,6 +137,10 @@ namespace scExpert
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCET_CC_Trh ON CET  (CC, Trh)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxCET_hCT    ON CET  (hCT)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_gCT").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxCET_gCT    ON CET  (gCT)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCTP_CC     ON CTP  (CC)");
@@ -162,6 +166,8 @@ namespace scExpert
                 Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON PRH");
                 Db.SQL("DROP INDEX IdxCT_CC       ON CT");
                 Db.SQL("DROP INDEX IdxCET_CC_Trh  ON CET");
+                Db.SQL("DROP INDEX IdxCET_hCT     ON CET");
+                Db.SQL("DROP INDEX IdxCET_gCT     ON CET");
                 Db.SQL("DROP INDEX IdxCTP_CC      ON CTP");
                 Db.SQL("DROP INDEX IdxCTP_CT      ON CTP");
                 Db.SQL("DROP INDEX IdxCETP_CET    ON CETP");

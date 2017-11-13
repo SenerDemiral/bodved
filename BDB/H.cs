@@ -10,6 +10,7 @@ namespace BDB
 {
     public static class H
     {
+
         // Sonuclari toplayip CET'e yaz
         public static void Cetr2Cet(string CEToNo)
         {
@@ -45,8 +46,11 @@ namespace BDB
             var cc = Db.FromId<CC>(CCoNo);
 
             var cts = Db.SQL<CT>("select r from CT r where r.CC = ?", cc);
+            
             foreach (var ct in cts)
+            {
                 updCTsum(ct.oNo);
+            }
         }
 
         public static void updCTsum(ulong CToNo)

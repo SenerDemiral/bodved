@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Starcounter;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System;
 
 namespace bodved
 {
@@ -22,30 +24,34 @@ namespace bodved
 
         public void Handle(Input.SaveOkTrigger Action)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             Save(true);
-            // -9 lari bul Diskalifiye yap
 
             // Sonuc OK Onayla
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             var cetrs = Db.SQL<BDB.CETR>("select r from CETR r where r.CET = ?", cet);
             Db.Transact(() =>
             {
-                foreach(var cetr in cetrs)
-                {
-
-                }
                 cet.Rok = true;
             });
 
-            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
-            //BDB.H.updCTsum(cet.hCT.oNo);
-            //BDB.H.updCTsum(cet.gCT.oNo);
-            BDB.H.updCTsumCC(cet.CCoNo);
+            BDB.H.updCTsum(cet.hCT.oNo);
+            BDB.H.updCTsum(cet.gCT.oNo);
+
+            //BDB.H.updCTsumCC(cet.CCoNo);
 
             BDB.H.refreshPRH();
 
+            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+
             PushChangesCT();
+
+            watch.Stop();
+            Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+
         }
 
         protected void Read()

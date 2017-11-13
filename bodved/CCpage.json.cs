@@ -26,11 +26,13 @@ namespace bodved
             //sener.NoR = DateTime.Now.Ticks;
         }
 
-        void Handle(Input.InsertTrigger Action)
+        void Handle(Input.DlgRejectTrigger A)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
+            DlgOpened = false;
+        }
 
+        void Handle(Input.DlgInsertTrigger Action)
+        {
             if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
                 Db.Transact(() =>
@@ -48,16 +50,13 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
-        void Handle(Input.UpdateTrigger Action)
+        void Handle(Input.DlgUpdateTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
-                
                 Db.Transact(() =>
                 {
                     var r = Db.FromId<BDB.CC>((ulong)MdfRec.oNo);
@@ -71,13 +70,11 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
-        void Handle(Input.DeleteTrigger Action)
+        void Handle(Input.DlgDeleteTrigger Action)
         {
-            var oo = Action.OldValue;
-            var nn = Action.Value;
-
             if (MdfRec.oNo != 0)
             {
                 Db.Transact(() =>
@@ -95,6 +92,7 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
         public void PushChanges()
@@ -122,7 +120,7 @@ namespace bodved
                 p.MdfRec.Skl = Skl;
                 p.MdfRec.Grp = Grp;
 
-                var deneme = this.Root;
+                p.DlgOpened = true;
             }
         }
 

@@ -4,10 +4,9 @@
     <template is="dom-bind">
         <paper-dialog opened="[[model.DlgOpened]]" modal="true">
             <div class="tblWrap">
-                
                 <table>
                     <caption>
-                        Set Sonuçları
+                        Maç Set Sonuçları
                     </caption>
                     <thead>
                         <tr>
@@ -16,6 +15,7 @@
                             <th>[[model.gPPAd1]]</th>
                         </tr>
                         <tr>
+                            <th></th>
                             <th>[[model.hPPAd2]]</th>
                             <th>[[model.gPPAd2]]</th>
                         </tr>
@@ -51,7 +51,6 @@
             </div>
             <div style="display:flex; justify-content:space-between;">
                 <button dialog-dismiss value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;">Vazgeç</button>
-                <span>&nbsp;</span>
                 <button dialog-confirm autofocus value="{{model.DlgSaveTrigger$::click}}" onmousedown="++this.value;">Kaydet</button>
             </div>
         </paper-dialog>
