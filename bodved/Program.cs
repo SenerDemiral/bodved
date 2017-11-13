@@ -25,7 +25,7 @@ namespace bodved
 					<title>{0}</title>
 					
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
-					<script src=""/sys/document-register-element/build/document-register-element.js""></script>
+					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
 
                     <script>
                         window.Polymer = {{
@@ -36,7 +36,7 @@ namespace bodved
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
 					<link rel=""import"" href=""/sys/starcounter.html"">
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
-					<link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html"">
+					<!--link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html""-->
 					
                     <link rel=""stylesheet"" href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro"">
                     <script src=""/sys/thenBy.js""></script>
@@ -53,7 +53,7 @@ namespace bodved
                         <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
                     <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
-                    <starcounter-debug-aid></starcounter-debug-aid>
+                    <!--starcounter-debug-aid></starcounter-debug-aid-->
                 </body>
 				</html>";
 

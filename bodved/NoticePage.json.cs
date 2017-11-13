@@ -16,10 +16,15 @@ namespace bodved
             Cap1 = $"Duyurular";
 
             NTCs.Data = Db.SQL<BDB.NTC>("select c from NTC c order by c.Onc, c.Trh desc");
-
+            
         }
 
-        void Handle(Input.InsertTrigger Action)
+        void Handle(Input.DlgRejectTrigger A)
+        {
+            DlgOpened = false;
+        }
+
+        void Handle(Input.DlgInsertTrigger Action)
         {
             Db.Transact(() =>
             {
@@ -34,9 +39,10 @@ namespace bodved
             MdfRec.oNo = 0;
 
             PushChanges();
+            DlgOpened = false;
         }
 
-        void Handle(Input.UpdateTrigger Action)
+        void Handle(Input.DlgUpdateTrigger Action)
         {
             if (MdfRec.oNo != 0)
             {
@@ -53,10 +59,11 @@ namespace bodved
                 MdfRec.oNo = 0; // Yanlislikla birdaha bu kayitta birsey yapamasin
 
                 PushChanges();
+                DlgOpened = false;
             }
         }
 
-        void Handle(Input.DeleteTrigger Action)
+        void Handle(Input.DlgDeleteTrigger Action)
         {
             if (MdfRec.oNo != 0)
             {
@@ -74,6 +81,7 @@ namespace bodved
                 MdfRec.oNo = 0;
 
                 PushChanges();
+                DlgOpened = false;
             }
         }
 
@@ -100,6 +108,8 @@ namespace bodved
                 p.MdfRec.Tarih = DateTime.Parse(Trh).ToString("yyyy-MM-dd");
                 p.MdfRec.Ad = Ad;
                 p.MdfRec.Link = Link;
+
+                p.DlgOpened = true;
             }
         }
 

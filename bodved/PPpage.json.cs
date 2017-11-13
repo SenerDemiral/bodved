@@ -19,7 +19,12 @@ namespace bodved
             //sener.NoR = DateTime.Now.Ticks;
         }
 
-        void Handle(Input.InsertTrigger Action)
+        void Handle(Input.DlgRejectTrigger A)
+        {
+            DlgOpened = false;
+        }
+
+        void Handle(Input.DlgInsertTrigger Action)
         {
             if (!string.IsNullOrWhiteSpace(MdfRec.Ad))
             {
@@ -40,9 +45,10 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
-        void Handle(Input.UpdateTrigger Action)
+        void Handle(Input.DlgUpdateTrigger Action)
         {
             if (MdfRec.oNo != 0)
             {
@@ -61,9 +67,10 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
-        void Handle(Input.DeleteTrigger Action)
+        void Handle(Input.DlgDeleteTrigger Action)
         {
             if (MdfRec.oNo != 0)
             {
@@ -82,6 +89,7 @@ namespace bodved
 
                 PushChanges();
             }
+            DlgOpened = false;
         }
 
         public void PushChanges()
@@ -134,6 +142,8 @@ namespace bodved
                 p.MdfRec.RnkBaz = RnkBaz;
                 p.MdfRec.Tel = this.Tel;
                 p.MdfRec.eMail = this.eMail;
+
+                p.DlgOpened = true;
             }
         }
 

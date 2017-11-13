@@ -1,11 +1,16 @@
 {
   "Html": "/bodved/MasterPage.html",
   "Login": {
-    "Id": "",
-    "Rl": "?",
-    "Nm": "Login",
+    "Id$": "",
+    "Rl$": "?",
+    "Nm$": "Login",
+    "Pw$": "",
+    "nPw$": "",
     "LI": false
   },
+  "LoginTrigger$": 0,
+  "DlgOpenTrigger$": 0,
+  "DlgOpened": false,
 
   "CurrentPage": { }
 }

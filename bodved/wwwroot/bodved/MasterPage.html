@@ -1,7 +1,18 @@
 ﻿<link rel="import" href="/sys/vaadin-icons/vaadin-icons.html">
+<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
 
 <template>
     <template is="dom-bind">
+        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+            <div class="mdfRecWrap">
+                <input placeholder="ID" type="text" value="{{model.Login.Id$::change}}" />
+                <input placeholder="Password" type="password" value="{{model.Login.Pw$::change}}" />
+                <input placeholder="New Password" type="password" value="{{model.Login.nPw$::change}}" />
+                <div class="mdfRecAction">
+                    <button value="{{model.LoginTrigger$::click}}" onmousedown="++this.value">Login</button>
+                </div>
+            </div>
+        </paper-dialog>
         <div>
             <section class="master-toolbar">
                 <ul role="navigation">
@@ -11,7 +22,9 @@
                     <li><a href="https://www.facebook.com/bodved"><iron-icon icon="vaadin:facebook"></iron-icon></a></li>
                     <li><a href="http://instagram.com/bodved"><iron-icon icon="vaadin:instagram"></iron-icon></a></li>
                     <li class="toRight"><a href="/bodved/AboutPage"><iron-icon icon="vaadin:info-circle"></iron-icon></a></li>
-                    <li><a href="/bodved/LoginPage"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm]]</span></a></li>
+                    <!--li><a href="/bodved/LoginPage"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></a></li-->
+                    <!--li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></button></li-->
+                    <li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value">[[model.Login.Nm$]]</button></li>
                     <li class="bodved">BODVED</li>
                 </ul>
             </section>

@@ -1,8 +1,23 @@
-﻿<link rel="import" href="/sys/polymer/polymer.html">
+﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
 
 <template>
     <template is="dom-bind">
         <img src="/bodved/bodved.jpg" alt="Smiley face" style="display:block;margin:auto;width:80vmin;height:80vmin;">
+        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+            <div class="mdfRecWrap">
+                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                <input placeholder="Öncelik 1-9" type="text" value="{{model.MdfRec.Onc$::change}}" />
+                <input placeholder="Tarih" type="date" value="{{model.MdfRec.Tarih$::change}}" />
+                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                <input placeholder="Link" type="text" value="{{model.MdfRec.Link$::change}}" />
+                <div class="mdfRecAction">
+                    <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                    <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                    <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                </div>
+                <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
+            </div>
+        </paper-dialog>
         <div style="position:absolute;top:48px;">
             <div class="tblWrap">
                 <table>
@@ -27,24 +42,7 @@
                         </template>
                     </tbody>
                 </table>
-
-                <template is="dom-if" if="[[model.canMdfy]]">
-                    <div class="mdfRecWrap">
-                        <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                        <input placeholder="Öncelik 1-9" type="text" value="{{model.MdfRec.Onc$::change}}" />
-                        <input placeholder="Tarih" type="date" value="{{model.MdfRec.Tarih$::change}}" />
-                        <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                        <input placeholder="Link" type="text" value="{{model.MdfRec.Link$::change}}" />
-                        <div class="mdfRecAction">
-                            <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                            <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                            <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
-                        </div>
-                    </div>
-                </template>
             </div>
-
         </div>
-        
     </template>
 </template>
