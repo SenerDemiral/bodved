@@ -123,42 +123,50 @@ namespace scExpert
             Handle.GET("/scExpert/IndexCreate", () =>
             {
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPP_Ad   ON PP   (Ad ASC)");
+                    Db.SQL("CREATE INDEX IdxPP_Ad      ON PP   (Ad ASC)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxPP_Sra     ON PP   (Sra ASC)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_Trh").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPRH_Trh ON PRH  (Trh ASC)");
-
+                    Db.SQL("CREATE INDEX IdxPRH_Trh    ON PRH  (Trh ASC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_PP_Trh").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPRH_PP_Trh ON PRH  (PP, Trh DESC)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_CC").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCT_CC  ON CT (CC)");
+                    Db.SQL("CREATE INDEX IdxCT_CC      ON CT   (CC)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCET_CC_Trh  ON CET (CC, Trh)");
+                    Db.SQL("CREATE INDEX IdxCET_CC_Trh ON CET  (CC, Trh)");
 
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxCTP_CC     ON CTP  (CC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CT").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCTP_CT  ON CTP (CT)");
+                    Db.SQL("CREATE INDEX IdxCTP_CT     ON CTP  (CT)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETP_CET").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETP_CET  ON CETP (CET)");
+                    Db.SQL("CREATE INDEX IdxCETP_CET   ON CETP (CET)");
 
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CC").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxCETR_CC    ON CETR (CC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETR_CET  ON CETR (CET)");
+                    Db.SQL("CREATE INDEX IdxCETR_CET   ON CETR (CET)");
 
                 return "IndexCreate: OK";
             });
 
             Handle.GET("/scExpert/IndexDrop", () =>
             {
-                Db.SQL("DROP INDEX IdxPP_Ad           ON PP");
-                Db.SQL("DROP INDEX IdxPRH_Trh         ON PRH");
-                Db.SQL("DROP INDEX IdxPRH_PP_Trh      ON PRH");
-                Db.SQL("DROP INDEX IdxCT_CC           ON CT");
-                Db.SQL("DROP INDEX IdxCET_CC_Trh      ON CET");
-                Db.SQL("DROP INDEX IdxCTP_CT          ON CTP");
-                Db.SQL("DROP INDEX IdxCETP_CET        ON CETP");
-                Db.SQL("DROP INDEX IdxCETR_CET        ON CETR");
+                Db.SQL("DROP INDEX IdxPP_Ad       ON PP");
+                Db.SQL("DROP INDEX IdxPP_Sra      ON PP");
+                Db.SQL("DROP INDEX IdxPRH_Trh     ON PRH");
+                Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON PRH");
+                Db.SQL("DROP INDEX IdxCT_CC       ON CT");
+                Db.SQL("DROP INDEX IdxCET_CC_Trh  ON CET");
+                Db.SQL("DROP INDEX IdxCTP_CC      ON CTP");
+                Db.SQL("DROP INDEX IdxCTP_CT      ON CTP");
+                Db.SQL("DROP INDEX IdxCETP_CET    ON CETP");
+                Db.SQL("DROP INDEX IdxCETR_CC     ON CC");
+                Db.SQL("DROP INDEX IdxCETR_CET    ON CETR");
 
                 return "IndexDrop: OK";
             });

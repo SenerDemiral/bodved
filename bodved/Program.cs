@@ -179,7 +179,7 @@ namespace bodved
                 //Session.Current.Data = master;
                 Session.Current.Store["bodved"] = master;
 
-                BDB.H.Write2Log($"Enter: {Session.Current}");
+                BDB.H.Write2Log($"Enter: {Session.Current.SessionId}");
             }
 
             return master;

@@ -89,6 +89,74 @@ namespace BDB
 
         }
 
+        public static void reCreatePRHofCC(ulong CCoNo)
+        {
+            // Rank PRH kayitlarini yarat, Sadece Singles
+            // Sonrasinda RefreshPRH gerekir!!!
+
+            var cc = Db.FromId<BDB.CC>(CCoNo);
+
+            // Delete PRHs of CC
+            Db.Transact(() =>
+            {
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
+                foreach (var cetr in cetrs)
+                {
+                    if (cetr.PRH != null)
+                    {
+                        Db.FromId<PRH>(cetr.PRH.GetObjectNo()).Delete();
+                    }
+                }
+            });
+
+            Db.Transact(() =>
+            {
+                PP pp = null, rpp = null;
+                CETR h = null, g = null;
+                int Won = 0;
+                PRH prh;
+                // Sadece Singles
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ?", cc, "S");
+                foreach (var r in cetrs)
+                {
+                    if (r.HoG == "H")
+                    {
+                        h = r;
+                        pp = r.PP;
+                        if (r.MW > r.ML)
+                            Won = 1;
+                        else if (r.MW < r.ML)
+                            Won = -1;
+                    }
+                    else if (r.HoG == "G")
+                    {
+                        g = r;
+                        rpp = r.PP;
+
+                        prh = new PRH
+                        {
+                            PP = pp,
+                            rPP = rpp,
+                            Won = Won,
+                            Trh = r.Trh,
+                        };
+                        h.PRH = prh;
+
+                        prh = new PRH
+                        {
+                            PP = rpp,
+                            rPP = pp,
+                            Won = Won * -1,
+                            Trh = r.Trh,
+                        };
+                        g.PRH = prh;
+                    }
+                }
+            });
+            // PRH daki herhangi bir degisiklik hepsini etkiler!
+            refreshPRH();
+        }
+
         public static void refreshPRH()
         {
             // ReCalculate Rank of All Players
@@ -995,10 +1063,11 @@ namespace BDB
 
         public static void Write2Log(string Msg)
         {
-            //StreamWriter sw = null;
-            //if (sw == null)
-            //    sw = new StreamWriter(@"C:\Starcounter\MyLog\tMaxLogin-Log.txt", true);
-
+            using (StreamWriter sw = new StreamWriter(@"C:\Starcounter\MyLog\BodVed-Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + Msg);
+            }
+            /*
             try
             {
                 StreamWriter sw = new StreamWriter(@"C:\Starcounter\MyLog\BodVed-Log.txt", true);
@@ -1008,7 +1077,7 @@ namespace BDB
             }
             catch
             {
-            }
+            }*/
         }
     }
 }
