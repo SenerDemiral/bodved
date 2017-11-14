@@ -276,7 +276,7 @@ namespace bodved
             var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.ID = ?", "∞").FirstOrDefault();
             Db.Transact(() =>
             {
-                long hA, gA, hMW = 0, gMW = 0;
+                long hA, gA, hMW = 0, gMW = 0, hSW = 0, gSW = 0;
 
                 foreach (var src in Singles)
                 {
@@ -455,17 +455,22 @@ namespace bodved
                                 gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
                             }
                         }
-
+                        hSW += hA;
+                        gSW += gA;
                         //var prh = Db.FromId<BDB.PRH>(hCetr.PRH.);
                     }
                 }
                 cet.hMSW = (int)hMW;
                 cet.gMSW = (int)gMW;
+                cet.hSSW = (int)hSW;
+                cet.gSSW = (int)gSW;
 
 
 
                 hMW = 0;
                 gMW = 0;
+                hSW = 0;
+                gSW = 0;
                 foreach (var src in Doubles)
                 {
                     var hCetr1 = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo1));
@@ -616,10 +621,14 @@ namespace bodved
                             gCetr2.MW = 1;
                         }
                     }
+                    hSW += hA;
+                    gSW += gA;
                 }
 
                 cet.hMDW = (int)hMW;
                 cet.gMDW = (int)gMW;
+                cet.hSDW = (int)hSW;
+                cet.gSDW = (int)gSW;
 
                 cet.hPW = (cet.hMSW * 2) + (cet.hMDW * 3);
                 cet.gPW = (cet.gMSW * 2) + (cet.gMDW * 3);

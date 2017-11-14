@@ -63,6 +63,9 @@ namespace BDB
             int aMP = 0; // Aldigi Musabaka Puani
             int vMP = 0; // Verdigi Musabaka Puani
             int fMP = 0; // Fark Aldigi-Verdigi Musabaka Puani
+            int aS = 0;  // Aldigi Set sayisi
+            int vS = 0;  // Verdigi Set sayisi
+            int fS = 0;  // Fark Set sayisi
 
             var ct = Db.FromId<CT>(CToNo);
 
@@ -78,6 +81,9 @@ namespace BDB
                 tP += r.hP;
                 aMP += r.hPW;
                 vMP += r.gPW;
+
+                aS += r.hSSW + r.hSDW;
+                vS += r.gSSW + r.gSDW;
             }
             // GUEST
             foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ? and c.Rok = ?", ct, true))
@@ -90,9 +96,13 @@ namespace BDB
                 tP += r.gP;
                 aMP += r.gPW;
                 vMP += r.hPW;
+
+                aS += r.gSSW + r.gSDW;
+                vS += r.hSSW + r.hSDW;
             }
             fM = aM - vM;
             fMP = aMP - vMP;
+            fS = aS - vS;
 
             Db.Transact(() =>
             {
@@ -104,6 +114,9 @@ namespace BDB
                 ct.aMP = aMP;
                 ct.vMP = vMP;
                 ct.fMP = fMP;
+                ct.aS = aS;
+                ct.vS = vS;
+                ct.fS = fS;
             });
 
         }

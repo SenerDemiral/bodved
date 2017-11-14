@@ -127,6 +127,9 @@ namespace BDB
         public int aMP { get; set; } // Aldigi Musabaka Puani
         public int vMP { get; set; } // Verdigi Musabaka Puani
         public int fMP { get; set; } // Fark Aldigi-Verdigi Musabaka Puani
+        public int aS { get; set; }  // Aldigi Set
+        public int vS { get; set; }  // Verdigi Set
+        public int fS { get; set; }  // Fark Set
 
         /*
         public int oE { get; set; }
@@ -228,9 +231,15 @@ namespace BDB
         public int hMSW { get; set; }   //      Mac Single Win
         public int hMDW { get; set; }   //          Double
 
+        public int hSSW { get; set; }   // Home Set Single Win (Single Aldigi Set Sayisi)
+        public int hSDW { get; set; }   //          Double Win (Double Aldigi Set Sayisi)
+
         public int gPW { get; set; }    // Guest Puan Win
         public int gMSW { get; set; }   //       Mac Single
         public int gMDW { get; set; }   //           Double
+
+        public int gSSW { get; set; }   // Guest Set Single Win (Single Aldigi Set Sayisi)
+        public int gSDW { get; set; }   //           Double Win (Double Aldigi Set Sayisi)
 
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;
         public ulong hCToNo => hCT?.GetObjectNo() ?? 0;
