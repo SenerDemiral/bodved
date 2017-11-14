@@ -73,6 +73,8 @@ namespace BDB
                 oM++;
                 if (r.hP > r.gP)
                     aM++;
+                else
+                    vM++;
                 tP += r.hP;
                 aMP += r.hPW;
                 vMP += r.gPW;
@@ -83,6 +85,8 @@ namespace BDB
                 oM++;
                 if (r.gP > r.hP)
                     aM++;
+                else
+                    vM++;
                 tP += r.gP;
                 aMP += r.gPW;
                 vMP += r.hPW;
