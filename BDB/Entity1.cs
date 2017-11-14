@@ -120,18 +120,21 @@ namespace BDB
         public string Pw { get; set; }
 
         public int tP { get; set; }  // Takim Puan
-        public int oM { get; set; }  // Oynadigi Musabaka Sayisi
+        public int oM { get; set; }  // Oynadigi Musabaka
+        public int aM { get; set; }  // Aldigi Musabaka
+        public int vM { get; set; }  // Verdigi Musabaka
+        public int fM { get; set; }  // Fark Musabaka
         public int aMP { get; set; } // Aldigi Musabaka Puani
         public int vMP { get; set; } // Verdigi Musabaka Puani
         public int fMP { get; set; } // Fark Aldigi-Verdigi Musabaka Puani
 
-
+        /*
         public int oE { get; set; }
         public int aE { get; set; }
         public int vE { get; set; }
         public int aP { get; set; }
         public int vP { get; set; }
-
+        */
         public string CCAd => CC?.Ad ?? "-";
         public ulong K1oNo => K1?.GetObjectNo() ?? 0;
         public ulong K2oNo => K2?.GetObjectNo() ?? 0;

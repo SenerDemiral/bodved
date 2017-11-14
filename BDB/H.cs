@@ -56,7 +56,10 @@ namespace BDB
         public static void updCTsum(ulong CToNo)
         {
             int tP = 0;  // Takim Puan
-            int oM = 0;  // Oynadigi Musabaka Sayisi
+            int oM = 0;  // Oynadigi Musabaka
+            int aM = 0;  // Aldigi Musabaka
+            int vM = 0;  // Verdigi Musabaka
+            int fM = 0;  // Fark Musabaka
             int aMP = 0; // Aldigi Musabaka Puani
             int vMP = 0; // Verdigi Musabaka Puani
             int fMP = 0; // Fark Aldigi-Verdigi Musabaka Puani
@@ -68,6 +71,8 @@ namespace BDB
             foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ? and c.Rok = ?", ct, true))
             {
                 oM++;
+                if (r.hP > r.gP)
+                    aM++;
                 tP += r.hP;
                 aMP += r.hPW;
                 vMP += r.gPW;
@@ -76,16 +81,22 @@ namespace BDB
             foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ? and c.Rok = ?", ct, true))
             {
                 oM++;
+                if (r.gP > r.hP)
+                    aM++;
                 tP += r.gP;
                 aMP += r.gPW;
                 vMP += r.hPW;
             }
+            fM = aM - vM;
             fMP = aMP - vMP;
 
             Db.Transact(() =>
             {
-                ct.oM = oM;
                 ct.tP = tP;
+                ct.oM = oM;
+                ct.aM = aM;
+                ct.vM = vM;
+                ct.fM = fM;
                 ct.aMP = aMP;
                 ct.vMP = vMP;
                 ct.fMP = fMP;
