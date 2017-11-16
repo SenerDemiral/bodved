@@ -280,227 +280,20 @@ namespace bodved
 
                 foreach (var src in Singles)
                 {
-                    var hCetr = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo));
-                    var gCetr = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo));
-                    /*
-                    if (OK && (src.hS1W < 0 || src.gS1W < 0))   // Player Diskalifiye
-                    {
-                        hCetr.S1W = 0;
-                        hCetr.S2W = 0;
-                        hCetr.S3W = 0;
-                        hCetr.S4W = 0;
-                        hCetr.S5W = 0;
-                        gCetr.S1W = 0;
-                        gCetr.S2W = 0;
-                        gCetr.S3W = 0;
-                        gCetr.S4W = 0;
-                        gCetr.S5W = 0;
+                    var hR = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo));
+                    var gR = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo));
 
-                        hCetr.SW = 0;
-                        hCetr.SL = 0;
-                        gCetr.SW = 0;
-                        gCetr.SL = 0;
+                    hR.S1W = (int)src.hS1W;
+                    hR.S2W = (int)src.hS2W;
+                    hR.S3W = (int)src.hS3W;
+                    hR.S4W = (int)src.hS4W;
+                    hR.S5W = (int)src.hS5W;
 
-                        if (src.hS1W < 0)   // HomePlayer Diskalifiye
-                        {
-                            hCetr.PP = dkPP;
-                            hCetr.PRH.PP = dkPP;
-                            hCetr.MW = 0;
-                            hCetr.ML = 1;
-                            gCetr.MW = 1;
-                            gCetr.ML = 0;
-
-                            hCetr.SW = 0;
-                            hCetr.SL = 3;
-                            gCetr.SW = 3;
-                            gCetr.SL = 0;
-                            src.hSW = 0;
-                            src.gSW = 3;
-                            gMW++;
-                        }
-                        else                // GusetPlayer Diskalifiye
-                        {
-                            gCetr.PP = dkPP;
-                            gCetr.PRH.PP = dkPP;
-                            hCetr.MW = 1;
-                            hCetr.ML = 0;
-                            gCetr.MW = 0;
-                            gCetr.ML = 1;
-
-                            hCetr.SW = 3;
-                            hCetr.SL = 0;
-                            gCetr.SW = 0;
-                            gCetr.SL = 3;
-                            src.hSW = 3;
-                            src.gSW = 0;
-                            hMW++;
-                        }
-                    }
-                    else*/
-                    {
-                        hCetr.S1W = (int)src.hS1W;
-                        hCetr.S2W = (int)src.hS2W;
-                        hCetr.S3W = (int)src.hS3W;
-                        hCetr.S4W = (int)src.hS4W;
-                        hCetr.S5W = (int)src.hS5W;
-
-                        gCetr.S1W = (int)src.gS1W;
-                        gCetr.S2W = (int)src.gS2W;
-                        gCetr.S3W = (int)src.gS3W;
-                        gCetr.S4W = (int)src.gS4W;
-                        gCetr.S5W = (int)src.gS5W;
-
-                        hA = 0;
-                        gA = 0;
-                        if (src.hS1W > src.gS1W)
-                            hA++;
-                        else if (src.hS1W < src.gS1W)
-                            gA++;
-                        if (src.hS2W > src.gS2W)
-                            hA++;
-                        else if (src.hS2W < src.gS2W)
-                            gA++;
-                        if (src.hS3W > src.gS3W)
-                            hA++;
-                        else if (src.hS3W < src.gS3W)
-                            gA++;
-                        if (src.hS4W > src.gS4W)
-                            hA++;
-                        else if (src.hS4W < src.gS4W)
-                            gA++;
-                        if (src.hS5W > src.gS5W)
-                            hA++;
-                        else if (src.hS5W < src.gS5W)
-                            gA++;
-
-                        if (src.hS1W == -9 || hCetr.PP.ID == "∞") // HomePlyr diskalifiye
-                        {
-                            hA = 0;
-                            gA = 3;
-                            hCetr.PP = dkPP;
-                            hCetr.PRH.PP = dkPP;
-                            gCetr.PRH.rPP = dkPP;
-
-                            hCetr.S1W = 0;
-                            hCetr.S2W = 0;
-                            hCetr.S3W = 0;
-                            hCetr.S4W = 0;
-                            hCetr.S5W = 0;
-                            gCetr.S1W = 0;
-                            gCetr.S2W = 0;
-                            gCetr.S3W = 0;
-                            gCetr.S4W = 0;
-                            gCetr.S5W = 0;
-                        }
-                        if (src.gS1W == -9 || gCetr.PP.ID == "∞") // GuestPlyr diskalifiye
-                        {
-                            hA = 3;
-                            gA = 0;
-                            gCetr.PP = dkPP;
-                            gCetr.PRH.PP = dkPP;
-                            hCetr.PRH.rPP = dkPP;
-
-                            hCetr.S1W = 0;
-                            hCetr.S2W = 0;
-                            hCetr.S3W = 0;
-                            hCetr.S4W = 0;
-                            hCetr.S5W = 0;
-                            gCetr.S1W = 0;
-                            gCetr.S2W = 0;
-                            gCetr.S3W = 0;
-                            gCetr.S4W = 0;
-                            gCetr.S5W = 0;
-                        }
-
-                        hCetr.SW = (int)hA;
-                        hCetr.SL = (int)gA;
-                        gCetr.SW = (int)gA;
-                        gCetr.SL = (int)hA;
-
-                        src.hSW = hA;
-                        src.gSW = gA;
-
-                        hCetr.MW = 0;
-                        hCetr.ML = 0;
-                        gCetr.MW = 0;
-                        gCetr.ML = 0;
-                        if ((hA + gA) > 0)  // Oynandiysa
-                        {
-                            if (hA > gA)
-                            {
-                                hMW++;
-                                hCetr.MW = 1;
-                                gCetr.ML = 1;
-
-                                hCetr.PRH.Won = 1;
-                                gCetr.PRH.Won = -1;
-
-                                hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
-                                hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
-                                gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
-                                gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
-                            }
-                            else
-                            {
-                                gMW++;
-                                hCetr.ML = 1;
-                                gCetr.MW = 1;
-
-                                hCetr.PRH.Won = -1;
-                                gCetr.PRH.Won = 1;
-
-                                hCetr.PRH.NOPX = hCetr.PRH.compNOPX;
-                                hCetr.PRH.Rnk = hCetr.PRH.NOPX + hCetr.PRH.prvRnk;
-                                gCetr.PRH.NOPX = gCetr.PRH.compNOPX;
-                                gCetr.PRH.Rnk = gCetr.PRH.NOPX + gCetr.PRH.prvRnk;
-                            }
-                        }
-                        hSW += hA;
-                        gSW += gA;
-                        //var prh = Db.FromId<BDB.PRH>(hCetr.PRH.);
-                    }
-                }
-                cet.hMSW = (int)hMW;
-                cet.gMSW = (int)gMW;
-                cet.hSSW = (int)hSW;
-                cet.gSSW = (int)gSW;
-
-
-
-                hMW = 0;
-                gMW = 0;
-                hSW = 0;
-                gSW = 0;
-                foreach (var src in Doubles)
-                {
-                    var hCetr1 = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo1));
-                    var hCetr2 = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo2));
-                    var gCetr1 = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo1));
-                    var gCetr2 = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo2));
-
-                    hCetr1.S1W = (int)src.hS1W;
-                    hCetr1.S2W = (int)src.hS2W;
-                    hCetr1.S3W = (int)src.hS3W;
-                    hCetr1.S4W = (int)src.hS4W;
-                    hCetr1.S5W = (int)src.hS5W;
-
-                    hCetr2.S1W = (int)src.hS1W;
-                    hCetr2.S2W = (int)src.hS2W;
-                    hCetr2.S3W = (int)src.hS3W;
-                    hCetr2.S4W = (int)src.hS4W;
-                    hCetr2.S5W = (int)src.hS5W;
-
-                    gCetr1.S1W = (int)src.gS1W;
-                    gCetr1.S2W = (int)src.gS2W;
-                    gCetr1.S3W = (int)src.gS3W;
-                    gCetr1.S4W = (int)src.gS4W;
-                    gCetr1.S5W = (int)src.gS5W;
-
-                    gCetr2.S1W = (int)src.gS1W;
-                    gCetr2.S2W = (int)src.gS2W;
-                    gCetr2.S3W = (int)src.gS3W;
-                    gCetr2.S4W = (int)src.gS4W;
-                    gCetr2.S5W = (int)src.gS5W;
+                    gR.S1W = (int)src.gS1W;
+                    gR.S2W = (int)src.gS2W;
+                    gR.S3W = (int)src.gS3W;
+                    gR.S4W = (int)src.gS4W;
+                    gR.S5W = (int)src.gS5W;
 
                     hA = 0;
                     gA = 0;
@@ -525,100 +318,249 @@ namespace bodved
                     else if (src.hS5W < src.gS5W)
                         gA++;
 
-                    if (src.hS1W == -9 || hCetr1.PP.ID == "∞") // HomePlyrS diskalifiye
+                    if (src.hS1W == -9 || hR.PP.ID == "∞") // HomePlyr diskalifiye
                     {
                         hA = 0;
                         gA = 3;
-                        hCetr1.PP = dkPP;
-                        hCetr2.PP = dkPP;
+                        hR.PP = dkPP;
+                        hR.PRH.PP = dkPP;
+                        gR.PRH.rPP = dkPP;
 
-                        hCetr1.S1W = 0;
-                        hCetr1.S2W = 0;
-                        hCetr1.S3W = 0;
-                        hCetr1.S4W = 0;
-                        hCetr1.S5W = 0;
-                        hCetr2.S1W = 0;
-                        hCetr2.S2W = 0;
-                        hCetr2.S3W = 0;
-                        hCetr2.S4W = 0;
-                        hCetr2.S5W = 0;
-                        gCetr1.S1W = 0;
-                        gCetr1.S2W = 0;
-                        gCetr1.S3W = 0;
-                        gCetr1.S4W = 0;
-                        gCetr1.S5W = 0;
-                        gCetr2.S1W = 0;
-                        gCetr2.S2W = 0;
-                        gCetr2.S3W = 0;
-                        gCetr2.S4W = 0;
-                        gCetr2.S5W = 0;
+                        hR.S1W = 0;
+                        hR.S2W = 0;
+                        hR.S3W = 0;
+                        hR.S4W = 0;
+                        hR.S5W = 0;
+                        gR.S1W = 0;
+                        gR.S2W = 0;
+                        gR.S3W = 0;
+                        gR.S4W = 0;
+                        gR.S5W = 0;
                     }
-                    if (src.gS1W == -9 || gCetr1.PP.ID == "∞") // GuestPlyrS diskalifiye
+                    if (src.gS1W == -9 || gR.PP.ID == "∞") // GuestPlyr diskalifiye
                     {
                         hA = 3;
                         gA = 0;
-                        gCetr1.PP = dkPP;
-                        gCetr2.PP = dkPP;
+                        gR.PP = dkPP;
+                        gR.PRH.PP = dkPP;
+                        hR.PRH.rPP = dkPP;
 
-                        hCetr1.S1W = 0;
-                        hCetr1.S2W = 0;
-                        hCetr1.S3W = 0;
-                        hCetr1.S4W = 0;
-                        hCetr1.S5W = 0;
-                        hCetr2.S1W = 0;
-                        hCetr2.S2W = 0;
-                        hCetr2.S3W = 0;
-                        hCetr2.S4W = 0;
-                        hCetr2.S5W = 0;
-                        gCetr1.S1W = 0;
-                        gCetr1.S2W = 0;
-                        gCetr1.S3W = 0;
-                        gCetr1.S4W = 0;
-                        gCetr1.S5W = 0;
-                        gCetr2.S1W = 0;
-                        gCetr2.S2W = 0;
-                        gCetr2.S3W = 0;
-                        gCetr2.S4W = 0;
-                        gCetr2.S5W = 0;
+                        hR.S1W = 0;
+                        hR.S2W = 0;
+                        hR.S3W = 0;
+                        hR.S4W = 0;
+                        hR.S5W = 0;
+                        gR.S1W = 0;
+                        gR.S2W = 0;
+                        gR.S3W = 0;
+                        gR.S4W = 0;
+                        gR.S5W = 0;
                     }
-                    src.hDW = hA;
-                    src.gDW = gA;
 
-                    hCetr1.SW = (int)hA;
-                    hCetr1.SL = (int)gA;
-                    gCetr1.SW = (int)gA;
-                    gCetr1.SL = (int)hA;
+                    hR.SW = (int)hA;
+                    hR.SL = (int)gA;
+                    gR.SW = (int)gA;
+                    gR.SL = (int)hA;
 
-                    hCetr2.SW = (int)hA;
-                    hCetr2.SL = (int)gA;
-                    gCetr2.SW = (int)gA;
-                    gCetr2.SL = (int)hA;
+                    src.hSW = hA;
+                    src.gSW = gA;
 
-                    hCetr1.MW = 0;
-                    hCetr1.ML = 0;
-                    gCetr1.MW = 0;
-                    gCetr1.ML = 0;
-                    hCetr2.MW = 0;
-                    hCetr2.ML = 0;
-                    gCetr2.MW = 0;
-                    gCetr2.ML = 0;
+                    hR.MW = 0;
+                    hR.ML = 0;
+                    gR.MW = 0;
+                    gR.ML = 0;
                     if ((hA + gA) > 0)  // Oynandiysa
                     {
                         if (hA > gA)
                         {
                             hMW++;
-                            hCetr1.MW = 1;
-                            hCetr2.MW = 1;
-                            gCetr1.ML = 1;
-                            gCetr2.ML = 1;
+                            hR.MW = 1;
+                            gR.ML = 1;
+
+                            hR.PRH.Won = 1;
+                            gR.PRH.Won = -1;
+
+                            hR.PRH.NOPX = hR.PRH.compNOPX;
+                            hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
+                            gR.PRH.NOPX = gR.PRH.compNOPX;
+                            gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
                         }
                         else
                         {
                             gMW++;
-                            hCetr1.ML = 1;
-                            hCetr2.ML = 1;
-                            gCetr1.MW = 1;
-                            gCetr2.MW = 1;
+                            hR.ML = 1;
+                            gR.MW = 1;
+
+                            hR.PRH.Won = -1;
+                            gR.PRH.Won = 1;
+
+                            hR.PRH.NOPX = hR.PRH.compNOPX;
+                            hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
+                            gR.PRH.NOPX = gR.PRH.compNOPX;
+                            gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
+                        }
+                    }
+                    hSW += hA;
+                    gSW += gA;
+                    //var prh = Db.FromId<BDB.PRH>(hR.PRH.);
+                }
+                cet.hMSW = (int)hMW;
+                cet.gMSW = (int)gMW;
+                cet.hSSW = (int)hSW;
+                cet.gSSW = (int)gSW;
+
+                hMW = 0;
+                gMW = 0;
+                hSW = 0;
+                gSW = 0;
+                foreach (var src in Doubles)
+                {
+                    var hR1 = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo1));
+                    var hR2 = Db.FromId<BDB.CETR>(ulong.Parse(src.hoNo2));
+                    var gR1 = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo1));
+                    var gR2 = Db.FromId<BDB.CETR>(ulong.Parse(src.goNo2));
+
+                    hR1.S1W = (int)src.hS1W;
+                    hR1.S2W = (int)src.hS2W;
+                    hR1.S3W = (int)src.hS3W;
+                    hR1.S4W = (int)src.hS4W;
+                    hR1.S5W = (int)src.hS5W;
+
+                    hR2.S1W = (int)src.hS1W;
+                    hR2.S2W = (int)src.hS2W;
+                    hR2.S3W = (int)src.hS3W;
+                    hR2.S4W = (int)src.hS4W;
+                    hR2.S5W = (int)src.hS5W;
+
+                    gR1.S1W = (int)src.gS1W;
+                    gR1.S2W = (int)src.gS2W;
+                    gR1.S3W = (int)src.gS3W;
+                    gR1.S4W = (int)src.gS4W;
+                    gR1.S5W = (int)src.gS5W;
+
+                    gR2.S1W = (int)src.gS1W;
+                    gR2.S2W = (int)src.gS2W;
+                    gR2.S3W = (int)src.gS3W;
+                    gR2.S4W = (int)src.gS4W;
+                    gR2.S5W = (int)src.gS5W;
+
+                    hA = 0;
+                    gA = 0;
+                    if (src.hS1W > src.gS1W)
+                        hA++;
+                    else if (src.hS1W < src.gS1W)
+                        gA++;
+                    if (src.hS2W > src.gS2W)
+                        hA++;
+                    else if (src.hS2W < src.gS2W)
+                        gA++;
+                    if (src.hS3W > src.gS3W)
+                        hA++;
+                    else if (src.hS3W < src.gS3W)
+                        gA++;
+                    if (src.hS4W > src.gS4W)
+                        hA++;
+                    else if (src.hS4W < src.gS4W)
+                        gA++;
+                    if (src.hS5W > src.gS5W)
+                        hA++;
+                    else if (src.hS5W < src.gS5W)
+                        gA++;
+
+                    if (src.hS1W == -9 || hR1.PP.ID == "∞") // HomePlyrS diskalifiye
+                    {
+                        hA = 0;
+                        gA = 3;
+                        hR1.PP = dkPP;
+                        hR2.PP = dkPP;
+
+                        hR1.S1W = 0;
+                        hR1.S2W = 0;
+                        hR1.S3W = 0;
+                        hR1.S4W = 0;
+                        hR1.S5W = 0;
+                        hR2.S1W = 0;
+                        hR2.S2W = 0;
+                        hR2.S3W = 0;
+                        hR2.S4W = 0;
+                        hR2.S5W = 0;
+                        gR1.S1W = 0;
+                        gR1.S2W = 0;
+                        gR1.S3W = 0;
+                        gR1.S4W = 0;
+                        gR1.S5W = 0;
+                        gR2.S1W = 0;
+                        gR2.S2W = 0;
+                        gR2.S3W = 0;
+                        gR2.S4W = 0;
+                        gR2.S5W = 0;
+                    }
+                    if (src.gS1W == -9 || gR1.PP.ID == "∞") // GuestPlyrS diskalifiye
+                    {
+                        hA = 3;
+                        gA = 0;
+                        gR1.PP = dkPP;
+                        gR2.PP = dkPP;
+
+                        hR1.S1W = 0;
+                        hR1.S2W = 0;
+                        hR1.S3W = 0;
+                        hR1.S4W = 0;
+                        hR1.S5W = 0;
+                        hR2.S1W = 0;
+                        hR2.S2W = 0;
+                        hR2.S3W = 0;
+                        hR2.S4W = 0;
+                        hR2.S5W = 0;
+                        gR1.S1W = 0;
+                        gR1.S2W = 0;
+                        gR1.S3W = 0;
+                        gR1.S4W = 0;
+                        gR1.S5W = 0;
+                        gR2.S1W = 0;
+                        gR2.S2W = 0;
+                        gR2.S3W = 0;
+                        gR2.S4W = 0;
+                        gR2.S5W = 0;
+                    }
+                    src.hDW = hA;
+                    src.gDW = gA;
+
+                    hR1.SW = (int)hA;
+                    hR1.SL = (int)gA;
+                    gR1.SW = (int)gA;
+                    gR1.SL = (int)hA;
+
+                    hR2.SW = (int)hA;
+                    hR2.SL = (int)gA;
+                    gR2.SW = (int)gA;
+                    gR2.SL = (int)hA;
+
+                    hR1.MW = 0;
+                    hR1.ML = 0;
+                    gR1.MW = 0;
+                    gR1.ML = 0;
+                    hR2.MW = 0;
+                    hR2.ML = 0;
+                    gR2.MW = 0;
+                    gR2.ML = 0;
+                    if ((hA + gA) > 0)  // Oynandiysa
+                    {
+                        if (hA > gA)
+                        {
+                            hMW++;
+                            hR1.MW = 1;
+                            hR2.MW = 1;
+                            gR1.ML = 1;
+                            gR2.ML = 1;
+                        }
+                        else
+                        {
+                            gMW++;
+                            hR1.ML = 1;
+                            hR2.ML = 1;
+                            gR1.MW = 1;
+                            gR2.MW = 1;
                         }
                     }
                     hSW += hA;
