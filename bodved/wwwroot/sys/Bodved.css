@@ -86,7 +86,7 @@ iron-icon {
 }
 
 .tblWrap td {
-	padding: 2px 2px;
+	padding: 2px 4px;
 	border: 1px solid #CBCBCB;
     white-space: nowrap;
 }
@@ -183,6 +183,22 @@ input:focus {
     color:white;
     text-align: center;
     font-weight:bold;
+}
+
+.sag2 {
+    border-right: 1px solid black !important;
+}
+.o {
+    color:red;
+}
+.a {
+    color:red;
+}
+.v {
+    color:red;
+}
+.f {
+    color:red;
 }
 
 .ppAd {

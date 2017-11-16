@@ -120,17 +120,23 @@ namespace BDB
         public string Pw { get; set; }
 
         public int tP { get; set; }  // Takim Puan
+
         public int oM { get; set; }  // Oynadigi Musabaka
-        public int aM { get; set; }  // Aldigi Musabaka
-        public int vM { get; set; }  // Verdigi Musabaka
-        public int fM { get; set; }  // Fark Musabaka
-        public int aMP { get; set; } // Aldigi Musabaka Puani
-        public int vMP { get; set; } // Verdigi Musabaka Puani
-        public int fMP { get; set; } // Fark Aldigi-Verdigi Musabaka Puani
+        public int aM { get; set; }  // Aldigi
+        public int vM { get; set; }  // Verdigi
+        public int fM { get; set; }  // Fark
+
+        public int aMP { get; set; } // Aldigi MusabakaPuani/Skor
+        public int vMP { get; set; } // Verdigi
+        public int fMP { get; set; } // Fark
+
+        public int aO { get; set; }  // Aldigi Mac/Oyun
+        public int vO { get; set; }  // Verdigi
+        public int fO { get; set; }  // Fark
+
         public int aS { get; set; }  // Aldigi Set
         public int vS { get; set; }  // Verdigi Set
         public int fS { get; set; }  // Fark Set
-
         /*
         public int oE { get; set; }
         public int aE { get; set; }
@@ -227,18 +233,16 @@ namespace BDB
         public int hP { get; set; }    // Home  Musabaka Puan
         public int gP { get; set; }    // Guest 
 
-        public int hPW { get; set; }    // Home Puan Win
+        public int hPW { get; set; }    // Home Skor/MsbkPuan Win
         public int hMSW { get; set; }   //      Mac Single Win
         public int hMDW { get; set; }   //          Double
-
-        public int hSSW { get; set; }   // Home Set Single Win (Single Aldigi Set Sayisi)
+        public int hSSW { get; set; }   //      Set Single Win (Single Aldigi Set Sayisi)
         public int hSDW { get; set; }   //          Double Win (Double Aldigi Set Sayisi)
 
-        public int gPW { get; set; }    // Guest Puan Win
+        public int gPW { get; set; }    // Guest Skor/MsbkPuan Win
         public int gMSW { get; set; }   //       Mac Single
         public int gMDW { get; set; }   //           Double
-
-        public int gSSW { get; set; }   // Guest Set Single Win (Single Aldigi Set Sayisi)
+        public int gSSW { get; set; }   //       Set Single Win (Single Aldigi Set Sayisi)
         public int gSDW { get; set; }   //           Double Win (Double Aldigi Set Sayisi)
 
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;

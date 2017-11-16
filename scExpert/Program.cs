@@ -9,6 +9,12 @@ namespace scExpert
     {
         static void Main()
         {
+            Handle.GET("/scExpert/updCETfrmCETRofCC/{?}", (string CCoNo) =>
+            {
+                BDB.H.updCETfrmCETRofCC(ulong.Parse(CCoNo));
+                return $"OK: updCETfrmCETRofCC({CCoNo})";
+            });
+
             Handle.GET("/scExpert/ReCalcCTsum/{?}", (string CCoNo) =>
             {
                 BDB.H.updCTsumCC(ulong.Parse(CCoNo));

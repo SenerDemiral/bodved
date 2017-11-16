@@ -10,6 +10,121 @@ namespace BDB
 {
     public static class H
     {
+        public static void updCETfrmCETRofCC(ulong CCoNo)
+        {
+            var cets = Db.SQL<CET>("select c from CET c where c.CC.ObjectNo = ?", CCoNo);
+            foreach (var r in cets)
+            {
+                if (r.Rok)
+                    updCETfrmCETR(r.oNo);
+            }
+        }
+
+        public static void updCETfrmCETR(ulong CEToNo)
+        {
+            var cet = Db.FromId<BDB.CET>(CEToNo);
+
+            if (!cet.Rok)   // Sonuclar onaylanmamis
+                return;
+
+            Db.Transact(() =>
+            { 
+                // Musabakaya gelmeyip Hukmen Maglup da CETR kayitlari yok! Rok=true h/g Puani manuel girilmis.
+                var cetr = Db.SQL<CETR>("select c from CETR c where c.CET = ?", cet).FirstOrDefault();
+                if (cetr == null)
+                {
+                    // Sonuclar yok sadece TurnuvaPuani var hP/gP
+                    // Digerlerini sifirla
+
+                    cet.hPW = 0;
+                    cet.hMSW = 0;
+                    cet.hMDW = 0;
+                    cet.hSSW = 0;
+                    cet.hSDW = 0;
+
+                    cet.gPW = 0;
+                    cet.gMSW = 0;
+                    cet.gMDW = 0;
+                    cet.gSSW = 0;
+                    cet.gSDW = 0;
+
+                    return;
+                }
+
+
+                // HomeRecs
+                int aSetS = 0, aSetD = 0, vSetS = 0, vSetD = 0;
+                int aMacS = 0, aMacD = 0, vMacS = 0, vMacD = 0;
+                var hRs = Db.SQL<CETR>("select c from CETR c where c.CET = ? and c.HoG = ?", cet, "H");
+                foreach(var r in hRs)
+                {
+                    if (r.SoD == "S")
+                    {
+                        aSetS += r.SW;
+                        aMacS += r.MW;
+                        vSetS += r.SL;
+                        vMacS += r.ML;
+                    }
+                    else // Double da her kisi icin bir kayit var!!
+                    {
+                        aSetD += r.SW;
+                        aMacD += r.MW;
+                        vSetD += r.SL;
+                        vMacD += r.ML;
+                    }
+                }
+                cet.hMSW = aMacS;
+                cet.hMDW = aMacD / 2;
+                cet.hSSW = aSetS;
+                cet.hSDW = aSetD / 2;
+
+                // GuestRecs
+                aSetS = 0; aSetD = 0; vSetS = 0; vSetD = 0;
+                aMacS = 0; aMacD = 0; vMacS = 0; vMacD = 0;
+                var gRs = Db.SQL<CETR>("select c from CETR c where c.CET = ? and c.HoG = ?", cet, "G");
+                foreach (var r in gRs)
+                {
+                    if (r.SoD == "S")
+                    {
+                        aSetS += r.SW;
+                        aMacS += r.MW;
+                        vSetS += r.SL;
+                        vMacS += r.ML;
+                    }
+                    else // Double da her kisi icin bir kayit var!! 
+                    {
+                        aSetD += r.SW;
+                        aMacD += r.MW;
+                        vSetD += r.SL;
+                        vMacD += r.ML;
+                    }
+                }
+                cet.gMSW = aMacS;
+                cet.gMDW = aMacD / 2;
+                cet.gSSW = aSetS;
+                cet.gSDW = aSetD / 2;
+
+                // Skor
+                cet.hPW = (cet.hMSW * 2) + (cet.hMDW * 3);
+                cet.gPW = (cet.gMSW * 2) + (cet.gMDW * 3);
+                // Puan
+                cet.hP = 0;
+                cet.gP = 0;
+                if (cet.hPW > cet.gPW)
+                {
+                    cet.hP = 2;
+                    cet.gP = 1;
+                }
+                else if (cet.hPW < cet.gPW)
+                {
+                    cet.hP = 1;
+                    cet.gP = 2;
+                }
+            });
+
+            updCTsum(cet.hCT.oNo);
+            updCTsum(cet.gCT.oNo);
+        }
 
         // Sonuclari toplayip CET'e yaz
         public static void Cetr2Cet(string CEToNo)
@@ -56,16 +171,23 @@ namespace BDB
         public static void updCTsum(ulong CToNo)
         {
             int tP = 0;  // Takim Puan
+
             int oM = 0;  // Oynadigi Musabaka
-            int aM = 0;  // Aldigi Musabaka
-            int vM = 0;  // Verdigi Musabaka
-            int fM = 0;  // Fark Musabaka
-            int aMP = 0; // Aldigi Musabaka Puani
-            int vMP = 0; // Verdigi Musabaka Puani
-            int fMP = 0; // Fark Aldigi-Verdigi Musabaka Puani
+            int aM = 0;  // Aldigi 
+            int vM = 0;  // Verdigi 
+            int fM = 0;  // Fark 
+
+            int aMP = 0; // Aldigi MusabakaPuani/Skor
+            int vMP = 0; // Verdigi 
+            int fMP = 0; // Fark
+
+            int aO = 0;  // Aldigi Oyun/Mac
+            int vO = 0;  // Verdigi 
+            int fO = 0;  // Fark
+
             int aS = 0;  // Aldigi Set sayisi
-            int vS = 0;  // Verdigi Set sayisi
-            int fS = 0;  // Fark Set sayisi
+            int vS = 0;  // Verdigi 
+            int fS = 0;  // Fark
 
             var ct = Db.FromId<CT>(CToNo);
 
@@ -82,6 +204,9 @@ namespace BDB
                 aMP += r.hPW;
                 vMP += r.gPW;
 
+                aO += r.hMSW + r.hMDW;
+                vO += r.gMSW + r.gMDW;
+
                 aS += r.hSSW + r.hSDW;
                 vS += r.gSSW + r.gSDW;
             }
@@ -97,11 +222,15 @@ namespace BDB
                 aMP += r.gPW;
                 vMP += r.hPW;
 
+                aO += r.gMSW + r.gMDW;
+                vO += r.hMSW + r.hMDW;
+
                 aS += r.gSSW + r.gSDW;
                 vS += r.hSSW + r.hSDW;
             }
             fM = aM - vM;
             fMP = aMP - vMP;
+            fO = aO - vO;
             fS = aS - vS;
 
             Db.Transact(() =>
@@ -114,11 +243,13 @@ namespace BDB
                 ct.aMP = aMP;
                 ct.vMP = vMP;
                 ct.fMP = fMP;
+                ct.aO = aO;
+                ct.vO = vO;
+                ct.fO = fO;
                 ct.aS = aS;
                 ct.vS = vS;
                 ct.fS = fS;
             });
-
         }
 
         public static void reCreatePRHofCC(ulong CCoNo)
