@@ -10,17 +10,17 @@ namespace BDB
 {
     public static class H
     {
-        public static void updCETfrmCETRofCC(ulong CCoNo)
+        public static void updCETsumCC(ulong CCoNo)
         {
             var cets = Db.SQL<CET>("select c from CET c where c.CC.ObjectNo = ?", CCoNo);
             foreach (var r in cets)
             {
                 if (r.Rok)
-                    updCETfrmCETR(r.oNo);
+                    updCETsum(r.oNo);
             }
         }
 
-        public static void updCETfrmCETR(ulong CEToNo)
+        public static void updCETsum(ulong CEToNo)
         {
             var cet = Db.FromId<BDB.CET>(CEToNo);
 
@@ -74,7 +74,7 @@ namespace BDB
                     }
                 }
                 cet.hMSW = aMacS;
-                cet.hMDW = aMacD / 2;
+                cet.hMDW = aMacD / 2;   // Iki defa sayildigi icin
                 cet.hSSW = aSetS;
                 cet.hSDW = aSetD / 2;
 
@@ -100,7 +100,7 @@ namespace BDB
                     }
                 }
                 cet.gMSW = aMacS;
-                cet.gMDW = aMacD / 2;
+                cet.gMDW = aMacD / 2;   // Iki defa sayildigi icin
                 cet.gSSW = aSetS;
                 cet.gSDW = aSetD / 2;
 
@@ -126,7 +126,7 @@ namespace BDB
             updCTsum(cet.gCT.oNo);
         }
 
-        // Sonuclari toplayip CET'e yaz
+        // Sonuclari toplayip CET'e yaz KULLANILMIYOR
         public static void Cetr2Cet(string CEToNo)
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
