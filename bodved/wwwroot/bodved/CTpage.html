@@ -8,45 +8,46 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th rowspan="3" class="oNo">ID</th>
-                        <th rowspan="3">Takım</th>
-                        <th colspan="13">Müsabaka</th>
-                        <th rowspan="3">Puan</th>
-                        <th rowspan="3">1.Kaptan</th>
-                        <th rowspan="3">2.Kaptan</th>
-                        <th rowspan="3">Adres</th>
-                    </tr>
-                    <tr>
-                        <th rowspan="2"></th>
-                        <th colspan="3">Adet</th>
+                        <th rowspan="2" class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
+                        <th rowspan="2">Takım</th>
+                        <th rowspan="2">Fikstür</th>
+                        <th colspan="3">Msbk</th>
+                        <th rowspan="2">Puan</th>
                         <th colspan="3">Skor</th>
                         <th colspan="3">Maç</th>
                         <th colspan="3">Set</th>
+                        <th rowspan="2">1.Kaptan</th>
+                        <th rowspan="2">2.Kaptan</th>
+                        <th rowspan="2">Adres</th>
                     </tr>
                     <tr>
                         <th>o</th>
                         <th>a</th>
-                        <th class="sag2">v</th>
+                        <th>v</th>
+
                         <th>a</th>
                         <th>v</th>
-                        <th class="sag2">a-v</th>
+                        <th>a-v</th>
+                        
                         <th>a</th>
                         <th>v</th>
-                        <th class="sag2">a-v</th>
+                        <th>a-v</th>
+                        
                         <th>a</th>
                         <th>v</th>
-                        <th class="sag2">a-v</th>
+                        <th>a-v</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.CTs]]">
                         <tr>
-                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td><a href="/bodved/CTPpage/[[item.oNo]]">[[item.Ad]]</a></td>
-                            <td class="ortala sag2"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
+                            <td class="ortala"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
                             <td class="ortala o">[[item.oM]]</td>
                             <td class="ortala a">[[item.aM]]</td>
-                            <td class="ortala v sag2">[[item.vM]]</td>
+                            <td class="ortala v">[[item.vM]]</td>
+                            <td class="Puan">[[item.tP]]</td>
                             <td class="ortala a">[[item.aMP]]</td>
                             <td class="ortala v">[[item.vMP]]</td>
                             <td class="ortala f sag2">[[item.fMP]]</td>
@@ -55,8 +56,7 @@
                             <td class="ortala f sag2">[[item.fO]]</td>
                             <td class="ortala a">[[item.aS]]</td>
                             <td class="ortala v">[[item.vS]]</td>
-                            <td class="ortala f">[[item.fS]]</td>
-                            <td class="Puan">[[item.tP]]</td>
+                            <td class="ortala f sag2">[[item.fS]]</td>
                             <td>[[item.K1Ad]]</td>
                             <td>[[item.K2Ad]]</td>
                             <td>[[item.Adres]]</td>

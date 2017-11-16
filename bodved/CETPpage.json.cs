@@ -74,6 +74,44 @@ namespace bodved
                     });
                 }
             }
+            else if (!Pok && !cet.Rok) // Yeni oyuncu eklendiyse sonuna ekle
+            {
+                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
+                int ix = ctps.Count() + 1;
+
+                foreach (var src in ctps)
+                {
+                    // CETP de yoksa ekle
+                    var cetp = Db.SQL<BDB.CETP>("select p from CETP p where p.CT = ? and p.PP = ?", src.CT, src.PP).FirstOrDefault();
+                    if (cetp == null)
+                    {
+                        Db.Transact(() =>
+                        {
+                            new BDB.CETP()
+                            {
+                                CET = cet,
+                                CC = src.CC,
+                                CT = src.CT,
+                                PP = src.PP,
+                                Idx = ix++,
+                                SoD = "S",
+                                HoG = HoG
+                            };
+
+                            new BDB.CETP()
+                            {
+                                CET = cet,
+                                CC = src.CC,
+                                CT = src.CT,
+                                PP = src.PP,
+                                Idx = ix++,
+                                SoD = "D",
+                                HoG = HoG
+                            };
+                        });
+                    }
+                }
+            }
 
 
             // Single lari yerlestir
