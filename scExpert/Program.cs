@@ -145,7 +145,7 @@ namespace scExpert
                     Db.SQL("CREATE INDEX IdxCET_CC_Trh ON CET  (CC, Trh)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCET_hCT    ON CET  (hCT)");
-                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_gCT").FirstOrDefault() == null)
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_gCT").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCET_gCT    ON CET  (gCT)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)

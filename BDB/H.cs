@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Starcounter;
 using System.IO;
+using System.Diagnostics;
 
 namespace BDB
 {
@@ -314,24 +315,34 @@ namespace BDB
 
         public static void refreshPRH()
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             // ReCalculate Rank of All Players
             var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh");
 
+            int nor = 0;
             Db.Transact(() =>
             {
                 foreach (var r in rr)
                 {
                     r.NOPX = r.compNOPX;
                     r.Rnk = r.NOPX + r.prvRnk;
+                    nor++;
                 }
             });
+            watch.Stop();
+            Console.WriteLine($"refreshPRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+
+            watch.Restart();
             ReCalcPPsra();
+            Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         public static void ReCalcPPsra()
         {
             // ReCalculate Rank of All Players
-            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.CurRnk desc, p.RnkBaz desc, p.Ad");
+            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
 
             Db.Transact(() =>
             {
