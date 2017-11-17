@@ -56,7 +56,7 @@ namespace bodved
                             CC = src.CC,
                             CT = src.CT,
                             PP = src.PP,
-                            Idx = ix++,
+                            Idx = ix,
                             SoD = "S",
                             HoG = HoG
                         };
@@ -67,11 +67,12 @@ namespace bodved
                             CC = src.CC,
                             CT = src.CT,
                             PP = src.PP,
-                            Idx = ix++,
+                            Idx = ix,
                             SoD = "D",
                             HoG = HoG
                         };
                     });
+                    ix++;
                 }
             }
             else if (!Pok && !cet.Rok) // Yeni oyuncu eklendiyse sonuna ekle
@@ -93,7 +94,7 @@ namespace bodved
                                 CC = src.CC,
                                 CT = src.CT,
                                 PP = src.PP,
-                                Idx = ix++,
+                                Idx = ix,
                                 SoD = "S",
                                 HoG = HoG
                             };
@@ -104,11 +105,12 @@ namespace bodved
                                 CC = src.CC,
                                 CT = src.CT,
                                 PP = src.PP,
-                                Idx = ix++,
+                                Idx = ix,
                                 SoD = "D",
                                 HoG = HoG
                             };
                         });
+                        ix++;
                     }
                 }
             }
@@ -133,17 +135,20 @@ namespace bodved
             DoublesElementJson d;
             var ds = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, ct, "D");
             var da = ds.ToArray();
+            i = 1;
             for (int c = 0; c < 6; c += 2)
             {
                 d = Doubles.Add();
 
                 d.c1.oNo = da[c].oNo.ToString();
                 d.c1.PPAd = da[c].PPAd;
-                d.c1.Idx = c/2+1;
+                d.c1.Idx = i; // c/2+1;
 
                 d.c2.oNo = da[c+1].oNo.ToString();
                 d.c2.PPAd = da[c+1].PPAd;
-                d.c2.Idx = c/2+1;
+                d.c2.Idx = i; // c/2+1;
+
+                i++;
             }
             for (int c = 6; c < da.Length; c++)
             {

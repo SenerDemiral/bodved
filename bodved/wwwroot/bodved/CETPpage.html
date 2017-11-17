@@ -85,38 +85,41 @@
 			    REDIPS.drag.event.dropped = function () {
 			        var rd = REDIPS.drag;
 			        var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
+			        var RowIdx = pos[1];
+			        var OldRowIdx = pos[4];
 			        console.log('droped', pos, rd);
+
 			        var sen = document.querySelector("#sener");
 			        var tbl = rd.obj.closest("table");
 			        if (tbl.id == "tableS") {
 			            var mdlItm = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
-			            mdlItm.Idx$ = pos[1];
+			            mdlItm.Idx$ = RowIdx; //pos[1];
 			            var mdlItmOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
-			            mdlItmOld.Idx$ = pos[4];
+			            mdlItmOld.Idx$ = OldRowIdx; //pos[4];
 			        }
 			        if (tbl.id == "tableD") {
 			            var mi;
 			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
 			            if (mi) {
-			                mi.c1.Idx$ = pos[1];
+			                mi.c1.Idx$ = RowIdx; //pos[1];
 			                console.log("mi.c1", mi.c1);
 			            }
 			            else {
 			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
 			                if (mi) {
-			                    mi.c2.Idx$ = pos[1];
+			                    mi.c2.Idx$ = RowIdx; //pos[1];
 			                    console.log("mi.c2", mi.c2);
 			                }
                         }
 			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
 			            if (mi) {
-			                mi.c1.Idx$ = pos[4];
+			                mi.c1.Idx$ = OldRowIdx; //pos[4];
 			                console.log("mi.c1", mi.c1);
                         }
 			            else {
 			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.objOld.id; });
 			                if (mi) {
-			                    mi.c2.Idx$ = pos[4];
+			                    mi.c2.Idx$ = OldRowIdx; //pos[4];
 			                    console.log("mi.c2", mi.c2);
                             }
 			            }

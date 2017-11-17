@@ -53,8 +53,8 @@ namespace BDB
 
 
                 // HomeRecs
-                int aSetS = 0, aSetD = 0, vSetS = 0, vSetD = 0;
-                int aMacS = 0, aMacD = 0, vMacS = 0, vMacD = 0;
+                int aSetS = 0, aSetD = 0;
+                int aMacS = 0, aMacD = 0;
                 var hRs = Db.SQL<CETR>("select c from CETR c where c.CET = ? and c.HoG = ?", cet, "H");
                 foreach(var r in hRs)
                 {
@@ -62,15 +62,11 @@ namespace BDB
                     {
                         aSetS += r.SW;
                         aMacS += r.MW;
-                        vSetS += r.SL;
-                        vMacS += r.ML;
                     }
                     else // Double da her kisi icin bir kayit var!!
                     {
                         aSetD += r.SW;
                         aMacD += r.MW;
-                        vSetD += r.SL;
-                        vMacD += r.ML;
                     }
                 }
                 cet.hMSW = aMacS;
@@ -79,8 +75,8 @@ namespace BDB
                 cet.hSDW = aSetD / 2;
 
                 // GuestRecs
-                aSetS = 0; aSetD = 0; vSetS = 0; vSetD = 0;
-                aMacS = 0; aMacD = 0; vMacS = 0; vMacD = 0;
+                aSetS = 0; aSetD = 0;
+                aMacS = 0; aMacD = 0;
                 var gRs = Db.SQL<CETR>("select c from CETR c where c.CET = ? and c.HoG = ?", cet, "G");
                 foreach (var r in gRs)
                 {
@@ -88,15 +84,11 @@ namespace BDB
                     {
                         aSetS += r.SW;
                         aMacS += r.MW;
-                        vSetS += r.SL;
-                        vMacS += r.ML;
                     }
                     else // Double da her kisi icin bir kayit var!! 
                     {
                         aSetD += r.SW;
                         aMacD += r.MW;
-                        vSetD += r.SL;
-                        vMacD += r.ML;
                     }
                 }
                 cet.gMSW = aMacS;
