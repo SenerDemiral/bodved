@@ -45,12 +45,12 @@ namespace bodved
 
             BDB.H.refreshPRH();
 
-            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+            //BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
             PushChangesCT();
 
             watch.Stop();
-            Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            Console.WriteLine($"CETR{CEToNo} SaveOkTrigger: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
 
         }
 
