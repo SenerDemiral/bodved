@@ -313,6 +313,32 @@ namespace BDB
             refreshPRH();
         }
 
+        public static void refreshPRH(DateTime trh)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            // ReCalculate Rank of All Players
+            var rr = Db.SQL<BDB.PRH>("select p from PRH p where p.Trh >= ? order by p.Trh", trh);
+
+            int nor = 0;
+            Db.Transact(() =>
+            {
+                foreach (var r in rr)
+                {
+                    r.NOPX = r.compNOPX;
+                    r.Rnk = r.NOPX + r.prvRnk;
+                    nor++;
+                }
+            });
+            watch.Stop();
+            Console.WriteLine($"refreshPRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+
+            watch.Restart();
+            ReCalcPPsra();
+            Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
         public static void refreshPRH()
         {
             Stopwatch watch = new Stopwatch();

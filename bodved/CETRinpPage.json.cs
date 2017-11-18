@@ -42,7 +42,7 @@ namespace bodved
 
             //BDB.H.updCTsumCC(cet.CCoNo);
 
-            BDB.H.refreshPRH();
+            BDB.H.refreshPRH(cet.Trh);
 
             BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
