@@ -365,9 +365,163 @@ namespace BDB
             Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
+        public static void refreshPRH2()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            int nor = 0;
+
+            var pps = Db.SQL<BDB.PP>("select p from PP p");
+            // ReCalculate Rank of All Players
+            var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh");
+
+            int NOPX = 0;
+            int pRnk = 0;
+            int pRnkRkp = 0;
+            PP pp = null;
+            PP ppRkp = null;
+            Db.Transact(() =>
+            {
+                // Init
+                // PP deki Rnk son degeri 
+                foreach (var p in pps)
+                {
+                    p.Rnk = 0; // p.RnkBaz;
+                    nor++;
+                }
+
+                foreach (var r in rr)
+                {
+                    pp = Db.FromId<PP>(r.PP.GetObjectNo());
+                    pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
+                    ppRkp = Db.FromId<PP>(r.rPP.GetObjectNo());
+                    pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
+
+                    if (r.Won == 0 || r.PP.ID == "∞" || r.rPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                        NOPX = 0;
+                    else
+                        NOPX = compNOPX(r.Won, pRnk, pRnkRkp);
+
+                    r.NOPX = NOPX;
+                    r.pRnk = pRnk;
+                    r.Rnk = NOPX + pRnk;
+
+                    pp.Rnk = r.Rnk;
+                }
+
+                // Update PP Sira
+                pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
+                int sira = 1;
+                foreach (var r in pps)
+                {
+                    //r.Rnk = r.curRnk;
+                    r.Sra = sira++;
+                }
+
+                /*
+                foreach (var r in rr)
+                {
+                    pRnk = dct[r.PP.GetObjectNo()];
+                    pRnkRkp = dct[r.rPP.GetObjectNo()];
+                    r.NOPX2 = compNOPX(r.Won, pRnk, pRnkRkp);
+                    r.Rnk2 = r.NOPX + pRnk;
+                    dct[r.PP.GetObjectNo()] = r.Rnk2;
+                }
+                */
+            });
+
+            watch.Stop();
+            Console.WriteLine($"refreshPRH2 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static int compNOPX(int Won, int pRnk, int pRnkRkp)
+        {
+            int NOPX = 0;
+
+            int PS = 0; // Point Spread between players
+            int ER = 0; // ExpectedResult
+            int UR = 0; // UpsetResult
+
+            // Compute
+            PS = Math.Abs(pRnk - pRnkRkp);
+
+            if (PS < 13)
+            {
+                ER = 8;
+                UR = 8;
+            }
+            else if (PS < 38)
+            {
+                ER = 7;
+                UR = 10;
+            }
+            else if (PS < 63)
+            {
+                ER = 6;
+                UR = 13;
+            }
+            else if (PS < 88)
+            {
+                ER = 5;
+                UR = 16;
+            }
+            else if (PS < 113)
+            {
+                ER = 4;
+                UR = 20;
+            }
+            else if (PS < 138)
+            {
+                ER = 3;
+                UR = 25;
+            }
+            else if (PS < 163)
+            {
+                ER = 2;
+                UR = 30;
+            }
+            else if (PS < 188)
+            {
+                ER = 2;
+                UR = 35;
+            }
+            else if (PS < 213)
+            {
+                ER = 1;
+                UR = 40;
+            }
+            else if (PS < 238)
+            {
+                ER = 1;
+                UR = 45;
+            }
+            else
+            {
+                ER = 0;
+                UR = 50;
+            }
+            if (pRnk >= pRnkRkp)   // Target: Iyi
+            {
+                if (Won > 0)     // Expected: Target kazanmis
+                    NOPX += ER;
+                else             // Upset: Target kaybetmis
+                    NOPX -= UR;
+            }
+            else                 // Rakip: Iyi
+            {
+                if (Won < 0)     // Expected: Rakip kazanmis
+                    NOPX -= ER;
+                else             // Upset: Rakip kaybetmis
+                    NOPX += UR;
+            }
+
+            return NOPX;
+        }
+
+
         public static void ReCalcPPsra()
         {
-            // ReCalculate Rank of All Players
+            // ReCalculate Sira of All Players
             var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
 
             Db.Transact(() =>
@@ -375,7 +529,7 @@ namespace BDB
                 int sira = 1;
                 foreach (var r in pps)
                 {
-                    r.Rnk = r.curRnk;
+                    //r.Rnk = r.curRnk;
                     r.Sra = sira++;
                 }
             });
@@ -384,7 +538,7 @@ namespace BDB
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
             var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP.ObjectNo = ? and p.Trh < ? order by p.Trh desc", PPoNo, Trh).FirstOrDefault();
-            return r?.prvRnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;
+            return r?.Rnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;    // Zaten prev kayit Rnk al, prvRnk degil
         }
         
         public static void updPPsum()
@@ -1142,7 +1296,7 @@ namespace BDB
         {
             var cet = Db.FromId<CET>(CEToNo);
 
-            var recs = Db.SQL<CETP>("select r from CETP r where r.CET = ? order by r.SoD desc, r.Idx, r.HoG desc", cet);
+            var recs = Db.SQL<CETP>("select r from CETP r where r.CET = ? and r.PP is not null order by r.SoD desc, r.Idx, r.HoG desc", cet);
             if (recs.FirstOrDefault() == null)
                 return;
 

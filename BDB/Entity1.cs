@@ -326,8 +326,8 @@ namespace BDB
         public DateTime Trh { get; set; }
 
         public int Won { get; set; }    // -1:Kaybetti, 0:Oynanmadi, +1:Kazandi
+        public int pRnk { get; set; }    // Macdan Sonraki Rank. (Rnk = prvRnk + NOPX)
         public int NOPX { get; set; }   // NumberOfPointsExchange between players. -:Kaybetti, 0:Oynanmadi, +:Kazandi
-
         public int Rnk { get; set; }    // Macdan Sonraki Rank. (Rnk = prvRnk + NOPX)
 
         public string PPAd => PP?.Ad ?? "-";

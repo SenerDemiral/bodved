@@ -379,6 +379,7 @@ namespace bodved
                             hR.PRH.Won = 1;
                             gR.PRH.Won = -1;
 
+                            // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
                             hR.PRH.NOPX = hR.PRH.compNOPX;
                             hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
                             gR.PRH.NOPX = gR.PRH.compNOPX;
@@ -393,6 +394,7 @@ namespace bodved
                             hR.PRH.Won = -1;
                             gR.PRH.Won = 1;
 
+                            // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
                             hR.PRH.NOPX = hR.PRH.compNOPX;
                             hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
                             gR.PRH.NOPX = gR.PRH.compNOPX;
