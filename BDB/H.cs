@@ -1030,39 +1030,42 @@ namespace BDB
 
             //sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd}");
             //                      0          1         2       3       4       5         6       7          8          9         10         11        12     13     14     15       16      
-            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CETR-{ccID}-{cetID}.txt"))
+            if (File.Exists($@"C:\Starcounter\BodVedData\Ydk-CETR-{ccID}-{cetID}.txt"))
             {
-                Db.Transact(() =>
+                using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CETR-{ccID}-{cetID}.txt"))
                 {
-                    while ((line = sr.ReadLine()) != null)
+                    Db.Transact(() =>
                     {
-                        string[] ra = line.Split(',');
-
-                        var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[2]).FirstOrDefault();
-                        var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
-
-                        var cetr = new CETR()
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            CC = cc,
-                            CET = cet,
-                            CT = ct,
-                            Trh = cet.Trh,
-                            SoD = ra[3],
-                            Idx = int.Parse(ra[4]),
-                            HoG = ra[5],
-                            PP = pp,
-                            S1W = int.Parse(ra[7]),
-                            S2W = int.Parse(ra[8]),
-                            S3W = int.Parse(ra[9]),
-                            S4W = int.Parse(ra[10]),
-                            S5W = int.Parse(ra[11]),
-                            SW = int.Parse(ra[12]),
-                            SL = int.Parse(ra[13]),
-                            MW = int.Parse(ra[14]),
-                            ML = int.Parse(ra[15]),
-                        };
-                    }
-                });
+                            string[] ra = line.Split(',');
+
+                            var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[2]).FirstOrDefault();
+                            var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
+
+                            var cetr = new CETR()
+                            {
+                                CC = cc,
+                                CET = cet,
+                                CT = ct,
+                                Trh = cet.Trh,
+                                SoD = ra[3],
+                                Idx = int.Parse(ra[4]),
+                                HoG = ra[5],
+                                PP = pp,
+                                S1W = int.Parse(ra[7]),
+                                S2W = int.Parse(ra[8]),
+                                S3W = int.Parse(ra[9]),
+                                S4W = int.Parse(ra[10]),
+                                S5W = int.Parse(ra[11]),
+                                SW = int.Parse(ra[12]),
+                                SL = int.Parse(ra[13]),
+                                MW = int.Parse(ra[14]),
+                                ML = int.Parse(ra[15]),
+                            };
+                        }
+                    });
+                }
             }
 
             // Rank PRH kayitlarini yarat, Sadece Singles
@@ -1140,30 +1143,32 @@ namespace BDB
 
             //sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx},{r.HoG},{r.PP.ID},{r.PPAd,25}");
             //                      0          1         2       3       4       5         6         
-
-            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CETP-{ccID}-{cetID}.txt"))
+            if (File.Exists($@"C:\Starcounter\BodVedData\Ydk-CETP-{ccID}-{cetID}.txt"))
             {
-                Db.Transact(() =>
+                using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CETP-{ccID}-{cetID}.txt"))
                 {
-                    while ((line = sr.ReadLine()) != null)
+                    Db.Transact(() =>
                     {
-                        string[] ra = line.Split(',');
-
-                        var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[2]).FirstOrDefault();
-                        var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
-
-                        var cetr = new CETP()
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            CC = cc,
-                            CET = cet,
-                            CT = ct,
-                            SoD = ra[3],
-                            Idx = int.Parse(ra[4]),
-                            HoG = ra[5],
-                            PP = pp,
-                        };
-                    }
-                });
+                            string[] ra = line.Split(',');
+
+                            var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, ra[2]).FirstOrDefault();
+                            var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", ra[6]).FirstOrDefault();
+
+                            var cetr = new CETP()
+                            {
+                                CC = cc,
+                                CET = cet,
+                                CT = ct,
+                                SoD = ra[3],
+                                Idx = int.Parse(ra[4]),
+                                HoG = ra[5],
+                                PP = pp,
+                            };
+                        }
+                    });
+                }
             }
         }
 
