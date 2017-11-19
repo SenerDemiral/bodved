@@ -23,9 +23,9 @@ namespace bodved
                 sng = Singles.Add();
                 sng.oNo = (long)k.oNo;
                 sng.Tarih = k.Trh.ToString("yyy-MM-dd");
-                sng.Rnk = k.PRH.prvRnk;
+                sng.Rnk = k.PRH.pRnk;  //prvRnk;
                 sng.NOBX = k.PRH.NOPX;
-                sng.rRnk = r.PRH.prvRnk;
+                sng.rRnk = r.PRH.pRnk; //prvRnk;
 
                 sng.rPPoNo = r.PP.oNo.ToString();
                 sng.rPPAd = r.PPAd;

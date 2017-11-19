@@ -42,7 +42,8 @@ namespace bodved
 
             //BDB.H.updCTsumCC(cet.CCoNo);
 
-            BDB.H.refreshPRH(cet.Trh);
+            //BDB.H.refreshPRH(cet.Trh);
+            BDB.H.refreshPRH2();
 
             BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
@@ -112,7 +113,7 @@ namespace bodved
                     sng.hoNo = src.oNo.ToString();
                     sng.hPPoNo = src.PP?.oNo.ToString();
                     sng.hPPAd = src.PPAd;
-                    sng.hPPrnk = src.PRH.prvRnk;
+                    sng.hPPrnk = src.PRH.pRnk; //prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.hS2W = src.S2W;
                     sng.hS3W = src.S3W;
@@ -125,7 +126,7 @@ namespace bodved
                     sng.goNo = src.oNo.ToString();
                     sng.gPPoNo = src.PP?.oNo.ToString();
                     sng.gPPAd = src.PPAd;
-                    sng.gPPrnk = src.PRH.prvRnk;
+                    sng.gPPrnk = src.PRH.pRnk;  //prvRnk;
 
                     sng.gS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.gS2W = src.S2W;
@@ -380,10 +381,12 @@ namespace bodved
                             gR.PRH.Won = -1;
 
                             // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
+                            /*
                             hR.PRH.NOPX = hR.PRH.compNOPX;
                             hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
                             gR.PRH.NOPX = gR.PRH.compNOPX;
                             gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
+                            */
                         }
                         else
                         {
@@ -395,10 +398,12 @@ namespace bodved
                             gR.PRH.Won = 1;
 
                             // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
+                            /*
                             hR.PRH.NOPX = hR.PRH.compNOPX;
                             hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
                             gR.PRH.NOPX = gR.PRH.compNOPX;
                             gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
+                            */
                         }
                     }
                     hSW += hA;
