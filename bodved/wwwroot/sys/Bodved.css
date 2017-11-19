@@ -185,6 +185,19 @@ input:focus {
     font-weight:bold;
 }
 
+.Sra {
+    background-color:royalblue;
+    color:white;
+    text-align: center;
+    font-weight:bold;
+}
+
+.Rnk {
+    background-color:maroon;
+    color:white;
+    text-align: center;
+    font-weight:bold;
+}
 .sag2 {
     border-right: 1px solid black !important;
 }
