@@ -310,9 +310,10 @@ namespace BDB
                 }
             });
             // PRH daki herhangi bir degisiklik hepsini etkiler!
-            refreshPRH();
+            refreshPRH2();
         }
 
+        // Kullanilmiyor Old version
         public static void refreshPRH(DateTime trh)
         {
             Stopwatch watch = new Stopwatch();
@@ -339,6 +340,7 @@ namespace BDB
             Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
+        // Kullanilmiyor Old version
         public static void refreshPRH()
         {
             Stopwatch watch = new Stopwatch();
@@ -363,6 +365,23 @@ namespace BDB
             watch.Restart();
             ReCalcPPsra();
             Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        // Kullanilmiyor
+        public static void ReCalcPPsra()
+        {
+            // ReCalculate Sira of All Players
+            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
+
+            Db.Transact(() =>
+            {
+                int sira = 1;
+                foreach (var r in pps)
+                {
+                    //r.Rnk = r.curRnk;
+                    r.Sra = sira++;
+                }
+            });
         }
 
         public static void refreshPRH2()
@@ -518,22 +537,6 @@ namespace BDB
             return NOPX;
         }
 
-
-        public static void ReCalcPPsra()
-        {
-            // ReCalculate Sira of All Players
-            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
-
-            Db.Transact(() =>
-            {
-                int sira = 1;
-                foreach (var r in pps)
-                {
-                    //r.Rnk = r.curRnk;
-                    r.Sra = sira++;
-                }
-            });
-        }
 
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
@@ -787,6 +790,9 @@ namespace BDB
                 LoadCETofCC(ccID);
                 LoadCETPofCC(ccID);
                 LoadCETRofCC(ccID);
+
+                updCETsumCC(cc.oNo);
+                updCTsumCC(cc.oNo);
             }
         }
 

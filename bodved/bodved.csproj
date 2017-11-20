@@ -115,6 +115,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatPage.json.cs">
+      <DependentUpon>StatPage.json</DependentUpon>
+    </Compile>
     <Compile Include="TurnuvalarPage.json.cs">
       <DependentUpon>TurnuvalarPage.json</DependentUpon>
     </Compile>
@@ -154,6 +157,9 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <TypedJSON Include="NoticePage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="StatPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="wwwroot\bodved\CCpage.html" />

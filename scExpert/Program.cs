@@ -21,7 +21,7 @@ namespace scExpert
                 return $"OK: updCETsumCC({CCoNo})";
             });
 
-            Handle.GET("/scExpert/ReCalcCTsum/{?}", (string CCoNo) =>
+            Handle.GET("/scExpert/updCTsumCC/{?}", (string CCoNo) =>
             {
                 BDB.H.updCTsumCC(ulong.Parse(CCoNo));
                 return $"OK: UpdateCTsumCC({CCoNo})";

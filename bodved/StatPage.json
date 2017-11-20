@@ -1,0 +1,15 @@
+{
+  "Html": "/bodved/StatPage.html",
+
+  "PPT": "", // ToplamOyuncu
+  "CCT": "", // ToplamTurnuva
+  "CTT": "", // ToplamTakim
+  "CTPT": "", // TakimlardaOynayanOyuncu
+  "CETT": "", // ToplamMusabaka
+  "CETO": "", // OynananMusabaka
+  "MACT": "", // ToplamMac
+  "MACO": "", // OynananMac
+  "SETO": "", // OynananSet
+  "SAYIO": "", // OynananSayi
+
+}

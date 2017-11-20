@@ -130,6 +130,10 @@ namespace bodved
             Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo = $"{CCoNo}" });
             Handle.GET("/bodved/Deneme/{?}", (string CCoNo) => WrapPage<Deneme>($"/bodved/partial/Deneme/{CCoNo}"));
 
+            Handle.GET("/bodved/Stat", () => {
+                return $"Toplam Turnuva sayisi: 5\ndfgsdfgsdgf";
+            });
+
             Hook<BDB.CET>.CommitUpdate += (s, obj) =>
             {
                 /*
