@@ -9,6 +9,12 @@ namespace scExpert
     {
         static void Main()
         {
+            Handle.GET("/scExpert", (Request req) =>
+            {
+                
+                return $"client IP: {req.ClientIpAddress}";
+            });
+
             Handle.GET("/scExpert/refreshPRH2", () =>
             {
                 BDB.H.refreshPRH2();

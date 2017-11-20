@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Starcounter;
 using System.Timers;
+using System;
 
 namespace bodved
 {
@@ -77,7 +78,6 @@ namespace bodved
 
             //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
             Handle.GET("/bodved", (Request request) => {
-
                 return Self.GET("/bodved/NoticePage");
             });
             //Handle.GET("/bodved", () => {return new MainPage(); });
