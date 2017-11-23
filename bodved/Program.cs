@@ -150,17 +150,18 @@ namespace bodved
                 }
                 */
             };
-            
+            /*
             Hook<BDB.CT>.CommitInsert += (p, obj) =>
             {
                 Session.RunTaskForAll((s, id) => {
                     
                     s.CalculatePatchAndPushOnWebSocket(); });
-            };
+            };*/
         }
 
         private static void Tmr_Elapsed(object sender, ElapsedEventArgs e)
         {
+            /*
             Session.RunTaskForAll((s, id) => {
                 var bb = s.ActiveWebSocket.IsDead();
                 var aa = "";
@@ -170,7 +171,7 @@ namespace bodved
                     aa = "sener";
                 }
             });
-
+            */
         }
 
         public static MasterPage GetMasterPageFromSession()
