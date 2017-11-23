@@ -11,9 +11,65 @@ namespace BDB
 {
     public static class H
     {
+        // If Db.FromId<table>(tablePrimaryKey) is for retreiving table unique row/object,
+        // Db.FromId should be return null if tablePrimaryKey does not belong to `table` but retuns exception if belongs to another `table`
+        // System.InvalidCastException: Unable to cast object of type `anotherTable` to type `table`.
+        // `tablePrimaryKey` is not used in any other tables Db.FromId returns null as expected.
+        static Random _r = new Random();
+        public static string perfTest()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            PP pp = null;
+            ulong oNo = 0;
+            //var pp = Db.SQL<PP>("select p from PP p where p.ObjectNo = ?", 1);
+
+            pp = Db.FromId<PP>(0);
+            pp = Db.FromId<PP>(5);
+            pp = Db.FromId<PP>(570);
+
+            int n = _r.Next(5);
+            int nor = 0;
+            for (int k = 0; k < 1000000; k++)
+            {
+                /*
+                n = _r.Next(5000) + 1;
+                try
+                {
+                    pp = Db.FromId<PP>((ulong)n);
+                    oNo = pp.oNo;
+                    nor++;
+                }
+                catch (Exception)
+                {
+                }
+                */
+                /*
+                //pp = Db.SQL<PP>("select p from PP p where p.ObjectNo = ?", n).FirstOrDefault();
+                if (pp != null)
+                {
+                    oNo = pp.oNo;
+                    nor++;
+
+                }
+                */
+                /*
+                pp = Db.SQL<PP>("select p from PP p where p.ObjectNo = ?", n);
+                foreach(var p in pp)
+                {
+                    oNo = p.oNo;
+                    nor++;
+                }*/
+
+            }
+            watch.Stop();
+            return $"perfTest 1M: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks {nor}";
+        }
+
         public static void updCETsumCC(ulong CCoNo)
         {
-            var cets = Db.SQL<CET>("select c from CET c where c.CC.ObjectNo = ?", CCoNo);
+            var cc = Db.FromId<CC>(CCoNo);
+            var cets = Db.SQL<CET>("select c from CET c where c.CC = ?", cc);
             foreach (var r in cets)
             {
                 if (r.Rok)
@@ -384,6 +440,104 @@ namespace BDB
             });
         }
 
+        public static void UpdPPLigMacSay()
+        {
+            // 10msec;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            var ccc = Db.SQL<CETR>("select p from CETR p").GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
+            int nor = 0;
+            Db.Transact(() =>
+            {
+                foreach(var c in ccc)
+                {
+                    var p = Db.FromId<PP>(c.Key.oNo);
+                    if (c.Key.Lig == "1")
+                        p.L1C = c.Count();
+                    else if (c.Key.Lig == "2")
+                        p.L2C = c.Count();
+                    else if (c.Key.Lig == "3")
+                        p.L3C = c.Count();
+
+                    nor++;
+                }
+            });
+            watch.Stop();
+            Console.WriteLine($"UpdPPLigMacSay {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static void UpdPPLigMacSay3()
+        {
+            // 60msec;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            var pps = Db.SQL<PP>("select p from PP p");
+            Db.Transact(() =>
+            {
+                foreach (var p in pps)
+                {
+                    var ccc = Db.SQL<CETR>("select p from CETR p where p.PP = ?", p).GroupBy((x) => x.CC.Lig);
+                    foreach (var c in ccc)
+                    {
+                        if (c.Key == "1")
+                            p.L1C = c.Count();
+                        else if (c.Key == "2")
+                            p.L2C = c.Count();
+                        else if (c.Key == "3")
+                            p.L3C = c.Count();
+                    }
+                }
+            });
+            watch.Stop();
+            Console.WriteLine($"UpdPPLigMacSay3 All: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static void UpdPPLigMacSay2()
+        {
+            // 180msec;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            var pps = Db.SQL<PP>("select p from PP p");
+            Db.Transact(() =>
+            {
+                foreach (var p in pps)
+                {
+                    p.L1C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "1").Count();
+                    p.L2C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "2").Count();
+                    p.L3C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "3").Count();
+                }
+            });
+            watch.Stop();
+            Console.WriteLine($"UpdPPLigMacSay2 All: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static void UpdPPLigMacSayOfCET(ulong CEToNo)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            var cet = Db.FromId<CET>(CEToNo);
+            var ccc = Db.SQL<CETR>("select c from CETR c where c.CET = ?", cet).GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
+            int nor = 0;
+            Db.Transact(() =>
+            {
+                foreach (var c in ccc)
+                {
+                    var p = Db.FromId<PP>(c.Key.oNo);
+                    if (c.Key.Lig == "1")
+                        p.L1C = c.Count();
+                    else if (c.Key.Lig == "2")
+                        p.L2C = c.Count();
+                    else if (c.Key.Lig == "3")
+                        p.L3C = c.Count();
+
+                    nor++;
+                }
+            });
+            watch.Stop();
+            Console.WriteLine($"UpdPPLigMacSay {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
         public static void refreshPRH2()
         {
             Stopwatch watch = new Stopwatch();
@@ -436,17 +590,6 @@ namespace BDB
                     //r.Rnk = r.curRnk;
                     r.Sra = sira++;
                 }
-
-                /*
-                foreach (var r in rr)
-                {
-                    pRnk = dct[r.PP.GetObjectNo()];
-                    pRnkRkp = dct[r.rPP.GetObjectNo()];
-                    r.NOPX2 = compNOPX(r.Won, pRnk, pRnkRkp);
-                    r.Rnk2 = r.NOPX + pRnk;
-                    dct[r.PP.GetObjectNo()] = r.Rnk2;
-                }
-                */
             });
 
             watch.Stop();
@@ -540,7 +683,8 @@ namespace BDB
 
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
-            var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP.ObjectNo = ? and p.Trh < ? order by p.Trh desc", PPoNo, Trh).FirstOrDefault();
+            var p = Db.FromId<PP>(PPoNo);
+            var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP = ? and p.Trh < ? order by p.Trh desc", p, Trh).FirstOrDefault();
             return r?.Rnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;    // Zaten prev kayit Rnk al, prvRnk degil
         }
         
@@ -793,6 +937,7 @@ namespace BDB
 
                 updCETsumCC(cc.oNo);
                 updCTsumCC(cc.oNo);
+                refreshPRH2();
             }
         }
 

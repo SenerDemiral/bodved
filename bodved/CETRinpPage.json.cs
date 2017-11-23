@@ -44,6 +44,7 @@ namespace bodved
 
             //BDB.H.refreshPRH(cet.Trh);
             BDB.H.refreshPRH2();
+            BDB.H.UpdPPLigMacSayOfCET(ulong.Parse(CEToNo));
 
             BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
@@ -77,7 +78,7 @@ namespace bodved
 
 
 
-            Cap1 = $"{cet.CCAd}  {cet.Tarih}";
+            Cap1 = $"{cet.CCAd}  {cet.Tarih}  Müsabaka Sonuçları";
             Cap2 = $"{cet.hCTAd} <> {cet.gCTAd}"; // Müsabaka Sonuçları";
 
             hP = cet.hP;

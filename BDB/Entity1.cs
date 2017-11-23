@@ -29,6 +29,16 @@ namespace BDB
         public string Skl { get; set; }    // Takim/Ferdi
         public string Grp { get; set; }    // Birden cok turnuvada oynayan Oyunculari takip icin
 
+        public string Lig
+        {
+            get
+            {
+                if (Skl == "T")
+                    return ID[3].ToString();
+                return "-";
+            }
+        }
+
         public CC()
         {
             Ad = "";
@@ -69,6 +79,10 @@ namespace BDB
         public int DMo { get; set; }
         public int DMa { get; set; }
         public int DMv { get; set; }
+
+        public int L1C { get; set; }
+        public int L2C { get; set; }
+        public int L3C { get; set; }
 
         public int curRnk
         {

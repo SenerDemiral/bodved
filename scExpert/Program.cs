@@ -7,12 +7,50 @@ namespace scExpert
 {
     class Program
     {
+
         static void Main()
         {
+            Handle.GET("/scExpert/perfTest", () =>
+            {
+                return BDB.H.perfTest();
+            });
+
             Handle.GET("/scExpert", (Request req) =>
             {
-                
+                var aaa = Db.SQL<CETR>("select p from CETR p where p.PP.ObjectNo = ? and p.CC.Lig = ?", 457, "1").GroupBy((x) => x.PP.Ad);
+                var bbb = Db.SQL<CETR>("select p from CETR p where p.PP.ObjectNo = ?", 457).GroupBy((x) => x.CC.Lig);
+                var ccc = Db.SQL<CETR>("select p from CETR p where p.PP.ObjectNo = ?", 457).GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
+                ulong LigP = 0;
+                string Lig = "";
+                int LigC = 0;
+                foreach (var b in bbb)
+                {
+                    Lig = b.Key;
+                    LigC = b.Count();
+                }
+                foreach (var c in ccc)
+                {
+                    LigP = c.Key.oNo;
+                    Lig = c.Key.Lig;
+                    LigC = c.Count();
+                }
                 return $"client IP: {req.ClientIpAddress}";
+            });
+
+            Handle.GET("/scExpert/UpdPPLigMacSay", () =>
+            {
+                BDB.H.UpdPPLigMacSay();
+                return $"OK: UpdPPLigMacSay";
+            });
+            Handle.GET("/scExpert/UpdPPLigMacSay2", () =>
+            {
+                BDB.H.UpdPPLigMacSay2();
+                return $"OK: UpdPPLigMacSay2";
+            });
+            Handle.GET("/scExpert/UpdPPLigMacSay3", () =>
+            {
+                BDB.H.UpdPPLigMacSay3();
+                return $"OK: UpdPPLigMacSay3";
             });
 
             Handle.GET("/scExpert/refreshPRH2", () =>

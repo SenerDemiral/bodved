@@ -22,6 +22,11 @@ a {
     color:blue;
 }
 
+.curRow {
+	background-color: orange !important;
+	color: white;
+}
+
 .master-toolbar {
     /*margin: auto; */
     background-color: darkkhaki; 

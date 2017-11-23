@@ -153,7 +153,7 @@ namespace bodved
             
             Hook<BDB.CT>.CommitInsert += (p, obj) =>
             {
-                Session.ForAll((s, id) => {
+                Session.RunTaskForAll((s, id) => {
                     
                     s.CalculatePatchAndPushOnWebSocket(); });
             };
@@ -161,7 +161,7 @@ namespace bodved
 
         private static void Tmr_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Session.ForAll((s, id) => {
+            Session.RunTaskForAll((s, id) => {
                 var bb = s.ActiveWebSocket.IsDead();
                 var aa = "";
 
@@ -194,10 +194,10 @@ namespace bodved
             var master = GetMasterPageFromSession();
 
             
-            if (master.CurrentPage != null && master.CurrentPage.GetType().Equals(typeof(T)))
-            {
-                return master;
-            }
+            //if (master.CurrentPage != null && master.CurrentPage.GetType().Equals(typeof(T)))
+            //{
+            //    return master;
+            //}
             
             master.CurrentPage = Self.GET(partialPath);
 

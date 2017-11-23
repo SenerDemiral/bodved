@@ -22,7 +22,7 @@
         </paper-dialog>
 
         <div class="tblWrap">
-            <table id="ppTbl">
+            <table id="ppTbl" on-click="MyFnc">
                 <caption>
                     <div>[[model.Cap1]]</div>
                     <div>[[model.Cap2]]</div>
@@ -35,11 +35,14 @@
                         <th>BR</th>
                         <th>Rank</th>
                         <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
+                        <th>L1M#</th>
+                        <th>L2M#</th>
+                        <th>L3M#</th>
+                        <th>Oynadığı Takımlar</th>
                         <th>Cns</th>
                         <th>Dğm</th>
                         <th>Tel</th>
                         <th>eMail</th>
-                        <th>Oynadığı Takımlar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,11 +54,14 @@
                             <td class="ortala">°[[item.RnkBaz]]</td>
                             <td class="Rnk">°[[item.Rnk]]</td>
                             <td class="Sra">[[item.Sra]]</td>
+                            <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
+                            <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
+                            <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
+                            <td>[[item.oCTs]]</td>
                             <td class="ortala">[[item.Sex]]</td>
                             <td>[[item.DgmYil]]</td>
                             <td>[[item.Tel]]</td>
                             <td>[[item.eMail]]</td>
-                            <td>[[item.oCTs]]</td>
                             <!--td> class="ortala"><a href="/bodved/Deneme/[[item.oNo]]">►</a></td-->
                         </tr>
                     </template>
@@ -64,4 +70,41 @@
 
         </div>
     </template>
+
+    <script>
+		(function ()
+		{
+			var curRowIndex = -1;
+			var curCellIndex = -1;
+
+			var script = document._currentScript || document.currentScript;
+			tmplt = script.previousElementSibling;
+
+			console.log("Script run");
+
+			tmplt.addEventListener('click', function () {
+			    console.log('click');
+			});
+
+
+			tmplt.MyFnc = function (e) {
+			    //console.log(e);
+			    var tr = e.target.closest("tr");
+			    //console.log("tr", tr);
+			    if (tr == null) // Input Table'da oldugu icin oradan da gelebilit
+			        return;
+
+			    if (tr.rowIndex > 0) {     // Mark current Row
+			        if (curRowIndex != -1) {
+			            ppTbl.rows[curRowIndex].classList.remove("curRow"); //this.$.tblOphs.rows[curRowIndex].classList.remove("curRow");
+			        }
+
+			        curRowIndex = tr.rowIndex; //curTr.rowIndex;
+			        tr.classList.add("curRow"); //curTr.classList.add("curRow");
+			    }
+			}
+		})();
+
+    </script>
+
 </template>
