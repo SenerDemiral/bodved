@@ -44,9 +44,9 @@ namespace bodved
                 }
             }
             if (!string.IsNullOrEmpty(CCoNo))
-                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", cc);
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.Trh", cc);
             else if (!string.IsNullOrEmpty(CToNo))
-                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? and (c.hCT = ? or c.gCT = ?) order by c.ID, c.Trh", cc, ct, ct);
+                CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? and (c.hCT = ? or c.gCT = ?) order by c.Trh", cc, ct, ct);
 
             //sener.NoR = DateTime.Now.Ticks;
         }
@@ -65,7 +65,7 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
-            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.ID, c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
+            CETs.Data = Db.SQL<BDB.CET>("select c from CET c where c.CC = ? order by c.Trh", Db.FromId<BDB.CC>(ulong.Parse(CCoNo)));
 
             //PushChanges();
         }
