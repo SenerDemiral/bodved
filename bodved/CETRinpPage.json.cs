@@ -44,7 +44,7 @@ namespace bodved
 
             //BDB.H.refreshPRH(cet.Trh);
             BDB.H.refreshPRH2();
-            BDB.H.UpdPPLigMacSayOfCET(ulong.Parse(CEToNo));
+            BDB.H.UpdPPLigMacSay();
 
             BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 

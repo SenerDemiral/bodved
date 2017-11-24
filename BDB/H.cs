@@ -446,13 +446,14 @@ namespace BDB
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            var ccc = Db.SQL<CETR>("select p from CETR p").GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
+            var cetrs = Db.SQL<CETR>("select c from CETR c").GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
             int nor = 0;
             Db.Transact(() =>
             {
-                foreach(var c in ccc)
+                foreach(var c in cetrs)
                 {
                     var p = Db.FromId<PP>(c.Key.oNo);
+
                     if (c.Key.Lig == "1")
                         p.L1C = c.Count();
                     else if (c.Key.Lig == "2")
@@ -510,32 +511,6 @@ namespace BDB
             });
             watch.Stop();
             Console.WriteLine($"UpdPPLigMacSay2 All: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        public static void UpdPPLigMacSayOfCET(ulong CEToNo)
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            var cet = Db.FromId<CET>(CEToNo);
-            var ccc = Db.SQL<CETR>("select c from CETR c where c.CET = ?", cet).GroupBy((x) => new { x.PP.oNo, x.CC.Lig });
-            int nor = 0;
-            Db.Transact(() =>
-            {
-                foreach (var c in ccc)
-                {
-                    var p = Db.FromId<PP>(c.Key.oNo);
-                    if (c.Key.Lig == "1")
-                        p.L1C = c.Count();
-                    else if (c.Key.Lig == "2")
-                        p.L2C = c.Count();
-                    else if (c.Key.Lig == "3")
-                        p.L3C = c.Count();
-
-                    nor++;
-                }
-            });
-            watch.Stop();
-            Console.WriteLine($"UpdPPLigMacSay {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         public static void refreshPRH2()
