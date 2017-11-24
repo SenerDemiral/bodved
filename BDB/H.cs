@@ -66,6 +66,31 @@ namespace BDB
             return $"perfTest 1M: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks {nor}";
         }
 
+        public static void insOtoNotice()
+        {
+            var ilkGun = DateTime.Today;
+            var sonGun = ilkGun.AddDays(5);
+            var cets = Db.SQL<CET>("select c from CET c where c.Trh >= ? and c.Trh < ? order by c.Trh", ilkGun, sonGun);
+            int onc = 1;
+            Db.Transact(() =>
+            {
+                Db.SQL("DELETE FROM NTC WHERE Onc like ?", "+%");
+
+                foreach (var c in cets)
+                {
+                    new NTC
+                    {
+                        Trh = c.Trh,
+                        Onc = $"+{onc}",
+                        Ad = $"{c.hCTAd} - {c.gCTAd}",
+                        Link = $"/bodved/CETpage/{c.CCoNo}"
+                        
+                    };
+                    onc++;
+                }
+            });
+        }
+
         public static void updCETsumCC(ulong CCoNo)
         {
             var cc = Db.FromId<CC>(CCoNo);

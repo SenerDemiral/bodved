@@ -34,10 +34,20 @@ namespace bodved
                 sng.SW = $"{k.SW}";
                 sng.SL = $"{r.SW}";
                 sng.S1 = $"{k.S1W}-{r.S1W}";
+                if (k.S1W == 0 && r.S1W == 0)
+                    sng.S1 = "";
                 sng.S2 = $"{k.S2W}-{r.S2W}";
+                if (k.S2W == 0 && r.S2W == 0)
+                    sng.S2 = "";
                 sng.S3 = $"{k.S3W}-{r.S3W}";
+                if (k.S3W == 0 && r.S3W == 0)
+                    sng.S3 = "";
                 sng.S4 = $"{k.S4W}-{r.S4W}";
+                if (k.S4W == 0 && r.S4W == 0)
+                    sng.S4 = "";
                 sng.S5 = $"{k.S5W}-{r.S5W}";
+                if (k.S5W == 0 && r.S5W == 0)
+                    sng.S5 = "";
 
                 sng.WoL = k.SW > r.SW ? "W" : "L";
 
@@ -80,10 +90,20 @@ namespace bodved
                 dbl.SW = $"{k.SW}";
                 dbl.SL = $"{r[0].SW}";
                 dbl.S1 = $"{k.S1W}-{r[0].S1W}";
+                if (k.S1W == 0 && r[0].S1W == 0)
+                    dbl.S1 = "";
                 dbl.S2 = $"{k.S2W}-{r[0].S2W}";
+                if (k.S2W == 0 && r[0].S2W == 0)
+                    dbl.S2 = "";
                 dbl.S3 = $"{k.S3W}-{r[0].S3W}";
+                if (k.S3W == 0 && r[0].S3W == 0)
+                    dbl.S3 = "";
                 dbl.S4 = $"{k.S4W}-{r[0].S4W}";
+                if (k.S4W == 0 && r[0].S4W == 0)
+                    dbl.S4 = "";
                 dbl.S5 = $"{k.S5W}-{r[0].S5W}";
+                if (k.S5W == 0 && r[0].S5W == 0)
+                    dbl.S5 = "";
 
                 dbl.WoL = k.SW > r[0].SW ? "W" : "L";
 

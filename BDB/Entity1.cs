@@ -10,7 +10,7 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
-        public string Onc { get; set; }     // Oncelik 1-9
+        public string Onc { get; set; }     // Oncelik 1-9, < 1 olanlar otomatik 
         public DateTime Trh { get; set; }
         public string Ad { get; set; }
         public string Link { get; set; }
@@ -192,6 +192,10 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
+
+        public int L1C => PP?.L1C ?? 0;
+        public int L2C => PP?.L2C ?? 0;
+        public int L3C => PP?.L3C ?? 0;
 
         public string oCTs
         {

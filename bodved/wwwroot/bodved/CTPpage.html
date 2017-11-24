@@ -11,6 +11,9 @@
                         <th class="oNo">ID</th>
                         <th>Sıra</th>
                         <th>Oyuncu</th>
+                        <th>L1M#</th>
+                        <th>L2M#</th>
+                        <th>L3M#</th>
                         <th>Oynadığı Diğer Takımlar</th>
                     </tr>
                 </thead>
@@ -20,6 +23,9 @@
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td class="Idx">[[item.Idx]]</td>
                             <td><a href="/bodved/ppMacPage/[[item.PPoNo]]">[[item.PPAd]]</a></td>
+                            <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
+                            <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
+                            <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
                             <td>[[item.oCTs]]</td>
                         </tr>
                     </template>

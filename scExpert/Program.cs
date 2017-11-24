@@ -10,6 +10,12 @@ namespace scExpert
 
         static void Main()
         {
+            Handle.GET("/scExpert/insOtoNotice", () =>
+            {
+                BDB.H.insOtoNotice();
+                return $"OK: insOtoNotice";
+            });
+
             Handle.GET("/scExpert/perfTest", () =>
             {
                 return BDB.H.perfTest();

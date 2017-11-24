@@ -75,6 +75,13 @@ namespace bodved
 
             BDB.H.Write2Log("Start");
 
+            Handle.GET("/bodved/insOtoNotice", () =>
+            {
+                BDB.H.insOtoNotice();
+                return $"OK: insOtoNotice";
+            });
+
+
 
             //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
             Handle.GET("/bodved", (Request request) => {
