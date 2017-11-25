@@ -23,6 +23,8 @@
     {
       "oNo": 0,
       "Tarih": "",
+      "CToNo": "",
+      "CTAd": "",
       "Rnk": 0,
       "NOBX": 0,
       "WoL": "",
@@ -36,7 +38,9 @@
       "Sonuc": "",
       "rPPoNo": "",
       "rPPAd": "",
-      "rRnk": 0
+      "rRnk": 0,
+      "rCToNo": "",
+      "rCTAd": ""
     }
   ],
 
@@ -44,6 +48,8 @@
     {
       "oNo": 0,
       "Tarih": "",
+      "CToNo": "",
+      "CTAd": "",
       "WoL": "",
       "oPPoNo": "",
       "oPPAd": "",
@@ -58,7 +64,9 @@
       "rPPoNo1": "",
       "rPPoNo2": "",
       "rPPAd1": "",
-      "rPPAd2": ""
+      "rPPAd2": "",
+      "rCToNo": "",
+      "rCTAd": ""
     }
   ]
 }

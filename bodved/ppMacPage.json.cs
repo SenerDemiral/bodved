@@ -22,13 +22,17 @@ namespace bodved
 
                 sng = Singles.Add();
                 sng.oNo = (long)k.oNo;
-                sng.Tarih = k.Trh.ToString("yyy-MM-dd");
+                sng.Tarih = k.Trh.ToString("dd.MM.yy");
+                sng.CToNo = $"{k.CT.oNo}";
+                sng.CTAd = $"{k.CTAd}•{k.CC.Grp}";
                 sng.Rnk = k.PRH.pRnk;  //prvRnk;
                 sng.NOBX = k.PRH.NOPX;
                 sng.rRnk = r.PRH.pRnk; //prvRnk;
 
                 sng.rPPoNo = r.PP.oNo.ToString();
                 sng.rPPAd = r.PPAd;
+                sng.rCToNo = $"{r.CT.oNo}";
+                sng.rCTAd = r.CTAd;
                 sng.Sonuc = $"[{k.SW}-{r.SW}] {k.S1W}-{r.S1W} {k.S2W}-{r.S2W} {k.S3W}-{r.S3W} {k.S4W}-{r.S4W} {k.S5W}-{r.S5W}";
 
                 sng.SW = $"{k.SW}";
@@ -77,6 +81,8 @@ namespace bodved
                 dbl = Doubles.Add();
                 dbl.oNo = (long)k.oNo;
                 dbl.Tarih = k.Trh.ToString("dd.MM.yy");
+                dbl.CToNo = $"{k.CT.oNo}";
+                dbl.CTAd = $"{k.CTAd}•{k.CC.Grp}";
                 dbl.oPPoNo = o.PP.oNo.ToString();
                 dbl.oPPAd = o.PPAd;
 
@@ -85,6 +91,8 @@ namespace bodved
                 dbl.rPPAd1 = r[0].PPAd;
                 dbl.rPPAd2 = r[1].PPAd;
 
+                dbl.rCToNo = $"{r[0].CT.oNo}";
+                dbl.rCTAd = r[0].CTAd;
                 dbl.Sonuc = $"[{k.SW}-{r[0].SW}] {k.S1W}-{r[0].S1W} {k.S2W}-{r[0].S2W} {k.S3W}-{r[0].S3W} {k.S4W}-{r[0].S4W} {k.S5W}-{r[0].S5W}";
 
                 dbl.SW = $"{k.SW}";

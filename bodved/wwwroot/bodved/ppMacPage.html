@@ -59,6 +59,7 @@
                     <tr>
                         <th class="oNo">ID</th>
                         <th>Tarih</th>
+                        <th>Takım</th>
                         <th>Rank</th>
                         <th>PX</th>
                         <th class="hSW">A</th>
@@ -68,7 +69,7 @@
                         <th>S4</th>
                         <th>S5</th>
                         <th class="hSW">V</th>
-                        <th colspan="2">Rakip</th>
+                        <th colspan="3">Rakip</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,21 +77,21 @@
                         <tr data-WoL$="[[item.WoL]]">
                             <td class="oNo">[[item.oNo]]</td>
                             <td>[[item.Tarih]]</td>
+                            <td><a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a></td>
                             <td class="rank">[[item.Rnk]]</td>
                             <td class="ortala">[[item.NOBX]]</td>
 
                             <td class="hSW">[[item.SW]]</td>
-                            <td>[[item.S1]]</td>
-                            <td>[[item.S2]]</td>
-                            <td>[[item.S3]]</td>
-                            <td>[[item.S4]]</td>
-                            <td>[[item.S5]]</td>
+                            <td class="ortala">[[item.S1]]</td>
+                            <td class="ortala">[[item.S2]]</td>
+                            <td class="ortala">[[item.S3]]</td>
+                            <td class="ortala">[[item.S4]]</td>
+                            <td class="ortala">[[item.S5]]</td>
                             <td class="hSW">[[item.SL]]</td>
                             
                             <td class="rank">[[item.rRnk]]</td>
-                            <td>
-                                <a href="/bodved/ppMacPage/[[item.rPPoNo]]">[[item.rPPAd]]</a>
-                            </td>
+                            <td><a href="/bodved/ppMacPage/[[item.rPPoNo]]">[[item.rPPAd]]</a></td>
+                            <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
                         </tr>
                     </template>
                 </tbody>
@@ -112,7 +113,7 @@
                         <th>S4</th>
                         <th>S5</th>
                         <th class="hSW">V</th>
-                        <th>Rakip</th>
+                        <th colspan="2">Rakip</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,22 +121,23 @@
                         <tr data-WoL$="[[item.WoL]]">
                             <td class="oNo">[[item.oNo]]</td>
                             <td>[[item.Tarih]]</td>
-                            <td>
-                                <a href="/bodved/ppMacPage/[[item.oPPoNo]]">[[item.oPPAd]]</a>
+                            <td><a href="/bodved/ppMacPage/[[item.oPPoNo]]">[[item.oPPAd]]</a>
+                                <br />
+                                <a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a>
                             </td>
                             <td class="hSW">[[item.SW]]</td>
-                            <td>[[item.S1]]</td>
-                            <td>[[item.S2]]</td>
-                            <td>[[item.S3]]</td>
-                            <td>[[item.S4]]</td>
-                            <td>[[item.S5]]</td>
+                            <td class="ortala">[[item.S1]]</td>
+                            <td class="ortala">[[item.S2]]</td>
+                            <td class="ortala">[[item.S3]]</td>
+                            <td class="ortala">[[item.S4]]</td>
+                            <td class="ortala">[[item.S5]]</td>
                             <td class="hSW">[[item.SL]]</td>
 
-                            <td>
-                                <a href="/bodved/ppMacPage/[[item.rPPoNo1]]">[[item.rPPAd1]]</a>
+                            <td><a href="/bodved/ppMacPage/[[item.rPPoNo1]]">[[item.rPPAd1]]</a>
                                 <br />
                                 <a href="/bodved/ppMacPage/[[item.rPPoNo2]]">[[item.rPPAd2]]</a>
                             </td>
+                            <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
                         </tr>
                     </template>
                 </tbody>

@@ -81,14 +81,22 @@
 			tmplt = script.previousElementSibling;
 
 			console.log("Script run");
+            /*
+			setTimeout(function () {
+			    var pt = document.querySelector('#ppTbl');
+                pt.onkeydown = function (e)
+                {
+                    console.log('keydown');
 
-			tmplt.addEventListener('click', function () {
-			    console.log('click');
+                }
+                //tmplt.addEventListener('keydown', function () {
+                //    console.log('keydown');
+                //});
 			});
-
+			*/
 
 			tmplt.MyFnc = function (e) {
-			    //console.log(e);
+			    console.log(e);
 			    var tr = e.target.closest("tr");
 			    //console.log("tr", tr);
 			    if (tr == null) // Input Table'da oldugu icin oradan da gelebilit
