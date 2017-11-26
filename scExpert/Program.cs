@@ -106,10 +106,10 @@ namespace scExpert
                 return $"OK: RestoreCC({ccID})";
             });
 
-            Handle.GET("/scExpert/BackupCC/{?}", (string ccID) =>
+            Handle.GET("/scExpert/BackupCC/{?}", (ulong CCoNo) =>
             {
-                BDB.H.BackupCC(ccID);
-                return $"OK: BackupCC({ccID})";
+                BDB.H.BackupCC(CCoNo);
+                return $"OK: BackupCC({CCoNo})";
             });
 
             Handle.GET("/scExpert/BackupCET/{?}/{?}", (string ccID, string cetID) =>
