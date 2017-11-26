@@ -12,7 +12,7 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
             NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
             Cap1 = $"Oyuncular  [{NOP-1} adet]";
 

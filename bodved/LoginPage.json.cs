@@ -21,6 +21,16 @@ namespace bodved
                 }
 
             }
+            else if (Id == "-2")
+            {
+                if (Pw == "modev")
+                {
+                    mpLgn.Nm = "ADMIN";
+                    mpLgn.Rl = "ADMIN";
+                    mpLgn.LI = true;
+                }
+
+            }
             else
             {
                 var ct = Db.FromId<BDB.CT>(ulong.Parse(Id));

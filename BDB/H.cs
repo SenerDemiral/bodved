@@ -353,9 +353,10 @@ namespace BDB
                 int Won = 0;
                 PRH prh;
                 // Sadece Singles
-                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ?", cc, "S");
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ? order by r.HoG desc", cc, "S");
                 foreach (var r in cetrs)
                 {
+                    // Ilk H sonra G gelir
                     if (r.HoG == "H")
                     {
                         h = r;
@@ -392,6 +393,67 @@ namespace BDB
             });
             // PRH daki herhangi bir degisiklik hepsini etkiler!
             refreshPRH2();
+        }
+
+        public static void reCreateRHofCC(ulong CCoNo)
+        {
+            // Rank RH kayitlarini yarat, Sadece Singles
+            // Sonrasinda RefreshPRH gerekir!!!
+
+            var cc = Db.FromId<BDB.CC>(CCoNo);
+
+            // Delete PRHs of CC
+            Db.Transact(() =>
+            {
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
+                foreach (var cetr in cetrs)
+                {
+                    if (cetr.RH != null)
+                    {
+                        Db.FromId<RH>(cetr.RH.GetObjectNo()).Delete();
+                    }
+                }
+            });
+
+            Db.Transact(() =>
+            {
+                CETR h = null, g = null;
+                int Won = 0;
+                RH rh;
+                // Sadece Singles
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ? order by r.CET, r.Idx, r.HoG desc", cc, "S");
+                foreach (var r in cetrs)
+                {
+                    // Ilk H sonra G gelir
+                    if (r.HoG == "H")
+                    {
+                        h = r;
+                        if (r.MW > r.ML)
+                            Won = 1;
+                        else if (r.MW < r.ML)
+                            Won = -1;
+
+                    }
+                    else if (r.HoG == "G")
+                    {
+                        g = r;
+
+                        rh = new RH
+                        {
+                            Trh = r.Trh,
+
+                            hPP = h.PP,
+                            hWon = Won,
+                            gPP = g.PP,
+                            gWon = -Won,
+                        };
+                        h.RH = rh;
+                        g.RH = rh;
+                    }
+                }
+            });
+            // RH daki herhangi bir degisiklik hepsini etkiler!
+            //refreshRH();
         }
 
         // Kullanilmiyor Old version
@@ -566,9 +628,11 @@ namespace BDB
                 foreach (var r in rr)
                 {
                     pp = Db.FromId<PP>(r.PP.GetObjectNo());
-                    pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
+                    //pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
+                    pRnk = pp.Rnk == 0 ? 1900 : pp.Rnk; // Deneme Herkes 1900 den baslarsa
                     ppRkp = Db.FromId<PP>(r.rPP.GetObjectNo());
-                    pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
+                    //pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
+                    pRnkRkp = ppRkp.Rnk == 0 ? 1900 : ppRkp.Rnk; // Deneme Herkes 1900 den baslarsa
 
                     if (r.Won == 0 || r.PP.ID == "∞" || r.rPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
                         NOPX = 0;
@@ -580,6 +644,14 @@ namespace BDB
                     r.Rnk = NOPX + pRnk;
 
                     pp.Rnk = r.Rnk;
+                    /*
+                    var rkp = Db.SQL<PRH>("select r from PRH r where r.PP = ? and r.rPP = ? and r.Trh = ?", r.rPP, r.PP, r.Trh).FirstOrDefault();
+                    NOPX = -NOPX;
+                    rkp.NOPX = NOPX;
+                    rkp.pRnk = pRnkRkp;
+                    rkp.Rnk = NOPX + pRnkRkp;
+
+                    ppRkp.Rnk = rkp.Rnk;*/
                 }
 
                 // Update PP Sira
@@ -594,6 +666,99 @@ namespace BDB
 
             watch.Stop();
             Console.WriteLine($"refreshPRH2 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static void initBazRanks()
+        {
+            Db.Transact(() =>
+            {
+                // BazRnk sifirla
+                var pps = Db.SQL<BDB.PP>("select p from PP p");
+                foreach (var p in pps)
+                {
+                    p.RnkBaz = 0;
+                }
+
+                // 1.Lig
+                var tps1 = Db.SQL<CTP>("select p from CTP p where p.CC.ObjectNo = ?", 185).GroupBy((x) => new { x.PP.oNo }); ;
+                foreach (var tp in tps1)
+                {
+                    var p = Db.FromId<PP>(tp.Key.oNo);
+                    p.RnkBaz = 1900;
+                }
+                // 2.Lig
+                var tps2 = Db.SQL<CTP>("select p from CTP p where p.CC.ObjectNo = ? or p.CC.ObjectNo = ?", 186, 187).GroupBy((x) => new { x.PP.oNo }); ;
+                foreach (var tp in tps2)
+                {
+                    var p = Db.FromId<PP>(tp.Key.oNo);
+                    if (p.RnkBaz == 0)  // Daha once tanimlanmadiysa
+                        p.RnkBaz = 1800;
+                }
+                // 3.Lig
+                var tps3 = Db.SQL<CTP>("select p from CTP p where p.CC.ObjectNo = ? or p.CC.ObjectNo = ?", 188, 189).GroupBy((x) => new { x.PP.oNo }); ;
+                foreach (var tp in tps3)
+                {
+                    var p = Db.FromId<PP>(tp.Key.oNo);
+                    if (p.RnkBaz == 0)  // Daha once tanimlanmadiysa
+                        p.RnkBaz = 1700;
+                }
+            });
+        }
+
+        public static void refreshRH()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            int nor = 0;
+
+            var pps = Db.SQL<BDB.PP>("select p from PP p");
+            // ReCalculate Rank of All Players
+            var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh");
+
+            int NOPX = 0;
+            Db.Transact(() =>
+            {
+                // Init
+                // PP deki Rnk son degeri 
+                foreach (var p in pps)
+                {
+                    p.Rnk = 0; // p.RnkBaz;
+                    nor++;
+                }
+
+                foreach (var r in rhs)
+                {
+                    //pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
+                    r.hpRnk = r.hPP.Rnk == 0 ? r.hPP.RnkBaz : r.hPP.Rnk;
+                    //r.hpRnk = r.hPP.Rnk == 0 ? 1900 : r.hPP.Rnk; // Deneme Herkes 1900 den baslarsa
+                    //pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
+                    r.gpRnk = r.gPP.Rnk == 0 ? r.gPP.RnkBaz : r.gPP.Rnk;
+                    //r.gpRnk = r.gPP.Rnk == 0 ? 1900 : r.gPP.Rnk; // Deneme Herkes 1900 den baslarsa
+
+                    if (r.hWon == 0 || r.hPP.ID == "∞" || r.gPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                        NOPX = 0;
+                    else
+                        NOPX = compNOPX(r.hWon, r.hpRnk, r.gpRnk);
+
+                    r.hNOPX = NOPX;
+                    r.gNOPX = -NOPX;
+
+                    r.hPP.Rnk = r.hpRnk + r.hNOPX;
+                    r.gPP.Rnk = r.gpRnk + r.gNOPX;
+                }
+
+                // Update PP Sira
+                pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
+                int sira = 1;
+                foreach (var r in pps)
+                {
+                    //r.Rnk = r.curRnk;
+                    r.Sra = sira++;
+                }
+            });
+
+            watch.Stop();
+            Console.WriteLine($"refreshRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         public static int compNOPX(int Won, int pRnk, int pRnkRkp)

@@ -62,7 +62,25 @@ namespace scExpert
             Handle.GET("/scExpert/refreshPRH2", () =>
             {
                 BDB.H.refreshPRH2();
-                return "refreshPRH: OK";
+                return "refreshPRH2: OK";
+            });
+
+            Handle.GET("/scExpert/initBazRanks", () =>
+            {
+                BDB.H.initBazRanks();
+                return "OK: initBazRanks";
+            });
+
+            Handle.GET("/scExpert/refreshRH", () =>
+            {
+                BDB.H.refreshRH();
+                return "refreshRH: OK";
+            });
+
+            Handle.GET("/scExpert/reCreateRHofCC/{?}", (ulong CCoNo) =>
+            {
+                BDB.H.reCreateRHofCC(CCoNo);
+                return $"OK: reCreateRHofCC({CCoNo})";
             });
 
             Handle.GET("/scExpert/updCETsumCC/{?}", (string CCoNo) =>
@@ -189,6 +207,9 @@ namespace scExpert
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPP_Sra     ON PP   (Sra)");
 
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxRH_Trh     ON RH   (Trh)");
+
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_Trh").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPRH_Trh    ON PRH  (Trh ASC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_PP_Trh").FirstOrDefault() == null)
@@ -227,6 +248,8 @@ namespace scExpert
             {
                 Db.SQL("DROP INDEX IdxPP_Ad       ON PP");
                 Db.SQL("DROP INDEX IdxPP_Sra      ON PP");
+
+                Db.SQL("DROP INDEX IdxRH_Trh      ON RH");
 
                 Db.SQL("DROP INDEX IdxPRH_Trh     ON PRH");
                 Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON PRH");

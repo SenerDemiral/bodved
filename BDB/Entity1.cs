@@ -297,7 +297,7 @@ namespace BDB
     // Her iki takim da onay (hPok/gPok) verdikten sonra CETR olusturulur
 
     [Database]
-    public class CETR    // Competition Event Team Results
+    public class CETR    // CompetitionEventTeam Player Results
     {
         public ulong oNo => this.GetObjectNo();
 
@@ -308,10 +308,13 @@ namespace BDB
         public string SoD { get; set; }
         public int Idx { get; set; }
         public PP PP { get; set; }
+
         public PRH PRH { get; set; }
+        public RH RH { get; set; }
+
         public DateTime Trh { get; set; }
 
-        public bool OynDis { get; set; }    // Oyuncu Diskalifiye Rank hesaplanmayacak
+        public bool OynDis { get; set; }    // Oyuncu Diskalifiye Rank hesaplanmayacak, KULLANILMIYOR
         // Setlerde kazandigi sayilar
         public int S1W { get; set; }
         public int S2W { get; set; }
@@ -344,7 +347,7 @@ namespace BDB
         public DateTime Trh { get; set; }
 
         public int Won { get; set; }    // -1:Kaybetti, 0:Oynanmadi, +1:Kazandi
-        public int pRnk { get; set; }    // Macdan Sonraki Rank. (Rnk = prvRnk + NOPX)
+        public int pRnk { get; set; }    // Macdan Onceki Rank.
         public int NOPX { get; set; }   // NumberOfPointsExchange between players. -:Kaybetti, 0:Oynanmadi, +:Kazandi
         public int Rnk { get; set; }    // Macdan Sonraki Rank. (Rnk = prvRnk + NOPX)
 
@@ -476,4 +479,21 @@ namespace BDB
     }
     // CETR (Veya baska Turnuva) yaratildiginda bu kayit da yaratilacak, Sonuc girildiginde NOPX ve Rnk hesaplanarak buraya yazilacak
 
+    [Database]
+    public class RH     // Rank History
+    {
+        public ulong oNo => this.GetObjectNo();
+
+        public DateTime Trh { get; set; }
+
+        public PP hPP { get; set; }
+        public int hWon { get; set; }
+        public int hpRnk { get; set; }
+        public int hNOPX { get; set; }
+
+        public PP gPP { get; set; }
+        public int gWon { get; set; }
+        public int gpRnk { get; set; }
+        public int gNOPX { get; set; }
+    }
 }

@@ -43,7 +43,8 @@ namespace bodved
             //BDB.H.updCTsumCC(cet.CCoNo);
 
             //BDB.H.refreshPRH(cet.Trh);
-            BDB.H.refreshPRH2();
+            //BDB.H.refreshPRH2();
+            BDB.H.refreshRH();
             BDB.H.UpdPPLigMacSay();
 
             BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
@@ -106,7 +107,7 @@ namespace bodved
             int s = 0;
             foreach (var src in SR)
             {
-                if ((s % 2) == 0)
+                if ((s % 2) == 0)   // Home
                 {
                     sng = Singles.Add();
                     sng.Idx = src.Idx;
@@ -114,7 +115,8 @@ namespace bodved
                     sng.hoNo = src.oNo.ToString();
                     sng.hPPoNo = src.PP?.oNo.ToString();
                     sng.hPPAd = src.PPAd;
-                    sng.hPPrnk = src.PRH.pRnk; //prvRnk;
+                    //sng.hPPrnk = src.PRH.pRnk; //prvRnk;
+                    sng.hPPrnk = src.RH.hpRnk; //prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.hS2W = src.S2W;
                     sng.hS3W = src.S3W;
@@ -122,12 +124,13 @@ namespace bodved
                     sng.hS5W = src.S5W;
                     sng.hSW = src.SW;
                 }
-                if ((s % 2) == 1)
+                if ((s % 2) == 1)   // Guest
                 {
                     sng.goNo = src.oNo.ToString();
                     sng.gPPoNo = src.PP?.oNo.ToString();
                     sng.gPPAd = src.PPAd;
-                    sng.gPPrnk = src.PRH.pRnk;  //prvRnk;
+                    //sng.gPPrnk = src.PRH.pRnk;  //prvRnk;
+                    sng.gPPrnk = src.RH.gpRnk;  //prvRnk;
 
                     sng.gS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.gS2W = src.S2W;
@@ -378,8 +381,10 @@ namespace bodved
                             hR.MW = 1;
                             gR.ML = 1;
 
-                            hR.PRH.Won = 1;
-                            gR.PRH.Won = -1;
+                            //hR.PRH.Won = 1;
+                            //gR.PRH.Won = -1;
+                            hR.RH.hWon = 1;
+                            gR.RH.gWon = -1;
 
                             // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
                             /*
@@ -395,8 +400,8 @@ namespace bodved
                             hR.ML = 1;
                             gR.MW = 1;
 
-                            hR.PRH.Won = -1;
-                            gR.PRH.Won = 1;
+                            hR.RH.hWon = -1;
+                            gR.RH.gWon = 1;
 
                             // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
                             /*

@@ -11,6 +11,7 @@ namespace bodved
 
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
             Cap1 = $"{pp.Ad} [{pp.ID}/{pp.oNo}]"; // №
+            Cap2 = $"Rank:{pp.Rnk}, Sıra:{pp.Sra}"; // №
 
             SinglesElementJson sng = null;
             var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "S");
@@ -25,9 +26,23 @@ namespace bodved
                 sng.Tarih = k.Trh.ToString("dd.MM.yy");
                 sng.CToNo = $"{k.CT.oNo}";
                 sng.CTAd = $"{k.CTAd}•{k.CC.Grp}";
-                sng.Rnk = k.PRH.pRnk;  //prvRnk;
-                sng.NOBX = k.PRH.NOPX;
-                sng.rRnk = r.PRH.pRnk; //prvRnk;
+
+                if (k.HoG == "H")
+                {
+                    sng.Rnk = k.RH.hpRnk;  //prvRnk;
+                    sng.NOBX = k.RH.hNOPX;
+                    sng.rRnk = r.RH.gpRnk; //prvRnk;
+
+                }
+                else
+                {
+                    sng.Rnk = k.RH.gpRnk;  //prvRnk;
+                    sng.NOBX = k.RH.gNOPX;
+                    sng.rRnk = r.RH.hpRnk; //prvRnk;
+                }
+                //sng.Rnk = k.PRH.pRnk;  //prvRnk;
+                //sng.NOBX = k.PRH.NOPX;
+                //sng.rRnk = r.PRH.pRnk; //prvRnk;
 
                 sng.rPPoNo = r.PP.oNo.ToString();
                 sng.rPPAd = r.PPAd;
