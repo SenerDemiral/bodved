@@ -81,7 +81,7 @@ namespace BDB
                     new NTC
                     {
                         Trh = c.Trh,
-                        Onc = $"+{onc}",
+                        Onc = $"+{onc:D2}",
                         Ad = $"{c.hCTAd} - {c.gCTAd}",
                         Link = $"/bodved/CETpage/{c.CCoNo}"
                         
@@ -1347,17 +1347,17 @@ namespace BDB
             }
         }
 
-        public static void BackupCC(string ccID)        // Turnuva Ilgili Kayitlari
+        public static void BackupCC(ulong CCoNo)        // Turnuva Ilgili Kayitlari
         {
-            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cc = Db.SQL<CC>("select r from CC r where r.ObjectNo = ?", CCoNo).FirstOrDefault();
 
             if (cc != null)
             {
-                SaveCTofCC(cc.oNo);
-                SaveCTPofCC(cc.oNo);
-                SaveCETofCC(cc.oNo);
-                SaveCETPofCC(cc.oNo);
-                SaveCETRofCC(cc.oNo);
+                SaveCTofCC(CCoNo);
+                SaveCTPofCC(CCoNo);
+                SaveCETofCC(CCoNo);
+                SaveCETPofCC(CCoNo);
+                SaveCETRofCC(CCoNo);
             }
         }
 
