@@ -84,6 +84,8 @@ namespace BDB
         public int L2C { get; set; }
         public int L3C { get; set; }
 
+        public int LTC => L1C + L2C + L3C;
+
         public int curRnk
         {
             get

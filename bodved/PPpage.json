@@ -7,6 +7,11 @@
   "SortAd$": 0,
   "SortRnk$": 0,
   "SortSra$": 0,
+  "SortLTC$": 0,
+  "SortL1C$": 0,
+  "SortL2C$": 0,
+  "SortL3C$": 0,
+
   "NOP": 0,
 
   "PPs": [
@@ -24,6 +29,7 @@
       "L1C": 0,
       "L2C": 0,
       "L3C": 0,
+      "LTC": 0,
       "oCTs": "",
 
       "MdfTrigger$": 0

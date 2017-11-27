@@ -35,9 +35,10 @@
                         <th>BR</th>
                         <th>Rank</th>
                         <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
-                        <th>L1M#</th>
-                        <th>L2M#</th>
-                        <th>L3M#</th>
+                        <th><button class="sort" value="{{model.SortLTC$::click}}" onmousedown="++this.value" style="border-width:1px;">LTM#</button></th>
+                        <th><button class="sort" value="{{model.SortL1C$::click}}" onmousedown="++this.value" style="border-width:1px;">L1M#</button></th>
+                        <th><button class="sort" value="{{model.SortL2C$::click}}" onmousedown="++this.value" style="border-width:1px;">L2M#</button></th>
+                        <th><button class="sort" value="{{model.SortL3C$::click}}" onmousedown="++this.value" style="border-width:1px;">L3M#</button></th>
                         <th>Oynadığı Takımlar</th>
                         <th>Cns</th>
                         <th>Dğm</th>
@@ -54,6 +55,7 @@
                             <td class="ortala">°[[item.RnkBaz]]</td>
                             <td class="Rnk">°[[item.Rnk]]</td>
                             <td class="Sra">[[item.Sra]]</td>
+                            <td class="ortala" data-val$="[[item.LTC]]">[[item.LTC]]</td>
                             <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
                             <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
                             <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>

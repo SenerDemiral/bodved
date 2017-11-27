@@ -43,6 +43,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
+                BDB.H.refreshRH();
                 PushChanges();
             }
             DlgOpened = false;
@@ -65,6 +66,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
+                BDB.H.refreshRH();
                 PushChanges();
             }
             DlgOpened = false;
@@ -118,6 +120,26 @@ namespace bodved
         void Handle(Input.SortSra Action)
         {
             PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
+        }
+
+        void Handle(Input.SortLTC Action)
+        {
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.LTC desc");
+        }
+
+        void Handle(Input.SortL1C Action)
+        {
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.L1C desc");
+        }
+
+        void Handle(Input.SortL2C Action)
+        {
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.L2C desc");
+        }
+
+        void Handle(Input.SortL3C Action)
+        {
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.L3C desc");
         }
 
         [PPpage_json.PPs]
