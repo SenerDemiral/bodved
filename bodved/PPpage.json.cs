@@ -96,7 +96,7 @@ namespace bodved
 
         public void PushChanges()
         {
-            Session.ForAll((s, sId) => {
+            Session.RunTaskForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is PPpage)
                 {

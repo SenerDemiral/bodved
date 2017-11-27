@@ -212,61 +212,32 @@ namespace bodved
 
         void createCETR()
         {
-            var x = Db.SQL<BDB.CETR>("select c from BDB.CETR c where c.CET.ObjectNo = ?", ulong.Parse(CEToNo)).FirstOrDefault();
+            ulong cetOnO = ulong.Parse(CEToNo);
+
+            var x = Db.SQL<BDB.CETR>("select c from BDB.CETR c where c.CET.ObjectNo = ?", cetOnO).FirstOrDefault();
 
             if (x == null)
             {
-                createCETR("H", "S");
-                createCETR("H", "D");
-                createCETR("G", "S");
-                createCETR("G", "D");
+                createCETR(cetOnO, "H", "S");
+                createCETR(cetOnO, "H", "D");
+                createCETR(cetOnO, "G", "S");
+                createCETR(cetOnO, "G", "D");
+
+                BDB.H.CreateRHofCET(cetOnO);
             }
-            /*
-            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            // Home/Guest Players Single/Double
-            var hPS = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.hCT, "S");
-            var hPD = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.hCT, "D");
-            var gPS = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.gCT, "S");
-            var gPD = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.gCT, "D");
-
-            int c = 0;
-            foreach (var src in hPS)
-            {
-                if (c > 7)
-                    break;
-
-                Db.Transact(() =>
-                {
-                    new BDB.CETR()
-                    {
-                        CET = cet,
-                        CC = src.CC,
-                        CT = src.CT,
-                        PP = src.PP,
-                        Idx = src.Idx,
-                        SoD = "S",
-                        HoG = "H"
-                    };
-
-                });
-                c++;
-            }
-            */
         }
 
-        void createCETR(string hOg, string sOd)
+        void createCETR(ulong cetOnO, string hOg, string sOd)
         {
-            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
+            var cet = Db.FromId<BDB.CET>(cetOnO);
             // Home/Guest Players Single/Double
-            //QueryResultRows<BDB.CETP> P;
-            IEnumerable<BDB.CETP> P;
-            if (hOg == "H")
-                P = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.hCT, sOd);
-            else
-                P = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, cet.gCT, sOd);
+
+            BDB.CT ct = hOg == "H" ? cet.hCT : cet.gCT;
+
+            var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ? and c.SoD = ? order by c.Idx", cet, ct, sOd);
 
             int c = 0;
-            foreach (var src in P)
+            foreach (var src in cetps)
             {
                 if ((sOd == "S" && c > 7) || (sOd == "D" && c > 5))
                     break;
@@ -284,17 +255,6 @@ namespace bodved
                         HoG = hOg,
                         Trh = cet.Trh
                     };
-                    if (sOd == "S")
-                    {
-                        var rp = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.SoD = ? and c.Idx = ? and c.HoG <> ?", cet, sOd, src.Idx, hOg).FirstOrDefault();
-                        nCetr.PRH = new BDB.PRH()
-                        {
-                            PP = src.PP,
-                            rPP = rp.PP,
-                            Trh = cet.Trh,
-                            Won = 0
-                        };
-                    }
                 });
                 c++;
             }

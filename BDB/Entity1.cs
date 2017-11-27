@@ -86,15 +86,6 @@ namespace BDB
 
         public int LTC => L1C + L2C + L3C;
 
-        public int curRnk
-        {
-            get
-            {
-                var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this, DateTime.MaxValue).FirstOrDefault();
-                return p?.Rnk ?? 0; // this.RnkBaz;
-            }
-        }
-
         public string oCTs
         {
             get     // Oynadigi dTakimlar
@@ -340,6 +331,7 @@ namespace BDB
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
 
+
     [Database]
     public class PRH     // Player Rank History
     {
@@ -480,6 +472,7 @@ namespace BDB
         }
     }
     // CETR (Veya baska Turnuva) yaratildiginda bu kayit da yaratilacak, Sonuc girildiginde NOPX ve Rnk hesaplanarak buraya yazilacak
+
 
     [Database]
     public class RH     // Rank History

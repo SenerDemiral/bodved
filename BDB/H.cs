@@ -200,35 +200,6 @@ namespace BDB
             updCTsum(cet.gCT.oNo);
         }
 
-        // Sonuclari toplayip CET'e yaz KULLANILMIYOR
-        public static void Cetr2Cet(string CEToNo)
-        {
-            var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            var recs = Db.SQL<CETR>("select c from CETR c where c.CET = ? order by c.SoD, c.Idx, c.HoG desc", cet);
-            long hMSW = 0,
-                 hMDW = 0,
-                 gMSW = 0,
-                 gMDW = 0;
-
-            foreach (var r in recs)
-            {
-                if (r.SoD == "S")
-                {
-                    if (r.HoG == "H")
-                        hMSW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
-                    else
-                        gMSW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
-                }
-                else
-                {
-                    if (r.HoG == "H")
-                        hMDW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
-                    else
-                        gMDW = r.S1W + r.S2W + r.S3W + r.S4W + r.S5W;
-                }
-            }
-        }
-
         public static void updCTsumCC(ulong CCoNo)
         {
             //var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
@@ -326,73 +297,49 @@ namespace BDB
             });
         }
 
-        public static void reCreatePRHofCC(ulong CCoNo)
+        public static void CreateRHofCET(ulong CEToNo)
         {
-            // Rank PRH kayitlarini yarat, Sadece Singles
-            // Sonrasinda RefreshPRH gerekir!!!
-
-            var cc = Db.FromId<BDB.CC>(CCoNo);
-
-            // Delete PRHs of CC
-            Db.Transact(() =>
-            {
-                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
-                foreach (var cetr in cetrs)
-                {
-                    if (cetr.PRH != null)
-                    {
-                        Db.FromId<PRH>(cetr.PRH.GetObjectNo()).Delete();
-                    }
-                }
-            });
+            var cet = Db.FromId<BDB.CET>(CEToNo);
 
             Db.Transact(() =>
             {
-                PP pp = null, rpp = null;
                 CETR h = null, g = null;
                 int Won = 0;
-                PRH prh;
+                RH rh;
                 // Sadece Singles
-                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ? order by r.HoG desc", cc, "S");
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ? and r.SoD = ? order by r.CET, r.Idx, r.HoG desc", cet, "S");
+
                 foreach (var r in cetrs)
                 {
                     // Ilk H sonra G gelir
                     if (r.HoG == "H")
                     {
                         h = r;
-                        pp = r.PP;
                         if (r.MW > r.ML)
                             Won = 1;
                         else if (r.MW < r.ML)
                             Won = -1;
+
                     }
                     else if (r.HoG == "G")
                     {
                         g = r;
-                        rpp = r.PP;
 
-                        prh = new PRH
+                        rh = new RH
                         {
-                            PP = pp,
-                            rPP = rpp,
-                            Won = Won,
                             Trh = r.Trh,
-                        };
-                        h.PRH = prh;
 
-                        prh = new PRH
-                        {
-                            PP = rpp,
-                            rPP = pp,
-                            Won = Won * -1,
-                            Trh = r.Trh,
+                            hPP = h.PP,
+                            hWon = Won,
+                            gPP = g.PP,
+                            gWon = -Won,
                         };
-                        g.PRH = prh;
+                        h.RH = rh;
+                        g.RH = rh;
                     }
                 }
             });
-            // PRH daki herhangi bir degisiklik hepsini etkiler!
-            refreshPRH2();
+
         }
 
         public static void reCreateRHofCC(ulong CCoNo)
@@ -422,6 +369,7 @@ namespace BDB
                 RH rh;
                 // Sadece Singles
                 var cetrs = Db.SQL<CETR>("select r from CETR r where r.CC = ? and r.SoD = ? order by r.CET, r.Idx, r.HoG desc", cc, "S");
+                
                 foreach (var r in cetrs)
                 {
                     // Ilk H sonra G gelir
@@ -454,60 +402,6 @@ namespace BDB
             });
             // RH daki herhangi bir degisiklik hepsini etkiler!
             //refreshRH();
-        }
-
-        // Kullanilmiyor Old version
-        public static void refreshPRH(DateTime trh)
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
-            // ReCalculate Rank of All Players
-            var rr = Db.SQL<BDB.PRH>("select p from PRH p where p.Trh >= ? order by p.Trh", trh);
-
-            int nor = 0;
-            Db.Transact(() =>
-            {
-                foreach (var r in rr)
-                {
-                    r.NOPX = r.compNOPX;
-                    r.Rnk = r.NOPX + r.prvRnk;
-                    nor++;
-                }
-            });
-            watch.Stop();
-            Console.WriteLine($"refreshPRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-
-            watch.Restart();
-            ReCalcPPsra();
-            Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        // Kullanilmiyor Old version
-        public static void refreshPRH()
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
-            // ReCalculate Rank of All Players
-            var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh");
-
-            int nor = 0;
-            Db.Transact(() =>
-            {
-                foreach (var r in rr)
-                {
-                    r.NOPX = r.compNOPX;
-                    r.Rnk = r.NOPX + r.prvRnk;
-                    nor++;
-                }
-            });
-            watch.Stop();
-            Console.WriteLine($"refreshPRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-
-            watch.Restart();
-            ReCalcPPsra();
-            Console.WriteLine($"ReCalcPPsra: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         // Kullanilmiyor
@@ -553,119 +447,6 @@ namespace BDB
             });
             watch.Stop();
             Console.WriteLine($"UpdPPLigMacSay {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        public static void UpdPPLigMacSay3()
-        {
-            // 60msec;
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            var pps = Db.SQL<PP>("select p from PP p");
-            Db.Transact(() =>
-            {
-                foreach (var p in pps)
-                {
-                    var ccc = Db.SQL<CETR>("select p from CETR p where p.PP = ?", p).GroupBy((x) => x.CC.Lig);
-                    foreach (var c in ccc)
-                    {
-                        if (c.Key == "1")
-                            p.L1C = c.Count();
-                        else if (c.Key == "2")
-                            p.L2C = c.Count();
-                        else if (c.Key == "3")
-                            p.L3C = c.Count();
-                    }
-                }
-            });
-            watch.Stop();
-            Console.WriteLine($"UpdPPLigMacSay3 All: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        public static void UpdPPLigMacSay2()
-        {
-            // 180msec;
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            var pps = Db.SQL<PP>("select p from PP p");
-            Db.Transact(() =>
-            {
-                foreach (var p in pps)
-                {
-                    p.L1C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "1").Count();
-                    p.L2C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "2").Count();
-                    p.L3C = Db.SQL<CETR>("select p from CETR p where p.PP = ? and p.CC.Lig = ?", p, "3").Count();
-                }
-            });
-            watch.Stop();
-            Console.WriteLine($"UpdPPLigMacSay2 All: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        public static void refreshPRH2()
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            int nor = 0;
-
-            var pps = Db.SQL<BDB.PP>("select p from PP p");
-            // ReCalculate Rank of All Players
-            var rr = Db.SQL<BDB.PRH>("select p from PRH p order by p.Trh");
-
-            int NOPX = 0;
-            int pRnk = 0;
-            int pRnkRkp = 0;
-            PP pp = null;
-            PP ppRkp = null;
-            Db.Transact(() =>
-            {
-                // Init
-                // PP deki Rnk son degeri 
-                foreach (var p in pps)
-                {
-                    p.Rnk = 0; // p.RnkBaz;
-                    nor++;
-                }
-
-                foreach (var r in rr)
-                {
-                    pp = Db.FromId<PP>(r.PP.GetObjectNo());
-                    //pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
-                    pRnk = pp.Rnk == 0 ? 1900 : pp.Rnk; // Deneme Herkes 1900 den baslarsa
-                    ppRkp = Db.FromId<PP>(r.rPP.GetObjectNo());
-                    //pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
-                    pRnkRkp = ppRkp.Rnk == 0 ? 1900 : ppRkp.Rnk; // Deneme Herkes 1900 den baslarsa
-
-                    if (r.Won == 0 || r.PP.ID == "∞" || r.rPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                        NOPX = 0;
-                    else
-                        NOPX = compNOPX(r.Won, pRnk, pRnkRkp);
-
-                    r.NOPX = NOPX;
-                    r.pRnk = pRnk;
-                    r.Rnk = NOPX + pRnk;
-
-                    pp.Rnk = r.Rnk;
-                    /*
-                    var rkp = Db.SQL<PRH>("select r from PRH r where r.PP = ? and r.rPP = ? and r.Trh = ?", r.rPP, r.PP, r.Trh).FirstOrDefault();
-                    NOPX = -NOPX;
-                    rkp.NOPX = NOPX;
-                    rkp.pRnk = pRnkRkp;
-                    rkp.Rnk = NOPX + pRnkRkp;
-
-                    ppRkp.Rnk = rkp.Rnk;*/
-                }
-
-                // Update PP Sira
-                pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
-                int sira = 1;
-                foreach (var r in pps)
-                {
-                    //r.Rnk = r.curRnk;
-                    r.Sra = sira++;
-                }
-            });
-
-            watch.Stop();
-            Console.WriteLine($"refreshPRH2 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         public static void initBazRanks()
@@ -714,6 +495,9 @@ namespace BDB
             var pps = Db.SQL<BDB.PP>("select p from PP p");
             // ReCalculate Rank of All Players
             var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh");
+            //var rhs = Db.SQL<BDB.RH>("select p from RH p").OrderBy(x => x.Trh);
+            var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc");
+            //var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc");
 
             int NOPX = 0;
             Db.Transact(() =>
@@ -725,15 +509,11 @@ namespace BDB
                     p.Rnk = 0; // p.RnkBaz;
                     nor++;
                 }
-
+                
                 foreach (var r in rhs)
                 {
-                    //pRnk = pp.Rnk == 0 ? pp.RnkBaz : pp.Rnk;
                     r.hpRnk = r.hPP.Rnk == 0 ? r.hPP.RnkBaz : r.hPP.Rnk;
-                    //r.hpRnk = r.hPP.Rnk == 0 ? 1900 : r.hPP.Rnk; // Deneme Herkes 1900 den baslarsa
-                    //pRnkRkp = ppRkp.Rnk == 0 ? ppRkp.RnkBaz : ppRkp.Rnk;
                     r.gpRnk = r.gPP.Rnk == 0 ? r.gPP.RnkBaz : r.gPP.Rnk;
-                    //r.gpRnk = r.gPP.Rnk == 0 ? 1900 : r.gPP.Rnk; // Deneme Herkes 1900 den baslarsa
 
                     if (r.hWon == 0 || r.hPP.ID == "∞" || r.gPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
                         NOPX = 0;
@@ -748,15 +528,13 @@ namespace BDB
                 }
 
                 // Update PP Sira
-                pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
                 int sira = 1;
-                foreach (var r in pps)
+                foreach (var r in pp)
                 {
-                    //r.Rnk = r.curRnk;
                     r.Sra = sira++;
                 }
             });
-
+            
             watch.Stop();
             Console.WriteLine($"refreshRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
@@ -845,14 +623,14 @@ namespace BDB
             return NOPX;
         }
 
-
+        /*
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
             var p = Db.FromId<PP>(PPoNo);
             var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP = ? and p.Trh < ? order by p.Trh desc", p, Trh).FirstOrDefault();
             return r?.Rnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;    // Zaten prev kayit Rnk al, prvRnk degil
         }
-        
+        */
         public static void updPPsum()
         {
             var pp = Db.SQL<BDB.PP>("select p from PP p");
@@ -1102,7 +880,7 @@ namespace BDB
 
                 updCETsumCC(cc.oNo);
                 updCTsumCC(cc.oNo);
-                refreshPRH2();
+                refreshRH();
             }
         }
 
@@ -1141,7 +919,7 @@ namespace BDB
 
         public static void DeleteCETrelated(ulong CEToNo)  // Delete Musabaka alti
         {
-            PRH prh;
+            RH rh;
             var cet = Db.FromId<CET>(CEToNo);
             var cetps = Db.SQL<CETP>("select r from CETP r where r.CET = ?", cet);
             var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ?", cet);
@@ -1155,10 +933,10 @@ namespace BDB
 
                 foreach (var cetr in cetrs)
                 {
-                    if (cetr.PRH != null)
+                    if (cetr.RH != null)
                     {
-                        prh = Db.FromId<PRH>(cetr.PRH.GetObjectNo());
-                        prh.Delete();
+                        rh = Db.FromId<RH>(cetr.RH.GetObjectNo());
+                        rh.Delete();
                     }
                     cetr.Delete();
                 }
@@ -1178,7 +956,7 @@ namespace BDB
                 updCTsum(cet.hCT.oNo);
                 updCTsum(cet.gCT.oNo);
 
-                refreshPRH();
+                refreshRH();
             });
         }
 
@@ -1257,16 +1035,16 @@ namespace BDB
         {
             string line;
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
-            PRH prh;
+            RH rh;
             Db.Transact(() =>
             {
                 var recs = Db.SQL<CETR>("select r from CETR r where r.CC = ?", cc);
                 foreach (var cetr in recs)
                 {
-                    if (cetr.PRH != null)
+                    if (cetr.RH != null)
                     {
-                        prh = Db.FromId<PRH>(cetr.PRH.GetObjectNo());
-                        prh.Delete();
+                        rh = Db.FromId<RH>(cetr.RH.GetObjectNo());
+                        rh.Delete();
                     }
                     cetr.Delete();
                 }
@@ -1335,9 +1113,9 @@ namespace BDB
                 var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ?", cet);
                 foreach (var cetr in cetrs)
                 {
-                    if (cetr.PRH != null)
+                    if (cetr.RH != null)
                     {
-                        Db.FromId<PRH>(cetr.PRH.GetObjectNo()).Delete();
+                        Db.FromId<RH>(cetr.RH.GetObjectNo()).Delete();
                     }
                     cetr.Delete();
                 }
@@ -1384,52 +1162,8 @@ namespace BDB
                 }
             }
 
-            // Rank PRH kayitlarini yarat, Sadece Singles
-            // Sonrasinda RefreshPRH gerekir!!!
-            Db.Transact(() =>
-            {
-                PP pp = null, rpp = null;
-                CETR h = null, g = null;
-                int Won = 0;
-                PRH prh;
-                var recs = Db.SQL<CETR>("select r from CETR r where r.CET = ? and r.SoD = ? order by r.Idx, r.HoG desc", cet, "S");
-                foreach (var r in recs)
-                {
-                    if(r.HoG == "H")
-                    {
-                        h = r;
-                        pp = r.PP;
-                        if (r.MW > r.ML)
-                            Won = 1;
-                        else if (r.MW < r.ML)
-                            Won = -1;
-                    }
-                    else if (r.HoG == "G")
-                    {
-                        g = r;
-                        rpp = r.PP;
-
-                        prh = new PRH
-                        {
-                            PP = pp,
-                            rPP = rpp,
-                            Won = Won,
-                            Trh = cet.Trh,
-                        };
-                        h.PRH = prh;
-
-                        prh = new PRH
-                        {
-                            PP = rpp,
-                            rPP = pp,
-                            Won = Won * -1,
-                            Trh = cet.Trh,
-                        };
-                        g.PRH = prh;
-                    }
-                }
-            });
-
+            // Rank RH kayitlarini yarat, Sadece Singles
+            // Sonrasinda RefreshRH gerekir!!!
         }
 
         public static void LoadCETPofCC(string ccID)                // Turnuva OyuncuSiralama
@@ -1504,6 +1238,13 @@ namespace BDB
 
         public static void SaveCC()                     // Turnuvalar
         {
+            var rec = new RowCC();
+            rec.CCs.Data = Db.SQL<CC>("select r from CC r order by r.ID");
+            var aaa = rec.ToJson();
+
+            dynamic json = new Json(aaa);
+            string ad = json.CCs[0].Ad;
+
             var ccs = Db.SQL<CC>("select r from CC r order by r.ID");
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC.txt", false))
             {

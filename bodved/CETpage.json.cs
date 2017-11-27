@@ -104,14 +104,14 @@ namespace bodved
                         {
                             s.Trh = nTrh;
                             // Oyuncu Rank/Mac tarihini de degistir
-                            if (s.PRH != null)
-                                s.PRH.Trh = nTrh;
+                            if (s.RH != null)
+                                s.RH.Trh = nTrh;
                         }
                     } 
                 });
                 
                 if (trhChanged)
-                    BDB.H.refreshPRH();
+                    BDB.H.refreshRH();
 
                 //watch.Stop();
                 //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
@@ -119,8 +119,6 @@ namespace bodved
                 MdfRec.oNo = 0; // Yanlislikla birdaha bu kayitta birsey yapamasin
 
                 PushChanges();
-
-
             }
         }
 
@@ -148,7 +146,7 @@ namespace bodved
 
         public void PushChanges()
         {
-            Session.ForAll((s, sId) => {
+            Session.RunTaskForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CETpage && CCoNo == (cp as CETpage).CCoNo)
                 {
