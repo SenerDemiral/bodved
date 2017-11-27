@@ -246,7 +246,7 @@ namespace bodved
             //var csId = Session.Current.SessionId;
             // var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data; Hep Null geliyor
 
-            Session.RunTaskForAll((s, sId) => {
+            Session.ForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 // var xx = s.Store["bodved"].Data;  Hep Null geliyor???
                 if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo) // && csId != sId)
@@ -264,7 +264,7 @@ namespace bodved
         public void PushChangesCT()
         {
             var csId = Session.Current.SessionId;
-            Session.RunTaskForAll((s, sId) => {
+            Session.ForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo && csId != sId)
                 {

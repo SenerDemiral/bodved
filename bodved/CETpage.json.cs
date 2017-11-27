@@ -146,7 +146,7 @@ namespace bodved
 
         public void PushChanges()
         {
-            Session.RunTaskForAll((s, sId) => {
+            Session.ForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CETpage && CCoNo == (cp as CETpage).CCoNo)
                 {
