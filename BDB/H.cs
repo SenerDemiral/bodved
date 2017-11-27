@@ -339,7 +339,7 @@ namespace BDB
                     }
                 }
             });
-
+            refreshRH();
         }
 
         public static void reCreateRHofCC(ulong CCoNo)
@@ -623,14 +623,25 @@ namespace BDB
             return NOPX;
         }
 
-        /*
+        
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
             var p = Db.FromId<PP>(PPoNo);
-            var r = Db.SQL<BDB.PRH>("select p from PRH p where p.PP = ? and p.Trh < ? order by p.Trh desc", p, Trh).FirstOrDefault();
-            return r?.Rnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;    // Zaten prev kayit Rnk al, prvRnk degil
+            var r = Db.SQL<BDB.RH>("select p from RH p where (p.hPP = ? or p.gPP = ?) and p.Trh <= ? order by p.Trh desc", p, p, Trh).FirstOrDefault();
+            //return r?.Rnk ?? Db.FromId<BDB.PP>(PPoNo).RnkBaz;    // Zaten prev kayit Rnk al, prvRnk degil
+            if (r != null)
+            {
+                if (PPoNo == r.hPP.GetObjectNo())
+                    return r.hpRnk;
+                else
+                    return r.gpRnk;
+            }
+            else
+            {
+                return 0;       // Simdilik boyle aslinda BazRank gelebilir
+            }
         }
-        */
+
         public static void updPPsum()
         {
             var pp = Db.SQL<BDB.PP>("select p from PP p");
@@ -1238,13 +1249,24 @@ namespace BDB
 
         public static void SaveCC()                     // Turnuvalar
         {
+            /* JSON deneme 
+            // Read From DB
             var rec = new RowCC();
             rec.CCs.Data = Db.SQL<CC>("select r from CC r order by r.ID");
             var aaa = rec.ToJson();
-
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC2.txt", false))
+            {
+                sw.WriteLine(aaa);
+            }
+            // Write To DB
             dynamic json = new Json(aaa);
             string ad = json.CCs[0].Ad;
+            int iz = json.CCs.Count;
+            for (int i = 0; i < iz; i++)
+            {
 
+            }
+            */
             var ccs = Db.SQL<CC>("select r from CC r order by r.ID");
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC.txt", false))
             {

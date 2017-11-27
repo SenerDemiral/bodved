@@ -178,7 +178,7 @@ namespace bodved
                     dbl.hoNo1 = src.oNo.ToString();
                     dbl.hPPoNo1 = src.PP?.oNo.ToString();
                     dbl.hPPAd1 = src.PPAd;
-                    //dbl.hPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
+                    dbl.hPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.hS1W = src.S1W;
                     dbl.hS2W = src.S2W;
                     dbl.hS3W = src.S3W;
@@ -191,14 +191,14 @@ namespace bodved
                     dbl.hoNo2 = src.oNo.ToString();
                     dbl.hPPoNo2 = src.PP?.oNo.ToString();
                     dbl.hPPAd2 = src.PPAd;
-                    //dbl.hPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
+                    dbl.hPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }
                 if ((c % 4) == 2)
                 {
                     dbl.goNo1 = src.oNo.ToString();
                     dbl.gPPoNo1 = src.PP?.oNo.ToString();
                     dbl.gPPAd1 = src.PPAd;
-                    //dbl.gPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
+                    dbl.gPPrnk1 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                     dbl.gS1W = src.S1W;
                     dbl.gS2W = src.S2W;
                     dbl.gS3W = src.S3W;
@@ -232,7 +232,7 @@ namespace bodved
                     dbl.goNo2 = src.oNo.ToString();
                     dbl.gPPoNo2 = src.PP?.oNo.ToString();
                     dbl.gPPAd2 = src.PPAd;
-                    //dbl.gPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
+                    dbl.gPPrnk2 = BDB.H.PPprvRnk(src.PP.oNo, cet.Trh);
                 }
 
                 c++;
