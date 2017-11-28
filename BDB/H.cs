@@ -241,6 +241,7 @@ namespace BDB
             foreach (var r in Db.SQL<CET>("select c from CET c where c.hCT = ? and c.Rok = ?", ct, true))
             {
                 oM++;
+                
                 if (r.hP > r.gP)
                     aM++;
                 else
@@ -259,6 +260,7 @@ namespace BDB
             foreach (var r in Db.SQL<CET>("select c from CET c where c.gCT = ? and c.Rok = ?", ct, true))
             {
                 oM++;
+                
                 if (r.gP > r.hP)
                     aM++;
                 else
@@ -277,7 +279,7 @@ namespace BDB
             fMP = aMP - vMP;
             fO = aO - vO;
             fS = aS - vS;
-
+            
             Db.Transact(() =>
             {
                 ct.tP = tP;
@@ -441,14 +443,46 @@ namespace BDB
                         p.L2C = c.Count();
                     else if (c.Key.Lig == "3")
                         p.L3C = c.Count();
-
-                    nor++;
+                        
+                    nor += c.Count();
                 }
             });
             watch.Stop();
             Console.WriteLine($"UpdPPLigMacSay {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
+        public static void UpdPPLigMacSay(ulong CEToNo)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            var cet = Db.FromId<CET>(CEToNo);
+
+            var pps = Db.SQL<CETR>("select c from CETR c where c.CET = ?", cet).Select(x => x.PP).Distinct();  //Distinct((x) => x.PP.  //GroupBy((x) => x.PP.oNo);
+            int nor = 0;
+            Db.Transact(() =>
+            {
+            foreach (var p in pps)
+            {
+                var cetrs = Db.SQL<CETR>("select c from CETR c where c.PP = ?", p).GroupBy( x => x.CC.Lig );
+                   
+                    foreach (var c in cetrs)
+                    {
+                        
+                        if (c.Key == "1")
+                            p.L1C = c.Count();
+                        else if (c.Key == "2")
+                            p.L2C = c.Count();
+                        else if (c.Key == "3")
+                            p.L3C = c.Count();
+                            
+                        nor += c.Count();
+                    }
+            }
+            });
+
+            watch.Stop();
+            Console.WriteLine($"UpdPPLigMacSayCET {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
         public static void initBazRanks()
         {
             Db.Transact(() =>
@@ -492,26 +526,50 @@ namespace BDB
             watch.Start();
             int nor = 0;
 
-            var pps = Db.SQL<BDB.PP>("select p from PP p");
-            // ReCalculate Rank of All Players
-            var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh");
-            //var rhs = Db.SQL<BDB.RH>("select p from RH p").OrderBy(x => x.Trh);
-            var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc");
-            //var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc");
-
+            PP hPP;
+            PP gPP;
             int NOPX = 0;
             Db.Transact(() =>
             {
                 // Init
                 // PP deki Rnk son degeri 
+                var pps = Db.SQL<BDB.PP>("select p from PP p");
                 foreach (var p in pps)
                 {
                     p.Rnk = 0; // p.RnkBaz;
                     nor++;
                 }
                 
+                int hRnk = 0, gRnk = 0;
+                int hpRnk = 0, gpRnk = 0;
+                // ReCalculate Rank of All Players
+                //var rhs = Db.SQL<BDB.RH>("select p from RH p").OrderBy(x => x.Trh);
+                var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh");
                 foreach (var r in rhs)
                 {
+                    hPP = Db.FromId<PP>(r.hPP.GetObjectNo());
+                    gPP = Db.FromId<PP>(r.gPP.GetObjectNo());
+
+                    hRnk = hPP.Rnk;
+                    gRnk = gPP.Rnk;
+
+                    hpRnk = hRnk == 0 ? hPP.RnkBaz : hRnk;
+                    gpRnk = gRnk == 0 ? gPP.RnkBaz : gRnk;
+
+                    if (r.hWon == 0 || hPP.ID == "∞" || gPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                        NOPX = 0;
+                    else
+                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+
+                    r.hNOPX = NOPX;
+                    r.gNOPX = -NOPX;
+                    r.hpRnk = hpRnk;
+                    r.gpRnk = gpRnk;
+
+                    hPP.Rnk = hpRnk + NOPX;
+                    gPP.Rnk = gpRnk - NOPX;
+                    
+                    /* Burasi 3-4msec yavas
                     r.hpRnk = r.hPP.Rnk == 0 ? r.hPP.RnkBaz : r.hPP.Rnk;
                     r.gpRnk = r.gPP.Rnk == 0 ? r.gPP.RnkBaz : r.gPP.Rnk;
 
@@ -525,9 +583,12 @@ namespace BDB
 
                     r.hPP.Rnk = r.hpRnk + r.hNOPX;
                     r.gPP.Rnk = r.gpRnk + r.gNOPX;
+                    */
                 }
 
                 // Update PP Sira
+                var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc");
+                //var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc");
                 int sira = 1;
                 foreach (var r in pp)
                 {

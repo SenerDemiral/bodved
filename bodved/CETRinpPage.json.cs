@@ -42,12 +42,11 @@ namespace bodved
 
             //BDB.H.updCTsumCC(cet.CCoNo);
 
-            //BDB.H.refreshPRH(cet.Trh);
-            //BDB.H.refreshPRH2();
             BDB.H.refreshRH();
-            BDB.H.UpdPPLigMacSay();
+            //BDB.H.UpdPPLigMacSay();
+            BDB.H.UpdPPLigMacSay(ulong.Parse(CEToNo));
 
-            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+            //BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
             PushChangesCT();
 

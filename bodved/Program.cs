@@ -202,10 +202,10 @@ namespace bodved
             var master = GetMasterPageFromSession();
 
             
-            //if (master.CurrentPage != null && master.CurrentPage.GetType().Equals(typeof(T)))
-            //{
-            //    return master;
-            //}
+            if (master.CurrentPage != null && master.CurrentPage.GetType().Equals(typeof(T)))
+            {
+                return master;
+            }
             
             master.CurrentPage = Self.GET(partialPath);
 
