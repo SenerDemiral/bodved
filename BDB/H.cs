@@ -103,7 +103,7 @@ namespace BDB
                     new STAT
                     {
                         ID = 1,
-                        IdVal = 4213
+                        IdVal = 4227
                     };
                 }
                 else
