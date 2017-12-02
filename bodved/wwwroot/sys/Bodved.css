@@ -170,8 +170,8 @@ td[data-idx="7"] {
     padding:1px;
 }
 
-[data-onc="9"] {
-    background-color: papayawhip;
+[data-onc^="+"] {
+    background-color: rgba(238, 232, 170, 0.7); /*palegoldenrod */
 }
 
 [data-val="0"] {
