@@ -11,6 +11,6 @@
   "LoginTrigger$": 0,
   "DlgOpenTrigger$": 0,
   "DlgOpened": false,
-
+  "EntCnt": 0,
   "CurrentPage": { }
 }

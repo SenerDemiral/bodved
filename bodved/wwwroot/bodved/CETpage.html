@@ -29,11 +29,11 @@
                         <tr>
                             <td class="oNo"  hidden$="[[!model.canMdfy]]"><button class="edit"value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td hidden$="[[!model.canMdfy]]">[[item.ID]]</td>
-                            <td><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]">[[item.hCTAd]]</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
-                            <td class="hSW" data-val$="[[item.hP]]">[[item.hP]]</td>
+                            <td data-WL$="[[item.hWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]">[[item.hCTAd]]</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
+                            <td class="hSW" data-val$="[[item.hP]]">[[item.hPW]]</td>
                             <td><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>
-                            <td class="gSW" data-val$="[[item.gP]]">[[item.gP]]</td>
-                            <td><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">[[item.gCTAd]]</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
+                            <td class="gSW" data-val$="[[item.gP]]">[[item.gPW]]</td>
+                            <td data-WL$="[[item.gWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">[[item.gCTAd]]</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
                         </tr>
                     </template>
                 </tbody>

@@ -91,6 +91,29 @@ namespace BDB
             });
         }
 
+        public static int updEntCnt()
+        {
+            Write2Log($"Enter: {Session.Current.SessionId}");
+            int EntCnt = 0;
+            Db.Transact(() =>
+            {
+                var s = Db.SQL<STAT>("select s from STAT s where s.ID = ?", 1).FirstOrDefault();
+                if (s == null)
+                {
+                    new STAT
+                    {
+                        ID = 1,
+                        IdVal = 4213
+                    };
+                }
+                else
+                    s.IdVal += 1;
+
+                EntCnt = s.IdVal;
+            });
+            return EntCnt;
+        }
+
         public static void updCETsumCC(ulong CCoNo)
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -110,7 +133,7 @@ namespace BDB
                 return;
 
             Db.Transact(() =>
-            { 
+            {
                 // Musabakaya gelmeyip Hukmen Maglup da CETR kayitlari yok! Rok=true h/g Puani manuel girilmis.
                 var cetr = Db.SQL<CETR>("select c from CETR c where c.CET = ?", cet).FirstOrDefault();
                 if (cetr == null)

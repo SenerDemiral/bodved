@@ -173,6 +173,12 @@ td[data-idx="7"] {
 [data-onc^="+"] {
     background-color: rgba(238, 232, 170, 0.7); /*palegoldenrod */
 }
+[data-WL="W"] {
+    background-color:#ffdbcf;
+}
+[data-WL="L"] {
+    background-color:#c6fec6;
+}
 
 [data-val="0"] {
     color:#e8e8e8 !important;

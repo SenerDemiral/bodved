@@ -1,9 +1,18 @@
+using System.Linq;
 using Starcounter;
 
 namespace bodved
 {
     partial class MasterPage : Json
     {
+        protected override void OnData()
+        {
+            var s = Db.SQL<BDB.STAT>("select s from STAT s where s.ID = ?", 1).FirstOrDefault();
+            EntCnt = s.IdVal;
+
+            base.OnData();
+        }
+
         void Handle(Input.DlgOpenTrigger Action)
         {
             DlgOpened = true;

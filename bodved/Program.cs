@@ -18,13 +18,14 @@ namespace bodved
 
 
             var HTML = @"<!DOCTYPE html>
-				<html>
+                <html lang=""tr"">
 				<head>
 					<meta charset=""utf-8"">
 				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, minimum-scale=0.50, user-scalable=yes"">
-				    <!--meta name=""viewport"" content=""width=device-width""-->
-					<title>{0}</title>
-					
+                    <meta http-equiv=""x-ua-compatible"" content=""ie=edge"">				    
+                    <title>{0}</title>
+                    <meta name=""description"" content=""Bodrum Veteranlar Derneği Turnuvaları"">
+
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
 					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
 
@@ -157,13 +158,14 @@ namespace bodved
                 }
                 */
             };
-            /*
-            Hook<BDB.CT>.CommitInsert += (p, obj) =>
+            
+            Hook<BDB.STAT>.CommitUpdate += (p, obj) =>
             {
                 Session.RunTaskForAll((s, id) => {
-                    
+
+                    (s.Store["bodved"] as MasterPage).Data = null;
                     s.CalculatePatchAndPushOnWebSocket(); });
-            };*/
+            };
         }
 
         private static void Tmr_Elapsed(object sender, ElapsedEventArgs e)
@@ -191,7 +193,8 @@ namespace bodved
                 //Session.Current.Data = master;
                 Session.Current.Store["bodved"] = master;
 
-                BDB.H.Write2Log($"Enter: {Session.Current.SessionId}");
+                //BDB.H.Write2Log($"Enter: {Session.Current.SessionId}");
+                master.EntCnt = BDB.H.updEntCnt();
             }
 
             return master;

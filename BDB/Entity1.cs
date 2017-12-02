@@ -6,6 +6,13 @@ using System.Globalization;
 namespace BDB
 {
     [Database]
+    public class STAT
+    {
+        public int ID { get; set; }
+        public int IdVal { get; set; }
+    }
+
+    [Database]
     public class NTC
     {
         public ulong oNo => this.GetObjectNo();
@@ -266,6 +273,29 @@ namespace BDB
         public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
         //public string Tarih2 => string.Format()
         //CultureInfo.CreateSpecificCulture("de-DE")
+
+        public string hWL
+        {
+            get
+            {
+                if (hP > gP)
+                    return "W"; 
+                else if (hP < gP)
+                    return "L";
+                return "X";
+            }
+        }
+        public string gWL
+        {
+            get
+            {
+                if (hP > gP)
+                    return "L";
+                else if (hP < gP)
+                    return "W";
+                return "X";
+            }
+        }
     }
 
     [Database]
