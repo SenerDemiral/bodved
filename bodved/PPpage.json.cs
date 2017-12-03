@@ -43,7 +43,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
-                BDB.H.refreshRH();
+                BDB.H.RefreshRH();
                 PushChanges();
             }
             DlgOpened = false;
@@ -66,7 +66,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
-                BDB.H.refreshRH();
+                BDB.H.RefreshRH();
                 PushChanges();
             }
             DlgOpened = false;

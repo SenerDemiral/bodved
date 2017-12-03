@@ -36,17 +36,12 @@ namespace bodved
                 cet.Rok = true;
             });
 
-
-            BDB.H.updCTsum(cet.hCT.oNo);
-            BDB.H.updCTsum(cet.gCT.oNo);
-
-            //BDB.H.updCTsumCC(cet.CCoNo);
-
-            BDB.H.refreshRH();
-            //BDB.H.UpdPPLigMacSay();
+            BDB.H.RefreshRH();
+            BDB.H.UpdCTsum(cet.hCT.oNo);
+            BDB.H.UpdCTsum(cet.gCT.oNo);
             BDB.H.UpdPPLigMacSay(ulong.Parse(CEToNo));
 
-            //BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
             PushChangesCT();
 
