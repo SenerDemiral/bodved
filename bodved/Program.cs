@@ -161,7 +161,7 @@ namespace bodved
             
             Hook<BDB.STAT>.CommitUpdate += (p, obj) =>
             {
-                Session.RunTaskForAll((s, id) => {
+                Session.ForAll((s, id) => {
 
                     (s.Store["bodved"] as MasterPage).Data = null;
                     s.CalculatePatchAndPushOnWebSocket(); });

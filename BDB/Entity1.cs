@@ -10,6 +10,12 @@ namespace BDB
     {
         public int ID { get; set; }
         public int IdVal { get; set; }
+
+        public STAT ()
+        {
+            ID = 1;
+            IdVal = 4230;
+        }
     }
 
     [Database]

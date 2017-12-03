@@ -100,16 +100,18 @@ namespace BDB
                 var s = Db.SQL<STAT>("select s from STAT s where s.ID = ?", 1).FirstOrDefault();
                 if (s == null)
                 {
-                    new STAT
+                    new STAT()
                     {
                         ID = 1,
-                        IdVal = 4227
+                        IdVal = 4230
                     };
+                    EntCnt = 4230;
                 }
-                else
+                else {
                     s.IdVal += 1;
+                    EntCnt = s.IdVal;
+                }
 
-                EntCnt = s.IdVal;
             });
             return EntCnt;
         }
