@@ -111,7 +111,7 @@ namespace bodved
                 });
                 
                 if (trhChanged)
-                    BDB.H.refreshRH();
+                    BDB.H.RefreshRH();
 
                 //watch.Stop();
                 //Console.WriteLine($"{watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");

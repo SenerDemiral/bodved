@@ -139,6 +139,7 @@ namespace BDB
         public string Adres { get; set; }
         public string Pw { get; set; }
 
+        public int tRnk { get; set; }  // Takim Rank
         public int tP { get; set; }  // Takim Puan
 
         public int oM { get; set; }  // Oynadigi Musabaka

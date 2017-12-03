@@ -57,26 +57,32 @@ namespace scExpert
 
             Handle.GET("/scExpert/refreshRH", () =>
             {
-                BDB.H.refreshRH();
+                BDB.H.RefreshRH();
                 return "refreshRH: OK";
             });
 
-            Handle.GET("/scExpert/reCreateRHofCC/{?}", (ulong CCoNo) =>
+            Handle.GET("/scExpert/CompCTtRnkOfCC/{?}", (ulong CCoNo) =>
             {
-                BDB.H.reCreateRHofCC(CCoNo);
-                return $"OK: reCreateRHofCC({CCoNo})";
+                BDB.H.CompCTtRnkOfCC(CCoNo);
+                return $"OK: CompCTtRnkOfCC({CCoNo})";
             });
 
-            Handle.GET("/scExpert/updCETsumCC/{?}", (string CCoNo) =>
+            Handle.GET("/scExpert/ReCreateRHofCC/{?}", (ulong CCoNo) =>
             {
-                BDB.H.updCETsumCC(ulong.Parse(CCoNo));
+                BDB.H.ReCreateRHofCC(CCoNo);
+                return $"OK: ReCreateRHofCC({CCoNo})";
+            });
+
+            Handle.GET("/scExpert/UpdCETsumCC/{?}", (string CCoNo) =>
+            {
+                BDB.H.UpdCETsumCC(ulong.Parse(CCoNo));
                 return $"OK: updCETsumCC({CCoNo})";
             });
 
-            Handle.GET("/scExpert/updCTsumCC/{?}", (string CCoNo) =>
+            Handle.GET("/scExpert/UpdCTsumCC/{?}", (string CCoNo) =>
             {
-                BDB.H.updCTsumCC(ulong.Parse(CCoNo));
-                return $"OK: UpdateCTsumCC({CCoNo})";
+                BDB.H.UpdCTsumCC(ulong.Parse(CCoNo));
+                return $"OK: UpdCTsumCC({CCoNo})";
             });
 
             Handle.GET("/scExpert/SavePP", () =>

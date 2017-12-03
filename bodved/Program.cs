@@ -194,7 +194,7 @@ namespace bodved
                 Session.Current.Store["bodved"] = master;
 
                 //BDB.H.Write2Log($"Enter: {Session.Current.SessionId}");
-                master.EntCnt = BDB.H.updEntCnt();
+                master.EntCnt = BDB.H.UpdEntCnt();
             }
 
             return master;

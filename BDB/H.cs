@@ -91,7 +91,7 @@ namespace BDB
             });
         }
 
-        public static int updEntCnt()
+        public static int UpdEntCnt()
         {
             Write2Log($"Enter: {Session.Current.SessionId}");
             int EntCnt = 0;
@@ -116,18 +116,18 @@ namespace BDB
             return EntCnt;
         }
 
-        public static void updCETsumCC(ulong CCoNo)
+        public static void UpdCETsumCC(ulong CCoNo)
         {
             var cc = Db.FromId<CC>(CCoNo);
             var cets = Db.SQL<CET>("select c from CET c where c.CC = ?", cc);
             foreach (var r in cets)
             {
                 if (r.Rok)
-                    updCETsum(r.oNo);
+                    UpdCETsum(r.oNo);
             }
         }
 
-        public static void updCETsum(ulong CEToNo)
+        public static void UpdCETsum(ulong CEToNo)
         {
             var cet = Db.FromId<BDB.CET>(CEToNo);
 
@@ -221,11 +221,11 @@ namespace BDB
                 }
             });
 
-            updCTsum(cet.hCT.oNo);
-            updCTsum(cet.gCT.oNo);
+            UpdCTsum(cet.hCT.oNo);
+            UpdCTsum(cet.gCT.oNo);
         }
 
-        public static void updCTsumCC(ulong CCoNo)
+        public static void UpdCTsumCC(ulong CCoNo)
         {
             //var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
             var cc = Db.FromId<CC>(CCoNo);
@@ -234,11 +234,11 @@ namespace BDB
             
             foreach (var ct in cts)
             {
-                updCTsum(ct.oNo);
+                UpdCTsum(ct.oNo);
             }
         }
 
-        public static void updCTsum(ulong CToNo)
+        public static void UpdCTsum(ulong CToNo)
         {
             int tP = 0;  // Takim Puan
 
@@ -304,7 +304,16 @@ namespace BDB
             fMP = aMP - vMP;
             fO = aO - vO;
             fS = aS - vS;
-            
+
+            // Calculate TakimRank Sum(Rnk) / Count(CTP)
+            int ppCnt = 0;
+            int ppRnkSum = 0;
+            foreach (var r in Db.SQL<CTP>("select c from CTP c where c.CT = ?", ct))
+            {
+                ppCnt++;
+                ppRnkSum += r.PP.Rnk == 0 ? r.PP.RnkBaz : r.PP.Rnk;
+            }
+
             Db.Transact(() =>
             {
                 ct.tP = tP;
@@ -321,6 +330,30 @@ namespace BDB
                 ct.aS = aS;
                 ct.vS = vS;
                 ct.fS = fS;
+
+                ct.tRnk = ppRnkSum / ppCnt;
+            });
+        }
+
+        public static void CompCTtRnkOfCC(ulong CCoNo)
+        {
+            // Calculate TakimRank Sum(Rnk) / Count(CTP)
+
+            var cc = Db.FromId<CC>(CCoNo);
+            Db.Transact(() =>
+            {
+                foreach (var ct in Db.SQL<CT>("select c from CT c where c.CC = ?", cc))
+                {
+                    int ppCnt = 0;
+                    int ppRnkSum = 0;
+                    foreach (var r in Db.SQL<CTP>("select c from CTP c where c.CT = ?", ct))
+                    {
+                        ppCnt++;
+                        ppRnkSum += r.PP.Rnk == 0 ? r.PP.RnkBaz : r.PP.Rnk;
+                    }
+
+                    ct.tRnk = ppRnkSum / ppCnt;
+                }
             });
         }
 
@@ -366,10 +399,10 @@ namespace BDB
                     }
                 }
             });
-            refreshRH();
+            RefreshRH();
         }
 
-        public static void reCreateRHofCC(ulong CCoNo)
+        public static void ReCreateRHofCC(ulong CCoNo)
         {
             // Rank RH kayitlarini yarat, Sadece Singles
             // Sonrasinda RefreshPRH gerekir!!!
@@ -508,6 +541,7 @@ namespace BDB
             watch.Stop();
             Console.WriteLine($"UpdPPLigMacSayCET {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
+
         public static void initBazRanks()
         {
             Db.Transact(() =>
@@ -545,7 +579,7 @@ namespace BDB
             });
         }
 
-        public static void refreshRH()
+        public static void RefreshRH()
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
@@ -975,9 +1009,9 @@ namespace BDB
                 LoadCETPofCC(ccID);
                 LoadCETRofCC(ccID);
 
-                updCETsumCC(cc.oNo);
-                updCTsumCC(cc.oNo);
-                refreshRH();
+                UpdCETsumCC(cc.oNo);
+                UpdCTsumCC(cc.oNo);
+                RefreshRH();
             }
         }
 
@@ -1050,10 +1084,9 @@ namespace BDB
                 cet.gMSW = 0;
                 cet.gMDW = 0;
 
-                updCTsum(cet.hCT.oNo);
-                updCTsum(cet.gCT.oNo);
-
-                refreshRH();
+                RefreshRH();
+                UpdCTsum(cet.hCT.oNo);
+                UpdCTsum(cet.gCT.oNo);
             });
         }
 
