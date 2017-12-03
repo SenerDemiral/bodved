@@ -24,20 +24,19 @@ namespace bodved
                 }
             }
 
-            var pt = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
-            CCoNo = pt.CC.GetObjectNo().ToString();
-            Cap1 = $"{pt.CCAd} {pt.Ad} Takım Oyuncuları";
+            var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
+            CCoNo = ct.CC.GetObjectNo().ToString();
+            Cap1 = $"{ct.CCAd} {ct.Ad} Takım Oyuncuları";
 
             CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
 
-            tRnk = pt.tRnk;
-            
+            tRnk = ct.tRnk;
+
             //sener.NoR = DateTime.Now.Ticks;
         }
 
         void Handle(Input.InsertTrigger Action)
-        {
-            var oo = Action.OldValue;
+        {            var oo = Action.OldValue;
             var nn = Action.Value;
 
             Db.Transact(() =>
@@ -51,7 +50,11 @@ namespace bodved
                 };
             });
             MdfRec.oNo = 0;
-            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+
+            var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
+            BDB.H.CompCTtRnk(ct.oNo);
+            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
+            tRnk = ct.tRnk;
         }
 
         void Handle(Input.UpdateTrigger Action)

@@ -357,6 +357,25 @@ namespace BDB
             });
         }
 
+        public static void CompCTtRnk(ulong CToNo)
+        {
+            // Calculate TakimRank Sum(Rnk) / Count(CTP)
+
+            var ct = Db.FromId<CT>(CToNo);
+            Db.Transact(() =>
+            {
+                int ppCnt = 0;
+                int ppRnkSum = 0;
+                foreach (var r in Db.SQL<CTP>("select c from CTP c where c.CT = ?", ct))
+                {
+                    ppCnt++;
+                    ppRnkSum += r.PP.Rnk == 0 ? r.PP.RnkBaz : r.PP.Rnk;
+                }
+
+                ct.tRnk = ppRnkSum / ppCnt;
+            });
+        }
+
         public static void CreateRHofCET(ulong CEToNo)
         {
             var cet = Db.FromId<BDB.CET>(CEToNo);
