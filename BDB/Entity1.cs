@@ -200,6 +200,8 @@ namespace BDB
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
 
+        public int PPRnk => PP?.Rnk == null ? 0 : PP.Rnk == 0 ? PP.RnkBaz : PP.Rnk;
+
         public int L1C => PP?.L1C ?? 0;
         public int L2C => PP?.L2C ?? 0;
         public int L3C => PP?.L3C ?? 0;

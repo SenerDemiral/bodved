@@ -30,6 +30,8 @@ namespace bodved
 
             CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
 
+            tRnk = pt.tRnk;
+            
             //sener.NoR = DateTime.Now.Ticks;
         }
 

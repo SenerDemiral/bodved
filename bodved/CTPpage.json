@@ -12,6 +12,7 @@
       "PPoNo": 0,
       "Idx": 0,
       "PPAd": "",
+      "PPRnk": 0,
       "L1C": 0,
       "L2C": 0,
       "L3C": 0,
@@ -19,6 +20,8 @@
       "MdfTrigger$": 0
     }
   ],
+  "PPRnkSum": 0,
+  "tRnk": 0,
 
   "InsertTrigger$": 0,
   "UpdateTrigger$": 0,
