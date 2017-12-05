@@ -283,6 +283,17 @@ namespace BDB
         //public string Tarih2 => string.Format()
         //CultureInfo.CreateSpecificCulture("de-DE")
 
+        public string TrhWeekEoO
+        {
+            get
+            {
+                CultureInfo myCI = new CultureInfo("tr-TR");
+                Calendar mc = myCI.Calendar;
+                var w = mc.GetWeekOfYear(Trh, myCI.DateTimeFormat.CalendarWeekRule, myCI.DateTimeFormat.FirstDayOfWeek) - 1;
+                return w % 2 == 0 ? "E" : "O";
+            }
+        }
+
         public string hWL
         {
             get
