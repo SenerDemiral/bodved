@@ -44,7 +44,7 @@ div#dragD tr:nth-child(even) {
 /* drag object (DIV inside table cell) */
 .redips-drag {
 	margin: auto;
-	text-align: center;
+	text-align: left;
 	width: 8em;
 	/*padding: 2px;*/
 	overflow: hidden;

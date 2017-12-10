@@ -23,8 +23,8 @@ namespace bodved
 					<meta charset=""utf-8"">
 				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, minimum-scale=0.50, user-scalable=yes"">
                     <meta http-equiv=""x-ua-compatible"" content=""ie=edge"">				    
-                    <title>{0}</title>
-                    <meta name=""description"" content=""Bodrum Veteranlar Derneği Turnuvaları"">
+                    <title>BODVED @masatenisi.online</title>
+                    <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları. Hazırlayan: Şener DEMİRAL"">
 
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
 					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
