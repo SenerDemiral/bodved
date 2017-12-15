@@ -77,6 +77,24 @@ namespace bodved
             DlgOpened = false;
             CurrentPage["canMdfy"] = true;
         }
-        
+
+        [MasterPage_json.user]
+        public partial class MasterPageUser
+        {
+            void Handle(Input.displayName A)
+            {
+                var aaa = displayName;
+            }
+
+            void Handle(Input.changeTrigger A)
+            {
+                var aaa = displayName;
+
+                BDB.H.Write2UserLog($"|{displayName}|{email}|{uid}|");
+
+            }
+        }
+
+
     }
 }

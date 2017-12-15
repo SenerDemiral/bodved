@@ -1,0 +1,54 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<dom-module id="snr-dnma">
+    <template>
+        <div>
+            snr-dnmA 
+            <div>aaa-bbb:{{aaa}}-{{bbb}} </div>
+            <div>fullName:[[fullName]]</div>
+            <div>computeFullName:[[computeFullName('ccc', 'ddd')]]</div> 
+            <span>displayIndex:{{displayIndex(22)}}</span>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'snr-dnma',
+            properties: {
+                bbb: {
+                    type: Number,
+                    notify: false,
+                    value: 123
+                },
+                aaa: {
+                    type: String,
+                    value: "Sener DenemeA",
+                    notify: false,
+                    observer: '_aaaChanged'
+                },
+                fullName: {
+                    type: String,
+                    // when `first` or `last` changes `computeFullName` is called once
+                    // and the value it returns is stored as `fullName`
+                    computed: 'computeFullName(bbb, aaa)'
+                }
+            },
+            _aaaChanged: function (newValue, oldValue) {
+                console.log(`${oldValue} -> ${newValue} ${this.bbb}`);
+                console.log(this.aaa);
+                this.bbb++;
+                console.log(this.bbb);
+            },
+            computeFullName: function(first, last) {
+                return first + ' ' + last;
+            },
+            displayIndex: function(index) {
+                return index + 1;
+            },
+            getMyName: function () {
+                console.log("getMyName", this.aaa);
+                return this.aaa;
+            }
+        });
+    </script>
+
+</dom-module>

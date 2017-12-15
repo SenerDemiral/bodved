@@ -381,7 +381,7 @@ namespace BDB
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
 
-
+    // Kullanilmiyor
     [Database]
     public class PRH     // Player Rank History
     {

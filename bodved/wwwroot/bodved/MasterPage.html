@@ -1,5 +1,6 @@
 ﻿<link rel="import" href="/sys/vaadin-icons/vaadin-icons.html">
 <link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
+<link rel="import" href="/sys/snr-login/snr-login.html">
 
 <template>
     <template is="dom-bind">
@@ -27,6 +28,7 @@
                     <!--li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></button></li-->
                     <li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value">[[model.Login.Nm$]]</button></li>
                     <li class="bodved">BODVED</li>
+                    <li><snr-login mdlusr="{{model.user}}"></snr-login></li>
                 </ul>
             </section>
             <section class="master-current">

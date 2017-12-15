@@ -1,0 +1,86 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/polymerfire/firebase-app.html">
+<link rel="import" href="/sys/polymerfire/firebase-auth.html">
+
+<dom-module id="snr-login">
+    <template>
+        <firebase-app auth-domain="bodved-masatenisi.firebaseapp.com"
+                      database-url="https://bodved-masatenisi.firebaseio.com"
+                      api-key="AIzaSyB8AvtdpZacLhjlS2gxYOoa8hygxof06PI"
+                      storage-bucket="bodved-masatenisi.appspot.com"
+                      messaging-sender-id="1023597248603"
+                      project-id="bodved-masatenisi">
+        </firebase-app>
+
+        <firebase-auth id="auth" 
+                       user="{{user}}"
+                       status-known="{{statusKnown}}" 
+                       signed-in="{{signedIn}}"
+                       provider="google">
+        </firebase-auth>
+
+        <!--
+        <h1>Welcome1 [[user.displayName]]</h1>
+        <h2>Welcome2 [[mdlusr.displayName$]]</h2>
+        -->
+        <div style="display:flex;align-items:center">
+            <template is="dom-if" if="[[user]]">
+                [[user.displayName]]
+                <img src="[[user.photoURL]]" alt="My Photo" height="24" width="24">
+                <button on-tap="logout">Çık</button>
+            </template>
+            <template is="dom-if" if="[[!user]]">
+                <button on-tap="login">Ben kimim?</button>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'snr-login',
+            properties: {
+                user: {
+                    type: Object,
+                    value: null,
+                    observer: '_userChanged'
+
+                },
+                signedIn: {
+                    type: Boolean,
+                    notify: true,
+                },
+                statusKnown: {
+                    type: Boolean,
+                    notify: true,
+                    observer: '_statusChanged'
+                },
+                mdlusr: {
+                    type: Object
+                }
+            },
+            login: function () {
+                return this.$.auth.signInWithPopup();
+            },
+            logout: function () {
+                return this.$.auth.signOut();
+            },
+            _userChanged: function (newValue, oldValue) {
+                //console.log(`user: ${oldValue && oldValue.displayName} -> ${newValue}`);
+                console.log("user old:", oldValue);
+                if (newValue) {
+                    console.log("user new:", newValue.displayName, newValue.uid);
+                    this.mdlusr.displayName$ = newValue.displayName;
+                    this.mdlusr.uid$ = newValue.uid;
+                    this.mdlusr.email$ = newValue.email;
+                    this.mdlusr.photoURL$ = newValue.photoURL;
+                    this.mdlusr.changeTrigger$++;
+                }
+            },
+            _statusChanged: function (newValue, oldValue) {
+                console.log(`status: ${oldValue} -> ${newValue}`);
+            },
+
+        });
+    </script>
+
+</dom-module>

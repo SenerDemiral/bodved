@@ -179,6 +179,8 @@
     <Content Include="wwwroot\sys\Bodved.css" />
     <Content Include="wwwroot\sys\redips-drag-min.js" />
     <Content Include="wwwroot\sys\redips-style.css" />
+    <None Include="wwwroot\sys\snr-dnma\snr-dnma.html" />
+    <None Include="wwwroot\sys\snr-login\snr-login.html" />
     <Content Include="wwwroot\sys\thenBy.js" />
     <TypedJSON Include="TurnuvalarPage.json">
       <Generator>MsBuild:Compile</Generator>

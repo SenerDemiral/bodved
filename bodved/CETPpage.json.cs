@@ -125,6 +125,7 @@ namespace bodved
                 s = Singles.Add();
                 s.oNo = p.oNo.ToString();
                 s.Idx = i;
+                s.dIdx = i;
                 s.PPAd = p.PPAd;
                 s.AoY = i < 9 ? "A" : "Y";  // Ilk 8 Asil snrakiler Yedek
 
@@ -148,6 +149,7 @@ namespace bodved
                 d.c2.PPAd = da[c+1].PPAd;
                 d.c2.Idx = i; // c/2+1;
 
+                d.dIdx = i;
                 i++;
             }
             for (int c = 6; c < da.Length; c++)

@@ -1,13 +1,21 @@
 {
   "Html": "/bodved/MasterPage.html",
+  "user": {
+    "changeTrigger$": 0,
+    "displayName$": "",
+    "email$": "",
+    "photoURL$": "",
+    "uid$": ""
+  },
   "Login": {
     "Id$": "",
-    "Rl$": "?",
+    "Rl$": "ADMIN",
     "Nm$": "Login",
     "Pw$": "",
     "nPw$": "",
-    "LI": false
+    "LI": true
   },
+
   "LoginTrigger$": 0,
   "DlgOpenTrigger$": 0,
   "DlgOpened": false,

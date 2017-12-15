@@ -240,7 +240,7 @@ namespace bodved
             //var csId = Session.Current.SessionId;
             // var cscpData = (Session.Current.Store["bodved"] as MasterPage).CurrentPage.Data; Hep Null geliyor
 
-            Session.ForAll((s, sId) => {
+            Session.RunTaskForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 // var xx = s.Store["bodved"].Data;  Hep Null geliyor???
                 if (cp is CETRinpPage && CEToNo == (cp as CETRinpPage).CEToNo) // && csId != sId)
@@ -258,7 +258,7 @@ namespace bodved
         public void PushChangesCT()
         {
             var csId = Session.Current.SessionId;
-            Session.ForAll((s, sId) => {
+            Session.RunTaskForAll((s, sId) => {
                 var cp = (s.Store["bodved"] as MasterPage).CurrentPage;
                 if (cp is CTpage && CCoNo == (cp as CTpage).CCoNo && csId != sId)
                 {
@@ -328,9 +328,9 @@ namespace bodved
                         hR.S3W = 0;
                         hR.S4W = 0;
                         hR.S5W = 0;
-                        gR.S1W = 0;
-                        gR.S2W = 0;
-                        gR.S3W = 0;
+                        gR.S1W = 11;
+                        gR.S2W = 11;
+                        gR.S3W = 11;
                         gR.S4W = 0;
                         gR.S5W = 0;
                     }
@@ -341,9 +341,9 @@ namespace bodved
                         gR.PP = dkPP;
                         gR.RH.gPP = dkPP;
 
-                        hR.S1W = 0;
-                        hR.S2W = 0;
-                        hR.S3W = 0;
+                        hR.S1W = 11;
+                        hR.S2W = 11;
+                        hR.S3W = 11;
                         hR.S4W = 0;
                         hR.S5W = 0;
                         gR.S1W = 0;
@@ -474,7 +474,7 @@ namespace bodved
                     if (src.hS1W == -9 || hR1.PP.ID == "∞") // HomePlyrS diskalifiye
                     {
                         hA = 0;
-                        gA = 3;
+                        gA = 2;
                         hR1.PP = dkPP;
                         hR2.PP = dkPP;
 
@@ -488,31 +488,31 @@ namespace bodved
                         hR2.S3W = 0;
                         hR2.S4W = 0;
                         hR2.S5W = 0;
-                        gR1.S1W = 0;
-                        gR1.S2W = 0;
+                        gR1.S1W = 11;
+                        gR1.S2W = 11;
                         gR1.S3W = 0;
                         gR1.S4W = 0;
                         gR1.S5W = 0;
-                        gR2.S1W = 0;
-                        gR2.S2W = 0;
+                        gR2.S1W = 11;
+                        gR2.S2W = 11;
                         gR2.S3W = 0;
                         gR2.S4W = 0;
                         gR2.S5W = 0;
                     }
                     if (src.gS1W == -9 || gR1.PP.ID == "∞") // GuestPlyrS diskalifiye
                     {
-                        hA = 3;
+                        hA = 2;
                         gA = 0;
                         gR1.PP = dkPP;
                         gR2.PP = dkPP;
 
-                        hR1.S1W = 0;
-                        hR1.S2W = 0;
+                        hR1.S1W = 11;
+                        hR1.S2W = 11;
                         hR1.S3W = 0;
                         hR1.S4W = 0;
                         hR1.S5W = 0;
-                        hR2.S1W = 0;
-                        hR2.S2W = 0;
+                        hR2.S1W = 11;
+                        hR2.S2W = 11;
                         hR2.S3W = 0;
                         hR2.S4W = 0;
                         hR2.S5W = 0;

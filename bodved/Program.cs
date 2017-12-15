@@ -33,6 +33,13 @@ namespace bodved
                         window.Polymer = {{
                             dom: ""shadow""
                         }};
+                        window.displayIndex = function(index) {{ return index + 1; }};
+window.addEventListener(""pagehide"", function(event) {{
+        alert(""I am the 3rd one."");
+      }});
+function myFunction() {{ alert(""aaaaaaaaa""); }};
+
+
                     </script>
 
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
@@ -50,12 +57,13 @@ namespace bodved
 				</head>
 
 
-                <body>
+                <body onpagehide=""myFunction();"">
                     <template is=""dom-bind"" id=""puppet-root"">
                         <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
                     <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
                     <!--starcounter-debug-aid></starcounter-debug-aid-->
+
                 </body>
 				</html>";
 
@@ -161,7 +169,7 @@ namespace bodved
             
             Hook<BDB.STAT>.CommitUpdate += (p, obj) =>
             {
-                Session.ForAll((s, id) => {
+                Session.RunTaskForAll((s, id) => {
 
                     (s.Store["bodved"] as MasterPage).Data = null;
                     s.CalculatePatchAndPushOnWebSocket(); });

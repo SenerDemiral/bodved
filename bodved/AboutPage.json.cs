@@ -4,5 +4,6 @@ namespace bodved
 {
     partial class AboutPage : Json
     {
+
     }
 }

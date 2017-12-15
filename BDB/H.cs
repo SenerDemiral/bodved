@@ -424,7 +424,7 @@ namespace BDB
         public static void ReCreateRHofCC(ulong CCoNo)
         {
             // Rank RH kayitlarini yarat, Sadece Singles
-            // Sonrasinda RefreshPRH gerekir!!!
+            // Sonrasinda RefreshRH gerekir!!!
 
             var cc = Db.FromId<BDB.CC>(CCoNo);
 
@@ -1028,9 +1028,12 @@ namespace BDB
                 LoadCETPofCC(ccID);
                 LoadCETRofCC(ccID);
 
-                UpdCETsumCC(cc.oNo);
-                UpdCTsumCC(cc.oNo);
+                ReCreateRHofCC(cc.oNo);
                 RefreshRH();
+                UpdCETsumCC(cc.oNo);    // Musabaka
+                UpdCTsumCC(cc.oNo);     // Lig Takim
+                CompCTtRnkOfCC(cc.oNo); // Takim Rank Avarage
+                UpdPPLigMacSay();
             }
         }
 
@@ -1646,6 +1649,13 @@ namespace BDB
             catch
             {
             }*/
+        }
+        public static void Write2UserLog(string Msg)
+        {
+            using (StreamWriter sw = new StreamWriter(@"C:\Starcounter\MyLog\BodVed-UserLog.txt", true))
+            {
+                sw.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} {Msg}");
+            }
         }
     }
 }
