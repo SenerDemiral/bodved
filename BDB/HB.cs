@@ -150,7 +150,9 @@ namespace BDB
                         gMSW = (int)r.gMSW,
                         gMDW = (int)r.gMDW,
                         gSSW = (int)r.gSSW,
-                        gSDW = (int)r.gSDW
+                        gSDW = (int)r.gSDW,
+
+                        Info = r.Info
                     };
                 }
             });

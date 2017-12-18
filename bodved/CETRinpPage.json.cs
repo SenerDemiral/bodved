@@ -57,6 +57,7 @@ namespace bodved
             hCTAd = cet.hCTAd;
             gCTAd = cet.gCTAd;
             Rok = cet.Rok;
+            Info = cet.Info;
 
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
@@ -274,6 +275,8 @@ namespace bodved
             var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.ID = ?", "∞").FirstOrDefault();
             Db.Transact(() =>
             {
+                cet.Info = Info;
+
                 long hA, gA, hMW = 0, gMW = 0, hSW = 0, gSW = 0;
 
                 foreach (var src in Singles)

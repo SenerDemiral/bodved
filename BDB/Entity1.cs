@@ -259,6 +259,8 @@ namespace BDB
         public CT gCT { get; set; }
         public DateTime Trh { get; set; }
 
+        public string Info { get; set; }  // Aciklama
+
         public bool hPok { get; set; }  // Home Players Ok
         public bool gPok { get; set; }
         public bool Rok { get; set; }   // Results Ok. Home/Guest Onaylayabilir

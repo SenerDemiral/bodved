@@ -179,6 +179,9 @@
                 </tbody>
             </table>
 
+            <!--input placeholder="Açıklama" type="text" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]" /-->
+            <textarea placeholder="Açıklama" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
+
             <div hidden$="[[!model.canMdfy]]">
                 <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">
                     <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" style="justify-self:start;">Kaydet</button>
