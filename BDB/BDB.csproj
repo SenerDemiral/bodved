@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Entity1.cs" />
     <Compile Include="H.cs" />
+    <Compile Include="HB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RowCC.json.cs">
       <DependentUpon>RowCC.json</DependentUpon>

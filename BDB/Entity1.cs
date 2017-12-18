@@ -73,7 +73,7 @@ namespace BDB
         public string eMail { get; set; }
         public DateTime KytTrh { get; set; }
 
-        public string KytTarih => string.Format("{0:s}", KytTrh);
+        public string KytTarih => KytTrh.ToString("s");
 
         public int RnkBaz { get; set; }
         public int Rnk { get; set; }
@@ -171,6 +171,9 @@ namespace BDB
         public string K1Ad => K1?.Ad ?? "-";
         public string K2Ad => K2?.Ad ?? "-";
 
+        public string CC_ID => CC?.ID ?? "-";
+        public string K1_ID => K1?.ID ?? "-";
+        public string K2_ID => K2?.ID ?? "-";
 
         public CT()
         {
@@ -205,6 +208,10 @@ namespace BDB
         public int L1C => PP?.L1C ?? 0;
         public int L2C => PP?.L2C ?? 0;
         public int L3C => PP?.L3C ?? 0;
+
+        public string CC_ID => CC?.ID ?? "-";
+        public string CT_ID => CT?.ID ?? "-";
+        public string PP_ID => PP?.ID ?? "-";
 
         public string oCTs
         {
@@ -280,8 +287,12 @@ namespace BDB
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
         public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
-        //public string Tarih2 => string.Format()
+        public string TrhS => Trh.ToString("s");    // Sortable 
         //CultureInfo.CreateSpecificCulture("de-DE")
+
+        public string CC_ID => CC?.ID ?? "-";
+        public string hCT_ID => hCT?.ID ?? "-";
+        public string gCT_ID => gCT?.ID ?? "-";
 
         public string TrhWeekEoO
         {
@@ -334,6 +345,12 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
+
+        public string CC_ID => CC?.ID ?? "-";
+        public string CET_ID => CET?.ID ?? "-";
+        public string CT_ID => CT?.ID ?? "-";
+        public string PP_ID => PP?.ID ?? "-";
+
     }
     // Kayit yoksa H&G takimlari icin CTP'den olusturulur
     // Siralama bitirildikten sonra Onaylanarak kapatilir.
@@ -378,6 +395,13 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
+        public string TrhS => Trh.ToString("s");    // Sortable 
+
+        public string CC_ID => CC?.ID ?? "-";
+        public string CT_ID => CT?.ID ?? "-";
+        public string CET_ID => CET?.ID ?? "-";
+        public string PP_ID => PP?.ID ?? "-";
+
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
 

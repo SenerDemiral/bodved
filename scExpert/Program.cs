@@ -10,6 +10,18 @@ namespace scExpert
 
         static void Main()
         {
+            Handle.GET("/scExpert/Backup", () =>
+            {
+                BDB.HB.bCC();
+                return $"OK: Backup";
+            });
+
+            Handle.GET("/scExpert/Restore", () =>
+            {
+                BDB.HB.rCC();
+                return $"OK: Restore";
+            });
+
             Handle.GET("/scExpert/insOtoNotice", () =>
             {
                 BDB.H.insOtoNotice();

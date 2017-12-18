@@ -37,7 +37,7 @@ namespace bodved
                 Pok = false;    // Admin sirlama OK olsa bile degistirebilsin
 
             var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));     // Bu Takim'in siralamasi yapiliyor.
-            Cap1 = $"{cet.CCAd} {cet.Tarih} {ct.Ad} Oyuncu Sıralama";
+            Cap1 = $"Oyuncu Sıralama: {cet.CCAd} -- {cet.Tarih} -- {ct.Ad} ";
             Cap2 = $"{ct.Ad} Oyuncu Sıralama";
 
             var cetps = Db.SQL<BDB.CETP>("select c from CETP c where c.CET = ? and c.CT = ?", cet, ct).FirstOrDefault();

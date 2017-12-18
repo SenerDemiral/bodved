@@ -7,8 +7,6 @@ namespace bodved
 {
     class Program
     {
-        static Timer tmr;
-
         static void Main()
         {
             //tmr = new Timer(10000);

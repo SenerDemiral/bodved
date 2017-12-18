@@ -21,7 +21,6 @@ namespace BDB
             Stopwatch watch = new Stopwatch();
             watch.Start();
             PP pp = null;
-            ulong oNo = 0;
             //var pp = Db.SQL<PP>("select p from PP p where p.ObjectNo = ?", 1);
 
             pp = Db.FromId<PP>(0);
@@ -1375,6 +1374,15 @@ namespace BDB
         }
 
 
+        public static void BackupDB()
+        {
+            SavePP();
+            SaveCC();
+            foreach(var cc in Db.SQL<CC>("select r from CC r"))
+            {
+                BackupCC(cc.oNo);
+            }
+        }
 
         public static void SavePP()                     // Oyuncular
         {
