@@ -27,7 +27,7 @@
                     </caption>
                     <thead>
                         <tr>
-                            <th class="oNo">ID</th>
+                            <th class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
                             <th>Tarih</th>
                             <th>Link</th>
                         </tr>
@@ -35,7 +35,7 @@
                     <tbody>
                         <template is="dom-repeat" items="[[model.NTCs]]">
                             <tr>
-                                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                                 <td data-onc$="[[item.Onc]]">[[item.Tarih]]</td>
                                 <td data-onc$="[[item.Onc]]"><a class="ortala" href="[[item.Link]]">[[item.Ad]]</a></td>
                             </tr>

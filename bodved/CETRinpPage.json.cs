@@ -74,7 +74,7 @@ namespace bodved
 
 
 
-            Cap1 = $"{cet.CCAd}  {cet.Tarih}  Müsabaka Sonuçları";
+            Cap1 = $"{cet.CCAd} [{cet.Tarih}] Müsabaka Sonuçları";
             Cap2 = $"{cet.hCTAd} <> {cet.gCTAd}"; // Müsabaka Sonuçları";
 
             hP = cet.hP;

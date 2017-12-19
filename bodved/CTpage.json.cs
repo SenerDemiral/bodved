@@ -123,6 +123,7 @@ namespace bodved
             protected override void OnData()
             {
                 base.OnData();
+                this.Sra = (Parent.Parent as CTpage)._Sra++;
             }
 
             void Handle(Input.MdfTrigger Action)

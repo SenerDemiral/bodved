@@ -23,6 +23,7 @@
     {
       "oNo": 0,
       "Tarih": "",
+      "CEToNo": "",
       "CToNo": "",
       "CTAd": "",
       "Rnk": 0,
@@ -48,6 +49,7 @@
     {
       "oNo": 0,
       "Tarih": "",
+      "CEToNo": "",
       "CToNo": "",
       "CTAd": "",
       "WoL": "",

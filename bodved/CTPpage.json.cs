@@ -1,4 +1,5 @@
 ﻿using Starcounter;
+using Starcounter.Templates;
 
 namespace bodved
 {
@@ -7,7 +8,6 @@ namespace bodved
         protected override void OnData()
         {
             base.OnData();
-
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
@@ -28,7 +28,7 @@ namespace bodved
             CCoNo = ct.CC.GetObjectNo().ToString();
             Cap1 = $"{ct.CCAd} {ct.Ad} Takım Oyuncuları";
 
-            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+            CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPRnk desc", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
 
             tRnk = ct.tRnk;
 
@@ -98,6 +98,12 @@ namespace bodved
         [CTPpage_json.CTPs]
         public partial class CTPsElementJson
         {
+            protected override void OnData()
+            {
+                base.OnData();
+                this.Sra = (Parent.Parent as CTPpage)._Sra++;
+            }
+
             void Handle(Input.MdfTrigger Action)
             {
                 var p = this.Parent.Parent as CTPpage;
