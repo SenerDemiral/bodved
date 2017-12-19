@@ -4,9 +4,11 @@
   "Cap2": "",
   "canMdfy": false,
   "CCoNo": "",
+  "_Sra": 1,  // Counter
 
   "CTs": [
     {
+      "Sra": 0,
       "oNo": 0,
       "Ad": "",
       "ID": "",
@@ -17,10 +19,10 @@
       "Adres": "",
       "Pw": "",
       "MdfTrigger$": 0,
-      
+
       "tRnk": 0,
       "tP": 0,
-      "oM": 0, 
+      "oM": 0,
       "aM": 0,
       "vM": 0,
       "fM": 0,

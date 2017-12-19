@@ -5,9 +5,11 @@
   "canMdfy": false,
   "CCoNo": "",
   "CToNo": "",
-
+  "_Sra": 1,  // Counter
+  
   "CTPs": [
     {
+      "Sra": 0,
       "oNo": 0,
       "PPoNo": 0,
       "Idx": 0,

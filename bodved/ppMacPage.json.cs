@@ -24,6 +24,7 @@ namespace bodved
                 sng = Singles.Add();
                 sng.oNo = (long)k.oNo;
                 sng.Tarih = k.Trh.ToString("dd.MM.yy");
+                sng.CEToNo = $"{k.CET.oNo}";
                 sng.CToNo = $"{k.CT.oNo}";
                 sng.CTAd = $"{k.CTAd}•{k.CC.Grp}";
 
@@ -96,6 +97,7 @@ namespace bodved
                 dbl = Doubles.Add();
                 dbl.oNo = (long)k.oNo;
                 dbl.Tarih = k.Trh.ToString("dd.MM.yy");
+                dbl.CEToNo = $"{k.CET.oNo}";
                 dbl.CToNo = $"{k.CT.oNo}";
                 dbl.CTAd = $"{k.CTAd}•{k.CC.Grp}";
                 dbl.oPPoNo = o.PP.oNo.ToString();

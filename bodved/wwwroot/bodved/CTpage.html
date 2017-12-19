@@ -9,6 +9,7 @@
                 <thead>
                     <tr>
                         <th rowspan="2" class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
+                        <th rowspan="2">Sıra</th>
                         <th rowspan="2">Takım</th>
                         <th rowspan="2">Rank</th>
                         <th rowspan="2">Fikstür</th>
@@ -43,6 +44,7 @@
                     <template is="dom-repeat" items="[[model.CTs]]">
                         <tr>
                             <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td class="ortala">[[item.Sra]]</td>
                             <td><a href="/bodved/CTPpage/[[item.oNo]]">[[item.Ad]]</a></td>
                             <td class="ortala o">[[item.tRnk]]</td>
                             <td class="ortala"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
