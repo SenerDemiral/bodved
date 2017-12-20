@@ -11,6 +11,46 @@ namespace BDB
 {
     public static class H
     {
+        public static string MacSetResult(long hR, long gR)
+        {
+            // ← →
+            // ◄ ►
+            string rS = "";
+            if (hR > gR)
+                rS = $"◄{gR}";
+            else if(hR < gR)
+                rS = $"{hR}►";
+
+            return rS;
+        }
+
+        public static long GEN_ID()
+        {
+            ulong id = 0;
+            Db.Transact(() =>
+            {
+                var _id = Db.SQL<_ID>("select i from _ID i").FirstOrDefault();
+                if (_id == null)
+                {
+                    _id = new _ID
+                    {
+                        ID = 100000
+                    };
+                }
+                id = _id.ID + 1;
+                _id.ID = id;
+
+            });
+            return (long)id;
+        }
+        public static void GEN_ID_DEL()
+        {
+            Db.Transact(() =>
+            {
+                Db.SQL("DELETE FROM _ID");
+            });
+        }
+
         // If Db.FromId<table>(tablePrimaryKey) is for retreiving table unique row/object,
         // Db.FromId should be return null if tablePrimaryKey does not belong to `table` but retuns exception if belongs to another `table`
         // System.InvalidCastException: Unable to cast object of type `anotherTable` to type `table`.

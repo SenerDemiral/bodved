@@ -1,6 +1,13 @@
 {
+  "_IDs": [
+    {
+      "ID": 0
+    }
+  ],
+  
   "CCs": [
     {
+      "PK": 0,
       "ID": "",
       "Ad": "",
       "Idx": "",
@@ -12,7 +19,7 @@
 
   "PPs": [
     {
-      "ID": "",
+      "PK": 0,
       "Ad": "",
       "Sex": "",
       "DgmYil": 0,
@@ -30,10 +37,10 @@
 
   "CTs": [
     {
-      "ID": "",
-      "CC_ID": "",
-      "K1_ID": "",
-      "K2_ID": "",
+      "PK": 0,
+      "CC_PK": 0,
+      "K1_PK": 0,
+      "K2_PK": 0,
       "Ad": "",
       "Adres": "",
       "Pw": "",
@@ -57,19 +64,19 @@
 
   "CTPs": [
     {
-      "CC_ID": "",
-      "CT_ID": "",
-      "PP_ID": "",
+      "CC_PK": 0,
+      "CT_PK": 0,
+      "PP_PK": 0,
       "Idx": 0
     }
   ],
 
   "CETs": [
     {
-      "ID": "",
-      "CC_ID": "",
-      "hCT_ID": "",
-      "gCT_ID": "",
+      "PK": 0,
+      "CC_PK": 0,
+      "hCT_PK": 0,
+      "gCT_PK": 0,
       "TrhS": "",
       "hPok": false,
       "gPok": false,
@@ -92,10 +99,10 @@
 
   "CETPs": [
     {
-      "CC_ID": "",
-      "CET_ID": "",
-      "CT_ID": "",
-      "PP_ID": "",
+      "CC_PK": 0,
+      "CET_PK": 0,
+      "CT_PK": 0,
+      "PP_PK": 0,
       "HoG": "",
       "SoD": "",
       "Idx": 0
@@ -105,10 +112,10 @@
 
   "CETRs": [
     {
-      "CC_ID": "",
-      "CT_ID": "",
-      "CET_ID": "",
-      "PP_ID": "",
+      "CC_PK": 0,
+      "CET_PK": 0,
+      "CT_PK": 0,
+      "PP_PK": 0,
       "TrhS": "",
       "HoG": "",
       "SoD": "",

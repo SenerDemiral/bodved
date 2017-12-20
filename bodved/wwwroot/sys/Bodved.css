@@ -277,14 +277,14 @@ button.sort {
     width: 20px;
     text-align: center;
     font-weight:700;
-    font-size:1rem;
+    /*font-size:1rem;*/
 }
 .gSW {
     background-color: #eaefb3;
     width: 20px;
     text-align: center;
     font-weight:700;
-    font-size:1rem;
+    /*font-size:1rem;*/
 }
 .hHdr {
     background-color: honeydew;

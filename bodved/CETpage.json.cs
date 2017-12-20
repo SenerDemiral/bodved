@@ -57,8 +57,8 @@ namespace bodved
             {
                 new BDB.CET()
                 {
+                    PK = BDB.H.GEN_ID(),
                     CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
-                    ID = MdfRec.ID,
                     hCT = MdfRec.hCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.hCToNo)),
                     gCT = MdfRec.gCToNo == "" ? null : Db.FromId<BDB.CT>(ulong.Parse(MdfRec.gCToNo)),
                     Trh = DateTime.Parse(MdfRec.Trh)

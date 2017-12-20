@@ -19,10 +19,11 @@ namespace bodved
                 <html lang=""tr"">
 				<head>
 					<meta charset=""utf-8"">
-				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, minimum-scale=0.50, user-scalable=yes"">
+				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes"">
                     <meta http-equiv=""x-ua-compatible"" content=""ie=edge"">				    
                     <title>BODVED @masatenisi.online</title>
                     <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları. Hazırlayan: Şener DEMİRAL"">
+                    <meta name=""author"" content=""Şener DEMİRAL"">
 
                     <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
 					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
@@ -31,19 +32,13 @@ namespace bodved
                         window.Polymer = {{
                             dom: ""shadow""
                         }};
+
                         window.displayIndex = function(index) {{ return index + 1; }};
-window.addEventListener(""pagehide"", function(event) {{
-        alert(""I am the 3rd one."");
-      }});
-function myFunction() {{ alert(""aaaaaaaaa""); }};
-
-
                     </script>
 
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
 					<link rel=""import"" href=""/sys/starcounter.html"">
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
-					<!--link rel=""import"" href=""/sys/starcounter-debug-aid/src/starcounter-debug-aid.html""-->
 					
                     <!--link rel=""stylesheet"" href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro""-->
                     <script src=""/sys/thenBy.js""></script>
@@ -55,13 +50,11 @@ function myFunction() {{ alert(""aaaaaaaaa""); }};
 				</head>
 
 
-                <body onpagehide=""myFunction();"">
+                <body>
                     <template is=""dom-bind"" id=""puppet-root"">
                         <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
                     <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
-                    <!--starcounter-debug-aid></starcounter-debug-aid-->
-
                 </body>
 				</html>";
 

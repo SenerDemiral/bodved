@@ -12,15 +12,15 @@ namespace bodved
             var mpLgn = (Root as MasterPage).Login;
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
-            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Ad");
+            PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
             NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
-            Cap1 = $"Oyuncular  [{NOP-1} adet]";
+            Cap1 = $"Oyuncu sayýsý : {NOP-1}";
 
             //sener.NoR = DateTime.Now.Ticks;
         }
 
         void Handle(Input.DlgRejectTrigger A)
-        {///
+        {
             DlgOpened = false;
         }
 
@@ -30,9 +30,9 @@ namespace bodved
             {
                 Db.Transact(() =>
                 {
-                    new BDB.PP()
+                    var nPP = new BDB.PP()
                     {
-                        ID = this.MdfRec.ID,
+                        PK = BDB.H.GEN_ID(),
                         Ad = this.MdfRec.Ad,
                         Sex = this.MdfRec.Sex,
                         DgmYil = (int)this.MdfRec.DgmYil,

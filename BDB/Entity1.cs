@@ -6,6 +6,18 @@ using System.Globalization;
 namespace BDB
 {
     [Database]
+    public class _ID
+    {
+        public ulong ID { get; set; }
+
+        public _ID()
+        {
+            ID = 0;
+        }
+
+    }
+
+    [Database]
     public class STAT
     {
         public int ID { get; set; }
@@ -35,12 +47,12 @@ namespace BDB
     public class CC    // Competitions
     {
         public ulong oNo => this.GetObjectNo();
-
+        public long PK { get; set; }
         public string ID { get; set; }
         public string Ad { get; set; }
-        public string Idx { get; set; }
-        public string Skl { get; set; }    // Takim/Ferdi
-        public string Grp { get; set; }    // Birden cok turnuvada oynayan Oyunculari takip icin
+        public string Idx { get; set; }     // Siralama icin gerekli
+        public string Skl { get; set; }     // Takim/Ferdi
+        public string Grp { get; set; }     // Birden cok turnuvada oynayan Oyunculari takip icin
 
         public string Lig
         {
@@ -64,8 +76,9 @@ namespace BDB
     public class PP     // Players
     {
         public ulong oNo => this.GetObjectNo();
+        public long PK { get; set; }
 
-        public string ID { get; set; }
+        public string ID { get; set; }  //SIL
         public string Ad { get; set; }
         public string Sex { get; set; }
         public int DgmYil { get; set; }
@@ -106,7 +119,7 @@ namespace BDB
                 string oCTs = "";
                 foreach (var r in Db.SQL<CTP>("select c from BDB.CTP c where c.PP = ?", this))
                 {
-                    oCTs += r.CC.ID + "-" + r.CT.ID + " ";
+                    oCTs += $"{r.CC.ID}:{r.CT.Ad} ";  //r.CC.ID + "-" + r.CT.ID + " ";
                 }
 
                 return oCTs;
@@ -130,6 +143,7 @@ namespace BDB
     public class CT    // Competition Teams
     {
         public ulong oNo => this.GetObjectNo();
+        public long PK { get; set; }
 
         public CC CC { get; set; }
         public string ID { get; set; }
@@ -139,7 +153,7 @@ namespace BDB
         public string Adres { get; set; }
         public string Pw { get; set; }
 
-        public int tRnk { get; set; }  // Takim Rank
+        public int tRnk { get; set; }// Takim Rank
         public int tP { get; set; }  // Takim Puan
 
         public int oM { get; set; }  // Oynadigi Musabaka
@@ -168,12 +182,12 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public ulong K1oNo => K1?.GetObjectNo() ?? 0;
         public ulong K2oNo => K2?.GetObjectNo() ?? 0;
-        public string K1Ad => K1?.Ad ?? "-";
-        public string K2Ad => K2?.Ad ?? "-";
+        public string K1Ad => K1 == null ? "-" : $"{K1.Ad} {K1.Tel}";
+        public string K2Ad => K2 == null ? "-" : $"{K2.Ad} {K2.Tel}"; //K2?.Ad ?? "-";
 
-        public string CC_ID => CC?.ID ?? "-";
-        public string K1_ID => K1?.ID ?? "-";
-        public string K2_ID => K2?.ID ?? "-";
+        public long CC_PK => CC?.PK ?? 0;
+        public long K1_PK => K1?.PK ?? 0;
+        public long K2_PK => K2?.PK ?? 0;
 
         public CT()
         {
@@ -209,9 +223,9 @@ namespace BDB
         public int L2C => PP?.L2C ?? 0;
         public int L3C => PP?.L3C ?? 0;
 
-        public string CC_ID => CC?.ID ?? "-";
-        public string CT_ID => CT?.ID ?? "-";
-        public string PP_ID => PP?.ID ?? "-";
+        public long CC_PK => CC?.PK ?? 0;
+        public long CT_PK => CT.PK;
+        public long PP_PK => PP.PK;
 
         public string oCTs
         {
@@ -252,6 +266,7 @@ namespace BDB
     public class CET    // Competition Event Teams
     {
         public ulong oNo => this.GetObjectNo();
+        public long PK { get; set; }
 
         public CC CC { get; set; }
         public string ID { get; set; }
@@ -292,9 +307,9 @@ namespace BDB
         public string TrhS => Trh.ToString("s");    // Sortable 
         //CultureInfo.CreateSpecificCulture("de-DE")
 
-        public string CC_ID => CC?.ID ?? "-";
-        public string hCT_ID => hCT?.ID ?? "-";
-        public string gCT_ID => gCT?.ID ?? "-";
+        public long CC_PK => CC?.PK ?? 0;
+        public long hCT_PK => hCT?.PK ?? 0;
+        public long gCT_PK => gCT?.PK ?? 0;
 
         public string TrhWeekEoO
         {
@@ -348,10 +363,10 @@ namespace BDB
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
 
-        public string CC_ID => CC?.ID ?? "-";
-        public string CET_ID => CET?.ID ?? "-";
-        public string CT_ID => CT?.ID ?? "-";
-        public string PP_ID => PP?.ID ?? "-";
+        public long CC_PK => CC?.PK ?? 0;
+        public long CET_PK => CET?.PK ?? 0;
+        public long CT_PK => CT?.PK ?? 0;
+        public long PP_PK => PP?.PK ?? 0;
 
     }
     // Kayit yoksa H&G takimlari icin CTP'den olusturulur
@@ -399,10 +414,10 @@ namespace BDB
         public string PPAd => PP?.Ad ?? "-";
         public string TrhS => Trh.ToString("s");    // Sortable 
 
-        public string CC_ID => CC?.ID ?? "-";
-        public string CT_ID => CT?.ID ?? "-";
-        public string CET_ID => CET?.ID ?? "-";
-        public string PP_ID => PP?.ID ?? "-";
+        public long CC_PK => CC?.PK ?? 0;
+        public long CT_PK => CT?.PK ?? 0;
+        public long CET_PK => CET?.PK ?? 0;
+        public long PP_PK => PP?.PK ?? 0;
 
     }
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.

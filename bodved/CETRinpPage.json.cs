@@ -134,10 +134,16 @@ namespace bodved
                     sng.gS5W = src.S5W;
                     sng.gSW = src.SW;
 
+                    sng.hgS1W = BDB.H.MacSetResult(sng.hS1W, sng.gS1W);
+                    sng.hgS2W = BDB.H.MacSetResult(sng.hS2W, sng.gS2W);
+                    sng.hgS3W = BDB.H.MacSetResult(sng.hS3W, sng.gS3W);
+                    sng.hgS4W = BDB.H.MacSetResult(sng.hS4W, sng.gS4W);
+                    sng.hgS5W = BDB.H.MacSetResult(sng.hS5W, sng.gS5W);
+                    /*
                     if (sng.hS1W == 0 && sng.gS1W == 0)
                         sng.hgS1W = "";
                     else
-                        sng.hgS1W = $"{sng.hS1W}-{sng.gS1W}";
+                        sng.hgS1W = BDB.H.MacSetResult(sng.hS1W, sng.gS1W); //$"{sng.hS1W}-{sng.gS1W}";
                     if (sng.hS2W == 0 && sng.gS2W == 0)
                         sng.hgS2W = "";
                     else
@@ -154,7 +160,7 @@ namespace bodved
                         sng.hgS5W = "";
                     else
                         sng.hgS5W = $"{sng.hS5W}-{sng.gS5W}";
-
+                        */
                 }
 
                 s++;
@@ -201,6 +207,12 @@ namespace bodved
                     dbl.gS5W = src.S5W;
                     dbl.gDW = src.SW;
 
+                    dbl.hgS1W = BDB.H.MacSetResult(dbl.hS1W, dbl.gS1W);
+                    dbl.hgS2W = BDB.H.MacSetResult(dbl.hS2W, dbl.gS2W);
+                    dbl.hgS3W = BDB.H.MacSetResult(dbl.hS3W, dbl.gS3W);
+                    dbl.hgS4W = BDB.H.MacSetResult(dbl.hS4W, dbl.gS4W);
+                    dbl.hgS5W = BDB.H.MacSetResult(dbl.hS5W, dbl.gS5W);
+                    /*
                     if (dbl.hS1W == 0 && dbl.gS1W == 0)
                         dbl.hgS1W = "";
                     else
@@ -220,7 +232,7 @@ namespace bodved
                     if (dbl.hS5W == 0 && dbl.gS5W == 0)
                         dbl.hgS5W = "";
                     else
-                        dbl.hgS5W = $"{dbl.hS5W}-{dbl.gS5W}";
+                        dbl.hgS5W = $"{dbl.hS5W}-{dbl.gS5W}";*/
                 }
                 if ((c % 4) == 3)
                 {

@@ -36,9 +36,7 @@ namespace bodved
         }
 
         void Handle(Input.InsertTrigger Action)
-        {            var oo = Action.OldValue;
-            var nn = Action.Value;
-
+        {
             Db.Transact(() =>
             {
                 new BDB.CTP()

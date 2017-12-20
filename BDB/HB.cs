@@ -11,10 +11,39 @@ namespace BDB
 {
     public static class HB
     {
+        public static void PKset()
+        {
+            H.GEN_ID_DEL();
+
+            Db.Transact(() =>
+            {
+                foreach(var r in Db.SQL<CC>("select c from CC c"))
+                {
+                    r.PK = H.GEN_ID();
+                }
+
+                foreach (var r in Db.SQL<PP>("select c from PP c"))
+                {
+                    r.PK = H.GEN_ID();
+                }
+
+                foreach (var r in Db.SQL<CT>("select c from CT c"))
+                {
+                    r.PK = H.GEN_ID();
+                }
+
+                foreach (var r in Db.SQL<CET>("select c from CET c"))
+                {
+                    r.PK = H.GEN_ID();
+                }
+            });
+        }
+
         public static void bCC()
         {
 
             var rec = new RowCC();
+            rec._IDs.Data = Db.SQL<_ID>("select r from _ID r");
             rec.CCs.Data = Db.SQL<CC>("select r from CC r");
             rec.PPs.Data = Db.SQL<PP>("select r from PP r");
             rec.CTs.Data = Db.SQL<CT>("select r from CT r");
@@ -38,11 +67,21 @@ namespace BDB
             var rowCC = srz.Deserialize<RowCC>(strm);
             Db.Transact(() =>
             {
-
+                foreach (var r in rowCC._IDs)
+                {
+                    new BDB._ID()
+                    {
+                        ID = (ulong)r.ID
+                    };
+                }
+            });
+            Db.Transact(() =>
+            {
                 foreach (var r in rowCC.CCs)
                 {
                     new BDB.CC()
                     {
+                        PK = r.PK,
                         ID = r.ID,
                         Ad = r.Ad,
                         Skl = r.Skl,
@@ -57,7 +96,7 @@ namespace BDB
                 {
                     new BDB.PP()
                     {
-                        ID = r.ID,
+                        PK = r.PK,
                         RnkBaz = (int)r.RnkBaz,
                         Rnk = (int)r.Rnk,
                         Sex = r.Sex,
@@ -77,30 +116,34 @@ namespace BDB
             {
                 foreach (var r in rowCC.CTs)
                 {
-                    var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", r.CC_ID).FirstOrDefault();
-                    var ppK1 = Db.SQL<PP>("select r from PP r where r.ID = ?", r.K1_ID).FirstOrDefault();
-                    var ppK2 = Db.SQL<PP>("select r from PP r where r.ID = ?", r.K2_ID).FirstOrDefault();
+                    var cc   = Db.SQL<CC>("select r from CC r where r.PK = ?", r.CC_PK).FirstOrDefault();
+                    var ppK1 = Db.SQL<PP>("select r from PP r where r.PK = ?", r.K1_PK).FirstOrDefault();
+                    var ppK2 = Db.SQL<PP>("select r from PP r where r.PK = ?", r.K2_PK).FirstOrDefault();
 
                     new BDB.CT()
                     {
+                        PK = r.PK,
                         CC = cc,
-                        ID = r.ID,
+                        K1 = ppK1,
+                        K2 = ppK2,
                         Ad = r.Ad,
                         Adres = r.Adres,
                         Pw = r.Pw,
-                        K1 = ppK1,
-                        K2 = ppK2,
                         tRnk = (int)r.tRnk,
                         tP = (int)r.tP,
                         oM = (int)r.oM,
                         aM = (int)r.aM,
                         vM = (int)r.vM,
+                        fM = (int)r.fM,
                         aMP = (int)r.aMP,
                         vMP = (int)r.vMP,
+                        fMP = (int)r.fMP,
                         aO = (int)r.aO,
                         vO = (int)r.vO,
+                        fO = (int)r.fO,
                         aS = (int)r.aS,
-                        vS = (int)r.vS
+                        vS = (int)r.vS,
+                        fS = (int)r.fS
                     };
                 }
             });
@@ -108,9 +151,9 @@ namespace BDB
             {
                 foreach (var r in rowCC.CTPs)
                 {
-                    var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", r.CC_ID).FirstOrDefault();
-                    var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.CT_ID).FirstOrDefault();
-                    var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", r.PP_ID).FirstOrDefault();
+                    var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", r.CC_PK).FirstOrDefault();
+                    var ct = Db.SQL<CT>("select r from CT r where r.PK = ?", r.CT_PK).FirstOrDefault();
+                    var pp = Db.SQL<PP>("select r from PP r where r.PK = ?", r.PP_PK).FirstOrDefault();
                     //var aaa = a.Ad;
                     new BDB.CTP()
                     {
@@ -125,16 +168,16 @@ namespace BDB
             {
                 foreach (var r in rowCC.CETs)
                 {
-                    var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", r.CC_ID).FirstOrDefault();
-                    var hct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.hCT_ID).FirstOrDefault();
-                    var gct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.gCT_ID).FirstOrDefault();
+                    var cc =  Db.SQL<CC>("select r from CC r where r.PK = ?", r.CC_PK).FirstOrDefault();
+                    var hct = Db.SQL<CT>("select r from CT r where r.PK = ?", r.hCT_PK).FirstOrDefault();
+                    var gct = Db.SQL<CT>("select r from CT r where r.PK = ?", r.gCT_PK).FirstOrDefault();
 
                     new BDB.CET()
                     {
+                        PK = r.PK,
                         CC = cc,
                         hCT = hct,
                         gCT = gct,
-                        ID = r.ID,
                         Trh = DateTime.Parse(r.TrhS),
                         hPok = r.hPok,
                         gPok = r.gPok,
@@ -160,10 +203,10 @@ namespace BDB
             {
                 foreach (var r in rowCC.CETPs)
                 {
-                    var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", r.CC_ID).FirstOrDefault();
-                    var cet = Db.SQL<CET>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.CET_ID).FirstOrDefault();
-                    var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.CT_ID).FirstOrDefault();
-                    var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", r.PP_ID).FirstOrDefault();
+                    var cc =  Db.SQL<CC>( "select r from CC  r where r.PK = ?", r.CC_PK).FirstOrDefault();
+                    var cet = Db.SQL<CET>("select r from CET r where r.PK = ?", r.CET_PK).FirstOrDefault();
+                    var ct =  Db.SQL<CT>( "select r from CT  r where r.PK = ?", r.CT_PK).FirstOrDefault();
+                    var pp =  Db.SQL<PP>( "select r from PP  r where r.PK = ?", r.PP_PK).FirstOrDefault();
 
                     new BDB.CETP()
                     {
@@ -181,10 +224,10 @@ namespace BDB
             {
                 foreach (var r in rowCC.CETRs)
                 {
-                    var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", r.CC_ID).FirstOrDefault();
-                    var cet = Db.SQL<CET>("select r from CET r where r.CC = ? and r.ID = ?", cc, r.CET_ID).FirstOrDefault();
-                    var ct = Db.SQL<CT>("select r from CT r where r.CC = ? and r.ID = ?", cc, r.CT_ID).FirstOrDefault();
-                    var pp = Db.SQL<PP>("select r from PP r where r.ID = ?", r.PP_ID).FirstOrDefault();
+                    var cc =  Db.SQL<CC> ("select r from CC  r where r.PK = ?", r.CC_PK).FirstOrDefault();
+                    var cet = Db.SQL<CET>("select r from CET r where r.PK = ?", r.CET_PK).FirstOrDefault();
+                    var ct =  Db.SQL<CT> ("select r from CT  r where r.PK = ?", r.CT_PK).FirstOrDefault();
+                    var pp =  Db.SQL<PP> ("select r from PP  r where r.Pk = ?", r.PP_PK).FirstOrDefault();
 
                     new BDB.CETR()
                     {

@@ -42,11 +42,11 @@ namespace bodved
                 {
                     new BDB.CT()
                     {
+                        PK = BDB.H.GEN_ID(),
                         CC = Db.FromId<BDB.CC>(ulong.Parse(CCoNo)),
-                        Ad = MdfRec.Ad,
-                        ID = MdfRec.ID,
                         K1 = MdfRec.K1oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K1oNo)),
                         K2 = MdfRec.K2oNo == "" ? null : Db.FromId<BDB.PP>(ulong.Parse(MdfRec.K2oNo)),
+                        Ad = MdfRec.Ad,
                         Adres = MdfRec.Adres,
                         Pw = MdfRec.Pw 
                     };

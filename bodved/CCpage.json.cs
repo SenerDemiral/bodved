@@ -1,3 +1,4 @@
+using System.Linq;
 using Starcounter;
 using BDB;
 
@@ -22,8 +23,6 @@ namespace bodved
 
             //canMdfy = true; //DENEME
             CCs.Data = Db.SQL<BDB.CC>("select c from CC c order by c.Idx desc");
-
-            //sener.NoR = DateTime.Now.Ticks;
         }
 
         void Handle(Input.DlgRejectTrigger A)
@@ -39,7 +38,7 @@ namespace bodved
                 {
                     new BDB.CC()
                     {
-                        ID = MdfRec.ID,
+                        PK = H.GEN_ID(),
                         Ad = MdfRec.Ad,
                         Idx = MdfRec.Idx,
                         Skl = MdfRec.Skl,

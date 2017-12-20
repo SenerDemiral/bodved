@@ -72,7 +72,7 @@
                     <!--div>[[model.Cap2]]</div-->
                 </caption>
                 <thead>
-                    <tr class="hSW">
+                    <tr class="hSW" style="font-size:1rem;">
                         <th></th>
                         <th colspan="2">[[model.hPW]]</th>
                         <th colspan="5">[[model.hP]] <iron-icon icon="vaadin:bolt"></iron-icon> [[model.gP]]</th>
@@ -84,26 +84,26 @@
                     <tr class="SngHdr">
                         <th rowspan="2" style="width:12px;">#</th>
                         <th rowspan="2" style="font-size:large">[[model.hCTAd]]</th>
-                        <th>[[model.hPSW]]</th>
+                        <th style="font-size: 1rem;">[[model.hPSW]]</th>
                         <th colspan="5">Single</th>
-                        <th>[[model.gPSW]]</th>
+                        <th style="font-size: 1rem;">[[model.gPSW]]</th>
                         <th rowspan="2" style="font-size:large">[[model.gCTAd]]</th>
                     </tr>
                     <tr class="SngHdr">
                         <th>[[model.hMSW]]</th>
-                        <th>S1</th>
-                        <th>S2</th>
-                        <th>S3</th>
-                        <th>S4</th>
-                        <th>S5</th>
+                        <th style="font-size: xx-small;">1</th>
+                        <th style="font-size: xx-small;">2</th>
+                        <th style="font-size: xx-small;">3</th>
+                        <th style="font-size: xx-small;">4</th>
+                        <th style="font-size: xx-small;">5</th>
                         <th>[[model.gMSW]]</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.Singles]]">
                         <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]">
-                                [[item.Idx]]
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                S[[item.Idx]]
                                 <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
                             </td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
@@ -131,26 +131,26 @@
                     <tr class="DblHdr">
                         <th rowspan="2" style="width:12px;">#</th>
                         <th rowspan="2">[[model.hCTAd]]</th>
-                        <th>[[model.hPDW]]</th>
+                        <th style="font-size: 1rem;">[[model.hPDW]]</th>
                         <th colspan="5">Double</th>
-                        <th>[[model.gPDW]]</th>
+                        <th style="font-size: 1rem;">[[model.gPDW]]</th>
                         <th rowspan="2">[[model.gCTAd]]</th>
                     </tr>
                     <tr class="DblHdr">
                         <th>[[model.hMDW]]</th>
-                        <th>S1</th>
-                        <th>S2</th>
-                        <th>S3</th>
-                        <th>S4</th>
-                        <th>S5</th>
+                        <th style="font-size: xx-small;">1</th>
+                        <th style="font-size: xx-small;">2</th>
+                        <th style="font-size: xx-small;">3</th>
+                        <th style="font-size: xx-small;">4</th>
+                        <th style="font-size: xx-small;">5</th>
                         <th>[[model.gMDW]]</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="[[model.Doubles]]">
                         <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]">
-                                [[item.Idx]]
+                            <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                D[[item.Idx]]
                                 <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
                             </td>
                             <td class="ppAd" data-idx$="[[item.Idx]]">
@@ -180,7 +180,7 @@
             </table>
 
             <!--input placeholder="Açıklama" type="text" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]" /-->
-            <textarea placeholder="Açıklama" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
+            <textarea placeholder="" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
 
             <div hidden$="[[!model.canMdfy]]">
                 <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">

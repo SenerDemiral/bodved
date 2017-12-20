@@ -53,6 +53,13 @@ namespace bodved
 
                 sng.SW = $"{k.SW}";
                 sng.SL = $"{r.SW}";
+
+                sng.S1 = BDB.H.MacSetResult(k.S1W, r.S1W);
+                sng.S2 = BDB.H.MacSetResult(k.S2W, r.S2W);
+                sng.S3 = BDB.H.MacSetResult(k.S3W, r.S3W);
+                sng.S4 = BDB.H.MacSetResult(k.S4W, r.S4W);
+                sng.S5 = BDB.H.MacSetResult(k.S5W, r.S5W);
+                /*
                 sng.S1 = $"{k.S1W}-{r.S1W}";
                 if (k.S1W == 0 && r.S1W == 0)
                     sng.S1 = "";
@@ -68,7 +75,7 @@ namespace bodved
                 sng.S5 = $"{k.S5W}-{r.S5W}";
                 if (k.S5W == 0 && r.S5W == 0)
                     sng.S5 = "";
-
+                */
                 sng.WoL = k.SW > r.SW ? "W" : "L";
 
                 // Esit sonuc sadece 0-0 da olur, bu da oynanmamis demektir
@@ -114,6 +121,13 @@ namespace bodved
 
                 dbl.SW = $"{k.SW}";
                 dbl.SL = $"{r[0].SW}";
+
+                dbl.S1 = BDB.H.MacSetResult(k.S1W, r[0].S1W);
+                dbl.S2 = BDB.H.MacSetResult(k.S2W, r[0].S2W);
+                dbl.S3 = BDB.H.MacSetResult(k.S3W, r[0].S3W);
+                dbl.S4 = BDB.H.MacSetResult(k.S4W, r[0].S4W);
+                dbl.S5 = BDB.H.MacSetResult(k.S5W, r[0].S5W);
+                /*
                 dbl.S1 = $"{k.S1W}-{r[0].S1W}";
                 if (k.S1W == 0 && r[0].S1W == 0)
                     dbl.S1 = "";
@@ -129,7 +143,7 @@ namespace bodved
                 dbl.S5 = $"{k.S5W}-{r[0].S5W}";
                 if (k.S5W == 0 && r[0].S5W == 0)
                     dbl.S5 = "";
-
+                */
                 dbl.WoL = k.SW > r[0].SW ? "W" : "L";
 
                 DMo++;
