@@ -698,7 +698,7 @@ namespace BDB
                     hpRnk = hRnk == 0 ? hPP.RnkBaz : hRnk;
                     gpRnk = gRnk == 0 ? gPP.RnkBaz : gRnk;
 
-                    if (r.hWon == 0 || hPP.ID == "∞" || gPP.ID == "∞")   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    if (r.hWon == 0 || hPP.Ad.StartsWith("∞") || gPP.Ad.StartsWith("∞"))   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
                         NOPX = 0;
                     else
                         NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
@@ -1123,12 +1123,12 @@ namespace BDB
                 LoadCETPofCC(ccID);
                 LoadCETRofCC(ccID);
 
+                UpdPPLigMacSay();
                 ReCreateRHofCC(cc.oNo);
                 RefreshRH();
                 UpdCETsumCC(cc.oNo);    // Musabaka
                 UpdCTsumCC(cc.oNo);     // Lig Takim
                 CompCTtRnkOfCC(cc.oNo); // Takim Rank Avarage
-                UpdPPLigMacSay();
             }
         }
 

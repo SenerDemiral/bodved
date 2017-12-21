@@ -10,7 +10,7 @@ namespace bodved
             base.OnData();
 
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
-            Cap1 = $"{pp.Ad}";// [{pp.ID}/{pp.oNo}]"; // №
+            Cap1 = $"{pp.Ad} ♯{pp.Lig}";// [{pp.ID}/{pp.oNo}]"; // №
             Cap2 = $"Rank:{pp.Rnk}, Sıra:{pp.Sra}"; // №
 
             SinglesElementJson sng = null;
@@ -46,7 +46,8 @@ namespace bodved
                 //sng.rRnk = r.PRH.pRnk; //prvRnk;
 
                 sng.rPPoNo = r.PP.oNo.ToString();
-                sng.rPPAd = r.PPAd;
+                sng.rPPAd = $"{r.PPAd} ♯{r.PP.Lig}";
+                
                 sng.rCToNo = $"{r.CT.oNo}";
                 sng.rCTAd = r.CTAd;
                 sng.Sonuc = $"[{k.SW}-{r.SW}] {k.S1W}-{r.S1W} {k.S2W}-{r.S2W} {k.S3W}-{r.S3W} {k.S4W}-{r.S4W} {k.S5W}-{r.S5W}";

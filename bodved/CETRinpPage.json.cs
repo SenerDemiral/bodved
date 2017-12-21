@@ -284,7 +284,7 @@ namespace bodved
         protected void Save(bool OK)
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
-            var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.ID = ?", "∞").FirstOrDefault();
+            var dkPP = Db.SQL<BDB.PP>("select p from PP p where p.Ad like ?", "∞%").FirstOrDefault();
             Db.Transact(() =>
             {
                 cet.Info = Info;
@@ -331,7 +331,7 @@ namespace bodved
                     else if (src.hS5W < src.gS5W)
                         gA++;
 
-                    if (src.hS1W == -9 || hR.PP.ID == "∞") // HomePlyr diskalifiye
+                    if (src.hS1W == -9 || hR.PP.Ad.StartsWith("∞")) // HomePlyr diskalifiye
                     {
                         hA = 0;
                         gA = 3;
@@ -349,7 +349,7 @@ namespace bodved
                         gR.S4W = 0;
                         gR.S5W = 0;
                     }
-                    if (src.gS1W == -9 || gR.PP.ID == "∞") // GuestPlyr diskalifiye
+                    if (src.gS1W == -9 || gR.PP.Ad.StartsWith("∞")) // GuestPlyr diskalifiye
                     {
                         hA = 3;
                         gA = 0;
@@ -486,7 +486,7 @@ namespace bodved
                     else if (src.hS5W < src.gS5W)
                         gA++;
 
-                    if (src.hS1W == -9 || hR1.PP.ID == "∞") // HomePlyrS diskalifiye
+                    if (src.hS1W == -9 || hR1.PP.Ad.StartsWith("∞")) // HomePlyrS diskalifiye
                     {
                         hA = 0;
                         gA = 2;
@@ -514,7 +514,7 @@ namespace bodved
                         gR2.S4W = 0;
                         gR2.S5W = 0;
                     }
-                    if (src.gS1W == -9 || gR1.PP.ID == "∞") // GuestPlyrS diskalifiye
+                    if (src.gS1W == -9 || gR1.PP.Ad.StartsWith("∞")) // GuestPlyrS diskalifiye
                     {
                         hA = 2;
                         gA = 0;

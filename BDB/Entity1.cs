@@ -111,6 +111,7 @@ namespace BDB
         public int L3C { get; set; }
 
         public int LTC => L1C + L2C + L3C;
+        public int Lig => Ad.StartsWith("∞") ? 0 : L1C != 0 ? 1 : L2C != 0 ? 2 : L3C != 0 ? 3 : 0;  // Oynadigi en ust lig.
 
         public string oCTs
         {
@@ -182,8 +183,8 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public ulong K1oNo => K1?.GetObjectNo() ?? 0;
         public ulong K2oNo => K2?.GetObjectNo() ?? 0;
-        public string K1Ad => K1 == null ? "-" : $"{K1.Ad} {K1.Tel}";
-        public string K2Ad => K2 == null ? "-" : $"{K2.Ad} {K2.Tel}"; //K2?.Ad ?? "-";
+        public string K1Ad => K1 == null ? "-" : $"{K1.Ad} ({K1.Tel})";
+        public string K2Ad => K2 == null ? "-" : $"{K2.Ad} ({K2.Tel})"; //K2?.Ad ?? "-";
 
         public long CC_PK => CC?.PK ?? 0;
         public long K1_PK => K1?.PK ?? 0;
@@ -443,7 +444,7 @@ namespace BDB
         {
             get
             {
-                if (PP.ID == "∞")
+                if (PP.Ad.StartsWith("∞"))
                     return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.PP, this.Trh).FirstOrDefault();
@@ -454,7 +455,7 @@ namespace BDB
         {
             get
             {
-                if (rPP.ID == "∞")
+                if (rPP.Ad.StartsWith("∞"))
                     return 0;
                 // Ayni tarihde baska maci olabilir zamani da olmali (Ayni zamanda iki maci olamaz)
                 var p = Db.SQL<PRH>("select m from BDB.PRH m where m.PP = ? and m.Trh < ? order by m.Trh desc", this.rPP, this.Trh).FirstOrDefault();
@@ -466,7 +467,7 @@ namespace BDB
             get
             {
                 int NOPX = 0;
-                if(PP.ID == "∞" || rPP.ID == "∞")   // Oyunculardan biri diskalifiye ise Rank hesaplama
+                if(PP.Ad.StartsWith("∞") || rPP.Ad.StartsWith("∞"))   // Oyunculardan biri diskalifiye ise Rank hesaplama
                     return NOPX;
 
                 if (this.Won == 0)
