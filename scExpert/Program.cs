@@ -237,6 +237,8 @@ namespace scExpert
                     Db.SQL("CREATE INDEX IdxCETR_CC    ON CETR (CC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCETR_CET   ON CETR (CET)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_RH").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxCETR_RH   ON CETR (RH)");
 
                 return "IndexCreate: OK";
             });
@@ -267,6 +269,7 @@ namespace scExpert
 
                 Db.SQL("DROP INDEX IdxCETR_CC     ON CETR");
                 Db.SQL("DROP INDEX IdxCETR_CET    ON CETR");
+                Db.SQL("DROP INDEX IdxCETR_RH     ON CETR");
 
                 return "IndexDrop: OK";
             });

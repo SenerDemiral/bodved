@@ -570,6 +570,7 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
+        public string Grp { get; set; }     // CC.Grp
         public DateTime Trh { get; set; }
 
         public PP hPP { get; set; }

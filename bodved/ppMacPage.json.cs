@@ -10,7 +10,7 @@ namespace bodved
             base.OnData();
 
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
-            Cap1 = $"{pp.Ad} [{pp.ID}/{pp.oNo}]"; // №
+            Cap1 = $"{pp.Ad}";// [{pp.ID}/{pp.oNo}]"; // №
             Cap2 = $"Rank:{pp.Rnk}, Sıra:{pp.Sra}"; // №
 
             SinglesElementJson sng = null;

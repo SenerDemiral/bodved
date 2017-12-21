@@ -445,12 +445,14 @@ namespace BDB
 
                         rh = new RH
                         {
+                            Grp = r.CC.Grp,
                             Trh = r.Trh,
 
                             hPP = h.PP,
                             hWon = Won,
                             gPP = g.PP,
                             gWon = -Won,
+
                         };
                         h.RH = rh;
                         g.RH = rh;
@@ -506,6 +508,7 @@ namespace BDB
 
                         rh = new RH
                         {
+                            Grp = r.CC.Grp,
                             Trh = r.Trh,
 
                             hPP = h.PP,
@@ -654,18 +657,40 @@ namespace BDB
                 foreach (var p in pps)
                 {
                     p.Rnk = 0; // p.RnkBaz;
-                    nor++;
                 }
                 
                 int hRnk = 0, gRnk = 0;
                 int hpRnk = 0, gpRnk = 0;
+                int hLig, gLig, rLig;
                 // ReCalculate Rank of All Players
                 //var rhs = Db.SQL<BDB.RH>("select p from RH p").OrderBy(x => x.Trh);
                 var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh");
                 foreach (var r in rhs)
                 {
+                    nor++;
+
                     hPP = Db.FromId<PP>(r.hPP.GetObjectNo());
                     gPP = Db.FromId<PP>(r.gPP.GetObjectNo());
+                    /*
+                    hLig = 0;
+                    if (hPP.L1C != 0)
+                        hLig = 1;
+                    else if (hPP.L2C != 0)
+                        hLig = 2;
+                    else if (hPP.L3C != 0)
+                        hLig = 3;
+
+
+                    gLig = 0;
+                    if (gPP.L1C != 0)
+                        gLig = 1;
+                    else if (gPP.L2C != 0)
+                        gLig = 2;
+                    else if (gPP.L3C != 0)
+                        gLig = 3;
+                    */
+                    hLig = hPP.L1C != 0 ? 1 : hPP.L2C != 0 ? 2 : hPP.L3C != 0 ? 3 : 0;  // Oynadigi en ust lig.
+                    gLig = gPP.L1C != 0 ? 1 : gPP.L2C != 0 ? 2 : gPP.L3C != 0 ? 3 : 0;  // Oynadigi en ust lig.
 
                     hRnk = hPP.Rnk;
                     gRnk = gPP.Rnk;
@@ -677,6 +702,37 @@ namespace BDB
                         NOPX = 0;
                     else
                         NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+
+                    /*
+                    //if ((hPP.L1C != 0 && hPP.L2C != 0) || (gPP.L1C != 0 && gPP.L2C != 0))
+                    if (hPP.L1C != 0 || gPP.L1C != 0)
+                    {
+                        //var cetr = Db.SQL<CETR>("select c from CETR c where c.RH = ?", r).FirstOrDefault();
+                        //if (cetr.CC.Lig != "1")
+                        //    NOPX = 0;
+                    }
+                    var cetr = Db.SQL<CETR>("select c from CETR c where c.RH = ?", r).FirstOrDefault();
+                    rLig = int.Parse(cetr.CC.Lig);
+                    //if (hLig != rLig || gLig != rLig)
+                    //if (hLig < rLig || gLig < rLig)
+                    //    NOPX = 0;
+                    
+                    if (hLig < rLig)    // H altLigde oynamis
+                        if (r.hWon == 1)    // Kazanmis
+                            NOPX = 0;
+                    if (gLig < rLig)    // G altLigde oynamis
+                        if (r.gWon == 1)    // Kazanmis
+                            NOPX = 0;
+                    */
+                    if (hLig != gLig)   // Farkli Lig oyunculari (Hangi ligde mac yaptiklari onemli degil)
+                    {
+                        if (hLig < gLig && r.hWon == 1) // H olan UstLig kazanmis
+                            NOPX = 0;
+                        if (gLig < hLig && r.gWon == 1) // G olan UstLig kazanmis
+                            NOPX = 0;
+                    }
+
+
 
                     r.hNOPX = NOPX;
                     r.gNOPX = -NOPX;
