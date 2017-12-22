@@ -445,7 +445,7 @@ namespace BDB
 
                         rh = new RH
                         {
-                            Grp = r.CC.Grp,
+                            CC = r.CC,
                             Trh = r.Trh,
 
                             hPP = h.PP,
@@ -478,6 +478,7 @@ namespace BDB
                     if (cetr.RH != null)
                     {
                         Db.FromId<RH>(cetr.RH.GetObjectNo()).Delete();
+                        cetr.RH = null;
                     }
                 }
             });
@@ -508,7 +509,7 @@ namespace BDB
 
                         rh = new RH
                         {
-                            Grp = r.CC.Grp,
+                            CC = r.CC,
                             Trh = r.Trh,
 
                             hPP = h.PP,

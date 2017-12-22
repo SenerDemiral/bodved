@@ -137,6 +137,26 @@ namespace BDB
             Rnk = 0;
         }
     }
+
+    /// Dnm(17-18), Grp(T17) veya Lig(1,2,3) bazli Rank yapilabilir. 
+    /// Aktif Dnm sonuclari PP de gosterilir, digerleri ayri Page de.
+    [Database]
+    public class PPDR   // Oyuncu Donem Rank
+    {
+        public PP PP { get; set; }
+        public string Dnm { get; set; } 
+        public int RnkBaz { get; set; }
+        public int Rnk { get; set; }
+        public int Sra { get; set; }
+
+        public PPDR()
+        {
+            RnkBaz = Db.FromId<PP>(PP.GetObjectNo()).RnkBaz;
+            Rnk = 0;
+        }
+    }
+
+
     // Global, Oyuncu oynayabilmesi icin burada tanimlanmalidir.
     // Hangi takimda oynayacagi CTP de belirtilir.
 
@@ -571,8 +591,8 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
-        public string Grp { get; set; }     // CC.Grp
         public DateTime Trh { get; set; }
+        public CC CC { get; set; }
 
         public PP hPP { get; set; }
         public int hWon { get; set; }

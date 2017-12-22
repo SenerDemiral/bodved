@@ -197,48 +197,44 @@ namespace scExpert
 
             Handle.GET("/scExpert/IndexCreate", () =>
             {
+                
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPP_Ad      ON PP   (Ad)");
+                    Db.SQL("CREATE INDEX IdxPP_Ad      ON BDB.PP (Ad)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Rnk").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPP_Rnk     ON PP   (Rnk desc)");
+                    Db.SQL("CREATE INDEX IdxPP_Rnk     ON BDB.PP (Rnk DESC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPP_Sra     ON PP   (Sra)");
-
-                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxRH_Trh     ON RH   (Trh)");
-
-                //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_Trh").FirstOrDefault() == null)
-                //    Db.SQL("CREATE INDEX IdxPRH_Trh    ON PRH  (Trh ASC)");
-                //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPRH_PP_Trh").FirstOrDefault() == null)
-                //    Db.SQL("CREATE INDEX IdxPRH_PP_Trh ON PRH  (PP, Trh DESC)");
+                    Db.SQL("CREATE INDEX IdxPP_Sra     ON BDB.PP (Sra)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCC_Idx").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCC_Idx     ON CC   (Idx DESC)");
-
+                    Db.SQL("CREATE INDEX IdxCC_Idx     ON BDB.CC (Idx DESC)");
+                
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_CC").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCT_CC      ON CT   (CC)");
+                    Db.SQL("CREATE INDEX IdxCT_CC      ON BDB.CT (CC)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCET_CC_Trh ON CET  (CC, Trh)");
+                    Db.SQL("CREATE INDEX IdxCET_CC_Trh ON BDB.CET (CC, Trh)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCET_hCT    ON CET  (hCT)");
+                    Db.SQL("CREATE INDEX IdxCET_hCT    ON BDB.CET (hCT)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_gCT").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCET_gCT    ON CET  (gCT)");
+                    Db.SQL("CREATE INDEX IdxCET_gCT    ON BDB.CET (gCT)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCTP_CC     ON CTP  (CC)");
+                    Db.SQL("CREATE INDEX IdxCTP_CC     ON BDB.CTP (CC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CT").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCTP_CT     ON CTP  (CT)");
+                    Db.SQL("CREATE INDEX IdxCTP_CT     ON BDB.CTP (CT)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETP_CET").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETP_CET   ON CETP (CET)");
+                    Db.SQL("CREATE INDEX IdxCETP_CET   ON BDB.CETP (CET)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CC").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETR_CC    ON CETR (CC)");
+                    Db.SQL("CREATE INDEX IdxCETR_CC    ON BDB.CETR (CC)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETR_CET   ON CETR (CET)");
+                    Db.SQL("CREATE INDEX IdxCETR_CET   ON BDB.CETR (CET)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_RH").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxCETR_RH   ON CETR (RH)");
+                    Db.SQL("CREATE INDEX IdxCETR_RH    ON BDB.CETR (RH)");
+
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxRH_Trh     ON BDB.RH (Trh)");
 
                 return "IndexCreate: OK";
             });
