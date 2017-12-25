@@ -17,10 +17,15 @@ namespace BDB
             // ◄ ►
             string rS = "";
             if (hR > gR)
-                rS = $"◄{gR}";
+                rS = $"◄ {gR}";
             else if(hR < gR)
-                rS = $"{hR}►";
-
+                rS = $"{hR} ►";
+            /*
+            if (hR > gR)
+                rS = $"{hR}-{gR}";
+            else if (hR < gR)
+                rS = $"{hR}-{gR}";
+            */
             return rS;
         }
 
@@ -770,6 +775,100 @@ namespace BDB
                 }
             });
             
+            watch.Stop();
+            Console.WriteLine($"refreshRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static PPGR getPPGR(PP pp, string RnkGrp)
+        {
+            PPGR ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP = ? and p.RnkGrp = ?", pp, RnkGrp).FirstOrDefault();
+            if (ppgr == null)
+            {
+                ppgr = new PPGR
+                {
+                    PP = pp,
+                    RnkGrp = RnkGrp,
+                    RnkBaz = ppgr.PP.RnkBaz,
+                    Rnk = ppgr.PP.RnkBaz
+                };
+            }
+            return ppgr;
+        }
+
+        public static void RefreshRH2(ulong CCoNo)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            int nor = 0;
+
+            var cc = Db.FromId<CC>(CCoNo);
+            string RnkGrp = cc.RnkGrp;
+            string Lig = RnkGrp.Substring(2, 1);
+            int RnkBaz = 1700;
+            if (Lig == "1")
+                RnkBaz = 1900;
+            else if (Lig == "2")
+                RnkBaz = 1800;
+
+
+            PPGR hPP;
+            PPGR gPP;
+            int NOPX = 0;
+            Db.Transact(() =>
+            {
+                // Init
+                // PP deki Rnk son degeri 
+                //Db.SQL("DELETE FROM BDB.PPGR WHERE RnkGrp = ?", RnkGrp);
+                var pps = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ?", RnkGrp);
+                foreach (var p in pps)
+                {
+                    p.RnkBaz = p.PP.RnkBaz;
+                    p.Rnk = p.PP.RnkBaz; // p.RnkBaz;
+                    p.aO = 0;
+                    p.vO = 0;
+                }
+
+                // ReCalculate Rank of RnkGrp Players
+                int hpRnk = 0, gpRnk = 0;
+                var rhs = Db.SQL<BDB.RH>("select p from RH p where p.CC.RnkGrp = ? order by p.Trh", RnkGrp);
+                foreach (var r in rhs)
+                {
+                    nor++;
+
+                    hPP = getPPGR(r.hPP, RnkGrp);
+                    gPP = getPPGR(r.gPP, RnkGrp);
+
+                    hpRnk = hPP.Rnk;
+                    gpRnk = gPP.Rnk;
+
+                    if (r.hWon == 0 || r.hPP.Ad.StartsWith("∞") || r.gPP.Ad.StartsWith("∞"))   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                        NOPX = 0;
+                    else
+                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+
+                    r.hNOPX = NOPX;
+                    r.gNOPX = -NOPX;
+                    r.hpRnk = hpRnk;
+                    r.gpRnk = gpRnk;
+
+                    hPP.Rnk = hpRnk + NOPX;
+                    gPP.Rnk = gpRnk - NOPX;
+
+                    hPP.aO += r.hWon > 0 ? 1 : 0;
+                    hPP.vO += r.hWon < 0 ? 1 : 0;
+                    gPP.aO += r.gWon > 0 ? 1 : 0;
+                    gPP.vO += r.gWon < 0 ? 1 : 0;
+                }
+
+                // Update PP Sira
+                var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ? order by p.Rnk desc", RnkGrp);
+                int sira = 1;
+                foreach (var r in ppgr)
+                {
+                    r.Sra = sira++;
+                }
+            });
+
             watch.Stop();
             Console.WriteLine($"refreshRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }

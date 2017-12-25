@@ -53,7 +53,9 @@ namespace BDB
         public string Idx { get; set; }     // Siralama icin gerekli
         public string Skl { get; set; }     // Takim/Ferdi
         public string Grp { get; set; }     // Birden cok turnuvada oynayan Oyunculari takip icin
-
+        public string Lig { get; set; }
+        public string RnkGrp { get; set; }
+        /*
         public string Lig
         {
             get
@@ -63,7 +65,7 @@ namespace BDB
                 return "-";
             }
         }
-
+        */
         public CC()
         {
             Ad = "";
@@ -141,18 +143,28 @@ namespace BDB
     /// Dnm(17-18), Grp(T17) veya Lig(1,2,3) bazli Rank yapilabilir. 
     /// Aktif Dnm sonuclari PP de gosterilir, digerleri ayri Page de.
     [Database]
-    public class PPDR   // Oyuncu Donem Rank
+    public class PPGR   // Oyuncu Group Rank
     {
+        public ulong oNo => this.GetObjectNo();
         public PP PP { get; set; }
-        public string Dnm { get; set; } 
+        public string RnkGrp { get; set; } 
         public int RnkBaz { get; set; }
         public int Rnk { get; set; }
         public int Sra { get; set; }
+        public int aO { get; set; }     // Aldigi Oyun/Mac
+        public int vO { get; set; }
 
-        public PPDR()
+        public ulong PPoNo => PP?.GetObjectNo() ?? 0;
+        public string PPAd => PP?.Ad ?? "-";
+
+
+        public PPGR()
         {
-            RnkBaz = Db.FromId<PP>(PP.GetObjectNo()).RnkBaz;
+            RnkBaz = 0;
             Rnk = 0;
+            Sra = 0;
+            aO = 0;
+            vO = 0;
         }
     }
 
@@ -595,7 +607,7 @@ namespace BDB
         public CC CC { get; set; }
 
         public PP hPP { get; set; }
-        public int hWon { get; set; }
+        public int hWon { get; set; }       // +1 Kazandi -1 Kaybetti 0 Oynanmadi
         public int hpRnk { get; set; }
         public int hNOPX { get; set; }
 

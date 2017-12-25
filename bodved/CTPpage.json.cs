@@ -27,6 +27,7 @@ namespace bodved
             var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
             CCoNo = ct.CC.GetObjectNo().ToString();
             Cap1 = $"{ct.CCAd} {ct.Ad} Takım Oyuncuları";
+            RnkGrp = ct.CC.RnkGrp;
 
             CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPRnk desc", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
 

@@ -74,6 +74,12 @@ namespace scExpert
                 return "refreshRH: OK";
             });
 
+            Handle.GET("/scExpert/refreshRH2/{?}", (ulong CCoNo) =>
+            {
+                BDB.H.RefreshRH2(CCoNo);
+                return $"OK: refreshRH({CCoNo})";
+            });
+
             Handle.GET("/scExpert/CompCTtRnkOfCC/{?}", (ulong CCoNo) =>
             {
                 BDB.H.CompCTtRnkOfCC(CCoNo);

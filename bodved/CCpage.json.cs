@@ -42,7 +42,9 @@ namespace bodved
                         Ad = MdfRec.Ad,
                         Idx = MdfRec.Idx,
                         Skl = MdfRec.Skl,
-                        Grp = MdfRec.Grp
+                        Grp = MdfRec.Grp,
+                        Lig = MdfRec.Lig,
+                        RnkGrp = MdfRec.RnkGrp
                     };
                 });
                 MdfRec.oNo = 0;
@@ -64,6 +66,8 @@ namespace bodved
                     r.Idx = MdfRec.Idx;
                     r.Skl = MdfRec.Skl;
                     r.Grp = MdfRec.Grp;
+                    r.Lig = MdfRec.Lig;
+                    r.RnkGrp = MdfRec.RnkGrp;
                 });
                 MdfRec.oNo = 0;
 
@@ -118,6 +122,8 @@ namespace bodved
                 p.MdfRec.Idx = Idx;
                 p.MdfRec.Skl = Skl;
                 p.MdfRec.Grp = Grp;
+                p.MdfRec.Lig = Lig;
+                p.MdfRec.RnkGrp = RnkGrp;
 
                 p.DlgOpened = true;
             }

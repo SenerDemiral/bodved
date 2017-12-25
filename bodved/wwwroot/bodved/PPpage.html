@@ -51,7 +51,7 @@
                     <template is="dom-repeat" items="[[model.PPs]]">
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td><a href="/bodved/ppMacPage/[[item.oNo]]">[[item.Ad]]</a></td>
+                            <td><a href="/bodved/ppMacPage/[[item.oNo]]/">[[item.Ad]]</a></td>
                             <td class="ortala">°[[item.RnkBaz]]</td>
                             <td class="Rnk">°[[item.Rnk]]</td>
                             <td class="Sra">[[item.Sra]]</td>

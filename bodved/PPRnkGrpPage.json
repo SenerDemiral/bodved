@@ -1,0 +1,23 @@
+{
+  "Html": "/bodved/PPRnkGrpPage.html",
+  "Cap1": "Oyuncular",
+  "Cap2": "",
+  "canMdfy": false,
+
+  "RnkGrp": "L.1.17",
+  "NOP": 0,
+  
+  "PPs": [
+    {
+      "oNo": 0,
+      
+      "PPoNo": 0,
+      "PPAd": "",
+      "RnkBaz": 0,
+      "Rnk": 0,
+      "Sra": 0,
+
+      "MdfTrigger$": 0
+    }
+  ],
+}

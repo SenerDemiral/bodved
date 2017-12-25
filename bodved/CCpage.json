@@ -12,6 +12,8 @@
       "Ad": "",
       "Skl": "",
       "Grp": "",
+      "Lig": "",
+      "RnkGrp": "",
       "MdfTrigger$": 0
     }
   ],
@@ -22,7 +24,9 @@
     "Ad$": "",
     "Idx$": "",
     "Skl$": "",
-    "Grp$": ""
+    "Grp$": "",
+    "Lig$": "",
+    "RnkGrp$": ""
   },
 
   "DlgOpened": false,

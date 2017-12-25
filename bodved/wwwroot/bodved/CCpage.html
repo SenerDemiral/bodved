@@ -5,11 +5,13 @@
         <paper-dialog opened="[[model.DlgOpened]]" modal="true">
             <div class="mdfRecWrap">
                 <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
                 <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
                 <input placeholder="Idx" type="text" value="{{model.MdfRec.Idx$::change}}" />
-                <input placeholder="Şekli" type="text" value="{{model.MdfRec.Skl$::change}}" />
-                <input placeholder="Grup" type="text" value="{{model.MdfRec.Grp$::change}}" />
+                <input placeholder="Şkl" type="text" value="{{model.MdfRec.Skl$::change}}" />
+                <input placeholder="Grp" type="text" value="{{model.MdfRec.Grp$::change}}" />
+                <input placeholder="Lig" type="text" value="{{model.MdfRec.Lig$::change}}" />
+                <input placeholder="RankGrup" type="text" value="{{model.MdfRec.RnkGrp$::change}}" />
                 <div class="mdfRecAction">
                     <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
                     <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
@@ -27,10 +29,17 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th class="oNo">ID</th>
+                        <th class="oNo">oNo</th>
                         <th>Ad</th>
+                        <th hidden$="[[!model.canMdfy]]">ID</th>
+                        <th hidden$="[[!model.canMdfy]]">Idx</th>
+                        <th hidden$="[[!model.canMdfy]]">Skl</th>
+                        <th hidden$="[[!model.canMdfy]]">Grp</th>
+                        <th hidden$="[[!model.canMdfy]]">Lig</th>
+                        <th hidden$="[[!model.canMdfy]]">RnkGrp</th>
                         <th><iron-icon icon="vaadin:group"></iron-icon></th>
                         <th><iron-icon icon="vaadin:bolt"></iron-icon></th>
+                        <th><iron-icon icon="vaadin:user"></iron-icon></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +47,15 @@
                         <tr>
                             <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-typ="nmr">[[item.Ad]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.ID]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.Idx]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.Skl]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.Grp]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.Lig]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.RnkGrp]]</td>
                             <td class="ortala"><a class="Go" href="/bodved/CTpage/[[item.oNo]]">►</a></td>
                             <td class="ortala"><a class="Go" href="/bodved/CETpage/[[item.oNo]]">►</a></td>
+                            <td class="ortala"><a class="Go" href="/bodved/PPRnkGrpPage/[[item.RnkGrp]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>

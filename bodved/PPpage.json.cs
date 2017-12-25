@@ -13,7 +13,9 @@ namespace bodved
             canMdfy = mpLgn.Rl == "ADMIN" && mpLgn.LI ? true : false;
 
             PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
-            NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
+            //NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
+            NOP = PPs.Count;
+
             Cap1 = $"Oyuncu sayýsý : {NOP-1}";
 
             //sener.NoR = DateTime.Now.Ticks;

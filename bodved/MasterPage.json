@@ -13,7 +13,7 @@
     "Nm$": "Login",
     "Pw$": "",
     "nPw$": "",
-    "LI": false
+    "LI": true
   },
 
   "LoginTrigger$": 0,
