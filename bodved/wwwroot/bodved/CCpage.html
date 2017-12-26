@@ -12,6 +12,7 @@
                 <input placeholder="Grp" type="text" value="{{model.MdfRec.Grp$::change}}" />
                 <input placeholder="Lig" type="text" value="{{model.MdfRec.Lig$::change}}" />
                 <input placeholder="RankGrup" type="text" value="{{model.MdfRec.RnkGrp$::change}}" />
+                <input placeholder="RankGrupAd" type="text" value="{{model.MdfRec.RnkGrpAd$::change}}" />
                 <div class="mdfRecAction">
                     <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
                     <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
@@ -37,6 +38,7 @@
                         <th hidden$="[[!model.canMdfy]]">Grp</th>
                         <th hidden$="[[!model.canMdfy]]">Lig</th>
                         <th hidden$="[[!model.canMdfy]]">RnkGrp</th>
+                        <th hidden$="[[!model.canMdfy]]">RnkGrpAd</th>
                         <th><iron-icon icon="vaadin:group"></iron-icon></th>
                         <th><iron-icon icon="vaadin:bolt"></iron-icon></th>
                         <th><iron-icon icon="vaadin:user"></iron-icon></th>
@@ -53,9 +55,10 @@
                             <td hidden$="[[!model.canMdfy]]">[[item.Grp]]</td>
                             <td hidden$="[[!model.canMdfy]]">[[item.Lig]]</td>
                             <td hidden$="[[!model.canMdfy]]">[[item.RnkGrp]]</td>
+                            <td hidden$="[[!model.canMdfy]]">[[item.RnkGrpAd]]</td>
                             <td class="ortala"><a class="Go" href="/bodved/CTpage/[[item.oNo]]">►</a></td>
                             <td class="ortala"><a class="Go" href="/bodved/CETpage/[[item.oNo]]">►</a></td>
-                            <td class="ortala"><a class="Go" href="/bodved/PPRnkGrpPage/[[item.RnkGrp]]">►</a></td>
+                            <td class="ortala"><a class="Go" href="/bodved/PPRnkGrpPage/[[item.oNo]]">►</a></td>
                         </tr>
                     </template>
                 </tbody>

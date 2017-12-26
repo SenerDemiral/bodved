@@ -8,10 +8,21 @@ namespace bodved
         protected override void OnData()
         {
             base.OnData();
-
+            string ccInf = "";
             var pp = Db.FromId<BDB.PP>(ulong.Parse(PPoNo));
-            Cap1 = $"{pp.Ad} ♯{pp.Lig}";// [{pp.ID}/{pp.oNo}]"; // №
-            Cap2 = $"Rank:{pp.Rnk}, Sıra:{pp.Sra}"; // №
+            if (CCoNo != "")
+            {
+                var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
+                RnkGrp = cc.RnkGrp;
+                RnkGrpAd = cc.RnkGrpAd;
+
+                var ppgr = Db.SQL<BDB.PPGR>("select p from BDB.PPGR p where p.PP = ? and p.RnkGrp = ?", pp, RnkGrp).FirstOrDefault();
+                ccInf = $"Rank: {cc.RnkGrpAd}/{ppgr.Rnk}/{ppgr.Sra}";
+
+            }
+            //Cap1 = $"{pp.Ad} ♯{pp.Lig}";// [{pp.ID}/{pp.oNo}]"; // №
+            Cap1 = $"{pp.Ad} {ccInf}";
+            Cap2 = $"Global Rank: {pp.Rnk}/{pp.Sra}"; // №
 
             SinglesElementJson sng = null;
             var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "S");
@@ -32,16 +43,34 @@ namespace bodved
 
                     if (k.HoG == "H")
                     {
-                        sng.Rnk = k.RH.hpRnk;  //prvRnk;
-                        sng.NOBX = k.RH.hNOPX;
-                        sng.rRnk = r.RH.gpRnk; //prvRnk;
+                        if (RnkGrp == "")
+                        {
+                            sng.Rnk = k.RH.hpRnk;  //prvRnk;
+                            sng.NOBX = k.RH.hNOPX;
+                            sng.rRnk = r.RH.gpRnk; //prvRnk;
+                        }
+                        else
+                        {
+                            sng.Rnk = k.RH.hpRnk2;  //prvRnk;
+                            sng.NOBX = k.RH.hNOPX2;
+                            sng.rRnk = r.RH.gpRnk2; //prvRnk;
+                        }
 
                     }
                     else
                     {
-                        sng.Rnk = k.RH.gpRnk;  //prvRnk;
-                        sng.NOBX = k.RH.gNOPX;
-                        sng.rRnk = r.RH.hpRnk; //prvRnk;
+                        if (RnkGrp == "")
+                        {
+                            sng.Rnk = k.RH.gpRnk;  //prvRnk;
+                            sng.NOBX = k.RH.gNOPX;
+                            sng.rRnk = r.RH.hpRnk; //prvRnk;
+                        }
+                        else
+                        {
+                            sng.Rnk = k.RH.gpRnk2;  //prvRnk;
+                            sng.NOBX = k.RH.gNOPX2;
+                            sng.rRnk = r.RH.hpRnk2; //prvRnk;
+                        }
                     }
                     //sng.Rnk = k.PRH.pRnk;  //prvRnk;
                     //sng.NOBX = k.PRH.NOPX;
@@ -62,23 +91,7 @@ namespace bodved
                     sng.S3 = BDB.H.MacSetResult(k.S3W, r.S3W);
                     sng.S4 = BDB.H.MacSetResult(k.S4W, r.S4W);
                     sng.S5 = BDB.H.MacSetResult(k.S5W, r.S5W);
-                    /*
-                    sng.S1 = $"{k.S1W}-{r.S1W}";
-                    if (k.S1W == 0 && r.S1W == 0)
-                        sng.S1 = "";
-                    sng.S2 = $"{k.S2W}-{r.S2W}";
-                    if (k.S2W == 0 && r.S2W == 0)
-                        sng.S2 = "";
-                    sng.S3 = $"{k.S3W}-{r.S3W}";
-                    if (k.S3W == 0 && r.S3W == 0)
-                        sng.S3 = "";
-                    sng.S4 = $"{k.S4W}-{r.S4W}";
-                    if (k.S4W == 0 && r.S4W == 0)
-                        sng.S4 = "";
-                    sng.S5 = $"{k.S5W}-{r.S5W}";
-                    if (k.S5W == 0 && r.S5W == 0)
-                        sng.S5 = "";
-                    */
+
                     sng.WoL = k.SW > r.SW ? "W" : "L";
 
                     // Esit sonuc sadece 0-0 da olur, bu da oynanmamis demektir

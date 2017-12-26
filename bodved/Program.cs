@@ -105,8 +105,8 @@ namespace bodved
             Handle.GET("/bodved/partial/PPpage", () => new PPpage());
             Handle.GET("/bodved/PPpage", () => WrapPage<PPpage>("/bodved/partial/PPpage"));
 
-            Handle.GET("/bodved/partial/PPRnkGrpPage/{?}", (string RnkGrp) => new PPRnkGrpPage() { RnkGrp = $"{RnkGrp}" });
-            Handle.GET("/bodved/PPRnkGrpPage/{?}", (string RnkGrp) => WrapPage<PPRnkGrpPage>($"/bodved/partial/PPRnkGrpPage/{RnkGrp}"));
+            Handle.GET("/bodved/partial/PPRnkGrpPage/{?}", (long CCoNo) => new PPRnkGrpPage() { CCoNo = CCoNo });
+            Handle.GET("/bodved/PPRnkGrpPage/{?}", (long CCoNo) => WrapPage<PPRnkGrpPage>($"/bodved/partial/PPRnkGrpPage/{CCoNo}"));
 
             Handle.GET("/bodved/partial/CCpage", () => new CCpage());
             Handle.GET("/bodved/CCpage", () => WrapPage<CCpage>("/bodved/partial/CCpage"));
@@ -135,8 +135,8 @@ namespace bodved
 
             //Handle.GET("/bodved/partial/ppMacPage/{?}", (string PPoNo) => new ppMacPage() { PPoNo = $"{PPoNo}" });
             //Handle.GET("/bodved/ppMacPage/{?}", (string PPoNo) => WrapPage<ppMacPage>($"/bodved/partial/ppMacPage/{PPoNo}"));
-            Handle.GET("/bodved/partial/ppMacPage/{?}/{?}", (string PPoNo, string RnkGrp) => new ppMacPage() { PPoNo = $"{PPoNo}", RnkGrp = RnkGrp });
-            Handle.GET("/bodved/ppMacPage/{?}/{?}", (string PPoNo, string RnkGrp) => WrapPage<ppMacPage>($"/bodved/partial/ppMacPage/{PPoNo}/{RnkGrp}"));
+            Handle.GET("/bodved/partial/ppMacPage/{?}/{?}", (string PPoNo, string CCoNo) => new ppMacPage() { PPoNo = $"{PPoNo}", CCoNo = CCoNo });
+            Handle.GET("/bodved/ppMacPage/{?}/{?}", (string PPoNo, string CCoNo) => WrapPage<ppMacPage>($"/bodved/partial/ppMacPage/{PPoNo}/{CCoNo}"));
 
 
             Handle.GET("/bodved/partial/Deneme/{?}", (string CCoNo) => new Deneme() { CCoNo = $"{CCoNo}" });

@@ -3,7 +3,9 @@
   "Cap1": "Oyuncu Maclari",
   "Cap2": "",
   "PPoNo": "",
+  "CCoNo": "",
   "RnkGrp": "",
+  "RnkGrpAd": "",
 
   "SMo": 0, // Sng Mac Oynadigi
   "SMa": 0, //         Aldigi

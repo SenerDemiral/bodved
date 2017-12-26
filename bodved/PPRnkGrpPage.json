@@ -4,7 +4,9 @@
   "Cap2": "",
   "canMdfy": false,
 
+  "CCoNo": 0,
   "RnkGrp": "L.1.17",
+  "RnkGrpAd": "?",
   "NOP": 0,
   
   "PPs": [
@@ -16,6 +18,8 @@
       "RnkBaz": 0,
       "Rnk": 0,
       "Sra": 0,
+      "aO": 0,
+      "vO": 0,
 
       "MdfTrigger$": 0
     }

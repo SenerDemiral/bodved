@@ -55,6 +55,7 @@ namespace BDB
         public string Grp { get; set; }     // Birden cok turnuvada oynayan Oyunculari takip icin
         public string Lig { get; set; }
         public string RnkGrp { get; set; }
+        public string RnkGrpAd { get; set; }
         /*
         public string Lig
         {
@@ -615,5 +616,12 @@ namespace BDB
         public int gWon { get; set; }
         public int gpRnk { get; set; }
         public int gNOPX { get; set; }
+
+        // Grup Rank
+        public int hpRnk2 { get; set; }
+        public int hNOPX2 { get; set; }
+        public int gpRnk2 { get; set; }
+        public int gNOPX2 { get; set; }
     }
+
 }
