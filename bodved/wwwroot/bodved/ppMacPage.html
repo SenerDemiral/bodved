@@ -4,8 +4,13 @@
             <table>
                 <caption>
                     <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
+                    <template is="dom-if" if="[[model.RnkGrp]]">
+                        <a href="/bodved/ppMacPage/[[model.PPoNo]]/">[[model.Cap2]]</a>
+                    </template>
+                    <template is="dom-if" if="[[!model.RnkGrp]]">
+                        <div>[[model.Cap2]]</div>
+                    </template>
+                    </caption>
                 <thead>
                     <tr>
                         <th colspan="6" class="SngHdr">Single</th>
@@ -88,7 +93,7 @@
                             <td class="ortala">[[item.S4]]</td>
                             <td class="ortala">[[item.S5]]</td>
                             <td class="hSW">[[item.SL]]</td>
-                            
+
                             <td class="rank">[[item.rRnk]]</td>
                             <td><a href="/bodved/ppMacPage/[[item.rPPoNo]]/[[model.CCoNo]]">[[item.rPPAd]]</a></td>
                             <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>

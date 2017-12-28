@@ -38,6 +38,9 @@ namespace bodved
 
             BDB.H.UpdPPLigMacSay(ulong.Parse(CEToNo));  // RefreshRH dan once gelmeli
             BDB.H.RefreshRH();  // Global Rank
+
+            BDB.H.RefreshRH4(cet.Trh);  // DENEME
+
             BDB.H.RefreshRH2(ulong.Parse(CCoNo));  // RnkGrp Rank
             BDB.H.UpdCTsum(cet.hCT.oNo);
             BDB.H.UpdCTsum(cet.gCT.oNo);
