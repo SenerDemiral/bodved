@@ -17,13 +17,13 @@ namespace bodved
             if (CCoNo != 0)
             {
                 cc = Db.FromId<BDB.CC>((ulong)CCoNo);
-                RnkGrp = cc.RnkGrp;
-                RnkGrpAd = cc.RnkGrpAd;
+                RnkID = cc.RnkID;
+                RnkAd = cc.RnkAd;
             }
 
-            PPs.Data = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ? order by p.Sra", RnkGrp);
+            PPs.Data = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkID = ? order by p.Sra", RnkID);
             NOP = PPs.Count;
-            Cap1 = $"{RnkGrpAd} Oynayan sayýsý : {NOP - 1}";
+            Cap1 = $"{RnkAd} Oynayan sayýsý : {NOP - 1}";
         }
     }
 }

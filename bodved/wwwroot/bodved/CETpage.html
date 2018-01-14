@@ -1,72 +1,74 @@
 ﻿<link rel="import" href="/sys/vaadin-icons/vaadin-icons.html">
 
 <template>
-    <template is="dom-bind" id="cetTmp">
+    <dom-bind>
+        <template is="dom-bind" id="cetTmp">
 
-        <div class="tblWrap">
-            <table id="cetTbl">
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo" rowspan="2" hidden$="[[!model.canMdfy]]">ID</th>
-                        <th rowspan="2" hidden$="[[!model.canMdfy]]">#</th>
-                        <th colspan="2" class="hHdr">Home</th>
-                        <th rowspan="2"><iron-icon icon="vaadin:bolt"></iron-icon></th>
-                        <th colspan="2" class="gHdr">Guest</th>
-                    </tr>
-                    <tr>
-                        <th class="hHdr">Takım</th>
-                        <th class="hHdr"><iron-icon icon="vaadin:medal"></th>
-                        <th class="gHdr"><iron-icon icon="vaadin:medal"></th>
-                        <th class="gHdr">Takım</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.CETs]]">
+            <div class="tblWrap">
+                <table id="cetTbl">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
                         <tr>
-                            <td class="oNo"  hidden$="[[!model.canMdfy]]"><button class="edit"value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td hidden$="[[!model.canMdfy]]">[[item.ID]]</td>
-                            <td data-WL$="[[item.hWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]">[[item.hCTAd]]</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
-                            <td class="hSW" data-val$="[[item.hP]]">[[item.hPW]]</td>
-                            <td data-TW$="[[item.TrhWeekEoO]]"><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>
-                            <td class="gSW" data-val$="[[item.gP]]">[[item.gPW]]</td>
-                            <td data-WL$="[[item.gWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">[[item.gCTAd]]</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
+                            <th class="oNo" rowspan="2" hidden$="[[!model.canMdfy]]">ID</th>
+                            <th rowspan="2" hidden$="[[!model.canMdfy]]">#</th>
+                            <th colspan="2" class="hHdr">Home</th>
+                            <th rowspan="2"><iron-icon icon="vaadin:bolt"></iron-icon></th>
+                            <th colspan="2" class="gHdr">Guest</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-
-            <template is="dom-if" if="[[model.canMdfy]]">
-                <div class="mdfRecWrap">
-                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
-                    <input placeholder="Tarih" type="date" value="{{model.MdfRec.Trh$::change}}" />
-                    <select name="select" value="{{model.MdfRec.hCToNo$::change}}">
-                        <option value="0">N/A</option>
-                        <template is="dom-repeat" items="[[model.CTs]]">
-                            <option value="[[item.oNo]]">[[item.Ad]]</option>
+                        <tr>
+                            <th class="hHdr">Takım</th>
+                            <th class="hHdr"><iron-icon icon="vaadin:medal"></th>
+                            <th class="gHdr"><iron-icon icon="vaadin:medal"></th>
+                            <th class="gHdr">Takım</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.CETs]]">
+                            <tr>
+                                <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td hidden$="[[!model.canMdfy]]">[[item.ID]]</td>
+                                <td data-WL$="[[item.hWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.hCToNo]]">[[item.hCTAd]]</a><span hidden$="[[!item.hPok]]" class="okSgn">✓</span></td>
+                                <td class="hSW" data-val$="[[item.hP]]">[[item.hPW]]</td>
+                                <td data-TW$="[[item.TrhWeekEoO]]"><a href="/bodved/CETRinpPage/[[item.oNo]]">[[item.Tarih]]</a><span hidden$="[[!item.Rok]]" class="okSgn">✓</span></td>
+                                <td class="gSW" data-val$="[[item.gP]]">[[item.gPW]]</td>
+                                <td data-WL$="[[item.gWL]]"><a href="/bodved/CETPpage/[[item.oNo]]/[[item.gCToNo]]">[[item.gCTAd]]</a><span hidden$="[[!item.gPok]]" class="okSgn">✓</span></td>
+                            </tr>
                         </template>
-                    </select>
-                    <select name="select" value="{{model.MdfRec.gCToNo$::change}}">
-                        <option value="0">N/A</option>
-                        <template is="dom-repeat" items="[[model.CTs]]">
-                            <option value="[[item.oNo]]">[[item.Ad]]</option>
-                        </template>
-                    </select>
-                    <input placeholder="hP" type="number" value="{{model.MdfRec.hP$::change}}" />
-                    <input placeholder="gP" type="number" value="{{model.MdfRec.gP$::change}}" />
+                    </tbody>
+                </table>
 
-                    <div class="mdfRecAction">
-                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                <template is="dom-if" if="[[model.canMdfy]]">
+                    <div class="mdfRecWrap">
+                        <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                        <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
+                        <input placeholder="Tarih" type="date" value="{{model.MdfRec.Trh$::change}}" />
+                        <select name="select" value="{{model.MdfRec.hCToNo$::change}}">
+                            <option value="0">N/A</option>
+                            <template is="dom-repeat" items="[[model.CTs]]">
+                                <option value="[[item.oNo]]">[[item.Ad]]</option>
+                            </template>
+                        </select>
+                        <select name="select" value="{{model.MdfRec.gCToNo$::change}}">
+                            <option value="0">N/A</option>
+                            <template is="dom-repeat" items="[[model.CTs]]">
+                                <option value="[[item.oNo]]">[[item.Ad]]</option>
+                            </template>
+                        </select>
+                        <input placeholder="hP" type="number" value="{{model.MdfRec.hP$::change}}" />
+                        <input placeholder="gP" type="number" value="{{model.MdfRec.gP$::change}}" />
+
+                        <div class="mdfRecAction">
+                            <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                            <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                            <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </div>
+                </template>
+            </div>
 
-    </template>
+        </template>
+    </dom-bind>
 </template>

@@ -1,40 +1,42 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 
 <template>
-    <template is="dom-bind">
-        <div class="tblWrap">
-            <table id="ppRnkGrpTbl" on-click="ppRnkGrpFnc">
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo">ID</th>
-                        <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
-                        <th>BR</th>
-                        <th>Rank</th>
-                        <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
-                        <th>G</th>
-                        <th>M</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.PPs]]">
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="tblWrap">
+                <table id="ppRnkGrpTbl" on-click="ppRnkGrpFnc">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
                         <tr>
-                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
-                            <td class="ortala">°[[item.RnkBaz]]</td>
-                            <td class="Rnk">°[[item.Rnk]]</td>
-                            <td class="Sra">[[item.Sra]]</td>
-                            <td class="ortala">[[item.aO]]</td>
-                            <td class="ortala">[[item.vO]]</td>
+                            <th class="oNo">ID</th>
+                            <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
+                            <th>BR</th>
+                            <th>Rank</th>
+                            <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
+                            <th>G</th>
+                            <th>M</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.PPs]]">
+                            <tr>
+                                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
+                                <td class="ortala">°[[item.RnkBaz]]</td>
+                                <td class="Rnk">°[[item.Rnk]]</td>
+                                <td class="Sra">[[item.Sra]]</td>
+                                <td class="ortala">[[item.aO]]</td>
+                                <td class="ortala">[[item.vO]]</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
 
-        </div>
-        
-    </template>
+            </div>
+
+        </template>
+    </dom-bind>
 </template>

@@ -5,117 +5,119 @@
 
 
 <template>
-    <template is="dom-bind">
-        <!--
-        <snr-dnma aaa="Dilara" bbb="444">[[getMyName]]</snr-dnma>
-        <snr-dnma aaa="[[model.abidik]]" bbb="555"></snr-dnma>
-        -->
-        <h3>Bu web sitesi aşağıdaki araçlar kullanılarak Şener DEMİRAL tarafından hazırlanmıştır.</h3>
-        <ul>
-            <li><a href="http://starcounter.com/">Starcounter 2.4 (In-Memory Application Engine)</a></li>
-            <li><a href="https://github.com/Palindrom/Palindrom">Polindrom (Library for two-way data binding)</a></li>
-            <li><a href="https://www.webcomponents.org/">Web Components (Web platform API)</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .Net 4.5 Framework</a> </li>
-            <li><a href="https://en.wikipedia.org/wiki/Microsoft_Visual_Studio">Microsoft Visual Studio 2015 (IDE)</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C# (Programming Language)</a></li>
-            <br />
-            <li>Önerileriniz için eMail adresi <a href="mailto:masatenisi.online@gmail.com">masatenisi.online@gmail.com</a></li>
-        </ul>
+    <dom-bind>
+        <template is="dom-bind">
+            <!--
+            <snr-dnma aaa="Dilara" bbb="444">[[getMyName]]</snr-dnma>
+            <snr-dnma aaa="[[model.abidik]]" bbb="555"></snr-dnma>
+            -->
+            <h3>Bu web sitesi aşağıdaki araçlar kullanılarak Şener DEMİRAL tarafından hazırlanmıştır.</h3>
+            <ul>
+                <li><a href="http://starcounter.com/">Starcounter 2.4 (In-Memory Application Engine)</a></li>
+                <li><a href="https://github.com/Palindrom/Palindrom">Polindrom (Library for two-way data binding)</a></li>
+                <li><a href="https://www.webcomponents.org/">Web Components (Web platform API)</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .Net 4.5 Framework</a> </li>
+                <li><a href="https://en.wikipedia.org/wiki/Microsoft_Visual_Studio">Microsoft Visual Studio 2015 (IDE)</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C# (Programming Language)</a></li>
+                <br />
+                <li>Önerileriniz için eMail adresi <a href="mailto:masatenisi.online@gmail.com">masatenisi.online@gmail.com</a></li>
+            </ul>
 
-        <div style="width:90vw">
-            <p>
-                <b>USATT Derecelendirme/Rank İşleme Sistemi</b>
-                <ul>
-                    <li>Maçlar kronolojik sıraya göre işlenir.</li>
-                    <li>Genel turnuva sonuçlarında maç kazanıp kaybedilerek puan kazanılır / kaybedilir.</li>
-                    <li>Her yeni üyeye ilk maçlarından alınan sonuçlara göre bir BazRank verilir. Ne kadar çok maç bildirilirse ilk derece okadar doğru olacaktır.</li>
-                    <li>Bir oyuncu daha yüksek Rank'i olan birçok rakibi yenerse, BazRank yukarı doğru ayarlanabilir ve turnuva bu yüksek puanlarla yeniden işlenir.</li>
-                    <li><a href="http://www.teamusa.org/usa-table-tennis/ratings/rating-system">Detaylı bilgiyi burdan bulabilirsiniz.</a></li>
-                    <br />
-                    <li>Örnek</li>
-                    <li>Rank 2000 ve 1960 olan iki oyuncu maç yaptığında (Rank farkı 40) </li>
-                    <li> eğer üst oyuncu yenerse kazanan 6 puan artar, kaybedenden 6 puan düşülür </li>
-                    <li> eğer ast oyuncu yenerse kazanan 13 puan artar, kaybedenden 13 puan düşülür</li>
-                    <li>Rank hesaplaması her Tek/Single maç sonrasında yapılır. (Çift/Double maçlarda yapılmaz)</li>
-                    <br />
-                    <br />
-                </ul>
-            </p>
-            <div class="tblWrap" style="justify-content:center">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Oyuncular Arasındaki</br>Rank Farkı</th>
-                            <th>Beklenen Sonuç</br>(Üst oyuncunun kazanması)</br>Değiştirilen puan sayısı</th>
-                            <th>Beklenmiyen Sonuç</br>(Ast oyuncunun kazanması)</br>Değiştirilen puan sayısı</th>
-                        </tr>
-                    </thead>
-                    <tbody style="text-align: center">
-                        <tr>
-                            <td>0 - 12</td>
-                            <td>8</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>13 - 37</td>
-                            <td>7</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>38 - 62</td>
-                            <td>6</td>
-                            <td>13</td>
-                        </tr>
-                        <tr>
-                            <td>63 - 87</td>
-                            <td>5</td>
-                            <td>16</td>
-                        </tr>
-                        <tr>
-                            <td>88 - 112</td>
-                            <td>4</td>
-                            <td>20</td>
-                        </tr>
-                        <tr>
-                            <td>113 - 137</td>
-                            <td>3</td>
-                            <td>25</td>
-                        </tr>
-                        <tr>
-                            <td>138 - 162</td>
-                            <td>2</td>
-                            <td>30</td>
-                        </tr>
-                        <tr>
-                            <td>163 - 187</td>
-                            <td>2</td>
-                            <td>35</td>
-                        </tr>
-                        <tr>
-                            <td>188 - 212</td>
-                            <td>1</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>213 - 237</td>
-                            <td>1</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>238 - ∞</td>
-                            <td>0</td>
-                            <td>50</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="width:90vw">
+                <p>
+                    <b>USATT Derecelendirme/Rank İşleme Sistemi</b>
+                    <ul>
+                        <li>Maçlar kronolojik sıraya göre işlenir.</li>
+                        <li>Genel turnuva sonuçlarında maç kazanıp kaybedilerek puan kazanılır / kaybedilir.</li>
+                        <li>Her yeni üyeye ilk maçlarından alınan sonuçlara göre bir BazRank verilir. Ne kadar çok maç bildirilirse ilk derece okadar doğru olacaktır.</li>
+                        <li>Bir oyuncu daha yüksek Rank'i olan birçok rakibi yenerse, BazRank yukarı doğru ayarlanabilir ve turnuva bu yüksek puanlarla yeniden işlenir.</li>
+                        <li><a href="http://www.teamusa.org/usa-table-tennis/ratings/rating-system">Detaylı bilgiyi burdan bulabilirsiniz.</a></li>
+                        <br />
+                        <li>Örnek</li>
+                        <li>Rank 2000 ve 1960 olan iki oyuncu maç yaptığında (Rank farkı 40) </li>
+                        <li> eğer üst oyuncu yenerse kazanan 6 puan artar, kaybedenden 6 puan düşülür </li>
+                        <li> eğer ast oyuncu yenerse kazanan 13 puan artar, kaybedenden 13 puan düşülür</li>
+                        <li>Rank hesaplaması her Tek/Single maç sonrasında yapılır. (Çift/Double maçlarda yapılmaz)</li>
+                        <br />
+                        <br />
+                    </ul>
+                </p>
+                <div class="tblWrap" style="justify-content:center">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Oyuncular Arasındaki</br>Rank Farkı</th>
+                                <th>Beklenen Sonuç</br>(Üst oyuncunun kazanması)</br>Değiştirilen puan sayısı</th>
+                                <th>Beklenmiyen Sonuç</br>(Ast oyuncunun kazanması)</br>Değiştirilen puan sayısı</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: center">
+                            <tr>
+                                <td>0 - 12</td>
+                                <td>8</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>13 - 37</td>
+                                <td>7</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>38 - 62</td>
+                                <td>6</td>
+                                <td>13</td>
+                            </tr>
+                            <tr>
+                                <td>63 - 87</td>
+                                <td>5</td>
+                                <td>16</td>
+                            </tr>
+                            <tr>
+                                <td>88 - 112</td>
+                                <td>4</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>113 - 137</td>
+                                <td>3</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>138 - 162</td>
+                                <td>2</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>163 - 187</td>
+                                <td>2</td>
+                                <td>35</td>
+                            </tr>
+                            <tr>
+                                <td>188 - 212</td>
+                                <td>1</td>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>213 - 237</td>
+                                <td>1</td>
+                                <td>45</td>
+                            </tr>
+                            <tr>
+                                <td>238 - ∞</td>
+                                <td>0</td>
+                                <td>50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-    </template>
-    <script>
-        document.addEventListener('WebComponentsReady', function () {
-            console.log("WebComponentsReady");
-        });
+        </template>
+    </dom-bind>
+        <script>
+            document.addEventListener('WebComponentsReady', function () {
+                console.log("WebComponentsReady");
+            });
 
-    </script>
+        </script>
 </template>

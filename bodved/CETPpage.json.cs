@@ -44,7 +44,7 @@ namespace bodved
             // Kayit yoksa CTP'den alip yarat
             if (cetps == null)
             {
-                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
+                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPAd", ct);
                 int ix = 1;
                 foreach (var src in ctps)
                 {

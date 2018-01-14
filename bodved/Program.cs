@@ -25,7 +25,7 @@ namespace bodved
                     <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları. Hazırlayan: Şener DEMİRAL"">
                     <meta name=""author"" content=""Şener DEMİRAL"">
 
-                    <script src=""/sys/webcomponentsjs/webcomponents.min.js""></script>
+                    <script src=""/sys/webcomponentsjs/webcomponents.lite.js""></script>
 					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
 
                     <script>
@@ -51,6 +51,17 @@ namespace bodved
 
 
                 <body>
+                    <dom-bind id=""palindrom-root"">
+                        <template is=""dom-bind"">
+                          <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
+                        </template>                    
+                    </dom-bind>
+                    <palindrom-client ref=""palindrom-root"" remote-url=""{1}""></palindrom-client>
+                </body>
+			</html>";
+
+            /*
+                <body>
                     <template is=""dom-bind"" id=""puppet-root"">
                         <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                     </template>
@@ -58,8 +69,7 @@ namespace bodved
                 </body>
 				</html>";
 
-            /*
-                <body>
+            <body>
                     <template is=""dom-bind"" id=""puppet-root"">
                         <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
                         <div><template is=""imported-template"" model=""{{{{model}}}}"" href=""/bodved/masterPage.Html""></template></div>
@@ -71,7 +81,7 @@ namespace bodved
 
             */
             Application.Current.Use(new HtmlFromJsonProvider());
-            Application.Current.Use(new PartialToStandaloneHtmlProvider(HTML));
+            Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
             BDB.H.Write2Log("Start");
 

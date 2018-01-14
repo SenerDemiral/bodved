@@ -1,8 +1,10 @@
 ﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
 
 <template>
-    <template is="dom-bind">
-        <img src="/bodved/bodved.jpg" alt="Smiley face" style="display:block;margin:auto;width:80vmin;height:80vmin;">
+    <dom-bind><template is="dom-bind">
+            <h1 slot="sener">SENER</h1>
+
+            <img src="/bodved/bodved.jpg" alt="Smiley face" style="display:block;margin:auto;width:80vmin;height:80vmin;">
         <paper-dialog opened="[[model.DlgOpened]]" modal="true">
             <div class="mdfRecWrap">
                 <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
@@ -44,5 +46,5 @@
                 </table>
             </div>
         </div>
-    </template>
+    </template></dom-bind>
 </template>

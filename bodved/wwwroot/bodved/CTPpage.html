@@ -1,65 +1,67 @@
 ﻿<template>
-    <template is="dom-bind">
-        <div class="tblWrap">
-            <table id="ctpTbl">
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo">ID</th>
-                        <th>Sıra</th>
-                        <th>Oyuncu</th>
-                        <th>Rank</th>
-                        <th>L1M#</th>
-                        <th>L2M#</th>
-                        <th>L3M#</th>
-                        <th>Oynadığı Diğer Takımlar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.CTPs]]">
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="tblWrap">
+                <table id="ctpTbl">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
                         <tr>
-                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td class="Idx">[[item.Sra]]</td>
-                            <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
-                            <td class="ortala">[[item.PPRnk]]</td>
-                            <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
-                            <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
-                            <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
-                            <td>[[item.oCTs]]</td>
+                            <th class="oNo">ID</th>
+                            <th>Sıra</th>
+                            <th>Oyuncu</th>
+                            <th>Rank</th>
+                            <th>L1M#</th>
+                            <th>L2M#</th>
+                            <th>L3M#</th>
+                            <th>Oynadığı Diğer Takımlar</th>
                         </tr>
-                    </template>
-                </tbody>
-                <tfoot>
-                    <tr style="font-weight:bold; background-color:azure">
-                        <td colspan="2"></td>
-                        <td>Takım ortalaması</td>
-                        <td>[[model.tRnk]]</td>
-                        <td colspan="4"></td>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <template is="dom-if" if="[[model.canMdfy]]">
-                <div class="mdfRecWrap">
-                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="Sıra" type="text" value="{{model.MdfRec.Idx$::change}}" />
-                    <select name="select" value="{{model.MdfRec.PPoNo$::change}}">
-                        <option value="0">-</option>
-                        <template is="dom-repeat" items="[[model.PPs]]">
-                            <option value="[[item.oNo]]">[[item.Ad]]</option>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.CTPs]]">
+                            <tr>
+                                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td class="Idx">[[item.Sra]]</td>
+                                <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
+                                <td class="ortala">[[item.PPRnk]]</td>
+                                <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
+                                <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
+                                <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
+                                <td>[[item.oCTs]]</td>
+                            </tr>
                         </template>
-                    </select>
+                    </tbody>
+                    <tfoot>
+                        <tr style="font-weight:bold; background-color:azure">
+                            <td colspan="2"></td>
+                            <td>Takım ortalaması</td>
+                            <td>[[model.tRnk]]</td>
+                            <td colspan="4"></td>
+                        </tr>
+                    </tfoot>
+                </table>
 
-                    <div class="mdfRecAction">
-                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                <template is="dom-if" if="[[model.canMdfy]]">
+                    <div class="mdfRecWrap">
+                        <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                        <input placeholder="Sıra" type="text" value="{{model.MdfRec.Idx$::change}}" />
+                        <select name="select" value="{{model.MdfRec.PPoNo$::change}}">
+                            <option value="0">-</option>
+                            <template is="dom-repeat" items="[[model.PPs]]">
+                                <option value="[[item.oNo]]">[[item.Ad]]</option>
+                            </template>
+                        </select>
+
+                        <div class="mdfRecAction">
+                            <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                            <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                            <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </div>
-    </template>
+                </template>
+            </div>
+        </template>
+    </dom-bind>
 </template>

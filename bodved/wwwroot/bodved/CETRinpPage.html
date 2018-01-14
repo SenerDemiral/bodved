@@ -1,194 +1,196 @@
 ﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
 
 <template>
-    <template is="dom-bind">
-        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+    <dom-bind>
+        <template is="dom-bind">
+            <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+                <div class="tblWrap">
+                    <table>
+                        <caption>
+                            Maç Set Sonuçları
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>Set</th>
+                                <th>[[model.hPPAd1]]</th>
+                                <th>[[model.gPPAd1]]</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>[[model.hPPAd2]]</th>
+                                <th>[[model.gPPAd2]]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ortala">1</td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.hS1W$::change}}" /></td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.gS1W$::change}}" /></td>
+                            </tr>
+                            <tr>
+                                <td class="ortala">2</td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.hS2W$::change}}" /></td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.gS2W$::change}}" /></td>
+                            </tr>
+                            <tr>
+                                <td class="ortala">3</td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.hS3W$::change}}" /></td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.gS3W$::change}}" /></td>
+                            </tr>
+                            <tr>
+                                <td class="ortala">4</td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.hS4W$::change}}" /></td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.gS4W$::change}}" /></td>
+                            </tr>
+                            <tr>
+                                <td class="ortala">5</td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.hS5W$::change}}" /></td>
+                                <td><input class="inpSetSayi" type="number" value="{{model.gS5W$::change}}" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <button dialog-dismiss value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;">Vazgeç</button>
+                    <button dialog-confirm autofocus value="{{model.DlgSaveTrigger$::click}}" onmousedown="++this.value;">Kaydet</button>
+                </div>
+            </paper-dialog>
+
             <div class="tblWrap">
-                <table>
+                <table id="cetrTblS">
+                    <!--colgroup>
+                        <col>
+                        <col>
+                        <col style="background-color:yellow">
+                        <col>
+                        <col style="background-color:yellow">
+                        <col>
+                        <col style="background-color:yellow">
+                        <col>
+                    </colgroup-->
                     <caption>
-                        Maç Set Sonuçları
+                        <div>[[model.Cap1]]</div>
+                        <!--div>[[model.Cap2]]</div-->
                     </caption>
                     <thead>
-                        <tr>
-                            <th>Set</th>
-                            <th>[[model.hPPAd1]]</th>
-                            <th>[[model.gPPAd1]]</th>
+                        <tr class="hSW" style="font-size:1rem;">
+                            <th></th>
+                            <th colspan="2">[[model.hPW]]</th>
+                            <th colspan="5">[[model.hP]] <iron-icon icon="vaadin:bolt"></iron-icon> [[model.gP]]</th>
+                            <th colspan="2">[[model.gPW]]</th>
                         </tr>
                         <tr>
-                            <th></th>
-                            <th>[[model.hPPAd2]]</th>
-                            <th>[[model.gPPAd2]]</th>
+                            <th colspan="10"></th>
+                        </tr>
+                        <tr class="SngHdr">
+                            <th rowspan="2" style="width:12px;">#</th>
+                            <th rowspan="2" style="font-size:large">[[model.hCTAd]]</th>
+                            <th style="font-size: 1rem;">[[model.hPSW]]</th>
+                            <th colspan="5">Single</th>
+                            <th style="font-size: 1rem;">[[model.gPSW]]</th>
+                            <th rowspan="2" style="font-size:large">[[model.gCTAd]]</th>
+                        </tr>
+                        <tr class="SngHdr">
+                            <th>[[model.hMSW]]</th>
+                            <th style="font-size: xx-small;">1</th>
+                            <th style="font-size: xx-small;">2</th>
+                            <th style="font-size: xx-small;">3</th>
+                            <th style="font-size: xx-small;">4</th>
+                            <th style="font-size: xx-small;">5</th>
+                            <th>[[model.gMSW]]</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="ortala">1</td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.hS1W$::change}}" /></td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.gS1W$::change}}" /></td>
-                        </tr>
-                        <tr>
-                            <td class="ortala">2</td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.hS2W$::change}}" /></td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.gS2W$::change}}" /></td>
-                        </tr>
-                        <tr>
-                            <td class="ortala">3</td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.hS3W$::change}}" /></td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.gS3W$::change}}" /></td>
-                        </tr>
-                        <tr>
-                            <td class="ortala">4</td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.hS4W$::change}}" /></td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.gS4W$::change}}" /></td>
-                        </tr>
-                        <tr>
-                            <td class="ortala">5</td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.hS5W$::change}}" /></td>
-                            <td><input class="inpSetSayi" type="number" value="{{model.gS5W$::change}}" /></td>
-                        </tr>
+                        <template is="dom-repeat" items="[[model.Singles]]">
+                            <tr>
+                                <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                    S[[item.Idx]]
+                                    <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                                </td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.hPPoNo]]/[[model.CCoNo]]">[[item.hPPAd]]</a>
+                                    <span class="rank">[[item.hPPrnk]]</span>
+                                </td>
+                                <td class="hSW" data-val$="[[item.hSW]]">[[item.hSW]]</td>
+                                <td class="ortala">[[item.hgS1W]]</td>
+                                <td class="ortala">[[item.hgS2W]]</td>
+                                <td class="ortala">[[item.hgS3W]]</td>
+                                <td class="ortala">[[item.hgS4W]]</td>
+                                <td class="ortala">[[item.hgS5W]]</td>
+                                <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.gPPoNo]]/[[model.CCoNo]]">[[item.gPPAd]]</a>
+                                    <span class="rank">[[item.gPPrnk]]</span>
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
-            </div>
-            <div style="display:flex; justify-content:space-between;">
-                <button dialog-dismiss value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;">Vazgeç</button>
-                <button dialog-confirm autofocus value="{{model.DlgSaveTrigger$::click}}" onmousedown="++this.value;">Kaydet</button>
-            </div>
-        </paper-dialog>
 
-        <div class="tblWrap">
-            <table id="cetrTblS">
-                <!--colgroup>
-                <col>
-                <col>
-                <col style="background-color:yellow">
-                <col>
-                <col style="background-color:yellow">
-                <col>
-                <col style="background-color:yellow">
-                <col>
-            </colgroup-->
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <!--div>[[model.Cap2]]</div-->
-                </caption>
-                <thead>
-                    <tr class="hSW" style="font-size:1rem;">
-                        <th></th>
-                        <th colspan="2">[[model.hPW]]</th>
-                        <th colspan="5">[[model.hP]] <iron-icon icon="vaadin:bolt"></iron-icon> [[model.gP]]</th>
-                        <th colspan="2">[[model.gPW]]</th>
-                    </tr>
-                    <tr>
-                        <th colspan="10"></th>
-                    </tr>
-                    <tr class="SngHdr">
-                        <th rowspan="2" style="width:12px;">#</th>
-                        <th rowspan="2" style="font-size:large">[[model.hCTAd]]</th>
-                        <th style="font-size: 1rem;">[[model.hPSW]]</th>
-                        <th colspan="5">Single</th>
-                        <th style="font-size: 1rem;">[[model.gPSW]]</th>
-                        <th rowspan="2" style="font-size:large">[[model.gCTAd]]</th>
-                    </tr>
-                    <tr class="SngHdr">
-                        <th>[[model.hMSW]]</th>
-                        <th style="font-size: xx-small;">1</th>
-                        <th style="font-size: xx-small;">2</th>
-                        <th style="font-size: xx-small;">3</th>
-                        <th style="font-size: xx-small;">4</th>
-                        <th style="font-size: xx-small;">5</th>
-                        <th>[[model.gMSW]]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.Singles]]">
-                        <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
-                                S[[item.Idx]]
-                                <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
-                            </td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo]]/[[model.CCoNo]]">[[item.hPPAd]]</a>
-                                <span class="rank">[[item.hPPrnk]]</span>
-                            </td>
-                            <td class="hSW" data-val$="[[item.hSW]]">[[item.hSW]]</td>
-                            <td class="ortala">[[item.hgS1W]]</td>
-                            <td class="ortala">[[item.hgS2W]]</td>
-                            <td class="ortala">[[item.hgS3W]]</td>
-                            <td class="ortala">[[item.hgS4W]]</td>
-                            <td class="ortala">[[item.hgS5W]]</td>
-                            <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.gPPoNo]]/[[model.CCoNo]]">[[item.gPPAd]]</a>
-                                <span class="rank">[[item.gPPrnk]]</span>
-                            </td>
+                <table id="cetrTblD">
+                    <thead>
+                        <tr class="DblHdr">
+                            <th rowspan="2" style="width:12px;">#</th>
+                            <th rowspan="2">[[model.hCTAd]]</th>
+                            <th style="font-size: 1rem;">[[model.hPDW]]</th>
+                            <th colspan="5">Double</th>
+                            <th style="font-size: 1rem;">[[model.gPDW]]</th>
+                            <th rowspan="2">[[model.gCTAd]]</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-
-            <table id="cetrTblD">
-                <thead>
-                    <tr class="DblHdr">
-                        <th rowspan="2" style="width:12px;">#</th>
-                        <th rowspan="2">[[model.hCTAd]]</th>
-                        <th style="font-size: 1rem;">[[model.hPDW]]</th>
-                        <th colspan="5">Double</th>
-                        <th style="font-size: 1rem;">[[model.gPDW]]</th>
-                        <th rowspan="2">[[model.gCTAd]]</th>
-                    </tr>
-                    <tr class="DblHdr">
-                        <th>[[model.hMDW]]</th>
-                        <th style="font-size: xx-small;">1</th>
-                        <th style="font-size: xx-small;">2</th>
-                        <th style="font-size: xx-small;">3</th>
-                        <th style="font-size: xx-small;">4</th>
-                        <th style="font-size: xx-small;">5</th>
-                        <th>[[model.gMDW]]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.Doubles]]">
-                        <tr>
-                            <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
-                                D[[item.Idx]]
-                                <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
-                            </td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo1]]/[[model.CCoNo]]">[[item.hPPAd1]]</a>
-                                <span class="rank">[[item.hPPrnk1]]</span>
-                                <br />
-                                <a href="/bodved/ppMacPage/[[item.hPPoNo2]]/[[model.CCoNo]]">[[item.hPPAd2]]</a>
-                                <span class="rank">[[item.hPPrnk2]]</span>
-                            </td>
-                            <td class="hSW" data-val$="[[item.hDW]]">[[item.hDW]]</td>
-                            <td class="ortala">[[item.hgS1W]]</td>
-                            <td class="ortala">[[item.hgS2W]]</td>
-                            <td class="ortala">[[item.hgS3W]]</td>
-                            <td class="ortala">[[item.hgS4W]]</td>
-                            <td class="ortala">[[item.hgS5W]]</td>
-                            <td class="gSW" data-val$="[[item.gDW]]">[[item.gDW]]</td>
-                            <td class="ppAd" data-idx$="[[item.Idx]]">
-                                <a href="/bodved/ppMacPage/[[item.gPPoNo1]]/[[model.CCoNo]]">[[item.gPPAd1]]</a>
-                                <span class="rank">[[item.gPPrnk1]]</span>
-                                <br />
-                                <a href="/bodved/ppMacPage/[[item.gPPoNo2]]/[[model.CCoNo]]">[[item.gPPAd2]]</a>
-                                <span class="rank">[[item.gPPrnk2]]</span>
-                            </td>
+                        <tr class="DblHdr">
+                            <th>[[model.hMDW]]</th>
+                            <th style="font-size: xx-small;">1</th>
+                            <th style="font-size: xx-small;">2</th>
+                            <th style="font-size: xx-small;">3</th>
+                            <th style="font-size: xx-small;">4</th>
+                            <th style="font-size: xx-small;">5</th>
+                            <th>[[model.gMDW]]</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.Doubles]]">
+                            <tr>
+                                <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                    D[[item.Idx]]
+                                    <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                                </td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.hPPoNo1]]/[[model.CCoNo]]">[[item.hPPAd1]]</a>
+                                    <span class="rank">[[item.hPPrnk1]]</span>
+                                    <br />
+                                    <a href="/bodved/ppMacPage/[[item.hPPoNo2]]/[[model.CCoNo]]">[[item.hPPAd2]]</a>
+                                    <span class="rank">[[item.hPPrnk2]]</span>
+                                </td>
+                                <td class="hSW" data-val$="[[item.hDW]]">[[item.hDW]]</td>
+                                <td class="ortala">[[item.hgS1W]]</td>
+                                <td class="ortala">[[item.hgS2W]]</td>
+                                <td class="ortala">[[item.hgS3W]]</td>
+                                <td class="ortala">[[item.hgS4W]]</td>
+                                <td class="ortala">[[item.hgS5W]]</td>
+                                <td class="gSW" data-val$="[[item.gDW]]">[[item.gDW]]</td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.gPPoNo1]]/[[model.CCoNo]]">[[item.gPPAd1]]</a>
+                                    <span class="rank">[[item.gPPrnk1]]</span>
+                                    <br />
+                                    <a href="/bodved/ppMacPage/[[item.gPPoNo2]]/[[model.CCoNo]]">[[item.gPPAd2]]</a>
+                                    <span class="rank">[[item.gPPrnk2]]</span>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
 
-            <!--input placeholder="Açıklama" type="text" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]" /-->
-            <textarea placeholder="" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
+                <!--input placeholder="Açıklama" type="text" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]" /-->
+                <textarea placeholder="" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
 
-            <div hidden$="[[!model.canMdfy]]">
-                <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">
-                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" style="justify-self:start;">Kaydet</button>
-                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" style="justify-self:end;">Onayla ve Kaydet</button>
+                <div hidden$="[[!model.canMdfy]]">
+                    <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">
+                        <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" style="justify-self:start;">Kaydet</button>
+                        <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" style="justify-self:end;">Onayla ve Kaydet</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </template>
+        </template>
+    </dom-bind>
 </template>

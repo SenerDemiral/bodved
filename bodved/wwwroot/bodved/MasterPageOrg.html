@@ -1,0 +1,64 @@
+﻿<link rel="stylesheet" href="/sys/Bodved.css">
+<link rel="import" href="/sys/vaadin-icons/vaadin-icons.html">
+<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
+<link rel="import" href="/sys/snr-login/snr-login.html">
+
+<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+                <div class="mdfRecWrap">
+                    <input placeholder="ID" type="text" value="{{model.Login.Id$::change}}" />
+                    <input placeholder="Password" type="password" value="{{model.Login.Pw$::change}}" />
+                    <input placeholder="New Password" type="password" value="{{model.Login.nPw$::change}}" />
+                    <div class="mdfRecAction">
+                        <button value="{{model.LoginTrigger$::click}}" onmousedown="++this.value">Login</button>
+                    </div>
+                </div>
+            </paper-dialog>
+            <div>
+                <section class="master-toolbar">
+                    <ul role="navigation">
+                        <li><a href="/bodved/NoticePage"><iron-icon icon="vaadin:star"></iron-icon></a></li>
+                        <li><a href="/bodved/ccPage"><iron-icon icon="vaadin:trophy"></iron-icon></a></li>
+                        <li><a href="/bodved/ppPage"><iron-icon icon="vaadin:users"></iron-icon></a></li>
+                        <li>[[model.EntCnt]]</li>
+                        <li class="toRight"><a href="https://www.facebook.com/bodved"><iron-icon icon="vaadin:facebook"></iron-icon></a></li>
+                        <li><a href="http://instagram.com/bodved"><iron-icon icon="vaadin:instagram"></iron-icon></a></li>
+                        <li><a href="/bodved/AboutPage"><iron-icon icon="vaadin:info-circle"></iron-icon></a></li>
+                        <!--li><a href="/bodved/LoginPage"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></a></li-->
+                        <!--li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></button></li-->
+                        <li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value">[[model.Login.Nm$]]</button></li>
+                        <li class="bodved">BODVED</li>
+                        <li><snr-login mdlusr="{{model.user}}"></snr-login></li>
+                    </ul>
+                </section>
+                <section class="master-current">
+                    <!--template is="imported-template" model="{{model.CurrentPage}}" href="{{model.CurrentPage.bodved_0.Html}}"></template-->
+                    <starcounter-include view-model="{{model.CurrentPage}}"></starcounter-include>
+                </section>
+            </div>
+        </template>
+    </dom-bind>
+    <script>
+        (function () {
+            var meta = document.createElement("meta");
+            meta.name = "author";
+            meta.content = "Şener DEMİRAL";
+            document.querySelector('head').appendChild(meta);
+
+            meta = document.createElement("meta");
+            meta.name = "description";
+            meta.content = "Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları";
+            document.querySelector('head').appendChild(meta);
+            /*
+            meta = document.createElement("meta");
+            meta.httpEquiv = "x-ua-compatible";
+            meta.content = "ie=edge";
+            document.querySelector('head').appendChild(meta);
+            */
+
+            window.dispIdx = function (index) { { return index + 1; } };
+        })();
+    </script>
+</template>

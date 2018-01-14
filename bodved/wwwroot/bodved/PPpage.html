@@ -1,122 +1,122 @@
 ﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
 
 <template>
-    <template is="dom-bind">
-        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
-            <div class="mdfRecWrap">
-                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
-                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                <input placeholder="Sex" type="text" value="{{model.MdfRec.Sex$::change}}" />
-                <input placeholder="DgmYil" type="number" min="1920" max="2010" value="{{model.MdfRec.DgmYil$::change}}" />
-                <input placeholder="BazRank" type="number" min="1900" max="2200" value="{{model.MdfRec.RnkBaz$::change}}" />
-                <input placeholder="Tel" type="text" value="{{model.MdfRec.Tel$::change}}" />
-                <input placeholder="eMail" type="text" value="{{model.MdfRec.eMail$::change}}" />
-                <div class="mdfRecAction">
-                    <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                    <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                    <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+    <dom-bind>
+        <template is="dom-bind">
+            <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+                <div class="mdfRecWrap">
+                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                    <input placeholder="ID" type="text" value="{{model.MdfRec.ID$::change}}" />
+                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                    <input placeholder="Sex" type="text" value="{{model.MdfRec.Sex$::change}}" />
+                    <input placeholder="DgmYil" type="number" min="1920" max="2010" value="{{model.MdfRec.DgmYil$::change}}" />
+                    <input placeholder="BazRank" type="number" min="1900" max="2200" value="{{model.MdfRec.RnkBaz$::change}}" />
+                    <input placeholder="Tel" type="text" value="{{model.MdfRec.Tel$::change}}" />
+                    <input placeholder="eMail" type="text" value="{{model.MdfRec.eMail$::change}}" />
+                    <div class="mdfRecAction">
+                        <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                        <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                        <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                    </div>
+                    <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
                 </div>
-                <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
-            </div>
-        </paper-dialog>
+            </paper-dialog>
 
-        <div class="tblWrap">
-            <table id="ppTbl" on-click="MyFnc">
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo">ID</th>
-                        <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
-                        <th>BR</th>
-                        <th>Rank</th>
-                        <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
-                        <th><button class="sort" value="{{model.SortLTC$::click}}" onmousedown="++this.value" style="border-width:1px;">LTM#</button></th>
-                        <th><button class="sort" value="{{model.SortL1C$::click}}" onmousedown="++this.value" style="border-width:1px;">L1M#</button></th>
-                        <th><button class="sort" value="{{model.SortL2C$::click}}" onmousedown="++this.value" style="border-width:1px;">L2M#</button></th>
-                        <th><button class="sort" value="{{model.SortL3C$::click}}" onmousedown="++this.value" style="border-width:1px;">L3M#</button></th>
-                        <th>Oynadığı Takımlar</th>
-                        <!--
-                        <th>Cns</th>
-                        <th>Dğm</th>
-                        -->
-                        <th hidden$="[[!model.canMdfy]]">Tel</th>
-                        <th hidden$="[[!model.canMdfy]]">eMail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.PPs]]">
+            <div class="tblWrap">
+                <table id="ppTbl" on-click="MyFnc">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
                         <tr>
-                            <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td><a href="/bodved/ppMacPage/[[item.oNo]]/">[[item.Ad]]</a></td>
-                            <td class="ortala">°[[item.RnkBaz]]</td>
-                            <td class="Rnk">°[[item.Rnk]]</td>
-                            <td class="Sra">[[item.Sra]]</td>
-                            <td class="ortala" data-val$="[[item.LTC]]">[[item.LTC]]</td>
-                            <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
-                            <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
-                            <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
-                            <td>[[item.oCTs]]</td>
+                            <th class="oNo">ID</th>
+                            <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
+                            <th>BR</th>
+                            <th>Rank</th>
+                            <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
+                            <th><button class="sort" value="{{model.SortLTC$::click}}" onmousedown="++this.value" style="border-width:1px;">LTM#</button></th>
+                            <th><button class="sort" value="{{model.SortL1C$::click}}" onmousedown="++this.value" style="border-width:1px;">L1M#</button></th>
+                            <th><button class="sort" value="{{model.SortL2C$::click}}" onmousedown="++this.value" style="border-width:1px;">L2M#</button></th>
+                            <th><button class="sort" value="{{model.SortL3C$::click}}" onmousedown="++this.value" style="border-width:1px;">L3M#</button></th>
+                            <th>Oynadığı Takımlar</th>
                             <!--
-                            <td class="ortala">[[item.Sex]]</td>
-                            <td>[[item.DgmYil]]</td>
+                            <th>Cns</th>
+                            <th>Dğm</th>
                             -->
-                            <td hidden$="[[!model.canMdfy]]">[[item.Tel]]</td>
-                            <td hidden$="[[!model.canMdfy]]">[[item.eMail]]</td>
-                            <!--td> class="ortala"><a href="/bodved/Deneme/[[item.oNo]]">►</a></td-->
+                            <th hidden$="[[!model.canMdfy]]">Tel</th>
+                            <th hidden$="[[!model.canMdfy]]">eMail</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.PPs]]">
+                            <tr>
+                                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td><a href="/bodved/ppMacPage/[[item.oNo]]/">[[item.Ad]]</a></td>
+                                <td class="ortala">°[[item.RnkBaz]]</td>
+                                <td class="Rnk">°[[item.Rnk]]</td>
+                                <td class="Sra">[[item.Sra]]</td>
+                                <td class="ortala" data-val$="[[item.LTC]]">[[item.LTC]]</td>
+                                <td class="ortala" data-val$="[[item.L1C]]">[[item.L1C]]</td>
+                                <td class="ortala" data-val$="[[item.L2C]]">[[item.L2C]]</td>
+                                <td class="ortala" data-val$="[[item.L3C]]">[[item.L3C]]</td>
+                                <td>[[item.oCTs]]</td>
+                                <!--
+                                <td class="ortala">[[item.Sex]]</td>
+                                <td>[[item.DgmYil]]</td>
+                                -->
+                                <td hidden$="[[!model.canMdfy]]">[[item.Tel]]</td>
+                                <td hidden$="[[!model.canMdfy]]">[[item.eMail]]</td>
+                                <!--td> class="ortala"><a href="/bodved/Deneme/[[item.oNo]]">►</a></td-->
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
 
-        </div>
-    </template>
+            </div>
+        </template>
+        </dom-bind>
+        <script>
+            (function () {
+                var curRowIndex = -1;
+                var curCellIndex = -1;
 
-    <script>
-		(function ()
-		{
-			var curRowIndex = -1;
-			var curCellIndex = -1;
+                var script = document._currentScript || document.currentScript;
+                tmplt = script.previousElementSibling;
 
-			var script = document._currentScript || document.currentScript;
-			tmplt = script.previousElementSibling;
+                console.log("Script run");
+                /*
+                setTimeout(function () {
+                    var pt = document.querySelector('#ppTbl');
+                    pt.onkeydown = function (e)
+                    {
+                        console.log('keydown');
 
-			console.log("Script run");
-            /*
-			setTimeout(function () {
-			    var pt = document.querySelector('#ppTbl');
-                pt.onkeydown = function (e)
-                {
-                    console.log('keydown');
+                    }
+                    //tmplt.addEventListener('keydown', function () {
+                    //    console.log('keydown');
+                    //});
+                });
+                */
 
+                tmplt.MyFnc = function (e) {
+                    console.log(e);
+                    var tr = e.target.closest("tr");
+                    //console.log("tr", tr);
+                    if (tr == null) // Input Table'da oldugu icin oradan da gelebilit
+                        return;
+
+                    if (tr.rowIndex > 0) {     // Mark current Row
+                        if (curRowIndex != -1) {
+                            ppTbl.rows[curRowIndex].classList.remove("curRow"); //this.$.tblOphs.rows[curRowIndex].classList.remove("curRow");
+                        }
+
+                        curRowIndex = tr.rowIndex; //curTr.rowIndex;
+                        tr.classList.add("curRow"); //curTr.classList.add("curRow");
+                    }
                 }
-                //tmplt.addEventListener('keydown', function () {
-                //    console.log('keydown');
-                //});
-			});
-			*/
+            })();
 
-			tmplt.MyFnc = function (e) {
-			    console.log(e);
-			    var tr = e.target.closest("tr");
-			    //console.log("tr", tr);
-			    if (tr == null) // Input Table'da oldugu icin oradan da gelebilit
-			        return;
-
-			    if (tr.rowIndex > 0) {     // Mark current Row
-			        if (curRowIndex != -1) {
-			            ppTbl.rows[curRowIndex].classList.remove("curRow"); //this.$.tblOphs.rows[curRowIndex].classList.remove("curRow");
-			        }
-
-			        curRowIndex = tr.rowIndex; //curTr.rowIndex;
-			        tr.classList.add("curRow"); //curTr.classList.add("curRow");
-			    }
-			}
-		})();
-
-    </script>
+        </script>
 
 </template>

@@ -5,8 +5,8 @@
   "canMdfy": false,
   "CCoNo": "",
   "CToNo": "",
-  "RnkGrp": "",
-  "RnkGrpAd": "",
+  "RnkID": 0,
+  "RnkAd": "",
   "_Sra": 1,  // Counter
   
   "CTPs": [

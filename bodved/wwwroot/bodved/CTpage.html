@@ -1,103 +1,105 @@
 ﻿<template>
-    <template is="dom-bind">
-        <div class="tblWrap">
-            <table id="ctTbl">
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <div>[[model.Cap2]]</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th rowspan="2" class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
-                        <th rowspan="2">Sıra</th>
-                        <th rowspan="2">Takım</th>
-                        <th rowspan="2">Rank</th>
-                        <th rowspan="2">Fikstür</th>
-                        <th colspan="3">Msbk</th>
-                        <th rowspan="2">Puan</th>
-                        <th colspan="3">Skor</th>
-                        <th colspan="3">Maç</th>
-                        <th colspan="3">Set</th>
-                        <th rowspan="2">1.Kaptan</th>
-                        <th rowspan="2">2.Kaptan</th>
-                        <th rowspan="2">Adres</th>
-                    </tr>
-                    <tr>
-                        <th>o</th>
-                        <th>g</th>
-                        <th>m</th>
-
-                        <th>a</th>
-                        <th>v</th>
-                        <th>a-v</th>
-                        
-                        <th>a</th>
-                        <th>v</th>
-                        <th>a-v</th>
-                        
-                        <th>a</th>
-                        <th>v</th>
-                        <th>a-v</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.CTs]]">
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="tblWrap">
+                <table id="ctTbl">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
                         <tr>
-                            <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                            <td class="ortala">[[item.Sra]]</td>
-                            <td><a href="/bodved/CTPpage/[[item.oNo]]">[[item.Ad]]</a></td>
-                            <td class="ortala o">[[item.tRnk]]</td>
-                            <td class="ortala"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
-                            <td class="ortala o">[[item.oM]]</td>
-                            <td class="ortala a">[[item.aM]]</td>
-                            <td class="ortala v">[[item.vM]]</td>
-                            <td class="Puan">[[item.tP]]</td>
-                            <td class="ortala a">[[item.aMP]]</td>
-                            <td class="ortala v">[[item.vMP]]</td>
-                            <td class="ortala f sag2">[[item.fMP]]</td>
-                            <td class="ortala a">[[item.aO]]</td>
-                            <td class="ortala v">[[item.vO]]</td>
-                            <td class="ortala f sag2">[[item.fO]]</td>
-                            <td class="ortala a">[[item.aS]]</td>
-                            <td class="ortala v">[[item.vS]]</td>
-                            <td class="ortala f sag2">[[item.fS]]</td>
-                            <td>[[item.K1Ad]]</td>
-                            <td>[[item.K2Ad]]</td>
-                            <td>[[item.Adres]]</td>
+                            <th rowspan="2" class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
+                            <th rowspan="2">Sıra</th>
+                            <th rowspan="2">Takım</th>
+                            <th rowspan="2">Rank</th>
+                            <th rowspan="2">Fikstür</th>
+                            <th colspan="3">Msbk</th>
+                            <th rowspan="2">Puan</th>
+                            <th colspan="3">Skor</th>
+                            <th colspan="3">Maç</th>
+                            <th colspan="3">Set</th>
+                            <th rowspan="2">1.Kaptan</th>
+                            <th rowspan="2">2.Kaptan</th>
+                            <th rowspan="2">Adres</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                        <tr>
+                            <th>o</th>
+                            <th>g</th>
+                            <th>m</th>
 
-            <template is="dom-if" if="[[model.canMdfy]]">
-                <div class="mdfRecWrap">
-                    <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                    <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                    <input placeholder="Rumuz/ID" type="text" value="{{model.MdfRec.ID$::change}}" />
-                    
-                    <select name="select" value="{{model.MdfRec.K1oNo$::change}}">
-                        <option value="0">N/A</option>
-                        <template is="dom-repeat" items="[[model.PPs]]">
-                            <option value="[[item.oNo]]">[[item.Ad]]</option>
-                        </template>
-                    </select>
-                    <select name="select" value="{{model.MdfRec.K2oNo$::change}}">
-                        <option value="0">N/A</option>
-                        <template is="dom-repeat" items="[[model.PPs]]">
-                            <option value="[[item.oNo]]">[[item.Ad]]</option>
-                        </template>
-                    </select>
-                    <input placeholder="Adres" type="text" value="{{model.MdfRec.Adres$::change}}" />
-                    <input placeholder="Pwd" type="text" value="{{model.MdfRec.Pw$::change}}" />
+                            <th>a</th>
+                            <th>v</th>
+                            <th>a-v</th>
 
-                    <div class="mdfRecAction">
-                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                            <th>a</th>
+                            <th>v</th>
+                            <th>a-v</th>
+
+                            <th>a</th>
+                            <th>v</th>
+                            <th>a-v</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.CTs]]">
+                            <tr>
+                                <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                                <td class="ortala">[[item.Sra]]</td>
+                                <td><a href="/bodved/CTPpage/[[item.oNo]]">[[item.Ad]]</a></td>
+                                <td class="ortala o">[[item.tRnk]]</td>
+                                <td class="ortala"><a class="Go" href="/bodved/CETpageCT/[[item.oNo]]">►</a></td>
+                                <td class="ortala o">[[item.oM]]</td>
+                                <td class="ortala a">[[item.aM]]</td>
+                                <td class="ortala v">[[item.vM]]</td>
+                                <td class="Puan">[[item.tP]]</td>
+                                <td class="ortala a">[[item.aMP]]</td>
+                                <td class="ortala v">[[item.vMP]]</td>
+                                <td class="ortala f sag2">[[item.fMP]]</td>
+                                <td class="ortala a">[[item.aO]]</td>
+                                <td class="ortala v">[[item.vO]]</td>
+                                <td class="ortala f sag2">[[item.fO]]</td>
+                                <td class="ortala a">[[item.aS]]</td>
+                                <td class="ortala v">[[item.vS]]</td>
+                                <td class="ortala f sag2">[[item.fS]]</td>
+                                <td>[[item.K1Ad]]</td>
+                                <td>[[item.K2Ad]]</td>
+                                <td>[[item.Adres]]</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <template is="dom-if" if="[[model.canMdfy]]">
+                    <div class="mdfRecWrap">
+                        <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+                        <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+                        <input placeholder="Rumuz/ID" type="text" value="{{model.MdfRec.ID$::change}}" />
+
+                        <select name="select" value="{{model.MdfRec.K1oNo$::change}}">
+                            <option value="0">N/A</option>
+                            <template is="dom-repeat" items="[[model.PPs]]">
+                                <option value="[[item.oNo]]">[[item.Ad]]</option>
+                            </template>
+                        </select>
+                        <select name="select" value="{{model.MdfRec.K2oNo$::change}}">
+                            <option value="0">N/A</option>
+                            <template is="dom-repeat" items="[[model.PPs]]">
+                                <option value="[[item.oNo]]">[[item.Ad]]</option>
+                            </template>
+                        </select>
+                        <input placeholder="Adres" type="text" value="{{model.MdfRec.Adres$::change}}" />
+                        <input placeholder="Pwd" type="text" value="{{model.MdfRec.Pw$::change}}" />
+
+                        <div class="mdfRecAction">
+                            <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                            <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                            <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </div>
-        
-    </template>
+                </template>
+            </div>
+
+        </template>
+    </dom-bind>
 </template>

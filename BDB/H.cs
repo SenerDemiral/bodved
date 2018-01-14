@@ -684,8 +684,8 @@ namespace BDB
                     hpRnk = hRnk == 0 ? hPP.RnkBaz : hRnk;
                     gpRnk = gRnk == 0 ? gPP.RnkBaz : gRnk;
 
-                    //if (r.hWon == 0 || hPP.Ad.StartsWith("∞") || gPP.Ad.StartsWith("∞"))   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                    if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    //if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    if (r.hWon == 0 || hpRnk == -1 || gpRnk == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
                         NOPX = 0;
                     else
                         NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
@@ -726,38 +726,19 @@ namespace BDB
             Console.WriteLine($"refreshRH {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
-        public static PPGR getPPGR(PP pp, string RnkGrp)
-        {
-            PPGR ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP = ? and p.RnkGrp = ?", pp, RnkGrp).FirstOrDefault();
-            if (ppgr == null)
-            {
-                ppgr = new PPGR
-                {
-                    PP = pp,
-                    RnkGrp = RnkGrp,
-                    RnkBaz = ppgr.PP.RnkBaz,
-                    Rnk = ppgr.PP.RnkBaz
-                };
-            }
-            return ppgr;
-        }
         public static void RefreshRH4(DateTime basTrh)
         {
             // Kucuk bir tarih verilerek basindan beri yaptirilabilir
+            // RefreshRH'dan 2x hizli
             Stopwatch watch = new Stopwatch();
             watch.Start();
             int nor = 0;
             PP pp;
 
-            DateTime d = new DateTime(2017, 12, 1);
-            Dictionary<ulong, int> myDic = new Dictionary<ulong, int>();
-            /*
-            foreach (var p in Db.SQL<BDB.PP>("select p from PP p"))
-            {
-                myDic[p.oNo] = -1;
-            }
-            */
-            // startDate'e kadarki PP lerin sonRank'ini kaydet.
+            Dictionary<ulong, int> myDic = new Dictionary<ulong, int>(1000);    // Initial capacity 1000 players
+            
+            // basTrh'e kadarki PP lerin sonRank'ini kaydet.
+            // Oyuncunun bircok degeri var. RH tarih sirali basindan beri okundugu icin en sonu istenen rank
             foreach (var r in Db.SQL<BDB.RH>("select p from RH p where p.Trh < ? order by p.Trh", basTrh))
             {
                 myDic[r.hPP.oNo] = r.hpRnk + r.hNOPX;
@@ -765,7 +746,7 @@ namespace BDB
             }
 
             ulong rhPPoNo = 0, rgPPoNo = 0;
-            int hpRnk = 0, gpRnk = 0;
+            int hpRnk = 0, gpRnk = 0, rnkBaz = 0;
             int NOPX = 0;
             Db.Transact(() =>
             {
@@ -775,17 +756,26 @@ namespace BDB
                     rhPPoNo = r.hPP.GetObjectNo();
                     rgPPoNo = r.gPP.GetObjectNo();
 
-                    //if (myDic[rhPPoNo] == -1)
                     if (!myDic.ContainsKey(rhPPoNo))
-                        myDic[rhPPoNo] = r.hPP.RnkBaz;
-                    hpRnk = myDic[rhPPoNo];
+                    {
+                        rnkBaz = r.hPP.RnkBaz;
+                        myDic[rhPPoNo] = rnkBaz;
+                        hpRnk = rnkBaz;
+                    }
+                    else
+                        hpRnk = myDic[rhPPoNo];
 
-                    //if (myDic[rgPPoNo] == -1)
                     if (!myDic.ContainsKey(rgPPoNo))
-                        myDic[rgPPoNo] = r.gPP.RnkBaz;
-                    gpRnk = myDic[rgPPoNo];
+                    {
+                        rnkBaz = r.gPP.RnkBaz;
+                        myDic[rgPPoNo] = rnkBaz;
+                        gpRnk = rnkBaz;
+                    }
+                    else
+                        gpRnk = myDic[rgPPoNo];
 
-                    if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    //if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    if (r.hWon == 0 || hpRnk < 1 || gpRnk < 1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
                         NOPX = 0;
                     else
                         NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
@@ -795,12 +785,15 @@ namespace BDB
                     r.gNOPX = -NOPX;
                     r.hpRnk = hpRnk;
                     r.gpRnk = gpRnk;
-
+                    
                     // Update dictionary of PP
                     myDic[rhPPoNo] = hpRnk + NOPX;
                     myDic[rgPPoNo] = gpRnk - NOPX;
 
                 }
+
+                int sira = 1;
+                /*
                 // Copy Dict to PP
                 foreach (var pair in myDic)
                 {
@@ -809,52 +802,124 @@ namespace BDB
                 }
 
                 // Update PP Sira
-                int sira = 1;
+                sira = 1;
                 foreach (var r in Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc"))
                 {
                     r.Sra = sira++;
                 }
-
-                /*
+                */
+                
                 var items = from pair in myDic
                             orderby pair.Value descending
                             select pair;
-
-                int sra = 1;
+                sira = 1;
                 foreach (var pair in items)
                 {
                     pp = Db.FromId<PP>(pair.Key);
                     pp.Rnk = pair.Value;
-                    pp.Sra = sra++;
+                    pp.Sra = sira++;
 
-                    //Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
                 }
-                */
-                /*
-                var list = myDic.Keys.ToList();
-                list.Sort();
 
-                // Loop through keys.
-                foreach (var key in list)
+            });
+
+            watch.Stop();
+            Console.WriteLine($"refreshRH4 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+  
+        public static PPGR getPPGR(PP pp, long RnkID)
+        {
+            PPGR ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP = ? and p.RnkID = ?", pp, RnkID).FirstOrDefault();
+            if (ppgr == null)
+            {
+                ppgr = new PPGR
                 {
-                    pp = Db.FromId<PP>(key);
-                    pp.Rnk = myDic[key];
-                    pp.Sra = sra++;
+                    PP = pp,
+                    RnkID = RnkID,
+                    RnkBaz = pp.RnkBaz,
+                    Rnk = pp.RnkBaz
+                };
+            }
+            return ppgr;
+        }
 
-                    //Console.WriteLine("{0}: {1}", key, myDic[key]);
+        public static void RefreshRH24(ulong CCoNo)
+        {
+            // DENEME
+            Stopwatch watch = Stopwatch.StartNew();
+            int nor = 0;
+            var cc = Db.FromId<CC>(CCoNo);
+            long RnkID = cc.RnkID;
+
+            Dictionary<ulong, int> myDic = new Dictionary<ulong, int>(1000);    // Initial capacity 1000 players
+
+            ulong rhPPoNo = 0, rgPPoNo = 0;
+            int hpRnk = 0, gpRnk = 0, rnkBaz = 0;
+            int NOPX = 0;
+            Db.Transact(() =>
+            {
+                var rhs = Db.SQL<BDB.RH>("select p from RH p where p.CC.RnkID = ? order by p.Trh", RnkID);
+                foreach (var r in rhs)
+                {
+                    nor++;
+                    rhPPoNo = r.hPP.GetObjectNo();
+                    rgPPoNo = r.gPP.GetObjectNo();
+
+                    if (!myDic.ContainsKey(rhPPoNo))
+                    {
+                        rnkBaz = r.hPP.RnkBaz;
+                        myDic[rhPPoNo] = rnkBaz;
+                        hpRnk = rnkBaz;
+                    }
+                    else
+                        hpRnk = myDic[rhPPoNo];
+
+                    if (!myDic.ContainsKey(rgPPoNo))
+                    {
+                        rnkBaz = r.gPP.RnkBaz;
+                        myDic[rgPPoNo] = rnkBaz;
+                        gpRnk = rnkBaz;
+                    }
+                    else
+                        gpRnk = myDic[rgPPoNo];
+
+                    if (r.hWon == 0 || hpRnk < 1 || gpRnk < 1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                        NOPX = 0;
+                    else
+                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+
+                    // Update RHs2
+                    r.hNOPX2 = NOPX;
+                    r.gNOPX2 = -NOPX;
+                    r.hpRnk2 = hpRnk;
+                    r.gpRnk2 = gpRnk;
+
+                    // Update dictionary of PP
+                    myDic[rhPPoNo] = hpRnk + NOPX;
+                    myDic[rgPPoNo] = gpRnk - NOPX;
+
                 }
-                */
                 /*
-                foreach (var pair in myDic)
+                int sira = 1;
+
+                var items = from pair in myDic
+                            orderby pair.Value descending
+                            select pair;
+                sira = 1;
+                PPGR ppgr;
+                foreach (var pair in items)
                 {
-                    pp = Db.FromId<PP>(pair.Key);
-                    pp.Rnk = pair.Value;
+                    ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkGrp = ?", pair.Key, RnkGrp).FirstOrDefault();
+
+                    ppgr.Rnk = pair.Value;
+                    ppgr.Sra = sira++;
                 }
                 */
             });
 
             watch.Stop();
-            Console.WriteLine($"refreshRH4 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+            Console.WriteLine($"refreshRH24 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
 
         public static void RefreshRH2(ulong CCoNo)
@@ -863,7 +928,7 @@ namespace BDB
             watch.Start();
             int nor = 0;
             var cc = Db.FromId<CC>(CCoNo);
-            string RnkGrp = cc.RnkGrp;
+            long RnkID = cc.RnkID;
 
             PPGR hPP;
             PPGR gPP;
@@ -873,7 +938,7 @@ namespace BDB
                 // Init
                 // PP deki Rnk son degeri 
 
-                var pps = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ?", RnkGrp);
+                var pps = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkID = ?", RnkID);
                 foreach (var p in pps)
                 {
                     p.RnkBaz = p.PP.RnkBaz;
@@ -884,13 +949,13 @@ namespace BDB
 
                 // ReCalculate Rank of RnkGrp Players
                 int hpRnk = 0, gpRnk = 0;
-                var rhs = Db.SQL<BDB.RH>("select p from RH p where p.CC.RnkGrp = ? order by p.Trh", RnkGrp);
+                var rhs = Db.SQL<BDB.RH>("select p from RH p where p.CC.RnkID = ? order by p.Trh", RnkID);
                 foreach (var r in rhs)
                 {
                     nor++;
 
-                    hPP = getPPGR(r.hPP, RnkGrp);
-                    gPP = getPPGR(r.gPP, RnkGrp);
+                    hPP = getPPGR(r.hPP, RnkID);
+                    gPP = getPPGR(r.gPP, RnkID);
 
                     hpRnk = hPP.Rnk;
                     gpRnk = gPP.Rnk;
@@ -916,93 +981,13 @@ namespace BDB
                 }
 
                 // Update PP Sira
-                var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ? order by p.Rnk desc", RnkGrp);
+                var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkID = ? order by p.Rnk desc", RnkID);
                 int sira = 1;
                 foreach (var r in ppgr)
                 {
                     r.Sra = sira++;
                 }
             });
-            watch.Stop();
-            Console.WriteLine($"refreshRH2 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
-        }
-
-        public static void RefreshRH3(ulong CCoNo)
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            int nor = 0;
-
-            var cc = Db.FromId<CC>(CCoNo);
-            string RnkGrp = cc.RnkGrp;
-            string Lig = RnkGrp.Substring(2, 1);
-            int RnkBaz = 1700;
-            if (Lig == "1")
-                RnkBaz = 1900;
-            else if (Lig == "2")
-                RnkBaz = 1800;
-
-
-            PPGR hPP;
-            PPGR gPP;
-            int NOPX = 0;
-            Db.Transact(() =>
-            {
-                // Init
-                // PP deki Rnk son degeri 
-                //Db.SQL("DELETE FROM BDB.PPGR WHERE RnkGrp = ?", RnkGrp);
-                
-                var pps = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ?", RnkGrp);
-                foreach (var p in pps)
-                {
-                    p.RnkBaz = p.PP.RnkBaz;
-                    p.Rnk = p.PP.RnkBaz; // p.RnkBaz;
-                    p.aO = 0;
-                    p.vO = 0;
-                }
-
-                // ReCalculate Rank of RnkGrp Players
-                int hpRnk = 0, gpRnk = 0;
-                var rhs = Db.SQL<BDB.RH>("select p from RH p where p.CC.RnkGrp = ? order by p.Trh", RnkGrp);
-                foreach (var r in rhs)
-                {
-                    nor++;
-
-                    hPP = getPPGR(r.hPP, RnkGrp);
-                    gPP = getPPGR(r.gPP, RnkGrp);
-
-                    hpRnk = hPP.Rnk;
-                    gpRnk = gPP.Rnk;
-
-                    //if (r.hWon == 0 || r.hPP.Ad.StartsWith("∞") || r.gPP.Ad.StartsWith("∞"))   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                    if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                        NOPX = 0;
-                    else
-                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
-
-                    r.hNOPX = NOPX;
-                    r.gNOPX = -NOPX;
-                    r.hpRnk = hpRnk;
-                    r.gpRnk = gpRnk;
-
-                    hPP.Rnk = hpRnk + NOPX;
-                    gPP.Rnk = gpRnk - NOPX;
-
-                    hPP.aO += r.hWon > 0 ? 1 : 0;
-                    hPP.vO += r.hWon < 0 ? 1 : 0;
-                    gPP.aO += r.gWon > 0 ? 1 : 0;
-                    gPP.vO += r.gWon < 0 ? 1 : 0;
-                }
-                
-                // Update PP Sira
-                var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkGrp = ? order by p.Rnk desc", RnkGrp);
-                int sira = 1;
-                foreach (var r in ppgr)
-                {
-                    r.Sra = sira++;
-                }
-            });
-
             watch.Stop();
             Console.WriteLine($"refreshRH2 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }

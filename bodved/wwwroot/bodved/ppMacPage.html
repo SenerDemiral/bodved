@@ -1,153 +1,157 @@
 ﻿<template>
-    <template is="dom-bind">
-        <div class="tblWrap">
-            <table>
-                <caption>
-                    <div>[[model.Cap1]]</div>
-                    <template is="dom-if" if="[[model.RnkGrp]]">
-                        <a href="/bodved/ppMacPage/[[model.PPoNo]]/">[[model.Cap2]]</a>
-                    </template>
-                    <template is="dom-if" if="[[!model.RnkGrp]]">
-                        <div>[[model.Cap2]]</div>
-                    </template>
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="tblWrap">
+                <table>
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <template is="dom-if" if="[[model.RnkGrp]]">
+                            <a href="/bodved/ppMacPage/[[model.PPoNo]]/">[[model.Cap2]]</a>
+                        </template>
+                        <template is="dom-if" if="[[!model.RnkGrp]]">
+                            <div>[[model.Cap2]]</div>
+                        </template>
                     </caption>
-                <thead>
-                    <tr>
-                        <th colspan="6" class="SngHdr">Single</th>
-                        <th colspan="6" class="DblHdr">Double</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3" class="SngHdr">Maç</th>
-                        <th colspan="3" class="SngHdr">Set</th>
-                        <th colspan="3" class="DblHdr">Maç</th>
-                        <th colspan="3" class="DblHdr">Set</th>
-                    </tr>
-                    <tr>
-                        <th class="SngHdr">O</th>
-                        <th class="SngHdr">G</th>
-                        <th class="SngHdr">M</th>
-                        <th class="SngHdr">O</th>
-                        <th class="SngHdr">A</th>
-                        <th class="SngHdr">V</th>
-                        <th class="DblHdr">O</th>
-                        <th class="DblHdr">G</th>
-                        <th class="DblHdr">M</th>
-                        <th class="DblHdr">O</th>
-                        <th class="DblHdr">A</th>
-                        <th class="DblHdr">V</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="ortala">[[model.SMo]]</td>
-                        <td class="ortala">[[model.SMa]]</td>
-                        <td class="ortala">[[model.SMv]]</td>
-                        <td class="ortala">[[model.SSo]]</td>
-                        <td class="ortala">[[model.SSa]]</td>
-                        <td class="ortala">[[model.SSv]]</td>
-
-                        <td class="ortala">[[model.DMo]]</td>
-                        <td class="ortala">[[model.DMa]]</td>
-                        <td class="ortala">[[model.DMv]]</td>
-                        <td class="ortala">[[model.DSo]]</td>
-                        <td class="ortala">[[model.DSa]]</td>
-                        <td class="ortala">[[model.DSv]]</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table>
-                <caption>
-                    <div>Single</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo">ID</th>
-                        <th>Tarih</th>
-                        <th>Takım</th>
-                        <th>Rank</th>
-                        <th>PX</th>
-                        <th class="hSW">A</th>
-                        <th>S1</th>
-                        <th>S2</th>
-                        <th>S3</th>
-                        <th>S4</th>
-                        <th>S5</th>
-                        <th class="hSW">V</th>
-                        <th colspan="3">Rakip</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.Singles]]">
-                        <tr data-WoL$="[[item.WoL]]">
-                            <td class="oNo">[[item.oNo]]</td>
-                            <td><a href="/bodved/CETRinpPage/[[item.CEToNo]]">[[item.Tarih]]</a></td>
-                            <td><a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a></td>
-                            <td class="rank">[[item.Rnk]]</td>
-                            <td class="ortala">[[item.NOBX]]</td>
-
-                            <td class="hSW">[[item.SW]]</td>
-                            <td class="ortala">[[item.S1]]</td>
-                            <td class="ortala">[[item.S2]]</td>
-                            <td class="ortala">[[item.S3]]</td>
-                            <td class="ortala">[[item.S4]]</td>
-                            <td class="ortala">[[item.S5]]</td>
-                            <td class="hSW">[[item.SL]]</td>
-
-                            <td class="rank">[[item.rRnk]]</td>
-                            <td><a href="/bodved/ppMacPage/[[item.rPPoNo]]/[[model.CCoNo]]">[[item.rPPAd]]</a></td>
-                            <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
+                    <thead>
+                        <tr>
+                            <th colspan="6" class="SngHdr">Single</th>
+                            <th colspan="6" class="DblHdr">Double</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-
-            <table>
-                <caption>
-                    <div>Double</div>
-                </caption>
-                <thead>
-                    <tr>
-                        <th class="oNo">ID</th>
-                        <th>Tarih</th>
-                        <th>Ortak</th>
-                        <th class="hSW">A</th>
-                        <th>S1</th>
-                        <th>S2</th>
-                        <th>S3</th>
-                        <th>S4</th>
-                        <th>S5</th>
-                        <th class="hSW">V</th>
-                        <th colspan="2">Rakip</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template is="dom-repeat" items="[[model.Doubles]]">
-                        <tr data-WoL$="[[item.WoL]]">
-                            <td class="oNo">[[item.oNo]]</td>
-                            <td><a href="/bodved/CETRinpPage/[[item.CEToNo]]">[[item.Tarih]]</a></td>
-                            <td><a href="/bodved/ppMacPage/[[item.oPPoNo]]/[[model.CCoNo]]">[[item.oPPAd]]</a>
-                                <br />
-                                <a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a>
-                            </td>
-                            <td class="hSW">[[item.SW]]</td>
-                            <td class="ortala">[[item.S1]]</td>
-                            <td class="ortala">[[item.S2]]</td>
-                            <td class="ortala">[[item.S3]]</td>
-                            <td class="ortala">[[item.S4]]</td>
-                            <td class="ortala">[[item.S5]]</td>
-                            <td class="hSW">[[item.SL]]</td>
-
-                            <td><a href="/bodved/ppMacPage/[[item.rPPoNo1]]/[[model.CCoNo]]">[[item.rPPAd1]]</a>
-                                <br />
-                                <a href="/bodved/ppMacPage/[[item.rPPoNo2]]/[[model.CCoNo]]">[[item.rPPAd2]]</a>
-                            </td>
-                            <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
+                        <tr>
+                            <th colspan="3" class="SngHdr">Maç</th>
+                            <th colspan="3" class="SngHdr">Set</th>
+                            <th colspan="3" class="DblHdr">Maç</th>
+                            <th colspan="3" class="DblHdr">Set</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
-        
-    </template>
+                        <tr>
+                            <th class="SngHdr">O</th>
+                            <th class="SngHdr">G</th>
+                            <th class="SngHdr">M</th>
+                            <th class="SngHdr">O</th>
+                            <th class="SngHdr">A</th>
+                            <th class="SngHdr">V</th>
+                            <th class="DblHdr">O</th>
+                            <th class="DblHdr">G</th>
+                            <th class="DblHdr">M</th>
+                            <th class="DblHdr">O</th>
+                            <th class="DblHdr">A</th>
+                            <th class="DblHdr">V</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ortala">[[model.SMo]]</td>
+                            <td class="ortala">[[model.SMa]]</td>
+                            <td class="ortala">[[model.SMv]]</td>
+                            <td class="ortala">[[model.SSo]]</td>
+                            <td class="ortala">[[model.SSa]]</td>
+                            <td class="ortala">[[model.SSv]]</td>
+
+                            <td class="ortala">[[model.DMo]]</td>
+                            <td class="ortala">[[model.DMa]]</td>
+                            <td class="ortala">[[model.DMv]]</td>
+                            <td class="ortala">[[model.DSo]]</td>
+                            <td class="ortala">[[model.DSa]]</td>
+                            <td class="ortala">[[model.DSv]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <caption>
+                        <div>Single</div>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="oNo">ID</th>
+                            <th>Tarih</th>
+                            <th>Takım</th>
+                            <th>Rank</th>
+                            <th>PX</th>
+                            <th class="hSW">A</th>
+                            <th>S1</th>
+                            <th>S2</th>
+                            <th>S3</th>
+                            <th>S4</th>
+                            <th>S5</th>
+                            <th class="hSW">V</th>
+                            <th colspan="3">Rakip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.Singles]]">
+                            <tr data-WoL$="[[item.WoL]]">
+                                <td class="oNo">[[item.oNo]]</td>
+                                <td><a href="/bodved/CETRinpPage/[[item.CEToNo]]">[[item.Tarih]]</a></td>
+                                <td><a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a></td>
+                                <td class="rank">[[item.Rnk]]</td>
+                                <td class="ortala">[[item.NOBX]]</td>
+
+                                <td class="hSW">[[item.SW]]</td>
+                                <td class="ortala">[[item.S1]]</td>
+                                <td class="ortala">[[item.S2]]</td>
+                                <td class="ortala">[[item.S3]]</td>
+                                <td class="ortala">[[item.S4]]</td>
+                                <td class="ortala">[[item.S5]]</td>
+                                <td class="hSW">[[item.SL]]</td>
+
+                                <td class="rank">[[item.rRnk]]</td>
+                                <td><a href="/bodved/ppMacPage/[[item.rPPoNo]]/[[model.CCoNo]]">[[item.rPPAd]]</a></td>
+                                <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <table>
+                    <caption>
+                        <div>Double</div>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="oNo">ID</th>
+                            <th>Tarih</th>
+                            <th>Ortak</th>
+                            <th class="hSW">A</th>
+                            <th>S1</th>
+                            <th>S2</th>
+                            <th>S3</th>
+                            <th>S4</th>
+                            <th>S5</th>
+                            <th class="hSW">V</th>
+                            <th colspan="2">Rakip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.Doubles]]">
+                            <tr data-WoL$="[[item.WoL]]">
+                                <td class="oNo">[[item.oNo]]</td>
+                                <td><a href="/bodved/CETRinpPage/[[item.CEToNo]]">[[item.Tarih]]</a></td>
+                                <td>
+                                    <a href="/bodved/ppMacPage/[[item.oPPoNo]]/[[model.CCoNo]]">[[item.oPPAd]]</a>
+                                    <br />
+                                    <a href="/bodved/CTPPage/[[item.CToNo]]">[[item.CTAd]]</a>
+                                </td>
+                                <td class="hSW">[[item.SW]]</td>
+                                <td class="ortala">[[item.S1]]</td>
+                                <td class="ortala">[[item.S2]]</td>
+                                <td class="ortala">[[item.S3]]</td>
+                                <td class="ortala">[[item.S4]]</td>
+                                <td class="ortala">[[item.S5]]</td>
+                                <td class="hSW">[[item.SL]]</td>
+
+                                <td>
+                                    <a href="/bodved/ppMacPage/[[item.rPPoNo1]]/[[model.CCoNo]]">[[item.rPPAd1]]</a>
+                                    <br />
+                                    <a href="/bodved/ppMacPage/[[item.rPPoNo2]]/[[model.CCoNo]]">[[item.rPPAd2]]</a>
+                                </td>
+                                <td><a href="/bodved/CTPPage/[[item.rCToNo]]">[[item.rCTAd]]</a></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+
+        </template>
+    </dom-bind>
 </template>

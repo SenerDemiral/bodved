@@ -54,8 +54,10 @@ namespace BDB
         public string Skl { get; set; }     // Takim/Ferdi
         public string Grp { get; set; }     // Birden cok turnuvada oynayan Oyunculari takip icin
         public string Lig { get; set; }
-        public string RnkGrp { get; set; }
-        public string RnkGrpAd { get; set; }
+        public long RnkID { get; set; } 
+        public string RnkAd { get; set; }
+        //public string RnkGrp { get; set; }
+        //public string RnkGrpAd { get; set; }
         /*
         public string Lig
         {
@@ -148,7 +150,8 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
         public PP PP { get; set; }
-        public string RnkGrp { get; set; } 
+        public long RnkID { get; set; } 
+        //public string RnkGrp { get; set; } 
         public int RnkBaz { get; set; }
         public int Rnk { get; set; }
         public int Sra { get; set; }

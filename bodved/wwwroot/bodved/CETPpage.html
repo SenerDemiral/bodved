@@ -1,98 +1,104 @@
-﻿<template>
-    <template is="dom-bind" id="sener">
-        <div>[[model.Cap1]]</div>
-        <template is="dom-if" if="[[model.canMdfy]]">
+﻿<script src="/sys/redips-drag-min.js"></script>
+<link rel="stylesheet" href="/sys/redips-style.css">
 
-            <div id="dragSD">
-                <div id="dragS">
-                    <table id="tableS">
-                        <colgroup>
-                            <col width="20" />
-                            <col width="110" />
-                        </colgroup>
-                        <tr>
-                            <td class="redips-mark" id="message">Sıra</td>
-                            <td class="redips-mark">Single</td>
-                        </tr>
-                        <template is="dom-repeat" items="{{model.Singles}}">
+<template>
+    <dom-bind id="sener">
+        <template is="dom-bind" id="dilara">
+            <div>[[model.Cap1]]</div>
+            <template is="dom-if" if="[[model.canMdfy]]">
+
+                <div id="dragSD">
+                    <div id="dragS">
+                        <table id="tableS">
+                            <colgroup>
+                                <col width="20" />
+                                <col width="110" />
+                            </colgroup>
                             <tr>
-                                <td class="redips-mark" data-AoY$="[[item.AoY]]">[[dispIdx(index)]]</td>
-                                <td><div id="[[item.oNo]]" class="redips-drag">[[item.PPAd]]</div></td>
+                                <td class="redips-mark" id="message">Sıra</td>
+                                <td class="redips-mark">Single</td>
                             </tr>
-                        </template>
-                    </table>
-                </div>
-                <div id="dragD">
-                    <table id="tableD">
-                        <colgroup>
-                            <col width="20" />
-                            <col width="110" />
-                            <col width="110" />
-                        </colgroup>
-                        <tr>
-                            <td class="redips-mark">Sıra</td>
-                            <td colspan="2" class="redips-mark">Double</td>
-                        </tr>
-
-                        <template is="dom-repeat" items="{{model.Doubles}}">
-                            <template is="dom-if" if="[[item.c2.PPAd]]">
+                            <template is="dom-repeat" items="{{model.Singles}}">
                                 <tr>
-                                    <td class="redips-mark">[[item.dIdx]]</td>
-                                    <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
-                                    <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.PPAd]]</div></td>
+                                    <td class="redips-mark" data-AoY$="[[item.AoY]]">[[item.dIdx]]</td>
+                                    <td><div id="[[item.oNo]]" class="redips-drag">[[item.PPAd]]</div></td>
                                 </tr>
                             </template>
-                            <template is="dom-if" if="[[!item.c2.PPAd]]">
-                                <tr>
-                                    <td class="redips-mark ydk"></td>
-                                    <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
-                                </tr>
+                        </table>
+                    </div>
+                    <div id="dragD">
+                        <table id="tableD">
+                            <colgroup>
+                                <col width="20" />
+                                <col width="110" />
+                                <col width="110" />
+                            </colgroup>
+                            <tr>
+                                <td class="redips-mark">Sıra</td>
+                                <td colspan="2" class="redips-mark">Double</td>
+                            </tr>
+
+                            <template is="dom-repeat" items="{{model.Doubles}}">
+                                <template is="dom-if" if="[[item.c2.PPAd]]">
+                                    <tr>
+                                        <td class="redips-mark">[[item.dIdx]]</td>
+                                        <td><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                                        <td><div id="[[item.c2.oNo]]" class="redips-drag">[[item.c2.PPAd]]</div></td>
+                                    </tr>
+                                </template>
+                                <template is="dom-if" if="[[!item.c2.PPAd]]">
+                                    <tr>
+                                        <td class="redips-mark ydk"></td>
+                                        <td colspan="2"><div id="[[item.c1.oNo]]" class="redips-drag">[[item.c1.PPAd]]</div></td>
+                                    </tr>
+                                </template>
                             </template>
-                        </template>
-                    </table>
+                        </table>
+                    </div>
+
+                    <div hidden$="[[model.Pok]]">
+                        <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
+                        <br />
+                        <br />
+                        <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
+                    </div>
                 </div>
 
-                <div hidden$="[[model.Pok]]">
-                    <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value">Kaydet</button>
-                    <br />
-                    <br />
-                    <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value">Onayla ve Kaydet</button>
-                </div>
-            </div>
-
+            </template>
+            
         </template>
-    </template>
+        </dom-bind>
 
-    <script>
+        <script>
 
-        if (HTMLImports.ready) {
-            console.log("HTMLImports.ready");
-            var template = document.querySelector('#sener');
-            template.dispIdx= function(i) {
-                return i + 1;
+            if (HTMLImports.ready) {
+                console.log("HTMLImports.ready");
+                var template = document.querySelector('#sener');
+                template.dispIdx = function (i) {
+                    return i + 1;
+                }
+            } else {
+                HTMLImports.whenReady(function () {
+                    console.log("HTMLImports.whenReady");
+                })
             }
-        } else {
-            HTMLImports.whenReady(function () {
-                console.log("HTMLImports.whenReady");
-            })
-        }
-        /*
-        var template = document.querySelector('#sener');
-        console.log("template");
-        template.dispIdx = function (i) {
-            return i + 1;
-        };
-        */
-		(function () {
-			    setTimeout(function () {
-			        console.log("redipsInit");
-			        var rd = REDIPS.drag;	// reference to the REDIPS.drag class
-			        rd.dropMode = "switch";
-			        // DIV container initialization
-			        rd.init('dragS');
-			        rd.init('dragD');
+            /*
+            var template = document.querySelector('#sener');
+            console.log("template");
+            template.dispIdx = function (i) {
+                return i + 1;
+            };
+            */
+            (function () {
+                setTimeout(function () {
+                    console.log("redipsInit");
+                    var rd = REDIPS.drag;	// reference to the REDIPS.drag class
+                    rd.dropMode = "switch";
+                    // DIV container initialization
+                    rd.init('dragS');
+                    rd.init('dragD');
 
-			    });
+                });
                 /*
 			    var template = document.querySelector('#sener');
 			    console.log("template", template);
@@ -105,51 +111,51 @@
 			        return (index + 1) % 2;
 			    }
                 */
-			    REDIPS.drag.event.dropped = function () {
-			        var rd = REDIPS.drag;
-			        var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
-			        var RowIdx = pos[1];
-			        var OldRowIdx = pos[4];
-			        console.log('droped', pos, rd);
+                REDIPS.drag.event.dropped = function () {
+                    var rd = REDIPS.drag;
+                    var pos = rd.getPosition();		// ti, ri, ci, oti, ori, oci
+                    var RowIdx = pos[1];
+                    var OldRowIdx = pos[4];
+                    console.log('droped', pos, rd);
 
-			        var sen = document.querySelector("#sener");
-			        var tbl = rd.obj.closest("table");
-			        if (tbl.id == "tableS") {
-			            var mdlItm = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
-			            mdlItm.Idx$ = RowIdx; //pos[1];
-			            var mdlItmOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
-			            mdlItmOld.Idx$ = OldRowIdx; //pos[4];
-			        }
-			        if (tbl.id == "tableD") {
-			            var mi;
-			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
-			            if (mi) {
-			                mi.c1.Idx$ = RowIdx; //pos[1];
-			                console.log("mi.c1", mi.c1);
-			            }
-			            else {
-			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
-			                if (mi) {
-			                    mi.c2.Idx$ = RowIdx; //pos[1];
-			                    console.log("mi.c2", mi.c2);
-			                }
+                    var sen = document.querySelector("#sener");
+                    var tbl = rd.obj.closest("table");
+                    if (tbl.id == "tableS") {
+                        var mdlItm = sen.model.Singles.find(function (obj) { return obj.oNo == rd.obj.id; });
+                        mdlItm.Idx$ = RowIdx; //pos[1];
+                        var mdlItmOld = sen.model.Singles.find(function (obj) { return obj.oNo == rd.objOld.id; });
+                        mdlItmOld.Idx$ = OldRowIdx; //pos[4];
+                    }
+                    if (tbl.id == "tableD") {
+                        var mi;
+                        mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.obj.id; });
+                        if (mi) {
+                            mi.c1.Idx$ = RowIdx; //pos[1];
+                            console.log("mi.c1", mi.c1);
                         }
-			            mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
-			            if (mi) {
-			                mi.c1.Idx$ = OldRowIdx; //pos[4];
-			                console.log("mi.c1", mi.c1);
-                        }
-			            else {
-			                mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.objOld.id; });
-			                if (mi) {
-			                    mi.c2.Idx$ = OldRowIdx; //pos[4];
-			                    console.log("mi.c2", mi.c2);
+                        else {
+                            mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.obj.id; });
+                            if (mi) {
+                                mi.c2.Idx$ = RowIdx; //pos[1];
+                                console.log("mi.c2", mi.c2);
                             }
-			            }
-			        }
-			        console.log('closest table', tbl.id);
-			    };
-			})();
-    </script>
+                        }
+                        mi = sen.model.Doubles.find(function (obj) { return obj.c1.oNo == rd.objOld.id; });
+                        if (mi) {
+                            mi.c1.Idx$ = OldRowIdx; //pos[4];
+                            console.log("mi.c1", mi.c1);
+                        }
+                        else {
+                            mi = sen.model.Doubles.find(function (obj) { return obj.c2.oNo == rd.objOld.id; });
+                            if (mi) {
+                                mi.c2.Idx$ = OldRowIdx; //pos[4];
+                                console.log("mi.c2", mi.c2);
+                            }
+                        }
+                    }
+                    console.log('closest table', tbl.id);
+                };
+            })();
+        </script>
 
 </template>

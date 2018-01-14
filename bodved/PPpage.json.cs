@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+
 using Starcounter;
 
 namespace bodved
@@ -67,8 +69,8 @@ namespace bodved
                     r.eMail = this.MdfRec.eMail;
                 });
                 MdfRec.oNo = 0;
-
                 BDB.H.RefreshRH();
+                BDB.H.RefreshRH4(DateTime.MinValue);
                 PushChanges();
             }
             DlgOpened = false;

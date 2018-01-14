@@ -13,8 +13,8 @@
       "Skl": "",
       "Grp": "",
       "Lig": "",
-      "RnkGrp": "",
-      "RnkGrpAd": "",
+      "RnkID": 0,
+      "RnkAd": "",
       "MdfTrigger$": 0
     }
   ],
@@ -27,8 +27,8 @@
     "Skl$": "",
     "Grp$": "",
     "Lig$": "",
-    "RnkGrp$": "",
-    "RnkGrpAd$": ""
+    "RnkID$": 0,
+    "RnkAd$": ""
   },
 
   "DlgOpened": false,

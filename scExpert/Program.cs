@@ -211,12 +211,12 @@ namespace scExpert
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPP_Sra     ON BDB.PP (Sra)");
 
-                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_PPRnkGrp").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPPGR_PPRnkGrp  ON BDB.PPGR (PP, RnkGrp)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_PPRnkID").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxPPGR_PPRnkID  ON BDB.PPGR (PP, RnkID)");
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_Rnk").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxPPGR_Rnk     ON BDB.PPGR (Rnk DESC)");
-                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_RnkGrp").FirstOrDefault() == null)
-                    Db.SQL("CREATE INDEX IdxPPGR_RnkGrp   ON BDB.PPGR (RnkGrp)");
+                if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_RnkID").FirstOrDefault() == null)
+                    Db.SQL("CREATE INDEX IdxPPGR_RnkID   ON BDB.PPGR (RnkID)");
 
                 if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCC_Idx").FirstOrDefault() == null)
                     Db.SQL("CREATE INDEX IdxCC_Idx     ON BDB.CC (Idx DESC)");
@@ -260,9 +260,9 @@ namespace scExpert
                 Db.SQL("DROP INDEX IdxPP_Rnk      ON BDB.PP");
                 Db.SQL("DROP INDEX IdxPP_Sra      ON BDB.PP");
 
-                Db.SQL("DROP INDEX IdxPPGR_PPRnkGrp ON BDB.PPGR");
-                Db.SQL("DROP INDEX IdxPPGR_Rnk      ON BDB.PPGR");
-                Db.SQL("DROP INDEX IdxPPGR_RnkGrp   ON BDB.PPGR");
+                Db.SQL("DROP INDEX IdxPPGR_PPRnkID ON BDB.PPGR");
+                Db.SQL("DROP INDEX IdxPPGR_Rnk     ON BDB.PPGR");
+                Db.SQL("DROP INDEX IdxPPGR_RnkID   ON BDB.PPGR");
 
                 Db.SQL("DROP INDEX IdxRH_Trh      ON BDB.RH");
                 //Db.SQL("DROP INDEX IdxRH_CC       ON BDB.RH");

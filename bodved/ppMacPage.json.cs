@@ -13,11 +13,11 @@ namespace bodved
             if (CCoNo != "")
             {
                 var cc = Db.FromId<BDB.CC>(ulong.Parse(CCoNo));
-                RnkGrp = cc.RnkGrp;
-                RnkGrpAd = cc.RnkGrpAd;
+                RnkID = cc.RnkID;
+                //RnkGrpAd = cc.RnkAd;
 
-                var ppgr = Db.SQL<BDB.PPGR>("select p from BDB.PPGR p where p.PP = ? and p.RnkGrp = ?", pp, RnkGrp).FirstOrDefault();
-                ccInf = $"Rank: {cc.RnkGrpAd}/{ppgr.Rnk}/{ppgr.Sra}";
+                var ppgr = Db.SQL<BDB.PPGR>("select p from BDB.PPGR p where p.PP = ? and p.RnkID = ?", pp, RnkID).FirstOrDefault();
+                ccInf = $"Rank: {cc.RnkAd}/{ppgr.Rnk}/{ppgr.Sra}";
 
             }
             //Cap1 = $"{pp.Ad} ♯{pp.Lig}";// [{pp.ID}/{pp.oNo}]"; // №
@@ -28,7 +28,7 @@ namespace bodved
             var cetrS = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "S");
             foreach (var k in cetrS)
             {
-                if (RnkGrp == "" || RnkGrp == k.CC.RnkGrp)
+                if (RnkID == 0 || RnkID == k.CC.RnkID)
                 {
 
                     // Rakip
@@ -43,7 +43,7 @@ namespace bodved
 
                     if (k.HoG == "H")
                     {
-                        if (RnkGrp == "")
+                        if (RnkID == 0)
                         {
                             sng.Rnk = k.RH.hpRnk;  //prvRnk;
                             sng.NOBX = k.RH.hNOPX;
@@ -59,7 +59,7 @@ namespace bodved
                     }
                     else
                     {
-                        if (RnkGrp == "")
+                        if (RnkID == 0)
                         {
                             sng.Rnk = k.RH.gpRnk;  //prvRnk;
                             sng.NOBX = k.RH.gNOPX;
@@ -112,7 +112,7 @@ namespace bodved
             var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "D");
             foreach (var k in cetrD)
             {
-                if (RnkGrp == "" || RnkGrp == k.CC.RnkGrp)
+                if (RnkID == 0 || RnkID == k.CC.RnkID)
                 {
                     // Ortagi
                     var o = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG = ? and c.ObjectNo <> ?", k.CET, k.Idx, k.SoD, k.HoG, k.GetObjectNo()).FirstOrDefault();
