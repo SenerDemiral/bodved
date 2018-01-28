@@ -109,7 +109,7 @@ namespace bodved
             }
 
             DoublesElementJson dbl = null;
-            var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ?", pp, "D");
+            var cetrD = Db.SQL<BDB.CETR>("select c from CETR c where c.PP = ? and c.SoD = ? order by c.Trh desc", pp, "D");
             foreach (var k in cetrD)
             {
                 if (RnkID == 0 || RnkID == k.CC.RnkID)

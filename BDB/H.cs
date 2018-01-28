@@ -714,7 +714,7 @@ namespace BDB
                 }
 
                 // Update PP Sira
-                var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc");
+                var pp = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.LTC desc");
                 int sira = 1;
                 foreach (var r in pp)
                 {
@@ -826,24 +826,7 @@ namespace BDB
             watch.Stop();
             Console.WriteLine($"refreshRH4 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
         }
-
-  
-        public static PPGR getPPGR(PP pp, long RnkID)
-        {
-            PPGR ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP = ? and p.RnkID = ?", pp, RnkID).FirstOrDefault();
-            if (ppgr == null)
-            {
-                ppgr = new PPGR
-                {
-                    PP = pp,
-                    RnkID = RnkID,
-                    RnkBaz = pp.RnkBaz,
-                    Rnk = pp.RnkBaz
-                };
-            }
-            return ppgr;
-        }
-
+ 
         public static void RefreshRH24(ulong CCoNo)
         {
             // DENEME
@@ -910,16 +893,45 @@ namespace BDB
                 PPGR ppgr;
                 foreach (var pair in items)
                 {
-                    ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkGrp = ?", pair.Key, RnkGrp).FirstOrDefault();
-
-                    ppgr.Rnk = pair.Value;
-                    ppgr.Sra = sira++;
+                    ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkID = ?", pair.Key, RnkID).FirstOrDefault();
+                    if (ppgr == null)
+                    {
+                        new PPGR()
+                        {
+                            PP = Db.FromId<PP>(pair.Key),
+                            RnkID = RnkID,
+                            RnkBaz = 0,
+                            Rnk = pair.Value,
+                            Sra = sira++,
+                        };
+                    }
+                    else
+                    {
+                        ppgr.Rnk = pair.Value;
+                        ppgr.Sra = sira++;
+                    }
                 }
                 */
             });
 
             watch.Stop();
             Console.WriteLine($"refreshRH24 {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
+        public static PPGR getPPGR(PP pp, long RnkID)
+        {
+            PPGR ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP = ? and p.RnkID = ?", pp, RnkID).FirstOrDefault();
+            if (ppgr == null)
+            {
+                ppgr = new PPGR
+                {
+                    PP = pp,
+                    RnkID = RnkID,
+                    RnkBaz = pp.RnkBaz,
+                    Rnk = pp.RnkBaz
+                };
+            }
+            return ppgr;
         }
 
         public static void RefreshRH2(ulong CCoNo)

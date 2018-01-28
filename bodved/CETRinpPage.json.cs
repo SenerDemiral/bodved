@@ -40,7 +40,7 @@ namespace bodved
             BDB.H.RefreshRH();  // Global Rank
 
             //BDB.H.RefreshRH4(cet.Trh);  // Global Rank DENEME OK RefreshRH dan 2x daha hizli
-            BDB.H.RefreshRH4(DateTime.MinValue);  // Global Rank DENEME OK RefreshRH dan daha hizli
+            //BDB.H.RefreshRH4(DateTime.MinValue);  // Global Rank DENEME OK RefreshRH dan daha hizli
 
             BDB.H.RefreshRH2(ulong.Parse(CCoNo));  // RnkGrp Rank
             //BDB.H.RefreshRH24(ulong.Parse(CCoNo));  // RnkGrp Rank DENEME
