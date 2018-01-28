@@ -147,9 +147,9 @@ namespace BDB
                     new STAT()
                     {
                         ID = 1,
-                        IdVal = 4230
+                        IdVal = 10580
                     };
-                    EntCnt = 4230;
+                    EntCnt = 10580;
                 }
                 else {
                     s.IdVal += 1;

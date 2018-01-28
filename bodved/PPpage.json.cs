@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 
 using Starcounter;
@@ -18,7 +18,7 @@ namespace bodved
             //NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
             NOP = PPs.Count;
 
-            Cap1 = $"Oyuncu sayýsý : {NOP-1}";
+            Cap1 = $"Oyuncu sayÄ±sÄ± : {NOP-1}";
 
             //sener.NoR = DateTime.Now.Ticks;
         }
