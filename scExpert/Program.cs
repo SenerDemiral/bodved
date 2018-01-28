@@ -9,7 +9,7 @@ namespace scExpert
     {
         static void Main()
         {
-            //HB.PKset();
+            //HB.PKset(); Bir kere yap
             
             Handle.GET("/scExpert/Backup", () =>
             {

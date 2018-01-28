@@ -70,7 +70,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
                 BDB.H.RefreshRH();
-                BDB.H.RefreshRH4(DateTime.MinValue);
+                //BDB.H.RefreshRH4(DateTime.MinValue);
                 PushChanges();
             }
             DlgOpened = false;

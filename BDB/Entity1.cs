@@ -423,7 +423,7 @@ namespace BDB
         public int Idx { get; set; }
         public PP PP { get; set; }
 
-        public PRH PRH { get; set; }
+        //public PRH PRH { get; set; }
         public RH RH { get; set; }
 
         public DateTime Trh { get; set; }
@@ -460,6 +460,7 @@ namespace BDB
     // Oyuncu siralamasi H&G takimlari tarafindan bitirilip onaylandiktan sonra CETP'den olusturulur.
 
     // Kullanilmiyor
+    /*
     [Database]
     public class PRH     // Player Rank History
     {
@@ -498,6 +499,7 @@ namespace BDB
                 return p?.Rnk ?? rPP.RnkBaz;
             }
         }
+
         public int compNOPX
         {
             get
@@ -600,7 +602,7 @@ namespace BDB
         }
     }
     // CETR (Veya baska Turnuva) yaratildiginda bu kayit da yaratilacak, Sonuc girildiginde NOPX ve Rnk hesaplanarak buraya yazilacak
-
+    */
 
     [Database]
     public class RH     // Rank History
