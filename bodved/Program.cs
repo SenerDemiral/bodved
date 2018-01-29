@@ -21,35 +21,28 @@ namespace bodved
 					<meta charset=""utf-8"">
 				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes"">
                     <meta http-equiv=""x-ua-compatible"" content=""ie=edge"">				    
-                    <title>BODVED @masatenisi.online</title>
-                    <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları. Hazırlayan: Şener DEMİRAL"">
+                    <title>{0}</title>
+                    <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları."">
                     <meta name=""author"" content=""Şener DEMİRAL"">
 
-                    <script src=""/sys/webcomponentsjs/webcomponents.lite.js""></script>
-					<!--script src=""/sys/document-register-element/build/document-register-element.js""></script-->
+                    <script src=""/sys/webcomponentsjs/webcomponents-lite.js""></script>
 
                     <script>
                         window.Polymer = {{
                             dom: ""shadow""
                         }};
-
-                        window.displayIndex = function(index) {{ return index + 1; }};
                     </script>
 
 					<link rel=""import"" href=""/sys/polymer/polymer.html"">
 					<link rel=""import"" href=""/sys/starcounter.html"">
 					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
 					
-                    <!--link rel=""stylesheet"" href=""https://fonts.googleapis.com/css?family=Source+Sans+Pro""-->
                     <script src=""/sys/thenBy.js""></script>
                     <script src=""/sys/redips-drag-min.js""></script>
 					<link rel=""stylesheet"" href=""/sys/redips-style.css"">
 					
                     <link rel=""stylesheet"" href=""/sys/Bodved.css"">
-				
 				</head>
-
-
                 <body>
                     <dom-bind id=""palindrom-root"">
                         <template is=""dom-bind"">
@@ -60,28 +53,8 @@ namespace bodved
                 </body>
 			</html>";
 
-            /*
-                <body>
-                    <template is=""dom-bind"" id=""puppet-root"">
-                        <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
-                    </template>
-                    <puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client>
-                </body>
-				</html>";
-
-            <body>
-                    <template is=""dom-bind"" id=""puppet-root"">
-                        <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
-                        <div><template is=""imported-template"" model=""{{{{model}}}}"" href=""/bodved/masterPage.Html""></template></div>
-                    </template>
-                    <!--puppet-client ref=""puppet-root"" remote-url=""{1}""></puppet-client-->
-                    <palindrom-client ref=""puppet-root"" remote-url=""{1}""></palindrom-client>
-                    <starcounter-debug-aid></starcounter-debug-aid>
-                </body>
-
-            */
             Application.Current.Use(new HtmlFromJsonProvider());
-            Application.Current.Use(new PartialToStandaloneHtmlProvider());
+            Application.Current.Use(new PartialToStandaloneHtmlProvider(HTML));
 
             BDB.H.Write2Log("Start");
 

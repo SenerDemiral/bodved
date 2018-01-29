@@ -1,7 +1,7 @@
 ﻿<link rel="stylesheet" href="/sys/Bodved.css">
 <link rel="import" href="/sys/vaadin-icons/vaadin-icons.html">
 <link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
-<link rel="import" href="/sys/snr-login/snr-login.html">
+<!--link rel="import" href="/sys/snr-login/snr-login.html"-->
 
 <template>
     <dom-bind>
@@ -30,7 +30,9 @@
                         <!--li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value"><iron-icon icon="vaadin:key" hidden$="[[model.Login.LI]]"></iron-icon><span hidden$="[[!model.Login.LI]]">[[model.Login.Nm$]]</span></button></li-->
                         <li><button class="edit" value="{{model.DlgOpenTrigger$::click}}" onmousedown="++this.value">[[model.Login.Nm$]]</button></li>
                         <li class="bodved">BODVED</li>
+                        <!--
                         <li><snr-login mdlusr="{{model.user}}"></snr-login></li>
+                        -->
                     </ul>
                 </section>
                 <section class="master-current">
@@ -41,6 +43,7 @@
         </template>
     </dom-bind>
     <script>
+        /*
         (function () {
             var meta = document.createElement("meta");
             meta.name = "author";
@@ -51,14 +54,9 @@
             meta.name = "description";
             meta.content = "Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları";
             document.querySelector('head').appendChild(meta);
-            /*
-            meta = document.createElement("meta");
-            meta.httpEquiv = "x-ua-compatible";
-            meta.content = "ie=edge";
-            document.querySelector('head').appendChild(meta);
-            */
 
             window.dispIdx = function (index) { { return index + 1; } };
         })();
+        */
     </script>
 </template>
