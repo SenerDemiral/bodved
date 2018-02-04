@@ -75,7 +75,7 @@ namespace bodved
             BDB.H.Write2Log($"Login: {Login.Nm} {Login.Id} {Login.Pw} {Login.nPw} {Login.LI}");
 
             DlgOpened = false;
-            CurrentPage["canMdfy"] = true;
+            CurrentPage["canMdfy"] = Login.LI;
         }
 
         [MasterPage_json.user]

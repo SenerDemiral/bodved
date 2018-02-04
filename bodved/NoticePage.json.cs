@@ -100,6 +100,18 @@ namespace bodved
         [NoticePage_json.NTCs]
         public partial class NTCsElementJson
         {
+            protected override void OnData()
+            {
+                base.OnData();
+                
+                if (!string.IsNullOrEmpty(Rtbl))
+                {
+                    var cet = Db.FromId<BDB.CET>((ulong)RoNo);
+                    Rinfo = $" [{cet.hPW}-{cet.gPW}]";
+                    //Ad = $"{Ad} {cet.hP}-{cet.gP}";
+                }
+            }
+
             void Handle(Input.MdfTrigger Action)
             {
                 var p = this.Parent.Parent as NoticePage;

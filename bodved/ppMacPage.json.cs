@@ -77,7 +77,8 @@ namespace bodved
                     //sng.rRnk = r.PRH.pRnk; //prvRnk;
 
                     sng.rPPoNo = r.PP.oNo.ToString();
-                    sng.rPPAd = $"{r.PPAd} ♯{r.PP.Lig}";
+                    sng.rPPAd = $"{r.PPAd}";
+                    //sng.rPPAd = $"{r.PPAd} ♯{r.PP.Lig}";
 
                     sng.rCToNo = $"{r.CT.oNo}";
                     sng.rCTAd = r.CTAd;

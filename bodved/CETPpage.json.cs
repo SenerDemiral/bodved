@@ -44,7 +44,7 @@ namespace bodved
             // Kayit yoksa CTP'den alip yarat
             if (cetps == null)
             {
-                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPAd", ct);
+                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
                 int ix = 1;
                 foreach (var src in ctps)
                 {
@@ -77,7 +77,7 @@ namespace bodved
             }
             else if (!Pok && !cet.Rok) // Yeni oyuncu eklendiyse sonuna ekle
             {
-                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", ct);
+                var ctps = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ?", ct);
                 int ix = ctps.Count() + 1;
 
                 foreach (var src in ctps)

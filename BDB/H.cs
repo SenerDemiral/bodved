@@ -127,8 +127,9 @@ namespace BDB
                         Trh = c.Trh,
                         Onc = $"+{onc:D2}",
                         Ad = $"{c.hCTAd} - {c.gCTAd}",
-                        Link = $"/bodved/CETpage/{c.CCoNo}"
-                        
+                        Link = $"/bodved/CETpage/{c.CCoNo}",
+                        Rtbl = "CET",
+                        RoNo = c.GetObjectNo()
                     };
                     onc++;
                 }
@@ -169,6 +170,28 @@ namespace BDB
                 if (r.Rok)
                     UpdCETsum(r.oNo);
             }
+        }
+
+        public static void UpdCETRpp(ulong CETRoNo, ulong newPPoNo)
+        {
+            var cetr = Db.FromId<BDB.CETR>(CETRoNo);
+            var pp = Db.FromId<BDB.PP>(newPPoNo);
+            Db.Transact(() =>
+            {
+                if (cetr.SoD == "S")
+                {
+                    if (cetr.HoG == "H")
+                        cetr.RH.hPP = pp;
+                    else
+                        cetr.RH.gPP = pp;
+                }
+                cetr.PP = pp;
+            });
+            BDB.H.UpdPPLigMacSay(cetr.CET.oNo);  // RefreshRH dan once gelmeli
+            BDB.H.RefreshRH();  // Global Rank
+            BDB.H.RefreshRH2(cetr.CC.oNo);  // RnkGrp Rank
+            BDB.H.UpdCTsum(cetr.CET.hCT.oNo);
+            BDB.H.UpdCTsum(cetr.CET.gCT.oNo);
         }
 
         public static void UpdCETsum(ulong CEToNo)

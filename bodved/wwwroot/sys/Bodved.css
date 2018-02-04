@@ -232,9 +232,9 @@ input:focus {
 }
 
 .ppAd {
-    width:9rem;
+    /*width:9rem;*/
     /*min-width: 10em;*/
-    max-width: 9rem;
+    /*max-width: 9rem;*/
     overflow: hidden;
     white-space: nowrap;
 }

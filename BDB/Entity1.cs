@@ -39,6 +39,8 @@ namespace BDB
         public DateTime Trh { get; set; }
         public string Ad { get; set; }
         public string Link { get; set; }
+        public string Rtbl { get; set; }    // Referans Table
+        public ulong RoNo { get; set; }
 
         public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
     }

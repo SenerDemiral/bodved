@@ -64,6 +64,11 @@ namespace bodved
                 return $"OK: insOtoNotice";
             });
 
+            Handle.GET("/bodved/UpdCETRpp/{?}/{?}", (ulong CETRoNo, ulong newPPoNo) =>
+            {
+                BDB.H.UpdCETRpp(CETRoNo, newPPoNo);
+                return $"OK: UpdCETRpp({CETRoNo}, {newPPoNo})";
+            });
 
 
             //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });

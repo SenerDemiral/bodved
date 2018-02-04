@@ -37,6 +37,7 @@ namespace bodved
                     var nPP = new BDB.PP()
                     {
                         PK = BDB.H.GEN_ID(),
+                        ID = MdfRec.ID,
                         Ad = this.MdfRec.Ad,
                         Sex = this.MdfRec.Sex,
                         DgmYil = (int)this.MdfRec.DgmYil,

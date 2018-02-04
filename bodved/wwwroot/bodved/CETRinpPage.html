@@ -108,6 +108,7 @@
                                     <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
                                 </td>
                                 <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.hoNo]] </span>
                                     <a href="/bodved/ppMacPage/[[item.hPPoNo]]/[[model.CCoNo]]">[[item.hPPAd]]</a>
                                     <span class="rank">[[item.hPPrnk]]</span>
                                 </td>
@@ -119,6 +120,7 @@
                                 <td class="ortala">[[item.hgS5W]]</td>
                                 <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
                                 <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.goNo]] </span>
                                     <a href="/bodved/ppMacPage/[[item.gPPoNo]]/[[model.CCoNo]]">[[item.gPPAd]]</a>
                                     <span class="rank">[[item.gPPrnk]]</span>
                                 </td>
@@ -155,9 +157,11 @@
                                     <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
                                 </td>
                                 <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.hoNo1]] </span>
                                     <a href="/bodved/ppMacPage/[[item.hPPoNo1]]/[[model.CCoNo]]">[[item.hPPAd1]]</a>
                                     <span class="rank">[[item.hPPrnk1]]</span>
                                     <br />
+                                    <span hidden$="[[!model.canMdfy]]">[[item.hoNo2]] </span>
                                     <a href="/bodved/ppMacPage/[[item.hPPoNo2]]/[[model.CCoNo]]">[[item.hPPAd2]]</a>
                                     <span class="rank">[[item.hPPrnk2]]</span>
                                 </td>
@@ -169,9 +173,11 @@
                                 <td class="ortala">[[item.hgS5W]]</td>
                                 <td class="gSW" data-val$="[[item.gDW]]">[[item.gDW]]</td>
                                 <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.goNo1]] </span>
                                     <a href="/bodved/ppMacPage/[[item.gPPoNo1]]/[[model.CCoNo]]">[[item.gPPAd1]]</a>
                                     <span class="rank">[[item.gPPrnk1]]</span>
                                     <br />
+                                    <span hidden$="[[!model.canMdfy]]">[[item.goNo2]] </span>
                                     <a href="/bodved/ppMacPage/[[item.gPPoNo2]]/[[model.CCoNo]]">[[item.gPPAd2]]</a>
                                     <span class="rank">[[item.gPPrnk2]]</span>
                                 </td>
