@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Starcounter;
 
@@ -15,8 +15,30 @@ namespace bodved
 
             Cap1 = $"Duyurular";
 
+            UpdateOtoNotice();
             NTCs.Data = Db.SQL<BDB.NTC>("select c from NTC c order by c.Onc, c.Trh desc");
             
+        }
+
+        public void UpdateOtoNotice()
+        {
+            Db.Transact(() =>
+            {
+                foreach(var n in Db.SQL<BDB.NTC>("select n from NTC n"))
+                {
+                    if (!string.IsNullOrEmpty(n.Rtbl))
+                    {
+                        var cet = Db.FromId<BDB.CET>(n.RoNo);
+                        if (cet.hPW != 0 || cet.gPW != 0)
+                        {
+                            n.Link = $"/bodved/CETRinpPage/{cet.oNo}";
+                            n.Ad = $"{cet.hCTAd} ◄{cet.hPW}-{cet.gPW}► {cet.gCTAd} ";
+                        }
+                    }
+
+                }
+
+            });
         }
 
         void Handle(Input.DlgRejectTrigger A)
@@ -100,18 +122,6 @@ namespace bodved
         [NoticePage_json.NTCs]
         public partial class NTCsElementJson
         {
-            protected override void OnData()
-            {
-                base.OnData();
-                
-                if (!string.IsNullOrEmpty(Rtbl))
-                {
-                    var cet = Db.FromId<BDB.CET>((ulong)RoNo);
-                    Rinfo = $" [{cet.hPW}-{cet.gPW}]";
-                    //Ad = $"{Ad} {cet.hP}-{cet.gP}";
-                }
-            }
-
             void Handle(Input.MdfTrigger Action)
             {
                 var p = this.Parent.Parent as NoticePage;
