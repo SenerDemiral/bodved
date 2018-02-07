@@ -118,7 +118,8 @@ namespace bodved
                     sng.hPPoNo = src.PP?.oNo.ToString();
                     sng.hPPAd = src.PPAd;
                     //sng.hPPrnk = src.PRH.pRnk; //prvRnk;
-                    sng.hPPrnk = src.RH.hpRnk; //prvRnk;
+                    
+                    sng.hPPrnk = src.RH.hpRnk2; // grup prvRnk;
                     sng.hS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.hS2W = src.S2W;
                     sng.hS3W = src.S3W;
@@ -132,7 +133,7 @@ namespace bodved
                     sng.gPPoNo = src.PP?.oNo.ToString();
                     sng.gPPAd = src.PPAd;
                     //sng.gPPrnk = src.PRH.pRnk;  //prvRnk;
-                    sng.gPPrnk = src.RH.gpRnk;  //prvRnk;
+                    sng.gPPrnk = src.RH.gpRnk2;  //grup prvRnk;
 
                     sng.gS1W = src.S1W; // src.S1W < 0 ? "" : src.S1W.ToString();
                     sng.gS2W = src.S2W;

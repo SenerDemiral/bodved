@@ -17,7 +17,9 @@ namespace bodved
 
             UpdateOtoNotice();
             NTCs.Data = Db.SQL<BDB.NTC>("select c from NTC c order by c.Onc, c.Trh desc");
-            
+
+            this.Deneme = @"<div><b>DENEME</b></div>";
+
         }
 
         public void UpdateOtoNotice()
@@ -32,8 +34,10 @@ namespace bodved
                         if (cet.hPW != 0 || cet.gPW != 0)
                         {
                             n.Link = $"/bodved/CETRinpPage/{cet.oNo}";
-                            n.Ad = $"{cet.hCTAd} ◄{cet.hPW}-{cet.gPW}► {cet.gCTAd} ";
+                            n.Ad = $"<div>{cet.hCTAd} **◄{cet.hPW}-{cet.gPW}►** {cet.gCTAd}</div>";
                         }
+                        else
+                            n.Ad = $"<div>{cet.hCTAd} - {cet.gCTAd}</div>";
                     }
 
                 }

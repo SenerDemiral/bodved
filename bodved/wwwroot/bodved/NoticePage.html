@@ -1,50 +1,51 @@
-﻿<link href="/sys/paper-dialog/paper-dialog.html" rel="import" />
+﻿<link rel="import" href="/sys/paper-dialog/paper-dialog.html">
+<link rel="import" href="/sys/marked-element/marked-element.html">
 
 <template>
     <dom-bind><template is="dom-bind">
-            <h1 slot="sener">SENER</h1>
+    <h1 slot="sener">SENER</h1>
 
-            <img src="/bodved/bodved.jpg" alt="Smiley face" style="display:block;margin:auto;width:80vmin;height:80vmin;">
-        <paper-dialog opened="[[model.DlgOpened]]" modal="true">
-            <div class="mdfRecWrap">
-                <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
-                <input placeholder="Öncelik 1-9" type="text" value="{{model.MdfRec.Onc$::change}}" />
-                <input placeholder="Tarih" type="date" value="{{model.MdfRec.Tarih$::change}}" />
-                <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
-                <input placeholder="Link" type="text" value="{{model.MdfRec.Link$::change}}" />
-                <div class="mdfRecAction">
-                    <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
-                    <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
-                    <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
-                </div>
-                <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
+    <img src="/bodved/bodved.jpg" alt="Smiley face" style="display:block;margin:auto;width:80vmin;height:80vmin;">
+    <paper-dialog opened="[[model.DlgOpened]]" modal="true">
+        <div class="mdfRecWrap">
+            <input placeholder="oNo" type="text" value="{{model.MdfRec.oNo$::change}}" readonly style="text-align:center" />
+            <input placeholder="Öncelik 1-9" type="text" value="{{model.MdfRec.Onc$::change}}" />
+            <input placeholder="Tarih" type="date" value="{{model.MdfRec.Tarih$::change}}" />
+            <input placeholder="Ad" type="text" value="{{model.MdfRec.Ad$::change}}" />
+            <input placeholder="Link" type="text" value="{{model.MdfRec.Link$::change}}" />
+            <div class="mdfRecAction">
+                <button value="{{model.DlgInsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                <button value="{{model.DlgUpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                <button value="{{model.DlgDeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
             </div>
-        </paper-dialog>
-        <div style="position:absolute;top:48px;">
-            <div class="tblWrap">
-                <table>
-                    <caption>
-                        <div>[[model.Cap1]]</div>
-                        <div>[[model.Cap2]]</div>
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
-                            <th>Tarih</th>
-                            <th>Link</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template is="dom-repeat" items="[[model.NTCs]]">
-                            <tr>
-                                <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                                <td data-onc$="[[item.Onc]]">[[item.Tarih]]</td>
-                                <td data-onc$="[[item.Onc]]"><a class="ortala" href="[[item.Link]]">[[item.Ad]]</a></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </div>
+            <button dialog-dismiss autofocus value="{{model.DlgRejectTrigger$::click}}" onmousedown="++this.value;" style="width:100%">Vazgeç</button>
         </div>
-    </template></dom-bind>
+    </paper-dialog>
+    <div style="position:absolute;top:48px;">
+        <div class="tblWrap">
+            <table>
+                <caption>
+                    <div>[[model.Cap1]]</div>
+                    <div>[[model.Cap2]]</div>
+                </caption>
+                <thead>
+                    <tr>
+                        <th class="oNo" hidden$="[[!model.canMdfy]]">ID</th>
+                        <th>Tarih</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template is="dom-repeat" items="[[model.NTCs]]">
+                        <tr>
+                            <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
+                            <td data-onc$="[[item.Onc]]">[[item.Tarih]]</td>
+                            <td data-onc$="[[item.Onc]]"><a href="[[item.Link]]"><marked-element markdown="[[item.Ad]]"></marked-element></a></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template></dom-bind>
 </template>
