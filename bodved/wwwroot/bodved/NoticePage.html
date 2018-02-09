@@ -40,7 +40,7 @@
                         <tr>
                             <td class="oNo" hidden$="[[!model.canMdfy]]"><button class="edit" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
                             <td data-onc$="[[item.Onc]]">[[item.Tarih]]</td>
-                            <td data-onc$="[[item.Onc]]"><a href="[[item.Link]]"><marked-element markdown="[[item.Ad]]"></marked-element></a></td>
+                            <td data-onc$="[[item.Onc]]"><a href="[[item.Link]]"><marked-element markdown="[[item.Ad]]"><div slot="markdown-html"></div></marked-element></a></td>
                         </tr>
                     </template>
                 </tbody>

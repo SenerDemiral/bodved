@@ -12,6 +12,10 @@ body {
     margin: 8px;
 }
 
+mark {
+    border: 1px solid lightgray;
+}
+
 img {
     opacity: 0.1;
     filter: alpha(opacity=50); /* For IE8 and earlier */

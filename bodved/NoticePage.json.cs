@@ -34,7 +34,7 @@ namespace bodved
                         if (cet.hPW != 0 || cet.gPW != 0)
                         {
                             n.Link = $"/bodved/CETRinpPage/{cet.oNo}";
-                            n.Ad = $"<div>{cet.hCTAd} **◄{cet.hPW}-{cet.gPW}►** {cet.gCTAd}</div>";
+                            n.Ad = $"<div>{cet.hCTAd} <mark>◄{cet.hPW} - {cet.gPW}►</mark> {cet.gCTAd}</div>";
                         }
                         else
                             n.Ad = $"<div>{cet.hCTAd} - {cet.gCTAd}</div>";
