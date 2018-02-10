@@ -64,6 +64,12 @@ namespace bodved
                 return $"OK: insOtoNotice";
             });
 
+            Handle.GET("/scExpert/DeleteCETrelated/{?}", (string cetOnO) =>
+            {
+                BDB.H.DeleteCETrelated(ulong.Parse(cetOnO));
+                return $"OK: DeleteCETrelated({cetOnO}) CEToNo";
+            });
+
             Handle.GET("/bodved/UpdCETRpp/{?}/{?}", (ulong CETRoNo, ulong newPPoNo) =>
             {
                 BDB.H.UpdCETRpp(CETRoNo, newPPoNo);
