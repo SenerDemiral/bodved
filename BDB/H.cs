@@ -1319,7 +1319,7 @@ namespace BDB
 
         public static void LoadPP()     // Oyuncular
         {
-            //sw.WriteLine($"{r.ID},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
+            //sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
 
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-PP.txt", System.Text.Encoding.UTF8))
             {
@@ -1332,7 +1332,7 @@ namespace BDB
 
                         new BDB.PP()
                         {
-                            ID = ra[0],
+                            PK = long.Parse(ra[0]),
                             RnkBaz = int.Parse(ra[1]),
                             Sex = ra[2],
                             DgmYil = int.Parse(ra[3]),
@@ -1347,7 +1347,7 @@ namespace BDB
 
         public static void LoadCC()     // Turnuvalar
         {
-            //sw.WriteLine($"{cc.ID},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
+            //sw.WriteLine($"{cc.PK},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
 
             using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CC.txt", System.Text.Encoding.UTF8))
             {
@@ -1360,7 +1360,7 @@ namespace BDB
 
                         new BDB.CC()
                         {
-                            ID = ra[0],
+                            PK = long.Parse(ra[0]),
                             Ad = ra[1],
                             Skl = ra[2],
                             Grp = ra[3],
@@ -1370,6 +1370,8 @@ namespace BDB
                 });
             }
         }
+
+
 
         public static void RestoreCC(string ccID)   // Delete&Restore Turnuva alti
         {
@@ -1735,11 +1737,372 @@ namespace BDB
         }
 
 
+        #region Restore
+
+        public static void Restore()
+        {
+            RestorePP();
+            RestoreCC();
+            RestoreCT();
+            RestoreCTP();
+            RestoreCET();
+            RestoreCETP();
+            RestoreCETR();
+        }
+
+        public static void RestorePP()    // Oyuncular
+        {
+            //sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
+
+            using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-PP.txt", System.Text.Encoding.UTF8))
+            {
+                string line;
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.PP()
+                        {
+                            PK = long.Parse(ra[0]),
+                            RnkBaz = int.Parse(ra[1]),
+                            Sex = ra[2],
+                            DgmYil = int.Parse(ra[3]),
+                            Ad = ra[4],
+                            eMail = ra[5],
+                            Tel = ra[6],
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCC()    // Turnuvalar
+        {
+            //sw.WriteLine($"{cc.PK},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
+
+            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CC.txt", System.Text.Encoding.UTF8))
+            {
+                string line;
+                Db.Transact(() =>
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.CC()
+                        {
+                            PK = long.Parse(ra[0]),
+                            Ad = ra[1],
+                            Skl = ra[2],
+                            Grp = ra[3],
+                            Idx = ra[4],
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCT()    // TurnuvaTakimlari
+        {
+            //sw.WriteLine($"{r.CC.PK},{r.PK},{r.Ad},{r.Adres},{r.Pw},{r.K1?.PK},{r.K2?.PK},{r.K1?.Ad,25},{r.K2?.Ad,25}");
+            using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CT.txt", System.Text.Encoding.UTF8))
+            {
+                string line;
+                long ccPK, rPK, ppK1PK, ppK2PK;
+
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+
+                        string[] ra = line.Split(',');
+
+                        ccPK = long.Parse(ra[0]);
+                        rPK = long.Parse(ra[1]);
+                        ppK1PK = long.Parse(ra[5]);
+                        ppK2PK = long.Parse(ra[6]);
+
+                        var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
+                        var ppK1 = Db.SQL<PP>("select r from PP r where r.PK = ?", ppK1PK).FirstOrDefault();
+                        var ppK2 = Db.SQL<PP>("select r from PP r where r.PK = ?", ppK2PK).FirstOrDefault();
+
+                        new BDB.CT()
+                        {
+                            CC = cc,
+                            PK = rPK,
+                            Ad = ra[2],
+                            Adres = ra[3],
+                            Pw = ra[4],
+                            K1 = ppK1,
+                            K2 = ppK2,
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCTP()   // TurnuvaTakimOyunculari
+        {
+            //sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.PPAd,25},{r.CTAd,20}");
+            using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CTP.txt"))
+            {
+                string line;
+                long ccPK, ctPK, ppPK;
+
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        ccPK = long.Parse(ra[0]);
+                        ctPK = long.Parse(ra[1]);
+                        ppPK = long.Parse(ra[2]);
+
+                        var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
+                        var ct = Db.SQL<CT>("select r from CT r where r.PK = ?", ctPK).FirstOrDefault();
+                        var pp = Db.SQL<PP>("select r from PP r where r.PK = ?", ppPK).FirstOrDefault();
+
+                        new BDB.CTP()
+                        {
+                            CC = cc,
+                            CT = ct,
+                            PP = pp,
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCET()   // TurnuvaFikstur/Event
+        {
+            //sw.WriteLine($"{r.CC.PK},{r.PK},{r.hCT.PK},{r.gCT.PK},{r.Trh:dd.MM.yyyy HH:mm},{r.hPok},{r.gPok},{r.Rok},{r.hP},{r.gP},{r.hPW},{r.hMSW},{r.hMDW},{r.gPW},{r.gMSW},{r.gMDW}");
+            using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CET.txt"))
+            {
+                string line;
+                long ccPK, rPK, hctPK, gctPK;
+
+                Db.Transact(() =>
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+                        ccPK = long.Parse(ra[0]);
+                        rPK = long.Parse(ra[1]);
+                        hctPK = long.Parse(ra[2]);
+                        gctPK = long.Parse(ra[3]);
+
+                        var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
+                        var hct = Db.SQL<CT>("select r from CT r where r.PK = ?", hctPK).FirstOrDefault();
+                        var gct = Db.SQL<CT>("select r from CT r where r.PK = ?", gctPK).FirstOrDefault();
+
+                        new BDB.CET()
+                        {
+                            CC = cc,
+                            PK = rPK,
+                            Trh = DateTime.Parse(ra[4]),
+                            hCT = hct,
+                            gCT = gct,
+
+                            hPok = bool.Parse(ra[5]),
+                            gPok = bool.Parse(ra[6]),
+                            Rok = bool.Parse(ra[7]),
+
+                            hP = int.Parse(ra[8]),
+                            gP = int.Parse(ra[9]),
+
+                            hPW = int.Parse(ra[10]),
+                            hMSW = int.Parse(ra[11]),
+                            hMDW = int.Parse(ra[12]),
+                            gPW = int.Parse(ra[13]),
+                            gMSW = int.Parse(ra[14]),
+                            gMDW = int.Parse(ra[15]),
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCETP()  // MusabakaOyuncuSiralama
+        {
+            //sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PPAd,25}");
+            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CETP.txt"))
+            {
+                string line;
+                long ccPK, cetPK, ctPK, ppPK;
+
+                Db.Transact(() =>
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+                        ccPK = long.Parse(ra[0]);
+                        cetPK = long.Parse(ra[1]);
+                        ctPK = long.Parse(ra[2]);
+                        ppPK = long.Parse(ra[3]);
+
+                        var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
+                        var cet = Db.SQL<CET>("select r from CET r where r.PK = ?", cetPK).FirstOrDefault();
+                        var ct = Db.SQL<CT>("select r from CT r where r.PK = ?", ctPK).FirstOrDefault();
+                        var pp = Db.SQL<PP>("select r from PP r where r.PK = ?", ppPK).FirstOrDefault();
+
+                        var cetr = new CETP()
+                        {
+                            CC = cc,
+                            CET = cet,
+                            CT = ct,
+                            SoD = ra[4],
+                            Idx = int.Parse(ra[5]),
+                            HoG = ra[6],
+                            PP = pp,
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreCETR()  // MusabakaSonuclari
+        {
+            //sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
+            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CETR.txt"))
+            {
+                string line;
+                long ccPK, cetPK, ctPK, ppPK;
+
+                Db.Transact(() =>
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+                        ccPK = long.Parse(ra[0]);
+                        cetPK = long.Parse(ra[1]);
+                        ctPK = long.Parse(ra[2]);
+                        ppPK = long.Parse(ra[3]);
+
+                        var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
+                        var cet = Db.SQL<CET>("select r from CET r where r.PK = ?", cetPK).FirstOrDefault();
+                        var ct = Db.SQL<CT>("select r from CT r where r.PK = ?", ctPK).FirstOrDefault();
+                        var pp = Db.SQL<PP>("select r from PP r where r.PK = ?", ppPK).FirstOrDefault();
+
+                        var cetr = new CETR()
+                        {
+                            CC = cc,
+                            CET = cet,
+                            CT = ct,
+                            PP = pp,
+                            Trh = cet.Trh,
+                            SoD = ra[4],
+                            Idx = int.Parse(ra[5]),
+                            HoG = ra[6],
+                            S1W = int.Parse(ra[7]),
+                            S2W = int.Parse(ra[8]),
+                            S3W = int.Parse(ra[9]),
+                            S4W = int.Parse(ra[10]),
+                            S5W = int.Parse(ra[11]),
+                            SW = int.Parse(ra[12]),
+                            SL = int.Parse(ra[13]),
+                            MW = int.Parse(ra[14]),
+                            ML = int.Parse(ra[15]),
+                        };
+                    }
+                });
+            }
+        }
+
+        #endregion Restore
+
+        #region Backup
+
+        public static void Backup()
+        {
+            BackupPP();
+            BackupCC();
+            BackupCT();
+            BackupCTP();
+            BackupCET();
+            BackupCETP();
+            BackupCETR();
+        }
+
+        public static void BackupPP()    // Oyuncular
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-PP.txt", false))
+            {
+                var recs = Db.SQL<PP>("select r from PP r order by r.Ad");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
+                }
+            }
+        }
+        public static void BackupCC()    // Turnuvalar
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CC.txt", false))
+            {
+                var recs = Db.SQL<CC>("select r from CC r order by r.PK");
+                foreach (var r in recs)
+                    sw.WriteLine($"{r.PK},{r.Ad},{r.Skl},{r.Grp},{r.Idx},{r.Lig},{r.RnkID},{r.RnkAd}");
+            }
+        }
+        public static void BackupCT()    // TurnuvaTakimlari
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CT.txt", false))
+            {
+                var recs = Db.SQL<CT>("select r from CT r order by r.CC");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.CC.PK},{r.PK},{r.Ad},{r.Adres},{r.Pw},{r.K1?.PK},{r.K2?.PK},{r.K1?.Ad},{r.K2?.Ad}");
+                }
+            }
+        }
+        public static void BackupCTP()   // TurnuvaTakimOyunculari
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CTP.txt", false))
+            {
+                var recs = Db.SQL<CTP>("select r from CTP r order by r.CC, r.CT");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.PPAd,25},{r.CTAd,20}");
+                }
+            }
+        }
+        public static void BackupCET()   // TurnuvaFikstur/Event
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CET.txt", false))
+            {
+                var recs = Db.SQL<CET>("select r from CET r order by r.CC, r.Trh");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.CC.PK},{r.PK},{r.hCT.PK},{r.gCT.PK},{r.Trh:dd.MM.yyyy HH:mm},{r.hPok},{r.gPok},{r.Rok},{r.hP},{r.gP},{r.hPW},{r.hMSW},{r.hMDW},{r.gPW},{r.gMSW},{r.gMDW},{r.hCTAd,25},{r.gCTAd,25}");
+                }
+            }
+        }
+        public static void BackupCETP()  // MusabakaOyuncuSiralama
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CETP.txt", false))
+            {
+                var recs = Db.SQL<CETP>("select r from CETP r order by r.CC, r.CET, r.HoG desc, r.SoD desc, r.Idx");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PPAd,25}");
+                }
+            }
+        }
+        public static void BackupCETR()  // Musabaka Sonuclari
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-CETR.txt", false))
+            {
+                var recs = Db.SQL<CETR>("select r from CETR r order by r.CC, r.CET, r.SoD desc, r.Idx, r.HoG desc");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
+                }
+            }
+        }
+
+        #endregion Backup
+
         public static void BackupDB()
         {
             SavePP();
             SaveCC();
-            foreach(var cc in Db.SQL<CC>("select r from CC r"))
+            foreach (var cc in Db.SQL<CC>("select r from CC r"))
             {
                 BackupCC(cc.oNo);
             }
@@ -1752,7 +2115,7 @@ namespace BDB
                 var recs = Db.SQL<PP>("select r from PP r order by r.Ad");
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.ID},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
+                    sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
                 }
             }
         }
@@ -1781,7 +2144,7 @@ namespace BDB
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC.txt", false))
             {
                 foreach (var cc in ccs)
-                sw.WriteLine($"{cc.ID},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
+                sw.WriteLine($"{cc.PK},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
             }
         }
 
@@ -1799,28 +2162,16 @@ namespace BDB
             }
         }
 
-        public static void BackupCET(string ccID, string cetID)     // Musabaka Ilgili Kayitlari
-        {
-            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
-            var cet = Db.SQL<CET>("select r from CET r where r.CC = ? and r.ID = ?", cc, cetID).FirstOrDefault();
-
-            if (cet != null)
-            {
-                //SaveCETPofCET(cet.oNo);
-                SaveCETRofCET(cet.oNo);
-            }
-        }
-
         public static void SaveCTofCC(ulong CCoNo)      // Turnuva Takimlari
         {
             var cc = Db.FromId<CC>(CCoNo);
 
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CT-{cc.ID}.txt", false))
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CT-{cc.PK}.txt", false))
             {
                 var recs = Db.SQL<CT>("select r from CT r where r.CC = ? order by r.Ad", cc);
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Ad},{r.Adres},{r.Pw},{r.K1?.ID},{r.K2?.ID},{r.K1?.Ad},{r.K2?.Ad}");
+                    sw.WriteLine($"{r.CC.PK},{r.PK},{r.Ad},{r.Adres},{r.Pw},{r.K1?.PK},{r.K2?.PK},{r.K1?.Ad},{r.K2?.Ad}");
                 }
             }
         }
@@ -1829,12 +2180,12 @@ namespace BDB
         {
             var cc = Db.FromId<CC>(CCoNo);
 
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CTP-{cc.ID}.txt", false))
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CTP-{cc.PK}.txt", false))
             {
                 var recs = Db.SQL<CTP>("select r from CTP r where r.CC = ? order by r.CT, r.Idx", cc);
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.CT.ID},{r.PP.ID},{r.PPAd,25},{r.CTAd,20}");
+                    sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.PPAd,25},{r.CTAd,20}");
                 }
             }
         }
@@ -1843,12 +2194,12 @@ namespace BDB
         {
             var cc = Db.FromId<CC>(CCoNo);
 
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CET-{cc.ID}.txt", false))
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CET-{cc.PK}.txt", false))
             {
                 var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.ID},{r.Trh:dd.MM.yyyy HH:mm},{r.hCT.ID},{r.gCT.ID},{r.hPok},{r.gPok},{r.Rok},{r.hP},{r.gP},{r.hPW},{r.hMSW},{r.hMDW},{r.gPW},{r.gMSW},{r.gMDW}");
+                    sw.WriteLine($"{r.CC.PK},{r.PK},{r.Trh:dd.MM.yyyy HH:mm},{r.hCT.PK},{r.gCT.PK},{r.hPok},{r.gPok},{r.Rok},{r.hP},{r.gP},{r.hPW},{r.hMSW},{r.hMDW},{r.gPW},{r.gMSW},{r.gMDW}");
                 }
             }
         }   
@@ -1856,7 +2207,7 @@ namespace BDB
         public static void SaveCETRofCC(ulong CCoNo)    // Turnuva Tum Sonuclari
         {
             var cc = Db.FromId<CC>(CCoNo);
-            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
+            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.Trh", cc);
             foreach (var r in recs)
                 SaveCETRofCET(r.oNo);
         }
@@ -1869,11 +2220,11 @@ namespace BDB
             if (recs.FirstOrDefault() == null)
                 return;
 
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CETR-{cet.CC.ID}-{cet.ID}.txt", false))
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CETR-{cet.CC.PK}-{cet.PK}.txt", false))
             {
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
+                    sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.ID},{r.S1W:D2},{r.S2W:D2},{r.S3W:D2},{r.S4W:D2},{r.S5W:D2},{r.SW},{r.SL},{r.MW},{r.ML},{r.PPAd,25}");
                 }
             }
         }
@@ -1881,7 +2232,7 @@ namespace BDB
         public static void SaveCETPofCC(ulong CCoNo)    // Turnuva OyuncuSiralama
         {
             var cc = Db.FromId<CC>(CCoNo);
-            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.ID", cc);
+            var recs = Db.SQL<CET>("select r from CET r where r.CC = ? order by r.Trh", cc);
             foreach (var r in recs)
                 SaveCETPofCET(r.oNo);
         }
@@ -1894,17 +2245,30 @@ namespace BDB
             if (recs.FirstOrDefault() == null)
                 return;
 
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CETP-{cet.CC.ID}-{cet.ID}.txt", false))
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CETP-{cet.CC.PK}-{cet.PK}.txt", false))
             {
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.ID},{r.CET.ID},{r.CT.ID},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.ID},{r.PPAd,25}");
+                    sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PP.PK},{r.PPAd,25}");
                 }
             }
         }
 
-        
-        
+        public static void BackupCET(string ccID, string cetID)     // Musabaka Ilgili Kayitlari
+        {
+            var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
+            var cet = Db.SQL<CET>("select r from CET r where r.CC = ? and r.ID = ?", cc, cetID).FirstOrDefault();
+
+            if (cet != null)
+            {
+                //SaveCETPofCET(cet.oNo);
+                SaveCETRofCET(cet.oNo);
+            }
+        }
+
+
+
+
         #region IPTAL
         /*
         public static void BackupPP()

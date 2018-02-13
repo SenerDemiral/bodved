@@ -52,11 +52,16 @@ namespace bodved
                     D2 d2 = new D2
                     {
                         Ad = ctp.PPAd,
-                        Rnk = 0
+                        Rnk = 0,
+                        aO = 0,
+                        vO = 0
                     };
                     if (ppgr != null)
+                    {
                         d2.Rnk = ppgr.Rnk;
-
+                        d2.aO = ppgr.aO;
+                        d2.vO = ppgr.vO;
+                    }
                     myDic2[ctp.PPoNo] = d2;
 
                 }
@@ -69,7 +74,9 @@ namespace bodved
                     D2 d2 = new D2
                     {
                         Ad = a.PPAd,
-                        Rnk = -a.Rnk
+                        Rnk = -a.Rnk,
+                        aO = a.aO,
+                        vO = a.vO
                     };
                     if (a.Rnk == 0)
                         d2.Rnk = -9999;
@@ -119,6 +126,8 @@ namespace bodved
                 pps.PPAd = pp.Ad;
                 pps.Rnk = $"{s.Value.Rnk:#}";
                 pps.RnkBaz = $"{pp.RnkBaz}";
+                pps.aO = $"{s.Value.aO:#}";
+                pps.vO = $"{s.Value.vO:#}";
                 if (pp.RnkBaz == 0)
                 {
                     pps.Rnk = "";
@@ -225,5 +234,7 @@ namespace bodved
     {
         public int Rnk;
         public string Ad;
+        public int aO;
+        public int vO;
     }
 }

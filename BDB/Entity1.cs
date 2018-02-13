@@ -248,7 +248,7 @@ namespace BDB
         public CT CT { get; set; }
         public PP PP { get; set; }
         public string PPid { get; set; }
-        public int Idx { get; set; }
+        public int Idx { get; set; }    // drop
 
         public ulong PPoNo => PP?.GetObjectNo() ?? 0;
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;
