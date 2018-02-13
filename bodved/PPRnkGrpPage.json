@@ -8,20 +8,22 @@
   "RnkID": 0,
   "RnkAd": "?",
   "NOP": 0,
-  
+  "_Sra": 1, // Counter
+
   "PPs": [
     {
       "oNo": 0,
-      
-      "PPoNo": 0,
+
+      "PPoNo": "",
       "PPAd": "",
-      "RnkBaz": 0,
-      "Rnk": 0,
+      "RnkBaz": "",
+      "Rnk": "",
       "Sra": 0,
+      "Sra2": "",
       "aO": 0,
       "vO": 0,
 
       "MdfTrigger$": 0
     }
-  ],
+  ]
 }

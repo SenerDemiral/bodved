@@ -6,31 +6,37 @@
             <div class="tblWrap">
                 <table id="ppRnkGrpTbl" on-click="ppRnkGrpFnc">
                     <caption>
-                        <div>[[model.Cap1]]</div>
+                        <div style="white-space: nowrap;">[[model.Cap1]]</div>
                         <div>[[model.Cap2]]</div>
                     </caption>
                     <thead>
                         <tr>
                             <th class="oNo">ID</th>
-                            <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
+                            <th>Oyuncu</th>
                             <th>BR</th>
                             <th>Rank</th>
+                            <th>Sıra</th>
+                            <!--
+                            <th><button class="sort" value="{{model.SortAd$::click}}" onmousedown="++this.value" style="border-width:1px;">Oyuncu</button></th>
                             <th><button class="sort" value="{{model.SortSra$::click}}" onmousedown="++this.value" style="border-width:1px;">Sıra</button></th>
-                            <th>G</th>
-                            <th>M</th>
+    <th>G</th>
+    <th>M</th>
+    -->
                         </tr>
-                    </thead>
-                    <tbody>
-                        <template is="dom-repeat" items="[[model.PPs]]">
-                            <tr>
-                                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.oNo]]</td>
-                                <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
-                                <td class="ortala">°[[item.RnkBaz]]</td>
-                                <td class="Rnk">°[[item.Rnk]]</td>
-                                <td class="Sra">[[item.Sra]]</td>
-                                <td class="ortala">[[item.aO]]</td>
-                                <td class="ortala">[[item.vO]]</td>
-                            </tr>
+    </thead>
+    <tbody>
+        <template is="dom-repeat" items="[[model.PPs]]">
+            <tr>
+                <td class="oNo"><button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>[[item.PPoNo]]</td>
+                <td><a href="/bodved/ppMacPage/[[item.PPoNo]]/[[model.CCoNo]]">[[item.PPAd]]</a></td>
+                <td class="ortala">[[item.RnkBaz]]</td>
+                <td class="Rnk">[[item.Rnk]]</td>
+                <td class="Sra">[[item.Sra2]]</td>
+                <!--
+                <td class="ortala">[[item.aO]]</td>
+                <td class="ortala">[[item.vO]]</td>
+                -->
+                        </tr>
                         </template>
                     </tbody>
                 </table>

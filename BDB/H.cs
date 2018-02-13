@@ -957,6 +957,16 @@ namespace BDB
             return ppgr;
         }
 
+        public static void RefreshPpGrpRnk(ulong PPoNo)
+        {
+            // Oyuncunun oynadigi turnuvalari bul
+            var cc = Db.SQL<CETR>("select c from CETR c where c.PP.ObjectNo = ?", PPoNo).Select(x => x.CC).Distinct();
+            foreach(var c in cc)
+            {
+                RefreshRH2(c.oNo);  
+            }
+        }
+
         public static void RefreshRH2(ulong CCoNo)
         {
             Stopwatch watch = new Stopwatch();
@@ -1380,6 +1390,7 @@ namespace BDB
                 UpdPPLigMacSay();
                 ReCreateRHofCC(cc.oNo);
                 RefreshRH();
+                RefreshRH2(cc.oNo);  // RnkGrp Rank
                 UpdCETsumCC(cc.oNo);    // Musabaka
                 UpdCTsumCC(cc.oNo);     // Lig Takim
                 CompCTtRnkOfCC(cc.oNo); // Takim Rank Avarage

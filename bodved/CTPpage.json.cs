@@ -114,9 +114,11 @@ namespace bodved
             {
                 base.OnData();
                 this.Sra = (Parent.Parent as CTPpage)._Sra++;
-                var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkID = ?", PPoNo, 171).FirstOrDefault();
-                if (ppgr != null)
-                    PPRnk2 = ppgr.Rnk;
+
+                //var rnkID = (Parent.Parent as CTPpage).RnkID;
+                //var ppgr = Db.SQL<BDB.PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkID = ?", PPoNo, rnkID).FirstOrDefault();
+                //if (ppgr != null)
+                //    PPRnk2 = ppgr.Rnk;
             }
 
             void Handle(Input.MdfTrigger Action)

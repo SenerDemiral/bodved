@@ -162,6 +162,7 @@ namespace BDB
 
         public ulong PPoNo => PP?.GetObjectNo() ?? 0;
         public string PPAd => PP?.Ad ?? "-";
+        public int Aktif => PPAd.StartsWith("∞") ? 0 : 1;
 
 
         public PPGR()
@@ -256,7 +257,6 @@ namespace BDB
         public string CTAd => CT?.Ad ?? "-";
         public string PPAd => PP?.Ad ?? "-";
 
-        public int PPRnk => PP?.Rnk == null ? 0 : PP.Rnk == 0 ? PP.RnkBaz : PP.Rnk;
 
         public int L1C => PP?.L1C ?? 0;
         public int L2C => PP?.L2C ?? 0;
@@ -266,6 +266,19 @@ namespace BDB
         public long CT_PK => CT.PK;
         public long PP_PK => PP.PK;
 
+        public int PPRnk => PP?.Rnk == null ? 0 : PP.Rnk == 0 ? PP.RnkBaz : PP.Rnk;
+        public int PPRnk2
+        {
+            get
+            {
+                int grpRnk = 0;
+                var ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkID = ?", PPoNo, CC.RnkID).FirstOrDefault();
+                if (ppgr != null)
+                    grpRnk = ppgr.Rnk;
+                return grpRnk;
+
+            }
+        }
         public string oCTs
         {
             get     // Oynadigi diger Takimlar

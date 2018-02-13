@@ -16,9 +16,17 @@ namespace bodved
 
             PPs.Data = Db.SQL<BDB.PP>("select p from PP p order by p.Sra");
             //NOP = Db.SQL<BDB.PP>("select p from PP p").Count();
-            NOP = PPs.Count;
 
-            Cap1 = $"Oyuncu sayısı : {NOP-1}";
+            NOP = 0;
+            foreach (var p in PPs)
+            {
+                if (p.Rnk != 0)
+                    NOP++;
+            }
+            //NOP = PPs.Count;
+
+            //Cap1 = $"Oyuncu sayısı : {NOP - 1}";
+            Cap1 = $"Oyuncular";
 
             //sener.NoR = DateTime.Now.Ticks;
         }
@@ -69,10 +77,12 @@ namespace bodved
                     r.Tel = this.MdfRec.Tel;
                     r.eMail = this.MdfRec.eMail;
                 });
-                MdfRec.oNo = 0;
-                BDB.H.RefreshRH();
+                BDB.H.RefreshRH();  // Global Rank
+                BDB.H.RefreshPpGrpRnk((ulong)MdfRec.oNo);
+
                 //BDB.H.RefreshRH4(DateTime.MinValue);
                 PushChanges();
+                MdfRec.oNo = 0;
             }
             DlgOpened = false;
         }
@@ -94,7 +104,7 @@ namespace bodved
                 });
                 MdfRec.oNo = 0;
 
-                PushChanges();
+                //PushChanges();
             }
             DlgOpened = false;
         }
