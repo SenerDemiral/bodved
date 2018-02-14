@@ -2002,7 +2002,8 @@ namespace BDB
                 var recs = Db.SQL<CETP>("select r from CETP r order by r.CC, r.CET, r.HoG desc, r.SoD desc, r.Idx");
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PPAd,25}");
+                    if (r.PP != null)
+                        sw.WriteLine($"{r.CC.PK},{r.CET.PK},{r.CT.PK},{r.PP.PK},{r.SoD},{r.Idx:D2},{r.HoG},{r.PPAd,25}");
                 }
             }
         }
