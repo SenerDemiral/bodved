@@ -1102,7 +1102,6 @@ namespace BDB
 
             return NOPX;
         }
-
         
         public static int PPprvRnk(ulong PPoNo, DateTime Trh)
         {
@@ -1598,6 +1597,8 @@ namespace BDB
 
         public static void Restore()
         {
+            Restore_ID();
+            RestoreSTAT();
             RestorePP();
             RestoreCC();
             RestoreCT();
@@ -1620,6 +1621,49 @@ namespace BDB
             }
         }
 
+        public static void Restore_ID()   // PKs
+        {
+            //sw.WriteLine($"{r.ID}");
+
+            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-ID.txt", System.Text.Encoding.UTF8))
+            {
+                string line;
+                Db.Transact(() =>
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB._ID()
+                        {
+                            ID = ulong.Parse(ra[0]),
+                        };
+                    }
+                });
+            }
+        }
+        public static void RestoreSTAT()  // STAT
+        {
+            //sw.WriteLine($"{r.ID},{r.IdVal}");
+
+            using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-STAT.txt", System.Text.Encoding.UTF8))
+            {
+                string line;
+                Db.Transact(() =>
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] ra = line.Split(',');
+
+                        new BDB.STAT()
+                        {
+                            ID = int.Parse(ra[0]),
+                            IdVal = int.Parse(ra[1]),
+                        };
+                    }
+                });
+            }
+        }
         public static void RestorePP()    // Oyuncular
         {
             //sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
@@ -1678,7 +1722,7 @@ namespace BDB
         }
         public static void RestoreCT()    // TurnuvaTakimlari
         {
-            //sw.WriteLine($"{r.CC.PK},{r.PK},{r.Ad},{r.Adres},{r.Pw},{r.K1?.PK},{r.K2?.PK},{r.K1?.Ad,25},{r.K2?.Ad,25}");
+            //sw.WriteLine($"{r.CC.PK}|{r.PK}|{r.Ad}|{r.Adres}|{r.Pw}|{r.K1?.PK}|{r.K2?.PK}");
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CT.txt", System.Text.Encoding.UTF8))
             {
                 string line;
@@ -1689,7 +1733,7 @@ namespace BDB
                     while ((line = reader.ReadLine()) != null)
                     {
 
-                        string[] ra = line.Split(',');
+                        string[] ra = line.Split('|');
 
                         ccPK = long.Parse(ra[0]);
                         rPK = long.Parse(ra[1]);
@@ -1926,6 +1970,89 @@ namespace BDB
             // RH daki herhangi bir degisiklik hepsini etkiler!
             //refreshRH();
         }
+        public static void IndexCreate()
+        {
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Ad      ON BDB.PP (Ad)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Rnk").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Rnk     ON BDB.PP (Rnk DESC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Sra     ON BDB.PP (Sra)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_PPRnkID").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_PPRnkID  ON BDB.PPGR (PP, RnkID)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_Rnk").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_Rnk     ON BDB.PPGR (Rnk DESC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_RnkID").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_RnkID   ON BDB.PPGR (RnkID)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCC_Idx").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCC_Idx     ON BDB.CC (Idx DESC)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCT_CC      ON BDB.CT (CC)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_CC_Trh ON BDB.CET (CC, Trh)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_hCT    ON BDB.CET (hCT)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_gCT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_gCT    ON BDB.CET (gCT)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCTP_CC     ON BDB.CTP (CC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCTP_CT     ON BDB.CTP (CT)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETP_CET").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETP_CET   ON BDB.CETP (CET)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_CC    ON BDB.CETR (CC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_CET   ON BDB.CETR (CET)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_RH").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_RH    ON BDB.CETR (RH)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxRH_Trh     ON BDB.RH (Trh)");
+            //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_CC").FirstOrDefault() == null)
+            //    Db.SQL("CREATE INDEX IdxRH_CC      ON BDB.RH (CC)");
+        }
+        public static void IndexDrop()
+        {
+            Db.SQL("DROP INDEX IdxPP_Ad       ON BDB.PP");
+            Db.SQL("DROP INDEX IdxPP_Rnk      ON BDB.PP");
+            Db.SQL("DROP INDEX IdxPP_Sra      ON BDB.PP");
+
+            Db.SQL("DROP INDEX IdxPPGR_PPRnkID ON BDB.PPGR");
+            Db.SQL("DROP INDEX IdxPPGR_Rnk     ON BDB.PPGR");
+            Db.SQL("DROP INDEX IdxPPGR_RnkID   ON BDB.PPGR");
+
+            Db.SQL("DROP INDEX IdxRH_Trh      ON BDB.RH");
+            //Db.SQL("DROP INDEX IdxRH_CC       ON BDB.RH");
+
+            //Db.SQL("DROP INDEX IdxPRH_Trh     ON BDB.PRH");
+            //Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON BDB.PRH");
+
+            Db.SQL("DROP INDEX IdxCC_Idx      ON BDB.CC");
+
+            Db.SQL("DROP INDEX IdxCT_CC       ON BDB.CT");
+
+            Db.SQL("DROP INDEX IdxCET_CC_Trh  ON BDB.CET");
+            Db.SQL("DROP INDEX IdxCET_hCT     ON BDB.CET");
+            Db.SQL("DROP INDEX IdxCET_gCT     ON BDB.CET");
+
+            Db.SQL("DROP INDEX IdxCTP_CC      ON BDB.CTP");
+            Db.SQL("DROP INDEX IdxCTP_CT      ON BDB.CTP");
+
+            Db.SQL("DROP INDEX IdxCETP_CET    ON BDB.CETP");
+
+            Db.SQL("DROP INDEX IdxCETR_CC     ON BDB.CETR");
+            Db.SQL("DROP INDEX IdxCETR_CET    ON BDB.CETR");
+            Db.SQL("DROP INDEX IdxCETR_RH     ON BDB.CETR");
+        }
+
 
         #endregion Restore
 
@@ -1933,6 +2060,8 @@ namespace BDB
 
         public static void Backup()
         {
+            Backup_ID();
+            BackupSTAT();
             BackupPP();
             BackupCC();
             BackupCT();
@@ -1942,6 +2071,28 @@ namespace BDB
             BackupCETR();
         }
 
+        public static void Backup_ID()   // PKs
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-ID.txt", false))
+            {
+                var recs = Db.SQL<_ID>("select r from _ID r");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.ID}");
+                }
+            }
+        }
+        public static void BackupSTAT()  // STAT
+        {
+            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-STAT.txt", false))
+            {
+                var recs = Db.SQL<STAT>("select r from STAT r");
+                foreach (var r in recs)
+                {
+                    sw.WriteLine($"{r.ID},{r.IdVal}");
+                }
+            }
+        }
         public static void BackupPP()    // Oyuncular
         {
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\BDB-PP.txt", false))
@@ -1969,7 +2120,7 @@ namespace BDB
                 var recs = Db.SQL<CT>("select r from CT r order by r.CC");
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.PK},{r.PK},{r.Ad},{r.Adres},{r.Pw},{r.K1?.PK},{r.K2?.PK},{r.K1?.Ad},{r.K2?.Ad}");
+                    sw.WriteLine($"{r.CC.PK}|{r.PK}|{r.Ad}|{r.Adres}|{r.Pw}|{r.K1?.PK}|{r.K2?.PK}|{r.K1?.Ad}|{r.K2?.Ad}");
                 }
             }
         }
@@ -2021,90 +2172,7 @@ namespace BDB
 
         #endregion Backup
 
-        public static void IndexCreate()
-        {
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPP_Ad      ON BDB.PP (Ad)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Rnk").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPP_Rnk     ON BDB.PP (Rnk DESC)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPP_Sra     ON BDB.PP (Sra)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_PPRnkID").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPPGR_PPRnkID  ON BDB.PPGR (PP, RnkID)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_Rnk").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPPGR_Rnk     ON BDB.PPGR (Rnk DESC)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_RnkID").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxPPGR_RnkID   ON BDB.PPGR (RnkID)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCC_Idx").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCC_Idx     ON BDB.CC (Idx DESC)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_CC").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCT_CC      ON BDB.CT (CC)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCET_CC_Trh ON BDB.CET (CC, Trh)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCET_hCT    ON BDB.CET (hCT)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_gCT").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCET_gCT    ON BDB.CET (gCT)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCTP_CC     ON BDB.CTP (CC)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CT").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCTP_CT     ON BDB.CTP (CT)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETP_CET").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCETP_CET   ON BDB.CETP (CET)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CC").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCETR_CC    ON BDB.CETR (CC)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCETR_CET   ON BDB.CETR (CET)");
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_RH").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxCETR_RH    ON BDB.CETR (RH)");
-
-            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
-                Db.SQL("CREATE INDEX IdxRH_Trh     ON BDB.RH (Trh)");
-            //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_CC").FirstOrDefault() == null)
-            //    Db.SQL("CREATE INDEX IdxRH_CC      ON BDB.RH (CC)");
-        }
-
-        public static void IndexDrop()
-        {
-            Db.SQL("DROP INDEX IdxPP_Ad       ON BDB.PP");
-            Db.SQL("DROP INDEX IdxPP_Rnk      ON BDB.PP");
-            Db.SQL("DROP INDEX IdxPP_Sra      ON BDB.PP");
-
-            Db.SQL("DROP INDEX IdxPPGR_PPRnkID ON BDB.PPGR");
-            Db.SQL("DROP INDEX IdxPPGR_Rnk     ON BDB.PPGR");
-            Db.SQL("DROP INDEX IdxPPGR_RnkID   ON BDB.PPGR");
-
-            Db.SQL("DROP INDEX IdxRH_Trh      ON BDB.RH");
-            //Db.SQL("DROP INDEX IdxRH_CC       ON BDB.RH");
-
-            //Db.SQL("DROP INDEX IdxPRH_Trh     ON BDB.PRH");
-            //Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON BDB.PRH");
-
-            Db.SQL("DROP INDEX IdxCC_Idx      ON BDB.CC");
-
-            Db.SQL("DROP INDEX IdxCT_CC       ON BDB.CT");
-
-            Db.SQL("DROP INDEX IdxCET_CC_Trh  ON BDB.CET");
-            Db.SQL("DROP INDEX IdxCET_hCT     ON BDB.CET");
-            Db.SQL("DROP INDEX IdxCET_gCT     ON BDB.CET");
-
-            Db.SQL("DROP INDEX IdxCTP_CC      ON BDB.CTP");
-            Db.SQL("DROP INDEX IdxCTP_CT      ON BDB.CTP");
-
-            Db.SQL("DROP INDEX IdxCETP_CET    ON BDB.CETP");
-
-            Db.SQL("DROP INDEX IdxCETR_CC     ON BDB.CETR");
-            Db.SQL("DROP INDEX IdxCETR_CET    ON BDB.CETR");
-            Db.SQL("DROP INDEX IdxCETR_RH     ON BDB.CETR");
-        }
-
+        /*
         public static void BackupDB()
         {
             SavePP();
@@ -2128,24 +2196,23 @@ namespace BDB
         }
         public static void SaveCC()                     // Turnuvalar
         {
-            /* JSON deneme 
+            // JSON deneme 
             // Read From DB
-            var rec = new RowCC();
-            rec.CCs.Data = Db.SQL<CC>("select r from CC r order by r.ID");
-            var aaa = rec.ToJson();
-            using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC2.txt", false))
-            {
-                sw.WriteLine(aaa);
-            }
-            // Write To DB
-            dynamic json = new Json(aaa);
-            string ad = json.CCs[0].Ad;
-            int iz = json.CCs.Count;
-            for (int i = 0; i < iz; i++)
-            {
-
-            }
-            */
+            //var rec = new RowCC();
+            //rec.CCs.Data = Db.SQL<CC>("select r from CC r order by r.ID");
+            //var aaa = rec.ToJson();
+            //using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC2.txt", false))
+            //{
+            //    sw.WriteLine(aaa);
+            //}
+            //// Write To DB
+            //dynamic json = new Json(aaa);
+            //string ad = json.CCs[0].Ad;
+            //int iz = json.CCs.Count;
+            //for (int i = 0; i < iz; i++)
+            //{
+            //
+            //}
             var ccs = Db.SQL<CC>("select r from CC r order by r.ID");
             using (StreamWriter sw = new StreamWriter($@"C:\Starcounter\BodVedData\Ydk-CC.txt", false))
             {
@@ -2263,7 +2330,7 @@ namespace BDB
                 SaveCETRofCET(cet.oNo);
             }
         }
-
+        */
 
 
 
