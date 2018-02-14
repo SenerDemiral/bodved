@@ -443,53 +443,6 @@ namespace BDB
             });
         }
 
-        public static void CreateRHofCET(ulong CEToNo)
-        {
-            var cet = Db.FromId<BDB.CET>(CEToNo);
-
-            Db.Transact(() =>
-            {
-                CETR h = null, g = null;
-                int Won = 0;
-                RH rh;
-                // Sadece Singles
-                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ? and r.SoD = ? order by r.CET, r.Idx, r.HoG desc", cet, "S");
-
-                foreach (var r in cetrs)
-                {
-                    // Ilk H sonra G gelir
-                    if (r.HoG == "H")
-                    {
-                        h = r;
-                        if (r.MW > r.ML)
-                            Won = 1;
-                        else if (r.MW < r.ML)
-                            Won = -1;
-
-                    }
-                    else if (r.HoG == "G")
-                    {
-                        g = r;
-
-                        rh = new RH
-                        {
-                            CC = r.CC,
-                            Trh = r.Trh,
-
-                            hPP = h.PP,
-                            hWon = Won,
-                            gPP = g.PP,
-                            gWon = -Won,
-
-                        };
-                        h.RH = rh;
-                        g.RH = rh;
-                    }
-                }
-            });
-            RefreshRH();
-        }
-
         public static void ReCreateRHofCC(ulong CCoNo)
         {
             // Rank RH kayitlarini yarat, Sadece Singles
@@ -554,19 +507,48 @@ namespace BDB
             //refreshRH();
         }
 
-        // Kullanilmiyor
-        public static void ReCalcPPsra()
+        public static void CreateRHofCET(ulong CEToNo)
         {
-            // ReCalculate Sira of All Players
-            var pps = Db.SQL<BDB.PP>("select p from PP p order by p.Rnk desc, p.RnkBaz desc, p.Ad");
+            var cet = Db.FromId<BDB.CET>(CEToNo);
 
             Db.Transact(() =>
             {
-                int sira = 1;
-                foreach (var r in pps)
+                CETR h = null, g = null;
+                int Won = 0;
+                RH rh;
+                // Sadece Singles
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ? and r.SoD = ? order by r.CET, r.Idx, r.HoG desc", cet, "S");
+
+                foreach (var r in cetrs)
                 {
-                    //r.Rnk = r.curRnk;
-                    r.Sra = sira++;
+                    // Ilk H sonra G gelir
+                    if (r.HoG == "H")
+                    {
+                        h = r;
+                        if (r.MW > r.ML)
+                            Won = 1;
+                        else if (r.MW < r.ML)
+                            Won = -1;
+
+                    }
+                    else if (r.HoG == "G")
+                    {
+                        g = r;
+
+                        rh = new RH
+                        {
+                            CC = r.CC,
+                            Trh = r.Trh,
+
+                            hPP = h.PP,
+                            hWon = Won,
+                            gPP = g.PP,
+                            gWon = -Won,
+
+                        };
+                        h.RH = rh;
+                        g.RH = rh;
+                    }
                 }
             });
         }
@@ -1140,6 +1122,51 @@ namespace BDB
             }
         }
 
+        public static void DeleteCETrelated(ulong CEToNo)  // Delete Musabaka alti
+        {
+            RH rh;
+            var cet = Db.FromId<CET>(CEToNo);
+            var cetps = Db.SQL<CETP>("select r from CETP r where r.CET = ?", cet);
+            var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ?", cet);
+
+            Db.Transact(() =>
+            {
+                foreach (var cetp in cetps)
+                {
+                    cetp.Delete();
+                }
+
+                foreach (var cetr in cetrs)
+                {
+                    if (cetr.RH != null)
+                    {
+                        rh = Db.FromId<RH>(cetr.RH.GetObjectNo());
+                        rh.Delete();
+                    }
+                    cetr.Delete();
+                }
+
+                cet.hPok = false;
+                cet.gPok = false;
+                cet.Rok = false;
+                cet.hP = 0;
+                cet.hPW = 0;
+                cet.hMSW = 0;
+                cet.hMDW = 0;
+                cet.gP = 0;
+                cet.gPW = 0;
+                cet.gMSW = 0;
+                cet.gMDW = 0;
+
+                RefreshRH();
+                UpdCTsum(cet.hCT.oNo);
+                UpdCTsum(cet.gCT.oNo);
+            });
+        }
+
+        //--------------------------------------------
+
+        /*
         public static void updPPsum()
         {
             var pp = Db.SQL<BDB.PP>("select p from PP p");
@@ -1201,122 +1228,6 @@ namespace BDB
 
         }
 
-        // KULLANILMIYOR
-        public static void updPPrnk(ulong CCoNo)
-        {
-            var cc = Db.FromId<BDB.CC>(CCoNo);
-
-            // Sadece Sngl oynadiklarinda Rank hesaplanir
-            // Home oyunculari tara, rakibi Guest
-
-            int hRnk = 0,
-                gRnk = 0;
-
-            int PS = 0;    // Point Spread between players
-            int ER = 0; // ExpectedResult
-            int UR = 0; // UpsetResult
-            string W = "";  // Winner H/G
-
-            var cetr = Db.SQL<BDB.CETR>("select c from CETR c where c.CC = ? and c.SoD = ? and c.HoG = ? order by c.Trh", cc, "S", "H");
-            foreach (var h in cetr)
-            {
-                hRnk = h.PP.Rnk == 0 ? h.PP.RnkBaz : h.PP.Rnk;
-                // Guest/Rakip
-                var g = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.HoG <> ?", h.CET, h.Idx, h.SoD, "G").FirstOrDefault();
-                gRnk = g.PP.Rnk == 0 ? g.PP.RnkBaz : g.PP.Rnk;
-
-                W = h.MW > g.MW ? "H" : "G";
-
-                PS = Math.Abs(hRnk - gRnk);
-                ER = 0;
-                UR = 0;
-
-                if (PS < 13)
-                {
-                    ER = 8;
-                    UR = 8;
-                }
-                else if (PS < 38)
-                {
-                    ER = 7;
-                    UR = 10;
-                }
-                else if (PS < 63)
-                {
-                    ER = 6;
-                    UR = 13;
-                }
-                else if (PS < 88)
-                {
-                    ER = 5;
-                    UR = 16;
-                }
-                else if (PS < 113)
-                {
-                    ER = 4;
-                    UR = 20;
-                }
-                else if (PS < 138)
-                {
-                    ER = 3;
-                    UR = 25;
-                }
-                else if (PS < 163)
-                {
-                    ER = 2;
-                    UR = 30;
-                }
-                else if (PS < 188)
-                {
-                    ER = 2;
-                    UR = 35;
-                }
-                else if (PS < 213)
-                {
-                    ER = 1;
-                    UR = 40;
-                }
-                else if (PS < 238)
-                {
-                    ER = 1;
-                    UR = 45;
-                }
-                else
-                {
-                    ER = 0;
-                    UR = 50;
-                }
-            }
-
-            if (hRnk >= gRnk)   // Home: Iyi
-            {
-                if (W == "H")   // Expected: Home kazanmis
-                {
-                    hRnk += ER;
-                    gRnk -= ER;
-                }
-                else            // Upset: Home kaybetmis
-                {
-                    hRnk -= UR;
-                    gRnk += UR;
-                }
-            }
-            else                // Guest: Iyi
-            {
-                if (W == "G")   // Expected: Guest kazanmis
-                {
-                    hRnk -= ER;
-                    gRnk += ER;
-                }
-                else            // Upset: Guest kayetmis
-                {
-                    hRnk += UR;
-                    gRnk -= UR;
-                }
-            }
-        }
-
-
         public static void LoadPP()     // Oyuncular
         {
             //sw.WriteLine($"{r.PK},{r.RnkBaz},{r.Sex},{r.DgmYil},{r.Ad},{r.eMail},{r.Tel}");
@@ -1344,7 +1255,6 @@ namespace BDB
                 });
             }
         }
-
         public static void LoadCC()     // Turnuvalar
         {
             //sw.WriteLine($"{cc.PK},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
@@ -1370,9 +1280,6 @@ namespace BDB
                 });
             }
         }
-
-
-
         public static void RestoreCC(string ccID)   // Delete&Restore Turnuva alti
         {
             // Eski kalmamali (Mukerrer olur)
@@ -1398,7 +1305,6 @@ namespace BDB
                 CompCTtRnkOfCC(cc.oNo); // Takim Rank Avarage
             }
         }
-
         public static void DeleteCCrelated(ulong CCoNo)    // Delete Turnuvanin alti
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -1431,49 +1337,6 @@ namespace BDB
             });
 
         }
-
-        public static void DeleteCETrelated(ulong CEToNo)  // Delete Musabaka alti
-        {
-            RH rh;
-            var cet = Db.FromId<CET>(CEToNo);
-            var cetps = Db.SQL<CETP>("select r from CETP r where r.CET = ?", cet);
-            var cetrs = Db.SQL<CETR>("select r from CETR r where r.CET = ?", cet);
-
-            Db.Transact(() =>
-            {
-                foreach (var cetp in cetps)
-                {
-                    cetp.Delete();
-                }
-
-                foreach (var cetr in cetrs)
-                {
-                    if (cetr.RH != null)
-                    {
-                        rh = Db.FromId<RH>(cetr.RH.GetObjectNo());
-                        rh.Delete();
-                    }
-                    cetr.Delete();
-                }
-
-                cet.hPok = false;
-                cet.gPok = false;
-                cet.Rok = false;
-                cet.hP = 0;
-                cet.hPW = 0;
-                cet.hMSW = 0;
-                cet.hMDW = 0;
-                cet.gP = 0;
-                cet.gPW = 0;
-                cet.gMSW = 0;
-                cet.gMDW = 0;
-
-                RefreshRH();
-                UpdCTsum(cet.hCT.oNo);
-                UpdCTsum(cet.gCT.oNo);
-            });
-        }
-
 
         public static void LoadCTofCC(string ccID)                  // Turnuva Takimlari
         {
@@ -1508,7 +1371,6 @@ namespace BDB
                 });
             }
         }
-
         public static void LoadCTPofCC(string ccID)                 // Turnuva Takim Oyunculari
         {
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\Ydk-CTP-{ccID}.txt"))
@@ -1544,7 +1406,6 @@ namespace BDB
                 });
             }
         }
-
         public static void LoadCETofCC(string ccID)                 // Turnuva Musabakalari
         {
             string line;
@@ -1604,7 +1465,6 @@ namespace BDB
                 });
             }
         }
-
         public static void LoadCETRofCC(string ccID)                // Turnuva Sonuclari
         {
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
@@ -1614,7 +1474,6 @@ namespace BDB
                 LoadCETRofCET(ccID, cet.ID);
             }
         }
-
         public static void LoadCETRofCET(string ccID, string cetID) // Musabaka Sonuclari
         {
             string line;
@@ -1679,7 +1538,6 @@ namespace BDB
             // Rank RH kayitlarini yarat, Sadece Singles
             // Sonrasinda RefreshRH gerekir!!!
         }
-
         public static void LoadCETPofCC(string ccID)                // Turnuva OyuncuSiralama
         {
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();
@@ -1689,7 +1547,6 @@ namespace BDB
                 LoadCETPofCET(ccID, cet.ID);
             }
         }
-
         public static void LoadCETPofCET(string ccID, string cetID) // Musabaka OyuncuSiralama
         {
             string line;
@@ -1735,7 +1592,7 @@ namespace BDB
                 }
             }
         }
-
+        */
 
         #region Restore
 
@@ -1748,6 +1605,19 @@ namespace BDB
             RestoreCET();
             RestoreCETP();
             RestoreCETR();
+
+            IndexCreate();
+            
+            UpdPPLigMacSay();
+            CreateRH();
+            RefreshRH();
+            foreach (var cc in Db.SQL<CC>("select c from CC c"))
+            {
+                RefreshRH2(cc.oNo);     // RnkGrp Rank
+                UpdCETsumCC(cc.oNo);    // Musabaka
+                UpdCTsumCC(cc.oNo);     // Lig Takim
+                CompCTtRnkOfCC(cc.oNo); // Takim Rank Avarage
+            }
         }
 
         public static void RestorePP()    // Oyuncular
@@ -1779,7 +1649,7 @@ namespace BDB
         }
         public static void RestoreCC()    // Turnuvalar
         {
-            //sw.WriteLine($"{cc.PK},{cc.Ad},{cc.Skl},{cc.Grp},{cc.Idx}");
+            //sw.WriteLine($"{r.PK},{r.ID},{r.Ad},{r.Skl},{r.Grp},{r.Idx},{r.Lig},{r.RnkID},{r.RnkAd}");
 
             using (StreamReader sr = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CC.txt", System.Text.Encoding.UTF8))
             {
@@ -1793,10 +1663,14 @@ namespace BDB
                         new BDB.CC()
                         {
                             PK = long.Parse(ra[0]),
-                            Ad = ra[1],
-                            Skl = ra[2],
-                            Grp = ra[3],
-                            Idx = ra[4],
+                            ID = ra[1],
+                            Ad = ra[2],
+                            Skl = ra[3],
+                            Grp = ra[4],
+                            Idx = ra[5],
+                            Lig = ra[6],
+                            RnkID = int.Parse(ra[7]),
+                            RnkAd = ra[8],
                         };
                     }
                 });
@@ -1819,8 +1693,8 @@ namespace BDB
 
                         ccPK = long.Parse(ra[0]);
                         rPK = long.Parse(ra[1]);
-                        ppK1PK = long.Parse(ra[5]);
-                        ppK2PK = long.Parse(ra[6]);
+                        ppK1PK = string.IsNullOrEmpty(ra[5]) ? 0 : long.Parse(ra[5]);
+                        ppK2PK = string.IsNullOrEmpty(ra[6]) ? 0 : long.Parse(ra[6]);
 
                         var cc = Db.SQL<CC>("select r from CC r where r.PK = ?", ccPK).FirstOrDefault();
                         var ppK1 = Db.SQL<PP>("select r from PP r where r.PK = ?", ppK1PK).FirstOrDefault();
@@ -1842,7 +1716,7 @@ namespace BDB
         }
         public static void RestoreCTP()   // TurnuvaTakimOyunculari
         {
-            //sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.PPAd,25},{r.CTAd,20}");
+            //sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.Idx}{r.PPAd,25},{r.CTAd,20}");
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CTP.txt"))
             {
                 string line;
@@ -1867,6 +1741,7 @@ namespace BDB
                             CC = cc,
                             CT = ct,
                             PP = pp,
+                            Idx = int.Parse(ra[3])
                         };
                     }
                 });
@@ -2005,6 +1880,53 @@ namespace BDB
             }
         }
 
+        public static void CreateRH()
+        {
+            // Rank RH kayitlarini yarat, Sadece Singles
+            // Sonrasinda RefreshRH gerekir!!!
+
+            Db.Transact(() =>
+            {
+                CETR h = null, g = null;
+                int Won = 0;
+                RH rh;
+                // Sadece Singles
+                var cetrs = Db.SQL<CETR>("select r from CETR r where r.SoD = ? order by r.CET, r.Idx, r.HoG desc", "S");
+
+                foreach (var r in cetrs)
+                {
+                    // Ilk H sonra G gelir
+                    if (r.HoG == "H")
+                    {
+                        h = r;
+                        if (r.MW > r.ML)
+                            Won = 1;
+                        else if (r.MW < r.ML)
+                            Won = -1;
+                    }
+                    else if (r.HoG == "G")
+                    {
+                        g = r;
+
+                        rh = new RH
+                        {
+                            CC = r.CC,
+                            Trh = r.Trh,
+
+                            hPP = h.PP,
+                            hWon = Won,
+                            gPP = g.PP,
+                            gWon = -Won,
+                        };
+                        h.RH = rh;
+                        g.RH = rh;
+                    }
+                }
+            });
+            // RH daki herhangi bir degisiklik hepsini etkiler!
+            //refreshRH();
+        }
+
         #endregion Restore
 
         #region Backup
@@ -2037,7 +1959,7 @@ namespace BDB
             {
                 var recs = Db.SQL<CC>("select r from CC r order by r.PK");
                 foreach (var r in recs)
-                    sw.WriteLine($"{r.PK},{r.Ad},{r.Skl},{r.Grp},{r.Idx},{r.Lig},{r.RnkID},{r.RnkAd}");
+                    sw.WriteLine($"{r.PK},{r.ID},{r.Ad},{r.Skl},{r.Grp},{r.Idx},{r.Lig},{r.RnkID},{r.RnkAd}");
             }
         }
         public static void BackupCT()    // TurnuvaTakimlari
@@ -2058,7 +1980,7 @@ namespace BDB
                 var recs = Db.SQL<CTP>("select r from CTP r order by r.CC, r.CT");
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.PPAd,25},{r.CTAd,20}");
+                    sw.WriteLine($"{r.CC.PK},{r.CT.PK},{r.PP.PK},{r.Idx},{r.PPAd,25},{r.CTAd,20}");
                 }
             }
         }
@@ -2098,6 +2020,90 @@ namespace BDB
 
         #endregion Backup
 
+        public static void IndexCreate()
+        {
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Ad").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Ad      ON BDB.PP (Ad)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Rnk").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Rnk     ON BDB.PP (Rnk DESC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPP_Sra").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPP_Sra     ON BDB.PP (Sra)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_PPRnkID").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_PPRnkID  ON BDB.PPGR (PP, RnkID)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_Rnk").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_Rnk     ON BDB.PPGR (Rnk DESC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxPPGR_RnkID").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxPPGR_RnkID   ON BDB.PPGR (RnkID)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCC_Idx").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCC_Idx     ON BDB.CC (Idx DESC)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCT_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCT_CC      ON BDB.CT (CC)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_CC_Trh").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_CC_Trh ON BDB.CET (CC, Trh)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_hCT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_hCT    ON BDB.CET (hCT)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCET_gCT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCET_gCT    ON BDB.CET (gCT)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCTP_CC     ON BDB.CTP (CC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCTP_CT").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCTP_CT     ON BDB.CTP (CT)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETP_CET").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETP_CET   ON BDB.CETP (CET)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CC").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_CC    ON BDB.CETR (CC)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_CET").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_CET   ON BDB.CETR (CET)");
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxCETR_RH").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxCETR_RH    ON BDB.CETR (RH)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_Trh").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxRH_Trh     ON BDB.RH (Trh)");
+            //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_CC").FirstOrDefault() == null)
+            //    Db.SQL("CREATE INDEX IdxRH_CC      ON BDB.RH (CC)");
+        }
+
+        public static void IndexDrop()
+        {
+            Db.SQL("DROP INDEX IdxPP_Ad       ON BDB.PP");
+            Db.SQL("DROP INDEX IdxPP_Rnk      ON BDB.PP");
+            Db.SQL("DROP INDEX IdxPP_Sra      ON BDB.PP");
+
+            Db.SQL("DROP INDEX IdxPPGR_PPRnkID ON BDB.PPGR");
+            Db.SQL("DROP INDEX IdxPPGR_Rnk     ON BDB.PPGR");
+            Db.SQL("DROP INDEX IdxPPGR_RnkID   ON BDB.PPGR");
+
+            Db.SQL("DROP INDEX IdxRH_Trh      ON BDB.RH");
+            //Db.SQL("DROP INDEX IdxRH_CC       ON BDB.RH");
+
+            //Db.SQL("DROP INDEX IdxPRH_Trh     ON BDB.PRH");
+            //Db.SQL("DROP INDEX IdxPRH_PP_Trh  ON BDB.PRH");
+
+            Db.SQL("DROP INDEX IdxCC_Idx      ON BDB.CC");
+
+            Db.SQL("DROP INDEX IdxCT_CC       ON BDB.CT");
+
+            Db.SQL("DROP INDEX IdxCET_CC_Trh  ON BDB.CET");
+            Db.SQL("DROP INDEX IdxCET_hCT     ON BDB.CET");
+            Db.SQL("DROP INDEX IdxCET_gCT     ON BDB.CET");
+
+            Db.SQL("DROP INDEX IdxCTP_CC      ON BDB.CTP");
+            Db.SQL("DROP INDEX IdxCTP_CT      ON BDB.CTP");
+
+            Db.SQL("DROP INDEX IdxCETP_CET    ON BDB.CETP");
+
+            Db.SQL("DROP INDEX IdxCETR_CC     ON BDB.CETR");
+            Db.SQL("DROP INDEX IdxCETR_CET    ON BDB.CETR");
+            Db.SQL("DROP INDEX IdxCETR_RH     ON BDB.CETR");
+        }
+
         public static void BackupDB()
         {
             SavePP();
@@ -2119,7 +2125,6 @@ namespace BDB
                 }
             }
         }
-
         public static void SaveCC()                     // Turnuvalar
         {
             /* JSON deneme 
@@ -2161,7 +2166,6 @@ namespace BDB
                 SaveCETRofCC(CCoNo);
             }
         }
-
         public static void SaveCTofCC(ulong CCoNo)      // Turnuva Takimlari
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -2175,7 +2179,6 @@ namespace BDB
                 }
             }
         }
-
         public static void SaveCTPofCC(ulong CCoNo)     // Turnuva Takim Oyunculari
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -2189,7 +2192,6 @@ namespace BDB
                 }
             }
         }
-
         public static void SaveCETofCC(ulong CCoNo)     // Turnuva Fikstur
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -2203,7 +2205,6 @@ namespace BDB
                 }
             }
         }   
-
         public static void SaveCETRofCC(ulong CCoNo)    // Turnuva Tum Sonuclari
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -2211,7 +2212,6 @@ namespace BDB
             foreach (var r in recs)
                 SaveCETRofCET(r.oNo);
         }
-
         public static void SaveCETRofCET(ulong CEToNo)  // Musabaka Sonuclari
         {
             var cet = Db.FromId<CET>(CEToNo);
@@ -2228,7 +2228,6 @@ namespace BDB
                 }
             }
         }
-
         public static void SaveCETPofCC(ulong CCoNo)    // Turnuva OyuncuSiralama
         {
             var cc = Db.FromId<CC>(CCoNo);
@@ -2236,7 +2235,6 @@ namespace BDB
             foreach (var r in recs)
                 SaveCETPofCET(r.oNo);
         }
-
         public static void SaveCETPofCET(ulong CEToNo)  // Musabaka OyuncuSiralama
         {
             var cet = Db.FromId<CET>(CEToNo);
@@ -2253,7 +2251,6 @@ namespace BDB
                 }
             }
         }
-
         public static void BackupCET(string ccID, string cetID)     // Musabaka Ilgili Kayitlari
         {
             var cc = Db.SQL<CC>("select r from CC r where r.ID = ?", ccID).FirstOrDefault();

@@ -47,7 +47,7 @@ namespace bodved
             BDB.H.UpdCTsum(cet.hCT.oNo);
             BDB.H.UpdCTsum(cet.gCT.oNo);
 
-            BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
+            //BDB.H.BackupCET(cet.CC.ID, cet.ID); // CETP, CETR yedegi. \Starcounter\BodVedData\Ydk-ccID-cetID.txt
 
             PushChangesCT();
 

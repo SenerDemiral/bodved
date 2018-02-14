@@ -99,6 +99,8 @@ namespace BDB
         public int Rnk { get; set; }
         public int Sra { get; set; }    // Rank'a gore sirasi
 
+        // DROP-----
+        /*
         public int SSo { get; set; }    // Single Set Oynadigi
         public int SSa { get; set; }
         public int SSv { get; set; }
@@ -112,7 +114,8 @@ namespace BDB
         public int DMo { get; set; }
         public int DMa { get; set; }
         public int DMv { get; set; }
-
+        */
+        // ----------
         public int L1C { get; set; }
         public int L2C { get; set; }
         public int L3C { get; set; }
@@ -247,8 +250,8 @@ namespace BDB
         public CC CC { get; set; }
         public CT CT { get; set; }
         public PP PP { get; set; }
-        public string PPid { get; set; }
-        public int Idx { get; set; }    // drop
+        //public string PPid { get; set; } DROP
+        public int Idx { get; set; }
 
         public ulong PPoNo => PP?.GetObjectNo() ?? 0;
         public ulong CCoNo => CC?.GetObjectNo() ?? 0;
@@ -266,13 +269,13 @@ namespace BDB
         public long CT_PK => CT.PK;
         public long PP_PK => PP.PK;
 
-        public int PPRnk => PP?.Rnk == null ? 0 : PP.Rnk == 0 ? PP.RnkBaz : PP.Rnk;
+        //public int PPRnk => PP?.Rnk == null ? 0 : PP.Rnk == 0 ? PP.RnkBaz : PP.Rnk;   DROP
         public int PPRnk2
         {
             get
             {
                 int grpRnk = 0;
-                var ppgr = Db.SQL<PPGR>("select p from PPGR p where p.PP.ObjectNo = ? and p.RnkID = ?", PPoNo, CC.RnkID).FirstOrDefault();
+                var ppgr = Db.SQL<PPGR>("select p from BDB.PPGR p where p.PP = ? and p.RnkID = ?", PP, CC.RnkID).FirstOrDefault();
                 if (ppgr != null)
                     grpRnk = ppgr.Rnk;
                 return grpRnk;

@@ -88,6 +88,12 @@ namespace bodved
                 return $"OK: Backup()";
             });
 
+            Handle.GET("/scExpert/Restore", () =>
+            {
+                BDB.H.Restore();
+                return $"OK: Restore()";
+            });
+
             //Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
             Handle.GET("/bodved", (Request request) => {
                 return Self.GET("/bodved/NoticePage");
