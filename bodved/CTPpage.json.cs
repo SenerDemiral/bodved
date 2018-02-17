@@ -102,7 +102,7 @@ namespace bodved
                 var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
                 BDB.H.CompCTtRnk(ct.oNo);
                 _Sra = 1;
-                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.PPRnk desc", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
+                CTPs.Data = Db.SQL<BDB.CTP>("select c from CTP c where c.CT = ? order by c.Idx", Db.FromId<BDB.CT>(ulong.Parse(CToNo)));
                 tRnk = ct.tRnk;
             }
         }

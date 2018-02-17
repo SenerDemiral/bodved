@@ -104,29 +104,6 @@ namespace scExpert
                 return $"OK: UpdCTsumCC({CCoNo})";
             });
 
-            Handle.GET("/scExpert/SavePP", () =>
-            {
-                BDB.H.SavePP();
-                return "OK: SavePP()";
-            });
-            Handle.GET("/scExpert/SaveCC", () =>
-            {
-                BDB.H.SaveCC();
-                return "OK: SaveCC()";
-            });
-
-            Handle.GET("/scExpert/BackupCC/{?}", (ulong CCoNo) =>
-            {
-                BDB.H.BackupCC(CCoNo);
-                return $"OK: BackupCC({CCoNo})";
-            });
-
-            Handle.GET("/scExpert/BackupCET/{?}/{?}", (string ccID, string cetID) =>
-            {
-                BDB.H.BackupCET(ccID, cetID);
-                return $"OK: BackupCET({ccID}, {cetID})";
-            });
-
             Handle.GET("/scExpert/DeleteCETrelated/{?}", (string cetOnO) =>
             {
                 H.DeleteCETrelated(ulong.Parse(cetOnO));

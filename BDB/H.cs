@@ -194,6 +194,44 @@ namespace BDB
             BDB.H.UpdCTsum(cetr.CET.gCT.oNo);
         }
 
+        public static void RefreshRank()
+        {
+            Dictionary<ulong, GrRnk> PPdic = new Dictionary<ulong, GrRnk>();
+            /*
+            foreach(var pp in Db.SQL<PP>("select p from PP p"))
+            {
+                PPdic[pp.oNo] = new GrRnk
+                {
+                    CCoNo = 0,
+                    CToNo = 0,
+                    RnkBaz = pp.RnkBaz,
+                    Rnk = 0,
+                    RnkGrp = 0
+                };
+            }
+
+            foreach (var cc in Db.SQL<CC>("select c from CC c"))
+            {
+                // TakimOyunculari
+                foreach (var ctp in Db.SQL<CTP>("select c from CTP c where c.CC = ?", cc))
+                {
+                    PPdic[ctp.PPoNo].CCoNo = cc.oNo;
+                    PPdic[ctp.PPoNo].CToNo = ctp.CToNo;
+                }
+                // OyuncuMaclari
+                var rhs = Db.SQL<BDB.RH>("select p from RH p order by p.Trh", RnkID);
+
+
+                foreach (var rh in Db.SQL<RH>("select c from RH c where c.CC = ?", cc))
+                {
+                    PPdic[rh.hPP.oNo].CCoNo = cc.oNo;
+                    PPdic[ctp.PPoNo].CToNo = ctp.CToNo;
+                }
+
+            }
+            */
+        }
+
         public static void UpdCETsum(ulong CEToNo)
         {
             var cet = Db.FromId<BDB.CET>(CEToNo);
@@ -2455,5 +2493,14 @@ namespace BDB
                 sw.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} {Msg}");
             }
         }
+    }
+
+    public class GrRnk
+    {
+        public ulong CCoNo;
+        public ulong CToNo;
+        public int RnkBaz;
+        public int Rnk;
+        public int RnkGrp;
     }
 }

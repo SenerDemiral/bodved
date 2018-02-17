@@ -41,7 +41,7 @@ namespace bodved
             */
             PPsElementJson pps = null;
 
-            Dictionary<ulong, D2> myDic2 = new Dictionary<ulong, D2>(1000);    // Initial capacity 1000 players
+            Dictionary<ulong, D2> ppDic = new Dictionary<ulong, D2>(1000);    // Initial capacity 1000 players
             var CCs = Db.SQL<BDB.CC>("select c from CC c where c.RnkID = ?", cc.RnkID);
             foreach (var c in CCs)
             {
@@ -62,14 +62,14 @@ namespace bodved
                         d2.aO = ppgr.aO;
                         d2.vO = ppgr.vO;
                     }
-                    myDic2[ctp.PPoNo] = d2;
+                    ppDic[ctp.PPoNo] = d2;
 
                 }
             }
             // GrpRnk de var ama TakimOyuncuListesinde(CTP) yoksa -Rnk koy
             foreach (var a in Db.SQL<BDB.PPGR>("select p from PPGR p where p.RnkID = ?", RnkID))
             {
-                if (!myDic2.ContainsKey(a.PPoNo))
+                if (!ppDic.ContainsKey(a.PPoNo))
                 {
                     D2 d2 = new D2
                     {
@@ -81,7 +81,7 @@ namespace bodved
                     if (a.Rnk == 0)
                         d2.Rnk = -9999;
 
-                    myDic2[a.PPoNo] = d2;
+                    ppDic[a.PPoNo] = d2;
                 }
             }
 
@@ -92,11 +92,11 @@ namespace bodved
 
             BDB.PP pp;
 
-            var items = from pair in myDic2
+            var ppDicItems = from pair in ppDic
                         orderby pair.Value.Rnk descending, pair.Value.Ad
                         select pair;
 
-            foreach (var s in items)
+            foreach (var s in ppDicItems)
             {
                 pp = Db.FromId<BDB.PP>(s.Key);
 
