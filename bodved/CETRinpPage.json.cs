@@ -60,6 +60,8 @@ namespace bodved
         {
             var cet = Db.FromId<BDB.CET>(ulong.Parse(CEToNo));
             CCoNo = cet.CCoNo.ToString();
+            hCToNo = (long)cet.hCToNo;
+            gCToNo = (long)cet.gCToNo;
             hCTAd = cet.hCTAd;
             gCTAd = cet.gCTAd;
             Rok = cet.Rok;
@@ -298,6 +300,7 @@ namespace bodved
                 cet.Info = Info;
 
                 long hA, gA, hMW = 0, gMW = 0, hSW = 0, gSW = 0;
+                int hSP = 0, gSP = 0;
 
                 foreach (var src in Singles)
                 {
@@ -388,26 +391,28 @@ namespace bodved
                     hR.ML = 0;
                     gR.MW = 0;
                     gR.ML = 0;
-                    if ((hA + gA) > 0)  // Oynandiysa
+                    //if ((hA + gA) > 0)  // Oynandiysa
                     {
-                        if (hA > gA)
+                        if (hA == gA)
+                        {
+                            hR.MW = 0;
+                            gR.ML = 0;
+                            hR.RH.hWon = 0;
+                            gR.RH.gWon = 0;
+                            //hSP += 1;
+                            //gSP += 1;
+
+                        }
+                        else if (hA > gA)
                         {
                             hMW++;
                             hR.MW = 1;
                             gR.ML = 1;
 
-                            //hR.PRH.Won = 1;
-                            //gR.PRH.Won = -1;
                             hR.RH.hWon = 1;
                             gR.RH.gWon = -1;
 
-                            // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
-                            /*
-                            hR.PRH.NOPX = hR.PRH.compNOPX;
-                            hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
-                            gR.PRH.NOPX = gR.PRH.compNOPX;
-                            gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
-                            */
+                            hSP += 2;
                         }
                         else
                         {
@@ -418,13 +423,7 @@ namespace bodved
                             hR.RH.hWon = -1;
                             gR.RH.gWon = 1;
 
-                            // Sonradan zaten hesaplaniyor gerek yok!! Won belli olsun yeter
-                            /*
-                            hR.PRH.NOPX = hR.PRH.compNOPX;
-                            hR.PRH.Rnk = hR.PRH.NOPX + hR.PRH.prvRnk;
-                            gR.PRH.NOPX = gR.PRH.compNOPX;
-                            gR.PRH.Rnk = gR.PRH.NOPX + gR.PRH.prvRnk;
-                            */
+                            gSP += 2;
                         }
                     }
                     hSW += hA;
@@ -513,12 +512,12 @@ namespace bodved
                         hR2.S5W = 0;
                         gR1.S1W = 11;
                         gR1.S2W = 11;
-                        gR1.S3W = 0;
+                        gR1.S3W = 11;
                         gR1.S4W = 0;
                         gR1.S5W = 0;
                         gR2.S1W = 11;
                         gR2.S2W = 11;
-                        gR2.S3W = 0;
+                        gR2.S3W = 11;
                         gR2.S4W = 0;
                         gR2.S5W = 0;
                     }
@@ -531,12 +530,12 @@ namespace bodved
 
                         hR1.S1W = 11;
                         hR1.S2W = 11;
-                        hR1.S3W = 0;
+                        hR1.S3W = 11;
                         hR1.S4W = 0;
                         hR1.S5W = 0;
                         hR2.S1W = 11;
                         hR2.S2W = 11;
-                        hR2.S3W = 0;
+                        hR2.S3W = 11;
                         hR2.S4W = 0;
                         hR2.S5W = 0;
                         gR1.S1W = 0;
@@ -599,8 +598,11 @@ namespace bodved
                 cet.hSDW = (int)hSW;
                 cet.gSDW = (int)gSW;
 
+
                 cet.hPW = (cet.hMSW * 2) + (cet.hMDW * 3);
                 cet.gPW = (cet.gMSW * 2) + (cet.gMDW * 3);
+                //cet.hPW = hSP + (cet.hMDW * 3);
+                //cet.gPW = gSP + (cet.gMDW * 3);
 
                 cet.hP = 0;
                 cet.gP = 0;

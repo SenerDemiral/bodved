@@ -87,6 +87,9 @@
     <Compile Include="CTpage.json.cs">
       <DependentUpon>CTpage.json</DependentUpon>
     </Compile>
+    <Compile Include="CTPofCETPpage.json.cs">
+      <DependentUpon>CTPofCETPpage.json</DependentUpon>
+    </Compile>
     <Compile Include="CTPpage.json.cs">
       <DependentUpon>CTPpage.json</DependentUpon>
     </Compile>
@@ -173,6 +176,9 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="app.config" />
+    <TypedJSON Include="CTPofCETPpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="packages.config" />
     <None Include="wwwroot\bodved\CCpage.html" />
     <None Include="wwwroot\bodved\CTpage.html" />
@@ -182,6 +188,7 @@
     <None Include="wwwroot\bodved\CETRviewPage.html" />
     <None Include="wwwroot\bodved\CETRinpPage.html" />
     <None Include="wwwroot\bodved\AboutPage.html" />
+    <None Include="wwwroot\bodved\CTPofCETPpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
     <None Include="wwwroot\bodved\LoginPage.html" />

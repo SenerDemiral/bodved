@@ -15,46 +15,8 @@ namespace bodved
             //tmr.Start();
 
 
-            var HTML = @"<!DOCTYPE html>
-                <html lang=""tr"">
-				<head>
-					<meta charset=""utf-8"">
-				    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=yes"">
-                    <meta http-equiv=""x-ua-compatible"" content=""ie=edge"">				    
-                    <title>{0}</title>
-                    <meta name=""description"" content=""Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları."">
-                    <meta name=""author"" content=""Şener DEMİRAL"">
-
-                    <script src=""/sys/webcomponentsjs/webcomponents-lite.js""></script>
-
-                    <script>
-                        window.Polymer = {{
-                            dom: ""shadow""
-                        }};
-                    </script>
-
-					<link rel=""import"" href=""/sys/polymer/polymer.html"">
-					<link rel=""import"" href=""/sys/starcounter.html"">
-					<link rel=""import"" href=""/sys/starcounter-include/starcounter-include.html"">
-					
-                    <script src=""/sys/thenBy.js""></script>
-                    <script src=""/sys/redips-drag-min.js""></script>
-					<link rel=""stylesheet"" href=""/sys/redips-style.css"">
-					
-                    <link rel=""stylesheet"" href=""/sys/Bodved.css"">
-				</head>
-                <body>
-                    <dom-bind id=""palindrom-root"">
-                        <template is=""dom-bind"">
-                          <starcounter-include view-model=""{{{{model}}}}""></starcounter-include>
-                        </template>                    
-                    </dom-bind>
-                    <palindrom-client ref=""palindrom-root"" remote-url=""{1}""></palindrom-client>
-                </body>
-			</html>";
-
             Application.Current.Use(new HtmlFromJsonProvider());
-            Application.Current.Use(new PartialToStandaloneHtmlProvider(HTML));
+            Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
             BDB.H.Write2Log("Start");
 
@@ -137,6 +99,9 @@ namespace bodved
 
             Handle.GET("/bodved/partial/CETPpage/{?}/{?}", (string CEToNo, string CToNo) => new CETPpage() { CEToNo = $"{CEToNo}", CToNo = $"{CToNo}" });
             Handle.GET("/bodved/CETPpage/{?}/{?}", (string CEToNo, string CToNo) => WrapPage<CETPpage>($"/bodved/partial/CETPpage/{CEToNo}/{CToNo}"));
+
+            Handle.GET("/bodved/partial/CTPofCETPpage/{?}/{?}", (string CEToNo, string CToNo) => new CTPofCETPpage() { CEToNo = $"{CEToNo}", CToNo = $"{CToNo}" });
+            Handle.GET("/bodved/CTPofCETPpage/{?}/{?}", (string CEToNo, string CToNo) => WrapPage<CTPofCETPpage>($"/bodved/partial/CTPofCETPpage/{CEToNo}/{CToNo}"));
 
             Handle.GET("/bodved/partial/CETRviewPage/{?}", (string CEToNo) => new CETRviewPage() { CEToNo = $"{CEToNo}" });
             Handle.GET("/bodved/CETRviewPage/{?}", (string CEToNo) => WrapPage<CETRviewPage>($"/bodved/partial/CETRviewPage/{CEToNo}"));

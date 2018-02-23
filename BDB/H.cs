@@ -727,11 +727,15 @@ namespace BDB
                     hpRnk = hRnk == 0 ? hPP.RnkBaz : hRnk;
                     gpRnk = gRnk == 0 ? gPP.RnkBaz : gRnk;
 
-                    //if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                    if (r.hWon == 0 || hpRnk == -1 || gpRnk == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    if (r.hWon == 0 && r.gWon == 0) // Ikisi de maca cikmamis
                         NOPX = 0;
                     else
-                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+                    {
+                        if (r.hWon == 0 || hpRnk == -1 || gpRnk == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                            NOPX = 0;
+                        else
+                            NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+                    }
 
                     /*
                     hLig = hPP.L1C != 0 ? 1 : hPP.L2C != 0 ? 2 : hPP.L3C != 0 ? 3 : 0;  // Oynadigi en ust lig.
@@ -1026,11 +1030,15 @@ namespace BDB
                     gpRnk = gPP.Rnk;
 
                     //if (r.hWon == 0 || r.hPP.Ad.StartsWith("∞") || r.gPP.Ad.StartsWith("∞"))   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
-                    if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                    if (r.hWon == 0 && r.gWon == 0) // Ikisi de maca cikmamis
                         NOPX = 0;
                     else
-                        NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
-
+                    {
+                        if (r.hWon == 0 || r.hPP.RnkBaz == -1 || r.gPP.RnkBaz == -1)   // Oynanmamis veya Oyunculardan biri diskalifiye ise Rank hesaplama
+                            NOPX = 0;
+                        else
+                            NOPX = compNOPX(r.hWon, hpRnk, gpRnk);
+                    }
                     r.hNOPX2 = NOPX;
                     r.gNOPX2 = -NOPX;
                     r.hpRnk2 = hpRnk;
@@ -1633,6 +1641,8 @@ namespace BDB
 
         #region Restore
 
+        static char __ = '║';
+
         public static void Restore()
         {
             Restore_ID();
@@ -1760,7 +1770,7 @@ namespace BDB
         }
         public static void RestoreCT()    // TurnuvaTakimlari
         {
-            //sw.WriteLine($"{r.CC.PK}|{r.PK}|{r.Ad}|{r.Adres}|{r.Pw}|{r.K1?.PK}|{r.K2?.PK}");
+            //sw.WriteLine($"{r.CC.PK}║{r.PK}║{r.Ad}║{r.Adres}║{r.Pw}║{r.K1?.PK}║{r.K2?.PK}║{r.K1?.Ad}║{r.K2?.Ad}");
             using (StreamReader reader = new StreamReader($@"C:\Starcounter\BodVedData\BDB-CT.txt", System.Text.Encoding.UTF8))
             {
                 string line;
@@ -1771,7 +1781,7 @@ namespace BDB
                     while ((line = reader.ReadLine()) != null)
                     {
 
-                        string[] ra = line.Split('|');
+                        string[] ra = line.Split(__);
 
                         ccPK = long.Parse(ra[0]);
                         rPK = long.Parse(ra[1]);
@@ -1842,6 +1852,7 @@ namespace BDB
                     while ((line = reader.ReadLine()) != null)
                     {
                         string[] ra = line.Split(',');
+
                         ccPK = long.Parse(ra[0]);
                         rPK = long.Parse(ra[1]);
                         hctPK = long.Parse(ra[2]);
@@ -2158,7 +2169,7 @@ namespace BDB
                 var recs = Db.SQL<CT>("select r from CT r order by r.CC");
                 foreach (var r in recs)
                 {
-                    sw.WriteLine($"{r.CC.PK}|{r.PK}|{r.Ad}|{r.Adres}|{r.Pw}|{r.K1?.PK}|{r.K2?.PK}|{r.K1?.Ad}|{r.K2?.Ad}");
+                    sw.WriteLine($"{r.CC.PK}{__}{r.PK}{__}{r.Ad}{__}{r.Adres}{__}{r.Pw}{__}{r.K1?.PK}{__}{r.K2?.PK}{__}{r.K1?.Ad}{__}{r.K2?.Ad}");
                 }
             }
         }

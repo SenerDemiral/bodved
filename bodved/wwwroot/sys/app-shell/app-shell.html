@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{0}</title>
+		<meta name="description" content="Bodrum Veteran Masa Tenisçileri Spor Kulübü Derneği Turnuvaları.">
+		<meta name="author" content="Şener DEMİRALxxxxxxxxxxxx">
+
+    <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/sys/polymer/polymer.html">
+    <link rel="import" href="/sys/starcounter.html">
+    <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
+    <link rel="stylesheet" href="/sys/Bodved.css">
+    <link rel="manifest">
+</head>
+<body>
+    <dom-bind id="palindrom-root">
+        <template id="dilara">
+            <starcounter-include view-model="{{{{model}}}}"></starcounter-include>
+        </template>
+    </dom-bind>
+    
+    <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
+</body>
+</html>

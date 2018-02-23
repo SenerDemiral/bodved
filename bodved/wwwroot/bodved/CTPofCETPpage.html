@@ -1,0 +1,33 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<template>
+    <dom-bind>
+        <template is="dom-bind">
+            <div class="tblWrap">
+                <table id="ctpTbl">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <div>[[model.Cap2]]</div>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>TkmSıra</th>
+                            <th>Oyuncu</th>
+                            <th>MaçSıra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.PPs]]">
+                            <tr>
+                                <td class="ortala">[[item.TkmSra]]</td>
+                                <td class="ortala">[[item.PPAd]]</td>
+                                <td class="ortala">[[item.MacSra]]</td>
+                                <td class="ortala">[[item.Hata]]</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+    </dom-bind>
+</template>

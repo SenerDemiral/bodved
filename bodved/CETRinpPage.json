@@ -10,9 +10,11 @@
 
   "CCoNo": "",
   "CEToNo": "",
-  "RnkID":  0,
+  "RnkID": 0,
   "RnkGrp": "",
 
+  "hCToNo": 0,
+  "gCToNo": 0,
   "hCTAd": "",
   "gCTAd": "",
 
@@ -30,14 +32,14 @@
   "gMSW": 0,
   "hMDW": 0,
   "gMDW": 0,
-  
+
 
   "Singles": [
     {
       "Idx": 0,
       "hSW": 0,
       "gSW": 0,
-      
+
       "hoNo": "",
       "hPPoNo": "",
       "hPPAd": "",
@@ -47,7 +49,7 @@
       "hS3W": 0,
       "hS4W": 0,
       "hS5W": 0,
-      
+
       "goNo": "",
       "gPPoNo": "",
       "gPPAd": "",
@@ -118,8 +120,8 @@
 
   "hPPAd1": "",
   "hPPAd2": "",
-  "gPPAd1": "", 
-  "gPPAd2": "", 
+  "gPPAd1": "",
+  "gPPAd2": "",
   "SoD": "",
   "Idx": 0,
   "hS1W$": 0,
@@ -131,6 +133,6 @@
   "gS2W$": 0,
   "gS3W$": 0,
   "gS4W$": 0,
-  "gS5W$": 0,
+  "gS5W$": 0
 
 }
