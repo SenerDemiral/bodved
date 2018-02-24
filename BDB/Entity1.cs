@@ -358,7 +358,7 @@ namespace BDB
         public string CCAd => CC?.Ad ?? "-";
         public string hCTAd => hCT?.Ad ?? "-";
         public string gCTAd => gCT?.Ad ?? "-";
-        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd MMM ddd}", Trh);
+        public string Tarih => string.Format(CultureInfo.CreateSpecificCulture("tr-TR"), "{0:dd.MMM.ddd}", Trh);
         public string TrhS => Trh.ToString("s");    // Sortable 
         //CultureInfo.CreateSpecificCulture("de-DE")
 

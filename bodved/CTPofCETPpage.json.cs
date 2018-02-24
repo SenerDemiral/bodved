@@ -14,7 +14,8 @@ namespace bodved
             var ct = Db.FromId<BDB.CT>(ulong.Parse(CToNo));
 
             CCoNo = ct.CC.GetObjectNo().ToString();
-            Cap1 = $"{ct.CCAd} {ct.Ad} Takım Oyuncuları Maç Sıraları";
+            Cap1 = $"{cet.Tarih} {ct.Ad}";
+            Cap2 = "Oyuncu Sıraları";
 
             PPsElementJson pps;
             int tkmSra = 1;
