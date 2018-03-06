@@ -60,12 +60,12 @@ a {
     /*border:1px solid;*/
     /*margin-right:4px;*/
 }
-
+/*
 iron-icon {
-/*    width: 1rem;
-    height: 1rem;*/
+    width: 1rem;
+    height: 1rem;
 }
-
+*/
 .master-toolbar iron-icon {
     margin: 0px 5px;
 }
@@ -154,6 +154,33 @@ iron-icon {
 .okSgn {
     padding-left:5px;
     text-decoration:none;
+}
+
+
+td[data-any="N"] {
+    color: yellow;
+    background-color: black;
+}
+td[data-any="N"]::before {
+    content: "■";
+    white-space: pre;
+}
+
+td[data-any="A"] {
+    color: red;
+    background-color: black;
+}
+td[data-any="A"]::before {
+    content: "▼";
+    white-space: pre;
+}
+
+td[data-any="Y"] {
+    color: hsl(120, 99%, 50%);
+    background-color: black;
+}
+td[data-any="Y"]::before {
+    content: "▲";
 }
 
 tr[data-idx="1"],
@@ -259,11 +286,12 @@ button.sort {
     text-align: center;
     border: none;
 }
+/*
 .inpSetCell
 {
-    /*width: 40px;
-    padding:1px;*/
-}
+    width: 40px;
+    padding:1px;
+}*/
 .oNo {
     background-color: gainsboro;
     font-size: 0.7em;
@@ -327,5 +355,8 @@ button.edit {
 }
 
 [data-WoL="W"] {
+    color: green;
+}
+[data-WoL="L"] {
     color: red;
 }

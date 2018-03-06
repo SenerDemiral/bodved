@@ -17,7 +17,7 @@ namespace bodved
                 //RnkGrpAd = cc.RnkAd;
 
                 var ppgr = Db.SQL<BDB.PPGR>("select p from BDB.PPGR p where p.PP = ? and p.RnkID = ?", pp, RnkID).FirstOrDefault();
-                ccInf = $"Rank: {cc.RnkAd}/{ppgr.Rnk}/{ppgr.Sra}";
+                ccInf = $"Rank: {cc.RnkAd}/{ppgr?.Rnk}/{ppgr?.Sra}";
 
             }
             //Cap1 = $"{pp.Ad} ♯{pp.Lig}";// [{pp.ID}/{pp.oNo}]"; // №
@@ -33,6 +33,8 @@ namespace bodved
 
                     // Rakip
                     var r = Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.Idx = ? and c.SoD = ? and c.PP <> ?", k.CET, k.Idx, k.SoD, pp).FirstOrDefault();
+                    if (r == null)
+                        Cap2 = "Rakip is null";
 
                     sng = Singles.Add();
                     sng.oNo = (long)k.oNo;

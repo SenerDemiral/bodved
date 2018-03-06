@@ -15,11 +15,12 @@ namespace BDB
         {
             // ← →
             // ◄ ►
+            // ◀▶ ◄►
             string rS = "";
             if (hR > gR)
-                rS = $"◄ {gR}";
+                rS = $"◀-{gR}";
             else if(hR < gR)
-                rS = $"{hR} ►";
+                rS = $"{hR}-▶";
             /*
             if (hR > gR)
                 rS = $"{hR}-{gR}";
@@ -689,6 +690,194 @@ namespace BDB
             });
         }
 
+        public static void CETRtoMAC()
+        {
+            int s = 0;
+            MAC m = null;
+            Db.Transact(() =>
+            {
+                foreach (var cet in Db.SQL<CET>("select c from CET c"))
+                {
+                    s = 0;
+                    foreach (var cetr in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "S"))
+                    {
+                        if ((s % 2) == 0)   // Home
+                        {
+                            m = new MAC();
+
+                            m.CC = cetr.CC;
+                            m.CET = cetr.CET;
+                            m.SoD = cetr.SoD;
+                            m.Trh = cet.Trh;
+                            m.Idx = cetr.Idx;
+
+                            m.hPP1 = cetr.PP;
+                            m.hDrm = 0;
+                            m.hS1W = cetr.S1W;
+                            m.hS2W = cetr.S2W;
+                            m.hS3W = cetr.S3W;
+                            m.hS4W = cetr.S4W;
+                            m.hS5W = cetr.S5W;
+                            m.hSW = cetr.SW;
+                            m.hMW = cetr.MW;
+                            m.hMP = cetr.MW * 2;
+                            m.hpRnk = 0;
+                            m.hNOPX = 0;
+                        }
+                        else if ((s % 2) == 1)   // Guest
+                        {
+                            m.gPP1 = cetr.PP;
+                            m.gDrm = 0;
+                            m.gS1W = cetr.S1W;
+                            m.gS2W = cetr.S2W;
+                            m.gS3W = cetr.S3W;
+                            m.gS4W = cetr.S4W;
+                            m.gS5W = cetr.S5W;
+                            m.gSW = cetr.SW;
+                            m.gMW = cetr.MW;
+                            m.gMP = cetr.MW * 2;
+                            m.gpRnk = 0;
+                            m.gNOPX = 0;
+                        }
+
+                        s++;
+                    }
+
+                    s = 0;
+                    foreach (var cetr in Db.SQL<BDB.CETR>("select c from CETR c where c.CET = ? and c.SoD = ? order by c.Idx, c.HoG desc", cet, "D"))
+                    {
+                        if ((s % 4) == 0)
+                        {
+                            m = new MAC();
+
+                            m.CC = cetr.CC;
+                            m.CET = cetr.CET;
+                            m.SoD = cetr.SoD;
+                            m.Trh = cet.Trh;
+                            m.Idx = cetr.Idx;
+
+                            m.hPP1 = cetr.PP;
+                            m.hDrm = 0;
+                            m.hS1W = cetr.S1W;
+                            m.hS2W = cetr.S2W;
+                            m.hS3W = cetr.S3W;
+                            m.hS4W = cetr.S4W;
+                            m.hS5W = cetr.S5W;
+                            m.hSW = cetr.SW;
+                            m.hMW = cetr.MW;
+                            m.hMP = cetr.MW * 3;
+                        }
+                        if ((s % 4) == 1)
+                        {
+                            m.hPP2 = cetr.PP;
+                        }
+                        if ((s % 4) == 2)
+                        {
+                            m.gPP1 = cetr.PP;
+                            m.gDrm = 0;
+                            m.gS1W = cetr.S1W;
+                            m.gS2W = cetr.S2W;
+                            m.gS3W = cetr.S3W;
+                            m.gS4W = cetr.S4W;
+                            m.gS5W = cetr.S5W;
+                            m.gSW = cetr.SW;
+                            m.gMW = cetr.MW;
+                            m.gMP = cetr.MW * 3;
+                        }
+                        if ((s % 4) == 3)
+                        {
+                            m.gPP2 = cetr.PP;
+                        }
+
+                        s++;
+                    }
+                }
+            });
+        }
+
+        public static void DENEME()
+        {
+            ulong pp = 103;
+            var items = from m in Db.SQL<MAC>("select m from MAC m")
+                        where m.hPP1.oNo == pp || m.gPP1.oNo == pp
+                        orderby m.hMW descending
+                        select m;
+
+            int MSW = 0;
+            foreach (var m in Db.SQL<MAC>("select m from MAC m where m.hPP1.oNo = ? or m.gPP1.oNo = ?", pp, pp))
+            {
+                if (m.hPP1.oNo == pp)
+                    MSW = m.hSW;
+                else
+                    MSW = m.gSW;
+
+            }
+        }
+
+        public static void RefreshGlobalRank()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            int nor = 0;
+
+            Dictionary<ulong, int> ppDic = new Dictionary<ulong, int>();    // Players
+
+            Db.Transact(() =>
+            {
+                //for (int i = 0; i < 100; i++) // SpeedTest 150K ~1.5sn
+                {
+                    foreach (var p in Db.SQL<BDB.PP>("select p from PP p"))
+                    {
+                        ppDic[p.oNo] = p.RnkBaz;
+                    }
+                    MAC m;
+                    int hpRnk, gpRnk;
+                    int NOPX;
+                    // Sadece Single Rank uretir
+                    foreach (var mac in Db.SQL<BDB.MAC>("select m from MAC m where m.SoD = ? order by m.Trh", "S"))
+                    {
+                        nor++;
+
+                        m = mac;
+                        hpRnk = ppDic[m.hPP1.oNo];
+                        gpRnk = ppDic[m.gPP1.oNo];
+
+                        if (m.hDrm > 0 || m.gDrm > 0) // 1:Oynamadi/2:SiralamaHatasi ise Rank hesaplma
+                            NOPX = 0;
+                        else
+                            NOPX = compNOPX(m.hMW == 0 ? -1 : 1, hpRnk, gpRnk);
+
+                        // Update MAC
+                        m.hNOPX = NOPX;
+                        m.gNOPX = -NOPX;
+                        m.hpRnk = hpRnk;
+                        m.gpRnk = gpRnk;
+
+                        // Update dictionary of PP
+                        ppDic[m.hPP1.oNo] = hpRnk + NOPX;
+                        ppDic[m.gPP1.oNo] = gpRnk - NOPX;
+                    }
+
+                    // Rank'e gore Sira verip PP ye koy
+                    var items = from pair in ppDic
+                                orderby pair.Value descending
+                                select pair;
+
+                    int sira = 1;
+                    PP pp;
+                    foreach (var pair in items)
+                    {
+                        pp = Db.FromId<PP>(pair.Key);
+                        pp.Rnk = pair.Value;
+                        pp.Sra = sira++;
+                    }
+                }
+            });
+
+            watch.Stop();
+            Console.WriteLine($"RefreshGlobalRank {nor}: {watch.ElapsedMilliseconds} msec  {watch.ElapsedTicks} ticks");
+        }
+
         public static void RefreshRH()
         {
             Stopwatch watch = new Stopwatch();
@@ -727,7 +916,9 @@ namespace BDB
                     hpRnk = hRnk == 0 ? hPP.RnkBaz : hRnk;
                     gpRnk = gRnk == 0 ? gPP.RnkBaz : gRnk;
 
-                    if (r.hWon == 0 && r.gWon == 0) // Ikisi de maca cikmamis
+                    if (r.oNo == 26625)     // Cagdas-Fatih Maci, Cagdas siralama Hatasi
+                        NOPX = 0;
+                    else if (r.hWon == 0 && r.gWon == 0) // Ikisi de maca cikmamis
                         NOPX = 0;
                     else
                     {
@@ -783,7 +974,7 @@ namespace BDB
             PP pp;
 
             Dictionary<ulong, int> myDic = new Dictionary<ulong, int>(1000);    // Initial capacity 1000 players
-            
+
             // basTrh'e kadarki PP lerin sonRank'ini kaydet.
             // Oyuncunun bircok degeri var. RH tarih sirali basindan beri okundugu icin en sonu istenen rank
             foreach (var r in Db.SQL<BDB.RH>("select p from RH p where p.Trh < ? order by p.Trh", basTrh))
@@ -1046,6 +1237,9 @@ namespace BDB
 
                     hPP.Rnk = hpRnk + NOPX;
                     gPP.Rnk = gpRnk - NOPX;
+
+                    hPP.RnkANY = NOPX;
+                    gPP.RnkANY = -NOPX;
 
                     hPP.aO += r.hWon > 0 ? 1 : 0;
                     hPP.vO += r.hWon < 0 ? 1 : 0;
@@ -2067,6 +2261,9 @@ namespace BDB
                 Db.SQL("CREATE INDEX IdxRH_Trh     ON BDB.RH (Trh)");
             //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxRH_CC").FirstOrDefault() == null)
             //    Db.SQL("CREATE INDEX IdxRH_CC      ON BDB.RH (CC)");
+
+            if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxMAC_Trh").FirstOrDefault() == null)
+                Db.SQL("CREATE INDEX IdxMAC_Trh     ON BDB.MAC (Trh)");
         }
         public static void IndexDrop()
         {
