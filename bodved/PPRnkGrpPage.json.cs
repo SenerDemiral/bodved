@@ -54,13 +54,15 @@ namespace bodved
                         Ad = ctp.PPAd,
                         Rnk = 0,
                         aO = 0,
-                        vO = 0
+                        vO = 0,
+                        RnkANY = 0
                     };
                     if (ppgr != null)
                     {
                         d2.Rnk = ppgr.Rnk;
                         d2.aO = ppgr.aO;
                         d2.vO = ppgr.vO;
+                        d2.RnkANY = ppgr.RnkANY;
                     }
                     ppDic[ctp.PPoNo] = d2;
 
@@ -76,7 +78,8 @@ namespace bodved
                         Ad = a.PPAd,
                         Rnk = -a.Rnk,
                         aO = a.aO,
-                        vO = a.vO
+                        vO = a.vO,
+                        RnkANY = 0
                     };
                     if (a.Rnk == 0)
                         d2.Rnk = -9999;
@@ -107,6 +110,7 @@ namespace bodved
                     pps.Sra2 = "";
                     pps.Rnk = "";
                     pps.RnkBaz = "";
+                    pps.RnkANY = "";
                     bbia = true;
                 }
 
@@ -117,6 +121,7 @@ namespace bodved
                     pps.Sra2 = "";
                     pps.Rnk = "";
                     pps.RnkBaz = "";
+                    pps.RnkANY = "";
                     bb = true;
                 }
 
@@ -126,6 +131,15 @@ namespace bodved
                 pps.PPAd = pp.Ad;
                 pps.Rnk = $"{s.Value.Rnk:#}";
                 pps.RnkBaz = $"{pp.RnkBaz}";
+
+                if (s.Value.RnkANY < 0)
+                    pps.RnkANY = "A"; // "⇘";
+                else if (s.Value.RnkANY > 0)
+                    pps.RnkANY = "Y"; // "⇗";
+                else
+                    pps.RnkANY = "N"; // "⇔";
+
+                //pps.RnkANY = $"{s.Value.RnkANY}";
                 pps.aO = $"{s.Value.aO:#}";
                 pps.vO = $"{s.Value.vO:#}";
                 if (pp.RnkBaz == 0)
@@ -236,5 +250,6 @@ namespace bodved
         public string Ad;
         public int aO;
         public int vO;
+        public int RnkANY;
     }
 }

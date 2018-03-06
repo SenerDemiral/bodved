@@ -23,7 +23,7 @@ namespace BDB
         public int ID { get; set; }
         public int IdVal { get; set; }
 
-        public STAT ()
+        public STAT()
         {
             ID = 1;
             IdVal = 4230;
@@ -56,7 +56,7 @@ namespace BDB
         public string Skl { get; set; }     // Takim/Ferdi
         public string Grp { get; set; }     // Birden cok turnuvada oynayan Oyunculari takip icin
         public string Lig { get; set; }
-        public long RnkID { get; set; } 
+        public long RnkID { get; set; }
         public string RnkAd { get; set; }
         //public string RnkGrp { get; set; }
         //public string RnkGrpAd { get; set; }
@@ -155,10 +155,11 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
         public PP PP { get; set; }
-        public long RnkID { get; set; } 
+        public long RnkID { get; set; }
         //public string RnkGrp { get; set; } 
         public int RnkBaz { get; set; }
         public int Rnk { get; set; }
+        public int RnkANY { get; set; } // Rank Azaldi(-1), Neutral(0), Yukseldi(+1)
         public int Sra { get; set; }
         public int aO { get; set; }     // Aldigi Oyun/Mac
         public int vO { get; set; }
@@ -175,6 +176,7 @@ namespace BDB
             Sra = 0;
             aO = 0;
             vO = 0;
+            RnkANY = 0;
         }
     }
 
@@ -287,9 +289,9 @@ namespace BDB
             get     // Oynadigi diger Takimlar
             {
                 string oCTs = "";
-                foreach( var r in Db.SQL<CTP>("select c from BDB.CTP c where c.PP = ? and c.CC.Grp = ?", this.PP, this.CC.Grp))
+                foreach (var r in Db.SQL<CTP>("select c from BDB.CTP c where c.PP = ? and c.CC.Grp = ?", this.PP, this.CC.Grp))
                 {
-                    if(r.CT.GetObjectNo() != this.CT.GetObjectNo())
+                    if (r.CT.GetObjectNo() != this.CT.GetObjectNo())
                     {
                         oCTs += r.CTAd + " ";
                     }
@@ -382,7 +384,7 @@ namespace BDB
             get
             {
                 if (hP > gP)
-                    return "W"; 
+                    return "W";
                 else if (hP < gP)
                     return "L";
                 return "X";
@@ -406,13 +408,13 @@ namespace BDB
     {
         public ulong oNo => this.GetObjectNo();
 
-        public CC     CC  { get; set; }
-        public CET    CET { get; set; }
-        public CT     CT  { get; set; }
+        public CC CC { get; set; }
+        public CET CET { get; set; }
+        public CT CT { get; set; }
         public string HoG { get; set; }
         public string SoD { get; set; }
-        public int    Idx { get; set; }
-        public PP     PP  { get; set; }
+        public int Idx { get; set; }
+        public PP PP { get; set; }
 
         public string CCAd => CC?.Ad ?? "-";
         public string CTAd => CT?.Ad ?? "-";
@@ -428,14 +430,15 @@ namespace BDB
     // Siralama bitirildikten sonra Onaylanarak kapatilir.
     // Her iki takim da onay (hPok/gPok) verdikten sonra CETR olusturulur
 
+
     [Database]
     public class CETR    // CompetitionEventTeam Player Results
     {
         public ulong oNo => this.GetObjectNo();
 
-        public CC CC  { get; set; }
+        public CC CC { get; set; }
         public CET CET { get; set; }
-        public CT CT  { get; set; }
+        public CT CT { get; set; }
         public string HoG { get; set; }
         public string SoD { get; set; }
         public int Idx { get; set; }
@@ -645,6 +648,49 @@ namespace BDB
         public int hNOPX2 { get; set; }
         public int gpRnk2 { get; set; }
         public int gNOPX2 { get; set; }
+    }
+
+    [Database]
+    public class MAC
+    {
+        // CETR+RH yerine kullanilacak
+        public CC CC { get; set; }
+        public CET CET { get; set; }    // Takim Event
+        //public CET CEF { get; set; }    // Ferdi Event
+
+        public DateTime Trh { get; set; }
+        public string SoD { get; set; } // Single or Double
+        public int Idx { get; set; }
+
+        // Home
+        public PP hPP1 { get; set; }
+        public PP hPP2 { get; set; }    // Double ise 2.Oyuncu
+        public int hDrm { get; set; }   // 0:Oynadi, 1:MacaCikmadi, 2:SiralamaHatasi
+        public int hS1W { get; set; }   // 1.Sette Alidigi/Won Sayi
+        public int hS2W { get; set; }
+        public int hS3W { get; set; }
+        public int hS4W { get; set; }
+        public int hS5W { get; set; }
+        public int hSW { get; set; }    // Kazandigi Set Miktari
+        public int hMW { get; set; }    // Kazandigi Mac (0/1)
+        public int hMP { get; set; }    // Mac Puani (S/D, L/W ve Event'e gore degisir)
+        public int hpRnk { get; set; }  // Previous Rank Global
+        public int hNOPX { get; set; }  // PointExcahnage
+
+        // Guest
+        public PP gPP1 { get; set; }
+        public PP gPP2 { get; set; }    // Double ise 2.Oyuncu
+        public int gDrm { get; set; }   // 0:Oynadi, 1:MacaCikmadi, 2:SiralamaHatasi
+        public int gS1W { get; set; }   // 1.Sette Alidigi/Won Sayi
+        public int gS2W { get; set; }
+        public int gS3W { get; set; }
+        public int gS4W { get; set; }
+        public int gS5W { get; set; }
+        public int gSW { get; set; }    // Kazandigi Set Miktari
+        public int gMW { get; set; }    // Kazandigi Mac (0/1)
+        public int gMP { get; set; }    // Mac Puani
+        public int gpRnk { get; set; }  // Previous Rank Global
+        public int gNOPX { get; set; }  // PointExcahnage
     }
 
 }

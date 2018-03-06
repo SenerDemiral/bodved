@@ -25,6 +25,13 @@ namespace bodved
                 BDB.H.insOtoNotice();
                 return $"OK: insOtoNotice";
             });
+            
+            Handle.GET("/scExpert/CETRtoMAC", () =>
+            {
+                //BDB.H.CETRtoMAC();
+                BDB.H.RefreshGlobalRank();
+                return $"OK: CETRtoMAC()";
+            });
 
             Handle.GET("/scExpert/RefreshRH2/{?}", (string CCoNo) =>
             {
@@ -49,11 +56,17 @@ namespace bodved
                 BDB.H.Backup();
                 return $"OK: Backup()";
             });
-
+            
             Handle.GET("/scExpert/Restore", () =>
             {
                 BDB.H.Restore();
                 return $"OK: Restore()";
+            });
+
+            Handle.GET("/scExpert/IndexCreate", () =>
+            {
+                BDB.H.IndexCreate();
+                return $"OK: IndexCreate()";
             });
 
             Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
