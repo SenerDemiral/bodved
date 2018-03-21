@@ -20,6 +20,7 @@
     "iron-icon": "PolymerElements/iron-icon#^2.0.1",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.1",
     "polymerfire": "firebase/polymerfire#^2.2.1",
-    "marked-element": "PolymerElements/marked-element#^2.3.3"
+    "marked-element": "PolymerElements/marked-element#^2.3.3",
+    "juicy-select": "Juicy/juicy-select#^1.1.3"
   }
 }

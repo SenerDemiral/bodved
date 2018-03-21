@@ -720,7 +720,7 @@ namespace BDB
                             m.hS5W = cetr.S5W;
                             m.hSW = cetr.SW;
                             m.hMW = cetr.MW;
-                            m.hMP = cetr.MW * 2;
+                            //m.hPW = cetr.MW * 2;
                             m.hpRnk = 0;
                             m.hNOPX = 0;
                         }
@@ -735,7 +735,7 @@ namespace BDB
                             m.gS5W = cetr.S5W;
                             m.gSW = cetr.SW;
                             m.gMW = cetr.MW;
-                            m.gMP = cetr.MW * 2;
+                            //m.gPW = cetr.MW * 2;
                             m.gpRnk = 0;
                             m.gNOPX = 0;
                         }
@@ -765,7 +765,7 @@ namespace BDB
                             m.hS5W = cetr.S5W;
                             m.hSW = cetr.SW;
                             m.hMW = cetr.MW;
-                            m.hMP = cetr.MW * 3;
+                            //m.hPW = cetr.MW * 3;
                         }
                         if ((s % 4) == 1)
                         {
@@ -782,7 +782,7 @@ namespace BDB
                             m.gS5W = cetr.S5W;
                             m.gSW = cetr.SW;
                             m.gMW = cetr.MW;
-                            m.gMP = cetr.MW * 3;
+                            //m.gPW = cetr.MW * 3;
                         }
                         if ((s % 4) == 3)
                         {
@@ -824,40 +824,45 @@ namespace BDB
 
             Db.Transact(() =>
             {
-                //for (int i = 0; i < 100; i++) // SpeedTest 150K ~1.5sn
+                //for (int i = 0; i < 100; i++) // SpeedTest 85K/sn R+R+U+R+U
                 {
                     foreach (var p in Db.SQL<BDB.PP>("select p from PP p"))
                     {
                         ppDic[p.oNo] = p.RnkBaz;
                     }
                     MAC m;
+                    ulong hPPoNo, gPPoNo; 
                     int hpRnk, gpRnk;
-                    int NOPX;
+                    int NOPX = 0;
                     // Sadece Single Rank uretir
+                    //foreach (var mac in Db.SQL<BDB.MAC>("select m from MAC m where m.SoD = ? order by m.Trh", "S"))
                     foreach (var mac in Db.SQL<BDB.MAC>("select m from MAC m where m.SoD = ? order by m.Trh", "S"))
                     {
                         nor++;
+                        
+                        //m = mac;
+                        hPPoNo = mac.hPP1.oNo;
+                        gPPoNo = mac.gPP1.oNo;
 
-                        m = mac;
-                        hpRnk = ppDic[m.hPP1.oNo];
-                        gpRnk = ppDic[m.gPP1.oNo];
-
-                        if (m.hDrm > 0 || m.gDrm > 0) // 1:Oynamadi/2:SiralamaHatasi ise Rank hesaplma
+                        hpRnk = ppDic[hPPoNo];
+                        gpRnk = ppDic[gPPoNo];
+                        
+                        if (mac.hDrm > 0 || mac.gDrm > 0) // 1:Oynamadi/2:SiralamaHatasi ise Rank hesaplma
                             NOPX = 0;
                         else
-                            NOPX = compNOPX(m.hMW == 0 ? -1 : 1, hpRnk, gpRnk);
-
+                            NOPX = compNOPX(mac.hMW == 0 ? -1 : 1, hpRnk, gpRnk);
+                        
                         // Update MAC
-                        m.hNOPX = NOPX;
-                        m.gNOPX = -NOPX;
-                        m.hpRnk = hpRnk;
-                        m.gpRnk = gpRnk;
-
+                        mac.hNOPX = NOPX;
+                        mac.gNOPX = -NOPX;
+                        mac.hpRnk = hpRnk;
+                        mac.gpRnk = gpRnk;
+                        
                         // Update dictionary of PP
-                        ppDic[m.hPP1.oNo] = hpRnk + NOPX;
-                        ppDic[m.gPP1.oNo] = gpRnk - NOPX;
+                        ppDic[hPPoNo] = hpRnk + NOPX;
+                        ppDic[gPPoNo] = gpRnk - NOPX;
                     }
-
+                    
                     // Rank'e gore Sira verip PP ye koy
                     var items = from pair in ppDic
                                 orderby pair.Value descending
@@ -2264,6 +2269,8 @@ namespace BDB
 
             if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxMAC_Trh").FirstOrDefault() == null)
                 Db.SQL("CREATE INDEX IdxMAC_Trh     ON BDB.MAC (Trh)");
+            //if (Db.SQL("SELECT i FROM Starcounter.Metadata.\"Index\" i WHERE Name = ?", "IdxMAC_SoD").FirstOrDefault() == null)
+            //    Db.SQL("CREATE INDEX IdxMAC_SoD    ON BDB.MAC (SoD)");
         }
         public static void IndexDrop()
         {
@@ -2297,6 +2304,9 @@ namespace BDB
             Db.SQL("DROP INDEX IdxCETR_CC     ON BDB.CETR");
             Db.SQL("DROP INDEX IdxCETR_CET    ON BDB.CETR");
             Db.SQL("DROP INDEX IdxCETR_RH     ON BDB.CETR");
+
+            Db.SQL("DROP INDEX IdxMAC_Trh ON BDB.MAC");
+            Db.SQL("DROP INDEX IdxMAC_SoD ON BDB.MAC");
         }
 
 

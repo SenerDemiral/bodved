@@ -22,5 +22,25 @@
     </dom-bind>
     
     <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
+
+<script>
+(function(){{		
+		sener = 'Sener DEMIRAL';
+		console.log(sener);
+		aa = document.querySelector("#palindrom-root");
+		console.log(aa.model);
+		/*
+		window.addEventListener("beforeunload", function (e) {{
+			var confirmationMessage = "\o/";
+			var bb = document.querySelector("#palindrom-root");
+			console.log(e);
+			bb.model.tMax14web_0.LeaveTrigger$ += 1;
+			console.log(bb.model.tMax14web_0);
+
+			(e || window.event).returnValue = confirmationMessage; //Gecko + IE
+			return confirmationMessage;                            //Webkit, Safari, Chrome
+		}});*/
+}})();					
+</script>
 </body>
 </html>

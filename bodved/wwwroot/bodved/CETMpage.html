@@ -1,0 +1,131 @@
+﻿<template>
+    <dom-bind>
+        <template>
+            <div class="tblWrap">
+                <table id="cetrTblS">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <!--div>[[model.Cap2]]</div-->
+                    </caption>
+                    <thead>
+                        <tr class="hSW" style="font-size:1rem;">
+                            <th></th>
+                            <th colspan="2">[[model.ThPW]]</th>
+                            <th colspan="5">[[model.hP]] <iron-icon icon="vaadin:bolt"></iron-icon> [[model.gP]]</th>
+                            <th colspan="2">[[model.TgPW]]</th>
+                        </tr>
+                        <tr>
+                            <th colspan="10"></th>
+                        </tr>
+                        <tr class="SngHdr">
+                            <th rowspan="2" style="width:12px;">#</th>
+                            <th rowspan="2" style="font-size:large"><a href="/bodved/CTPofCETPpage/[[model.CEToNo]]/[[model.hCToNo]]">[[model.hCTAd]]</a></th>
+                            <th style="font-size: 1rem;">[[model.ShPW]]</th>
+                            <th colspan="5">Single</th>
+                            <th style="font-size: 1rem;">[[model.SgPW]]</th>
+                            <th rowspan="2" style="font-size:large"><a href="/bodved/CTPofCETPpage/[[model.CEToNo]]/[[model.gCToNo]]">[[model.gCTAd]]</a></th>
+                        </tr>
+                        <tr class="SngHdr">
+                            <th>[[model.ShMW]]</th>
+                            <th style="font-size: xx-small;">1</th>
+                            <th style="font-size: xx-small;">2</th>
+                            <th style="font-size: xx-small;">3</th>
+                            <th style="font-size: xx-small;">4</th>
+                            <th style="font-size: xx-small;">5</th>
+                            <th>[[model.SgMW]]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.Singles]]">
+                            <tr>
+                                <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                    S[[item.Idx]]
+                                    <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                                    <a href="/bodved/MACpage/[[item.MACoNo]]">Edit</a>
+                                </td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.hoNo]] </span>
+                                    <a href="/bodved/ppMacPage/[[item.hPP1oNo]]/[[model.CCoNo]]">[[item.hPP1Ad]]</a>
+                                    <span class="rank">[[item.hPP1Rnk]]</span>
+                                </td>
+                                <td class="hSW" data-val$="[[item.hSW]]">[[item.hSW]]</td>
+                                <td class="ortala">[[item.S1R]]</td>
+                                <td class="ortala">[[item.S2R]]</td>
+                                <td class="ortala">[[item.S3R]]</td>
+                                <td class="ortala">[[item.S4R]]</td>
+                                <td class="ortala">[[item.S5R]]</td>
+                                <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <span hidden$="[[!model.canMdfy]]">[[item.goNo]] </span>
+                                    <a href="/bodved/ppMacPage/[[item.gPP1oNo]]/[[model.CCoNo]]">[[item.gPP1Ad]]</a>
+                                    <span class="rank">[[item.gPP1Rnk]]</span>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <table id="cetrTblD">
+                    <thead>
+                        <tr class="DblHdr">
+                            <th rowspan="2" style="width:12px;">#</th>
+                            <th rowspan="2">[[model.hCTAd]]</th>
+                            <th style="font-size: 1rem;">[[model.DhPW]]</th>
+                            <th colspan="5">Double</th>
+                            <th style="font-size: 1rem;">[[model.DgPW]]</th>
+                            <th rowspan="2">[[model.gCTAd]]</th>
+                        </tr>
+                        <tr class="DblHdr">
+                            <th>[[model.DhMW]]</th>
+                            <th style="font-size: xx-small;">1</th>
+                            <th style="font-size: xx-small;">2</th>
+                            <th style="font-size: xx-small;">3</th>
+                            <th style="font-size: xx-small;">4</th>
+                            <th style="font-size: xx-small;">5</th>
+                            <th>[[model.DgMW]]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template is="dom-repeat" items="[[model.Doubles]]">
+                            <tr>
+                                <td data-typ="nmr" data-idx$="[[item.Idx]]" style="font-size: x-small;">
+                                    D[[item.Idx]]
+                                    <button class="edit" hidden$="[[!model.canMdfy]]" value="{{item.MdfTrigger$::click}}" onmousedown="++this.value">▼</button>
+                                    <a href="/bodved/MACpage/[[item.MACoNo]]">Edit</a>
+                                </td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.hPP1oNo]]/[[model.CCoNo]]">[[item.hPP1Ad]]</a>
+                                    <br />
+                                    <a href="/bodved/ppMacPage/[[item.hPP2oNo]]/[[model.CCoNo]]">[[item.hPP2Ad]]</a>
+                                </td>
+                                <td class="hSW" data-val$="[[item.hSW]]">[[item.hSW]]</td>
+                                <td class="ortala">[[item.S1R]]</td>
+                                <td class="ortala">[[item.S2R]]</td>
+                                <td class="ortala">[[item.S3R]]</td>
+                                <td class="ortala">[[item.S4R]]</td>
+                                <td class="ortala">[[item.S5R]]</td>
+                                <td class="gSW" data-val$="[[item.gSW]]">[[item.gSW]]</td>
+                                <td class="ppAd" data-idx$="[[item.Idx]]">
+                                    <a href="/bodved/ppMacPage/[[item.gPP1oNo]]/[[model.CCoNo]]">[[item.gPP1Ad]]</a>
+                                    <br />
+                                    <a href="/bodved/ppMacPage/[[item.gPP2oNo]]/[[model.CCoNo]]">[[item.gPP2Ad]]</a>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <!--input placeholder="Açıklama" type="text" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]" /-->
+                <textarea placeholder="" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
+
+                <div hidden$="[[!model.canMdfy]]">
+                    <div hidden$="[[model.Rok]]" style="display:grid; grid-template-columns:1fr 1fr;">
+                        <button value="{{model.SaveTrigger$::click}}" onmousedown="++this.value" style="justify-self:start;">Kaydet</button>
+                        <button value="{{model.SaveOkTrigger$::click}}" onmousedown="++this.value" style="justify-self:end;">Onayla ve Kaydet</button>
+                    </div>
+                </div>
+            </div>
+
+        </template>
+    </dom-bind>
+</template>

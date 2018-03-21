@@ -118,7 +118,7 @@ namespace bodved
 
                     sng.hoNo = src.oNo.ToString();
                     sng.hPPoNo = src.PP?.oNo.ToString();
-                    sng.hPPAd = src.PPAd;
+                    sng.hPPAd = src.PP?.Ad;
                     //sng.hPPrnk = src.PRH.pRnk; //prvRnk;
                     
                     sng.hPPrnk = src.RH.hpRnk2; // grup prvRnk;

@@ -1,0 +1,132 @@
+﻿<link rel="import" href="/sys/juicy-select/juicy-select.html">
+<template>
+    <dom-bind>
+        <template>
+            <div class="tblWrap">
+                <div class="grid2C">
+                    <div>Tarih</div>
+                    <input class="inpTarih" type="date" value="{{model.Tarih$::change}}" readonly$="[[!model.canMdfy]]" />
+                    <div>Saat</div>
+                    <input class="inpTarih" type="time" value="{{model.Saat$::change}}" readonly$="[[!model.canMdfy]]" />
+                </div>
+                <table id="macTbl" style="table-layout: fixed;width: 360px;">
+                    <caption>
+                        <div>[[model.Cap1]]</div>
+                        <!--div>[[model.Cap2]]</div-->
+                    </caption>
+                    <thead>
+                        <template is="dom-if" if="[[model.canMdfy]]">
+                            <tr>
+                                <th style="width:16%">Drm</th>
+                                <th style="width:42%"><input class="inpDrm" type="number" value="{{model.hDrm$::change}}" style="width:100%" /></th>
+                                <th style="width:42%"><input class="inpDrm" type="number" value="{{model.gDrm$::change}}" style="width:100%" /></th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <juicy-select caption-text="Home"
+                                                  value="{{model.hPP1oNo$}}"
+                                                  options="{{model.hPPs}}"
+                                                  text-property="Ad"
+                                                  value-property="oNo">
+                                    </juicy-select>
+                                </th>
+                                <th>
+                                    <juicy-select caption-text="Guest"
+                                                  value="{{model.gPP1oNo$}}"
+                                                  options="{{model.gPPs}}"
+                                                  text-property="Ad"
+                                                  value-property="oNo">
+                                    </juicy-select>
+                                </th>
+                            </tr>
+                            <template is="dom-if" if="[[model.hPP2Ad]]">
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <juicy-select caption-text="Home"
+                                                      value="{{model.hPP2oNo$}}"
+                                                      options="{{model.hPPs}}"
+                                                      text-property="Ad"
+                                                      value-property="oNo">
+                                        </juicy-select>
+                                    </th>
+                                    <th>
+                                        <juicy-select caption-text="Guest"
+                                                      value="{{model.gPP2oNo$}}"
+                                                      options="{{model.gPPs}}"
+                                                      text-property="Ad"
+                                                      value-property="oNo">
+                                        </juicy-select>
+                                    </th>
+                                </tr>
+                            </template>
+                        </template>
+
+                        <template is="dom-if" if="[[!model.canMdfy]]">
+                            <tr>
+                                <th style="width:16%">Drm</th>
+                                <th style="width:42%">[[model.hDrm$]]</th>
+                                <th style="width:42%">[[model.gDrm$]]</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>[[model.hPP1Ad]]</th>
+                                <th>[[model.gPP1Ad]]</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>[[model.hPP2Ad]]</th>
+                                <th>[[model.gPP2Ad]]</th>
+                            </tr>
+                        </template>
+
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Sonuç</th>
+                            <th style="padding-right:16px">[[model.hSW]]</th>
+                            <th style="padding-right:16px">[[model.gSW]]</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td class="ortala">1</td>
+                            <td data-SetSnc$="[[model.hS1W$]]"><input class="inpSetSayi" type="number" value="{{model.hS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td data-SetSnc$="[[model.gS1W$]]"><input class="inpSetSayi" type="number" value="{{model.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">2</td>
+                            <td data-SetSnc$="[[model.hS2W$]]"><input class="inpSetSayi" type="number" value="{{model.hS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td data-SetSnc$="[[model.hS2W$]]"><input class="inpSetSayi" type="number" value="{{model.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">3</td>
+                            <td data-SetSnc$="[[model.hS3W$]]"><input class="inpSetSayi" type="number" value="{{model.hS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td data-SetSnc$="[[model.hS3W$]]"><input class="inpSetSayi" type="number" value="{{model.gS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">4</td>
+                            <td data-SetSnc$="[[model.hS4W$]]"><input class="inpSetSayi" type="number" value="{{model.hS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td data-SetSnc$="[[model.hS4W$]]"><input class="inpSetSayi" type="number" value="{{model.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                        </tr>
+                        <tr>
+                            <td class="ortala">5</td>
+                            <td data-SetSnc$="[[model.hS5W$]]"><input class="inpSetSayi" type="number" value="{{model.hS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td data-SetSnc$="[[model.gS5W$]]"><input class="inpSetSayi" type="number" value="{{model.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <template is="dom-if" if="[[model.canMdfy]]">
+                    <div class="mdfRecAction">
+                        <button value="{{model.InsertTrigger$::click}}" onmousedown="++this.value">Insert</button>
+                        <button value="{{model.UpdateTrigger$::click}}" onmousedown="++this.value">Update</button>
+                        <button value="{{model.DeleteTrigger$::click}}" onmousedown="++this.value">Delete</button>
+                    </div>
+                </template>
+            </div>
+
+        </template>
+    </dom-bind>
+</template>

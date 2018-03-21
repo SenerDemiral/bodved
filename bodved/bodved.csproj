@@ -72,6 +72,9 @@
     <Compile Include="CCpage.json.cs">
       <DependentUpon>CCpage.json</DependentUpon>
     </Compile>
+    <Compile Include="CETMpage.json.cs">
+      <DependentUpon>CETMpage.json</DependentUpon>
+    </Compile>
     <Compile Include="CETpage.json.cs">
       <DependentUpon>CETpage.json</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
     </Compile>
     <Compile Include="LoginPage.json.cs">
       <DependentUpon>LoginPage.json</DependentUpon>
+    </Compile>
+    <Compile Include="MACpage.json.cs">
+      <DependentUpon>MACpage.json</DependentUpon>
     </Compile>
     <Compile Include="MainPage.json.cs">
       <DependentUpon>MainPage.json</DependentUpon>
@@ -179,6 +185,12 @@
     <TypedJSON Include="CTPofCETPpage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
+    <TypedJSON Include="CETMpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="MACpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
     <None Include="packages.config" />
     <None Include="wwwroot\bodved\CCpage.html" />
     <None Include="wwwroot\bodved\CTpage.html" />
@@ -189,6 +201,7 @@
     <None Include="wwwroot\bodved\CETRinpPage.html" />
     <None Include="wwwroot\bodved\AboutPage.html" />
     <None Include="wwwroot\bodved\CTPofCETPpage.html" />
+    <None Include="wwwroot\bodved\CETMpage.html" />
     <Content Include="wwwroot\bodved\Deneme.html" />
     <None Include="wwwroot\bodved\PPpage.html" />
     <None Include="wwwroot\bodved\LoginPage.html" />
@@ -197,6 +210,7 @@
     <None Include="wwwroot\bodved\NoticePage.html" />
     <None Include="wwwroot\bodved\PPRnkGrpPage.html" />
     <None Include="wwwroot\bodved\MasterPageOrg.html" />
+    <None Include="wwwroot\bodved\MACpage.html" />
     <Content Include="wwwroot\sys\Bodved.css" />
     <Content Include="wwwroot\sys\redips-drag-min.js" />
     <Content Include="wwwroot\sys\redips-style.css" />

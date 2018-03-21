@@ -28,9 +28,15 @@ namespace bodved
             
             Handle.GET("/scExpert/CETRtoMAC", () =>
             {
-                //BDB.H.CETRtoMAC();
+                BDB.H.CETRtoMAC();
                 BDB.H.RefreshGlobalRank();
                 return $"OK: CETRtoMAC()";
+            });
+
+            Handle.GET("/scExpert/RefreshGlobalRank", () =>
+            {
+                BDB.H.RefreshGlobalRank();
+                return $"OK: RefreshGlobalRank()";
             });
 
             Handle.GET("/scExpert/RefreshRH2/{?}", (string CCoNo) =>
@@ -67,6 +73,12 @@ namespace bodved
             {
                 BDB.H.IndexCreate();
                 return $"OK: IndexCreate()";
+            });
+
+            Handle.GET("/scExpert/IndexDrop", () =>
+            {
+                BDB.H.IndexDrop();
+                return $"OK: IndexDrop()";
             });
 
             Handle.GET("/bodved", () => { return Self.GET("/bodved/MainPage"); });
@@ -121,6 +133,13 @@ namespace bodved
 
             Handle.GET("/bodved/partial/CETRinpPage/{?}", (string CEToNo) => new CETRinpPage() { CEToNo = $"{CEToNo}" });
             Handle.GET("/bodved/CETRinpPage/{?}", (string CEToNo) => WrapPage<CETRinpPage>($"/bodved/partial/CETRinpPage/{CEToNo}"));
+
+            Handle.GET("/bodved/partial/CETMpage/{?}", (string CEToNo) => new CETMpage() { CEToNo = $"{CEToNo}" });
+            Handle.GET("/bodved/CETMpage/{?}", (string CEToNo) => WrapPage<CETMpage>($"/bodved/partial/CETMpage/{CEToNo}"));
+
+            Handle.GET("/bodved/partial/MACpage/{?}", (string MACoNo) => new MACpage() { MACoNo = $"{MACoNo}" });
+            Handle.GET("/bodved/MACpage/{?}", (string MACoNo) => WrapPage<MACpage>($"/bodved/partial/MACpage/{MACoNo}"));
+
 
             //Handle.GET("/bodved/partial/ppMacPage/{?}", (string PPoNo) => new ppMacPage() { PPoNo = $"{PPoNo}" });
             //Handle.GET("/bodved/ppMacPage/{?}", (string PPoNo) => WrapPage<ppMacPage>($"/bodved/partial/ppMacPage/{PPoNo}"));

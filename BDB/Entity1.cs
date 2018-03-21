@@ -654,6 +654,8 @@ namespace BDB
     public class MAC
     {
         // CETR+RH yerine kullanilacak
+        public ulong oNo => this.GetObjectNo();
+
         public CC CC { get; set; }
         public CET CET { get; set; }    // Takim Event
         //public CET CEF { get; set; }    // Ferdi Event
@@ -673,9 +675,9 @@ namespace BDB
         public int hS5W { get; set; }
         public int hSW { get; set; }    // Kazandigi Set Miktari
         public int hMW { get; set; }    // Kazandigi Mac (0/1)
-        public int hMP { get; set; }    // Mac Puani (S/D, L/W ve Event'e gore degisir)
         public int hpRnk { get; set; }  // Previous Rank Global
         public int hNOPX { get; set; }  // PointExcahnage
+
 
         // Guest
         public PP gPP1 { get; set; }
@@ -688,9 +690,24 @@ namespace BDB
         public int gS5W { get; set; }
         public int gSW { get; set; }    // Kazandigi Set Miktari
         public int gMW { get; set; }    // Kazandigi Mac (0/1)
-        public int gMP { get; set; }    // Mac Puani
         public int gpRnk { get; set; }  // Previous Rank Global
         public int gNOPX { get; set; }  // PointExcahnage
+
+        //public int hMP { get; set; }    // Removed
+        //public int gMP { get; set; }    // Removed
+
+        // Drop: Puan'in Mac ile ilgisi yok.
+        //public int hPW { get; set; }    // Mac Puani (S/D, L/W ve Event'e gore degisir)
+        //public int gPW { get; set; }    // Kazandigi Puani
+
+        //1. Delete the property from the database class
+        //2. Restart the application, eger hata gelirse (schemaErr) stop/start DB (bodved)
+        //3. Stop the app. Eger 2 de hata gelmezse
+        //4. Run SQL command DROP COLUMN
+        //   ALTER TABLE MyApp.Person DROP COLUMN IrrelevantFact
+        //5. Run the cleaner
+        //   staradmin -d=database start cleaner
+
     }
 
 }

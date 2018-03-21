@@ -1,0 +1,59 @@
+{
+  "Html": "/bodved/MACpage.html",
+  "Cap1": "Maç",
+  "Cap2": "",
+  "canMdfy": true,
+  "SaveTrigger$": 0,
+  "SaveOkTrigger$": 0,
+
+  "MACoNo": "",
+  "CCoNo": 0,
+  "CEToNo": 0,
+
+  "hCToNo": 0,
+  "hCTAd": "",
+  "gCToNo": 0,
+  "gCTAd": "",
+
+  "Tarih$": "",
+  "Saat$": "",
+  "hDrm$": "",
+  "gDrm$": "",
+
+  "hPP1oNo$": "",
+  "hPP1Ad": "",
+  "gPP1oNo$": "",
+  "gPP1Ad": "",
+
+  "hPP2oNo$": "",
+  "hPP2Ad": "",
+  "gPP2oNo$": "",
+  "gPP2Ad": "",
+
+  "hS1W$": 0,
+  "gS1W$": 0,
+  "hS2W$": 0,
+  "gS2W$": 0,
+  "hS3W$": 0,
+  "gS3W$": 0,
+  "hS4W$": 0,
+  "gS4W$": 0,
+  "hS5W$": 0,
+  "gS5W$": 0,
+
+  "hSW": 0,
+  "gSW": 0,
+
+  "hPPs": [
+    {
+      "oNo": "",
+      "Ad": ""
+    }
+  ],
+  "gPPs": [
+    {
+      "oNo": "",
+      "Ad": ""
+    }
+  ]
+}

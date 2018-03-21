@@ -1,0 +1,143 @@
+{
+  "Html": "/bodved/CETMpage.html",
+  "Cap1": "",
+  "Cap2": "Takým Müsabaka Sonuçlarý",
+  "canMdfy": true,
+  "Rok": false,
+
+  "SaveTrigger$": 0,
+  "SaveOkTrigger$": 0,
+
+  "CCoNo": "",
+  "CEToNo": "",
+
+  "hCToNo": 0,
+  "gCTAd": "",
+  "gCToNo": 0,
+  "hCTAd": "",
+
+  "Info$": "",
+
+  "ThPW": 0, // Toplam Home  Puan Win
+  "TgPW": 0, //        Guest Puan Win
+
+  "ShMW": 0, // Sng Home MacWin
+  "ShPW": 0, //          PuanWin
+  "SgMW": 0,
+  "SgPW": 0,
+
+  "DhMW": 0, // Dbl Home MacWin
+  "DhPW": 0, //          PuanWin
+  "DgMW": 0,
+  "DgPW": 0,
+
+  "Singles": [
+    {
+      "MACoNo": 0,
+
+      "hSW": 0, // Set Win
+      "gSW": 0,
+      "hMW": 0, // Mac Win
+      "gMW": 0,
+      "hPW": 0, // Puan Win
+      "gPW": 0,
+
+      "Idx": 0,
+
+      "hPP1oNo": "",
+      "hPP1Ad": "",
+      "hPP1Rnk": 0,
+      "hS1W": 0,
+      "hS2W": 0,
+      "hS3W": 0,
+      "hS4W": 0,
+      "hS5W": 0,
+
+      "gPP1oNo": "",
+      "gPP1Ad": "",
+      "gPP1Rnk": 0,
+      "gS1W": 0,
+      "gS2W": 0,
+      "gS3W": 0,
+      "gS4W": 0,
+      "gS5W": 0,
+
+      "S1R": "",  // Set1 Result  hS1W-gS1W, 11-5
+      "S2R": "",
+      "S3R": "",
+      "S4R": "",
+      "S5R": "",
+
+      "MdfTrigger$": 0
+    }
+  ],
+
+  "Doubles": [
+    {
+      "MACoNo": 0,
+
+      "hSW": 0, // Set Win
+      "gSW": 0,
+      "hMW": 0, // Mac Win
+      "gMW": 0,
+      "hPW": 0, // Puan Win
+      "gPW": 0,
+
+      "Idx": 0,
+
+      "hPP1oNo": "",
+      "hPP1Ad": "",
+      "hPP1Rnk": 0,
+      "hPP2oNo": "",
+      "hPP2Ad": "",
+      "hPP2Rnk": 0,
+      "hS1W": 0,
+      "hS2W": 0,
+      "hS3W": 0,
+      "hS4W": 0,
+      "hS5W": 0,
+
+      "gPP1oNo": "",
+      "gPP1Ad": "",
+      "gPP1rnk": 0,
+      "gPP2oNo": "",
+      "gPP2Ad": "",
+      "gPP2rnk": 0,
+      "gS1W": 0,
+      "gS2W": 0,
+      "gS3W": 0,
+      "gS4W": 0,
+      "gS5W": 0,
+
+      "S1R": "",
+      "S2R": "",
+      "S3R": "",
+      "S4R": "",
+      "S5R": "",
+
+      "MdfTrigger$": 0
+    }
+  ],
+
+  "DlgOpened": false,
+  "DlgRejectTrigger$": 0,
+  "DlgSaveTrigger$": 0,
+
+  "hPPAd1": "",
+  "hPPAd2": "",
+  "gPPAd1": "",
+  "gPPAd2": "",
+  "SoD": "",
+  "Idx": 0,
+  "hS1W$": 0,
+  "hS2W$": 0,
+  "hS3W$": 0,
+  "hS4W$": 0,
+  "hS5W$": 0,
+  "gS1W$": 0,
+  "gS2W$": 0,
+  "gS3W$": 0,
+  "gS4W$": 0,
+  "gS5W$": 0
+
+}

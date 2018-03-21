@@ -360,3 +360,14 @@ button.edit {
 [data-WoL="L"] {
     color: red;
 }
+
+[data-SetSnc="0"] {
+    opacity: 0;
+}
+
+.grid2C {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-gap: 5px;
+    align-items: center;
+}
