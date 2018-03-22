@@ -5,6 +5,7 @@
   "canMdfy": true,
   "SaveTrigger$": 0,
   "SaveOkTrigger$": 0,
+  "UpdateTrigger$": 0,
 
   "MACoNo": "",
   "CCoNo": 0,
@@ -17,6 +18,8 @@
 
   "Tarih$": "",
   "Saat$": "",
+  "SoD": "S",
+  "Dbl": false,
   "hDrm$": "",
   "gDrm$": "",
 
@@ -43,6 +46,20 @@
 
   "hSW": 0,
   "gSW": 0,
+
+  "hS1R": "X",
+  "gS1R": "X",
+  "hS2R": "X",
+  "gS2R": "X",
+  "hS3R": "X",
+  "gS3R": "X",
+  "hS4R": "X",
+  "gS4R": "X",
+  "hS5R": "X",
+  "gS5R": "X",
+
+  "hSR": "X",
+  "gSR": "X",
 
   "hPPs": [
     {

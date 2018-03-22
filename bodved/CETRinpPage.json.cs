@@ -771,7 +771,7 @@ namespace bodved
             else if (A.Value == 0)
             {
                 A.Value = 0;
-                gS1W = 0;
+                hS1W = 0;
             }
             else if (A.Value > 21)
                 A.Cancel();

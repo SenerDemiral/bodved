@@ -360,14 +360,29 @@ button.edit {
 [data-WoL="L"] {
     color: red;
 }
-
-[data-SetSnc="0"] {
-    opacity: 0;
+[data-WoL="X"] {
+    opacity: 0.4;
+}
+[data-WoL="H"] {
+    animation: blinker 1s step-start infinite;
 }
 
-.grid2C {
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+[data-SetSnc="0"] {
+    opacity: 0.4;
+}
+
+.gridKeyValueForm {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    grid-gap: 5px;
+    grid-template-columns: auto 1fr;
+    grid-gap: 5px 10px;
     align-items: center;
 }
+
+    .gridKeyValueForm > div {
+        justify-self: right;
+    }

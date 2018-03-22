@@ -3,11 +3,15 @@
     <dom-bind>
         <template>
             <div class="tblWrap">
-                <div class="grid2C">
+                <div class="gridKeyValueForm">
                     <div>Tarih</div>
                     <input class="inpTarih" type="date" value="{{model.Tarih$::change}}" readonly$="[[!model.canMdfy]]" />
                     <div>Saat</div>
                     <input class="inpTarih" type="time" value="{{model.Saat$::change}}" readonly$="[[!model.canMdfy]]" />
+                    <div>Şekli</div>
+                    <input type="text" value="Single" readonly$="[[!model.canMdfy]]" />
+                    <div>Kategori</div>
+                    <input type="text" value="Single Mix" readonly$="[[!model.canMdfy]]" />
                 </div>
                 <table id="macTbl" style="table-layout: fixed;width: 360px;">
                     <caption>
@@ -24,15 +28,21 @@
                             <tr>
                                 <th></th>
                                 <th>
-                                    <juicy-select caption-text="Home"
+                                    <juicy-select caption-text=""
                                                   value="{{model.hPP1oNo$}}"
                                                   options="{{model.hPPs}}"
                                                   text-property="Ad"
                                                   value-property="oNo">
+                                        <select class="my-select"></select>
                                     </juicy-select>
+                                    <style>
+                                        .my-select {
+                                            color: blue;
+                                        }
+                                    </style>
                                 </th>
                                 <th>
-                                    <juicy-select caption-text="Guest"
+                                    <juicy-select caption-text=""
                                                   value="{{model.gPP1oNo$}}"
                                                   options="{{model.gPPs}}"
                                                   text-property="Ad"
@@ -40,7 +50,7 @@
                                     </juicy-select>
                                 </th>
                             </tr>
-                            <template is="dom-if" if="[[model.hPP2Ad]]">
+                            <template is="dom-if" if="[[model.Dbl]]">
                                 <tr>
                                     <th></th>
                                     <th>
@@ -83,37 +93,37 @@
 
                     </thead>
                     <tfoot>
-                        <tr>
+                        <tr style="background-color:yellow">
                             <th>Sonuç</th>
-                            <th style="padding-right:16px">[[model.hSW]]</th>
-                            <th style="padding-right:16px">[[model.gSW]]</th>
+                            <th style="padding-right:16px" data-WoL$="[[model.hSR]]">[[model.hSW]]</th>
+                            <th style="padding-right:16px" data-WoL$="[[model.gSR]]">[[model.gSW]]</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         <tr>
                             <td class="ortala">1</td>
-                            <td data-SetSnc$="[[model.hS1W$]]"><input class="inpSetSayi" type="number" value="{{model.hS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td data-SetSnc$="[[model.gS1W$]]"><input class="inpSetSayi" type="number" value="{{model.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.hS1R]]" value="{{model.hS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.gS1R]]" value="{{model.gS1W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                         </tr>
                         <tr>
                             <td class="ortala">2</td>
-                            <td data-SetSnc$="[[model.hS2W$]]"><input class="inpSetSayi" type="number" value="{{model.hS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td data-SetSnc$="[[model.hS2W$]]"><input class="inpSetSayi" type="number" value="{{model.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.hS2R]]" value="{{model.hS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.gS2R]]" value="{{model.gS2W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                         </tr>
                         <tr>
                             <td class="ortala">3</td>
-                            <td data-SetSnc$="[[model.hS3W$]]"><input class="inpSetSayi" type="number" value="{{model.hS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td data-SetSnc$="[[model.hS3W$]]"><input class="inpSetSayi" type="number" value="{{model.gS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.hS3R]]" value="{{model.hS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.gS3R]]" value="{{model.gS3W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                         </tr>
                         <tr>
                             <td class="ortala">4</td>
-                            <td data-SetSnc$="[[model.hS4W$]]"><input class="inpSetSayi" type="number" value="{{model.hS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td data-SetSnc$="[[model.hS4W$]]"><input class="inpSetSayi" type="number" value="{{model.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.hS4R]]" value="{{model.hS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.gS4R]]" value="{{model.gS4W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                         </tr>
                         <tr>
                             <td class="ortala">5</td>
-                            <td data-SetSnc$="[[model.hS5W$]]"><input class="inpSetSayi" type="number" value="{{model.hS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
-                            <td data-SetSnc$="[[model.gS5W$]]"><input class="inpSetSayi" type="number" value="{{model.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.hS5R]]" value="{{model.hS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
+                            <td><input class="inpSetSayi" type="number" onclick="this.select();" data-WoL$="[[model.gS5R]]" value="{{model.gS5W$::change}}" readonly$="[[!model.canMdfy]]" /></td>
                         </tr>
                     </tbody>
                 </table>
