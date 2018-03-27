@@ -1,0 +1,80 @@
+{
+  "Html": "/bodved/OyuncuMacPage.html",
+  "Cap1": "Oyuncu Maclari",
+  "Cap2": "",
+  "PPoNo": "",
+  "CCoNo": "",
+  "RnkID": 0,
+  "RnkGrp": "",
+  "RnkGrpAd": "",
+
+  "SMo": 0, // Sng Mac Oynadigi
+  "SMa": 0, //         Aldigi
+  "SMv": 0, //         Verdigi
+  "SSo": 0, // Sng Set Oynadigi
+  "SSa": 0,
+  "SSv": 0,
+
+  "DMo": 0,
+  "DMa": 0,
+  "DMv": 0,
+  "DSo": 0,
+  "DSa": 0,
+  "DSv": 0,
+
+
+  "Singles": [
+    {
+      "oNo": 0,
+      "Tarih": "",
+      "CEToNo": "",
+      "CToNo": "",
+      "CTAd": "",
+      "Drm": "",
+      "Rnk": 0,
+      "NOBX": 0,
+      "WoL": "",
+      "SW": "",
+      "SL": "",
+      "S1": "",
+      "S2": "",
+      "S3": "",
+      "S4": "",
+      "S5": "",
+      "rDrm": "",
+      "rPPoNo": "",
+      "rPPAd": "",
+      "rRnk": 0,
+      "rCToNo": "",
+      "rCTAd": ""
+    }
+  ],
+
+  "Doubles": [
+    {
+      "oNo": 0,
+      "Tarih": "",
+      "CEToNo": "",
+      "CToNo": "",
+      "CTAd": "",
+      "WoL": "",
+      "Drm": "",
+      "oPPoNo": "",
+      "oPPAd": "",
+      "SW": "",
+      "SL": "",
+      "S1": "",
+      "S2": "",
+      "S3": "",
+      "S4": "",
+      "S5": "",
+      "rDrm": "",
+      "rPP1oNo": "",
+      "rPP1Ad": "",
+      "rPP2oNo": "",
+      "rPP2Ad": "",
+      "rCToNo": "",
+      "rCTAd": ""
+    }
+  ]
+}

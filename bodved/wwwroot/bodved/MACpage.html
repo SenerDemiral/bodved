@@ -12,13 +12,25 @@
                     <input type="text" value="Single" readonly$="[[!model.canMdfy]]" />
                     <div>Kategori</div>
                     <input type="text" value="Single Mix" readonly$="[[!model.canMdfy]]" />
+                    <div>Açıklama</div>
+                    <textarea placeholder="" type="text" maxlength="300" value="{{model.Info$::change}}" readonly$="[[!model.canMdfy]]"></textarea>
                 </div>
-                <table id="macTbl" style="table-layout: fixed;width: 360px;">
+                <table id="macTbl" style="table-layout:fixed;width:340px;">
                     <caption>
                         <div>[[model.Cap1]]</div>
                         <!--div>[[model.Cap2]]</div-->
                     </caption>
+                    <colgroup>
+                        <col style="width:12%">
+                        <col style="width:44%">
+                        <col style="width:44%">
+                    </colgroup>
                     <thead>
+                        <tr>
+                            <th></th>
+                            <th>[[model.hCTAd]]</th>
+                            <th>[[model.gCTAd]]</th>
+                        </tr>
                         <template is="dom-if" if="[[model.canMdfy]]">
                             <tr>
                                 <th style="width:16%">Drm</th>
@@ -94,9 +106,9 @@
                     </thead>
                     <tfoot>
                         <tr style="background-color:yellow">
-                            <th>Sonuç</th>
-                            <th style="padding-right:16px" data-WoL$="[[model.hSR]]">[[model.hSW]]</th>
-                            <th style="padding-right:16px" data-WoL$="[[model.gSR]]">[[model.gSW]]</th>
+                            <th></th>
+                            <th style="padding-right:16px;text-align:right;" data-WoL$="[[model.hSR]]">[[model.hSW]]</th>
+                            <th style="padding-left:16px;text-align:left;" data-WoL$="[[model.gSR]]">[[model.gSW]]</th>
                         </tr>
                     </tfoot>
                     <tbody>

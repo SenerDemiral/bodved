@@ -117,6 +117,9 @@
     <Compile Include="OyuncularPage.json.cs">
       <DependentUpon>OyuncularPage.json</DependentUpon>
     </Compile>
+    <Compile Include="OyuncuMacPage.json.cs">
+      <DependentUpon>OyuncuMacPage.json</DependentUpon>
+    </Compile>
     <Compile Include="ppMacPage.json.cs">
       <DependentUpon>ppMacPage.json</DependentUpon>
     </Compile>
@@ -189,6 +192,9 @@
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <TypedJSON Include="MACpage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <TypedJSON Include="OyuncuMacPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <None Include="packages.config" />

@@ -379,7 +379,7 @@ button.edit {
 .gridKeyValueForm {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-gap: 5px 10px;
+    grid-gap: 3px 10px;
     align-items: center;
 }
 
